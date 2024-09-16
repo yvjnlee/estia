@@ -1,13 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
 .login-container {
-    margin-top: 4%;
+    margin-top: 2%;
     align-items: center;
+    flex-direction: column;
+
   }
   
   .login-title {
     display: flex;
-  
     align-items:center;
     color: white;
+    font-size: 42px;
+    padding: 0px;
+    margin-top: 32px;
+    margin-bottom: 12px;
     justify-content: center;
   }
   
@@ -22,7 +29,6 @@
   
   .custom-button {
     position: relative;
-    display: inline-block;
     padding: 10px 20px;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -103,3 +109,29 @@
   .custom-message {
     font-size: 200;
   }
+
+  .back-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #121212;
+    color: #838383;
+    border: 1px solid #333333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column;
+
+  }
+  
+  .back-button:hover {
+    background-color: #2e2e2e;
+    border-color: #bbb;
+  }
+  
+  .back-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  

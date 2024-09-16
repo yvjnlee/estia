@@ -1,9 +1,13 @@
 import "./index.css";
-import "./login.css";
-import "./firstpage.css";
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
 import { createClient, Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
+
+import Project from "./components/project";
+
+import LocomotiveScroll from "locomotive-scroll";
+import "locomotive-scroll/dist/locomotive-scroll.css";
 
 const supabase = createClient(
   process.env.REACT_APP_PROJECT_URL as string,
@@ -26,6 +30,25 @@ export default function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+
+    // Ensure the scrollRef exists
+    if (scrollElement) {
+      const locomotiveScroll = new LocomotiveScroll({
+        el: scrollElement, // Ensure this is the ref pointing to the parent container
+        smooth: true,
+        getDirection: true, // This can be useful if you're checking scrolling direction
+      });
+
+      // Cleanup on unmount
+      return () => {
+        locomotiveScroll.destroy();
+      };
+    }
+  }, []);
 
   // Add the scroller animation effect
   useEffect(() => {
@@ -43,7 +66,7 @@ export default function App() {
 
         // Make an array from the elements within `.scroller-inner`
         const scrollerInner = scroller.querySelector(".scroller__inner");
-        
+
         // Ensure scrollerInner is not null
         if (scrollerInner) {
           const scrollerContent = Array.from(scrollerInner.children);
@@ -57,13 +80,12 @@ export default function App() {
         }
       });
     }
-  }, []); // Runs once after the component mounts
+  }, [showAuth]); // Runs once after the component mounts
 
   // Handle session state
   if (session) {
     return (
       <>
-        <div>Logged in!</div>
         <button
           className="custom-button"
           onClick={async () => {
@@ -73,6 +95,40 @@ export default function App() {
         >
           Log Out
         </button>
+        <div ref={scrollRef} className="main-container" >
+        <div className="heading-container">
+          <h2 className="main-h2" data-scroll-section>
+            start building today
+          </h2>
+          </div>
+          <div className="projects-container">
+            <div className="project-row" data-scroll-section>
+              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
+              <Project title="Netflix Clone" tech1="React" tech2="TypeScript" colour="#456F00" />
+              <Project title="Spanish Writing Assistant" tech1="React" tech2="TypeScript" colour="#006F5B" />
+              <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
+            </div>
+            <div className="project-row" data-scroll-section>
+              <Project title="Actorle" tech1="React" tech2="TypeScript" colour="#45006F" />
+              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
+              <Project title="Netflix Clone" tech1="React" tech2="TypeScript" colour="#456F00" />
+              <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
+            </div>
+            <div className="project-row" data-scroll-section>
+            <Project title="Spanish Writing Assistant" tech1="React" tech2="TypeScript" colour="#006F5B" />
+            <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
+              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
+              <Project title="Spanish Writing Assistant" tech1="React" tech2="TypeScript" colour="#006F5B" />
+            </div>
+            <div className="project-row" data-scroll-section>
+              <Project title="Actorle" tech1="React" tech2="TypeScript" colour="#45006F" />
+              <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
+              <Project title="Netflix Clone" tech1="React" tech2="TypeScript" colour="#456F00" />
+              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
+            </div>
+            {/* Add more rows in the same structure */}
+          </div>
+        </div>
       </>
     );
   }
@@ -81,7 +137,15 @@ export default function App() {
   if (showAuth) {
     return (
       <div className="login-container">
-        <h2 className="login-title">Welcome to estia</h2>
+        <div className="back-container">
+          <button
+            className="back-button" // Add styling for the back button
+            onClick={() => setShowAuth(false)} // Hide the Auth component and go back to the initial page
+          >
+            Go back
+          </button>
+        </div>
+        <h2 className="login-title">Create an account</h2>
         <Auth
           supabaseClient={supabase}
           appearance={{
@@ -107,6 +171,9 @@ export default function App() {
                 email_label: '',
                 password_label: '',
                 password_input_placeholder: "Password",
+              },
+              forgotten_password: {
+                email_label: "",
               },
             },
           }}

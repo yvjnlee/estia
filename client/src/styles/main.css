@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+.main-container {
+
+}
+
+.heading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 4%;
+    position: relative; /* If using absolute positioning for any element inside */
+  z-index: 1; /* Ensure it stays above other content */
+}
+
+.main-h2 {
+    font-size: 32px;
+    font-weight: 100;
+
+}

@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        /* Optional: small upward movement */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.projects-container {
+    border-radius: 8px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    display: grid;
+    gap: 24px;
+    /* Add space between the grid items */
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s forwards;
+}
+
+.project-container {
+    width: 14.36rem;
+    /* Fixed width */
+    height: 13rem;
+    /* Fixed height */
+    border-radius: 4px;
+    padding: 24px;
+    background-color: #f9f9f9;
+    margin-left: 12px;
+    margin-right: 12px;
+    display: flex;
+    flex-direction: column;
+    /* Stack title and tech vertically */
+    justify-content: flex-start;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.projects-container .project-container:nth-child(even) {
+    margin-top: 2rem;
+}
+
+.project-container:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.01); /* Makes the element 5% larger */
+}
+
+
+.project-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    max-width: 50%;
+    /* Adjust as needed to fit within container */
+    margin-bottom: auto;
+    /* Pushes the .project-tech to the bottom */
+
+}
+
+.project-tech {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    /* Ensures this sticks to the bottom */
+
+}
+
+.tech-item {
+    font-size: 16px;
+    color: #555;
+    background-color: #e0e0e0;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.project-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
