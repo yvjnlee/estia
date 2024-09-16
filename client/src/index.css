@@ -1,13 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --background-color: #121212;
+  --button-background: #121212;
+  --button-text-color: #626262;
+  --input-background: #282828;
+  --input-border: #626262;
+  --border-radius: 10px;
+  --anchor-color: #FFFFFF; /* Purple color, replace with desired color */
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
+  -webkit-text-fill-color: #333;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px white inset;/*your box-shadow*/
+  -webkit-text-fill-color: #333;
+} 
+
+.login-container {
+  margin-top: 4%;
+  align-items: center;
+}
+
+.login-title {
+  display: flex;
+
+  align-items:center;
+  color: white;
+  justify-content: center;
+}
+
+.custom-container {
+  display: flex;
+  font-family: "Poppins";
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--background-color);
+  padding: 20px;
+}
+
+.custom-button {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  border: 0.5px solid var(--button-text-color);
+  width: 370px;
+  height: 42px;
+  margin-bottom: 10px;
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+  overflow: hidden; /* Hide the overflow of the pseudo-element */
+  display: flex;
+  align-items: center; /* Vertically center items */
+  justify-content: center; /* Horizontally center items */
+  font-size: 16px;
+  text-align: center; /* Center the text horizontally */
+}
+
+.custom-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  transition: left 0.3s ease-in-out;
+  z-index: -999;
+}
+
+.custom-button:hover::before {
+  left: 0;
+}
+
+.custom-button:hover {
+  color: var(--button-text-color); /* Keeps text color on hover */
+  z-index: 1; /* Ensures button text is on top */
+}
+
+.supabase-auth-ui_ui-button {
+  color: var(--button-text-color); /* Keeps text color on hover */
+  z-index: 1000; /* Ensures button text is on top */ 
+}
+
+.supabase-auth-ui_ui-container {
+  padding: 0px;
+  margin: 5px;
+}
+
+.custom-input {
+  border: 2px solid var(--input-border);
+  margin-bottom: 10px;
+  border-radius: var(--border-radius);
+  width: 350px;
+  height: 42px;
+  background-color: var(--input-background);
+  color: var(--button-text-color);
+  padding-left: 15px;
+  font-weight: 500;
+
+}
+
+.custom-anchor {
+  color: var(--anchor-color);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.custom-anchor:hover {
+  text-decoration: underline;
+}
+
+.custom-label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.custom-message {
+  font-size: 200;
 }
