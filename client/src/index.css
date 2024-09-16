@@ -14,6 +14,7 @@
   --input-border: #626262;
   --border-radius: 10px;
   --anchor-color: #FFFFFF; /* Purple color, replace with desired color */
+  --button-background2: #000000;
 }
 
 body {

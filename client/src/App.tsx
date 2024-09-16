@@ -1,11 +1,8 @@
 import "./index.css";
-
 import React, { useState, useEffect, useRef } from "react";
 import { createClient, Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
-
 import Project from "./components/project";
-
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
@@ -13,6 +10,22 @@ const supabase = createClient(
   process.env.REACT_APP_PROJECT_URL as string,
   process.env.REACT_APP_ANON_KEY as string
 );
+
+interface ProjectData {
+  title: string;
+  tech1: string;
+  tech2: string;
+  colour: string;
+  descript?: string;
+}
+
+const projects: ProjectData[] = [
+  { title: "Syllabus Extractor", tech1: "React", tech2: "TypeScript", colour: "#6F0000" },
+  { title: "Netflix Clone", tech1: "React", tech2: "TypeScript", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
+  { title: "Spanish Writing Assistant", tech1: "React", tech2: "TypeScript", colour: "#006F5B" },
+  { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
+  { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" },
+];
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -30,6 +43,7 @@ export default function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -86,47 +100,57 @@ export default function App() {
   if (session) {
     return (
       <>
-        <button
-          className="custom-button"
-          onClick={async () => {
-            await supabase.auth.signOut();
-            setSession(null); // Reset session state
-          }}
-        >
-          Log Out
-        </button>
-        <div ref={scrollRef} className="main-container" >
-        <div className="heading-container">
-          <h2 className="main-h2" data-scroll-section>
-            start building today
-          </h2>
-          </div>
-          <div className="projects-container">
-            <div className="project-row" data-scroll-section>
-              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
-              <Project title="Netflix Clone" tech1="React" tech2="TypeScript" colour="#456F00" />
-              <Project title="Spanish Writing Assistant" tech1="React" tech2="TypeScript" colour="#006F5B" />
-              <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
+        <div>
+          <button
+            className="custom-button"
+            onClick={async () => {
+              await supabase.auth.signOut();
+              setSession(null); // Reset session state
+            }}
+          >
+            Log Out
+          </button>
+          <div ref={scrollRef} className="main-container">
+            <div className="heading-container">
+              <h2 className="main-h2" data-scroll-section>
+                start building today
+              </h2>
             </div>
-            <div className="project-row" data-scroll-section>
-              <Project title="Actorle" tech1="React" tech2="TypeScript" colour="#45006F" />
-              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
-              <Project title="Netflix Clone" tech1="React" tech2="TypeScript" colour="#456F00" />
-              <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
+            <div className="projects-container">
+              {projects.map((project, index) => (
+                <div className="project-row" key={index} data-scroll-section>
+                  <Project 
+                    title={project.title}
+                    tech1={project.tech1}
+                    tech2={project.tech2}
+                    colour={project.colour}
+                    descript={project.descript}
+                  />
+                </div>
+              ))}
+                    {projects.map((project, index) => (
+                <div className="project-row lowered" key={index} data-scroll-section>
+                  <Project 
+                    title={project.title}
+                    tech1={project.tech1}
+                    tech2={project.tech2}
+                    colour={project.colour}
+                    descript={project.descript}
+                  />
+                </div>
+              ))}
+                    {projects.map((project, index) => (
+                <div className="project-row" key={index} data-scroll-section>
+                  <Project 
+                    title={project.title}
+                    tech1={project.tech1}
+                    tech2={project.tech2}
+                    colour={project.colour}
+                    descript={project.descript}
+                  />
+                </div>
+              ))}
             </div>
-            <div className="project-row" data-scroll-section>
-            <Project title="Spanish Writing Assistant" tech1="React" tech2="TypeScript" colour="#006F5B" />
-            <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
-              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
-              <Project title="Spanish Writing Assistant" tech1="React" tech2="TypeScript" colour="#006F5B" />
-            </div>
-            <div className="project-row" data-scroll-section>
-              <Project title="Actorle" tech1="React" tech2="TypeScript" colour="#45006F" />
-              <Project title="Football Webscraper" tech1="React" tech2="TypeScript" colour="#6F0050" />
-              <Project title="Netflix Clone" tech1="React" tech2="TypeScript" colour="#456F00" />
-              <Project title="Syllabus Extractor" tech1="React" tech2="TypeScript" colour="#6F0000" />
-            </div>
-            {/* Add more rows in the same structure */}
           </div>
         </div>
       </>
@@ -198,7 +222,7 @@ export default function App() {
         <ul className="tag-list scroller__inner">
           <li>Backend Programming</li>
           <li>Angular</li>
-          <li>Typscript</li>
+          <li>TypeScript</li>
           <li>Databases</li>
           <li>Integration Testing</li>
           <li>Animation</li>
