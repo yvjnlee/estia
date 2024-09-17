@@ -1,38 +1,33 @@
-import "./index.css";
-import React, { useState, useEffect, useRef } from "react";
-import { createClient, Session } from "@supabase/supabase-js";
-import { Auth } from "@supabase/auth-ui-react";
-import Project from "./components/project";
-import LocomotiveScroll from "locomotive-scroll";
-import "locomotive-scroll/dist/locomotive-scroll.css";
+import React, { useRef, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './components/HomePage';
+import ProjectDetails from './components/ProjectDetails';
+import { createClient, Session } from '@supabase/supabase-js';
+import { Auth } from '@supabase/auth-ui-react';
+import './index.css';
+
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
+
+// Define projects array with unique titles
+const projects = [
+  { title: "Syllabus Extractor", tech1: "React", tech2: "TypeScript", colour: "#6F0000" },
+  { title: "Netflix Clone", tech1: "React", tech2: "TypeScript", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
+  { title: "Spanish Writing Assistant", tech1: "React", tech2: "TypeScript", colour: "#006F5B" },
+  { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
+  { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" }
+];
 
 const supabase = createClient(
   process.env.REACT_APP_PROJECT_URL as string,
   process.env.REACT_APP_ANON_KEY as string
 );
 
-interface ProjectData {
-  title: string;
-  tech1: string;
-  tech2: string;
-  colour: string;
-  descript?: string;
-}
+const App: React.FC = () => {
+  const [session, setSession] = React.useState<Session | null>(null);
+  const [showAuth, setShowAuth] = React.useState(false);
 
-const projects: ProjectData[] = [
-  { title: "Syllabus Extractor", tech1: "React", tech2: "TypeScript", colour: "#6F0000" },
-  { title: "Netflix Clone", tech1: "React", tech2: "TypeScript", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
-  { title: "Spanish Writing Assistant", tech1: "React", tech2: "TypeScript", colour: "#006F5B" },
-  { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
-  { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" },
-];
-
-export default function App() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [showAuth, setShowAuth] = useState(false); // State to control the display of Auth component
-
-  useEffect(() => {
-    // Supabase session handling
+  React.useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session as Session);
     });
@@ -44,48 +39,38 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const scrollElement = scrollRef.current;
 
-    // Ensure the scrollRef exists
     if (scrollElement) {
       const locomotiveScroll = new LocomotiveScroll({
-        el: scrollElement, // Ensure this is the ref pointing to the parent container
+        el: scrollElement,
         smooth: true,
-        getDirection: true, // This can be useful if you're checking scrolling direction
+        getDirection: true,
       });
 
-      // Cleanup on unmount
       return () => {
         locomotiveScroll.destroy();
       };
     }
   }, []);
 
-  // Add the scroller animation effect
   useEffect(() => {
     const scrollers = document.querySelectorAll(".scroller");
 
-    // If a user hasn't opted in for reduced motion, add the animation
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       addAnimation();
     }
 
     function addAnimation() {
       scrollers.forEach((scroller) => {
-        // add data-animated="true" to every `.scroller`
         scroller.setAttribute("data-animated", "true");
-
-        // Make an array from the elements within `.scroller-inner`
         const scrollerInner = scroller.querySelector(".scroller__inner");
 
-        // Ensure scrollerInner is not null
         if (scrollerInner) {
           const scrollerContent = Array.from(scrollerInner.children);
-
-          // For each item in the array, clone it and append it
           scrollerContent.forEach((item) => {
             const duplicatedItem = item.cloneNode(true) as Element;
             duplicatedItem.setAttribute("aria-hidden", "true");
@@ -94,9 +79,8 @@ export default function App() {
         }
       });
     }
-  }, [showAuth]); // Runs once after the component mounts
+  }, [showAuth]);
 
-  // Handle session state
   if (session) {
     return (
       <>
@@ -105,66 +89,35 @@ export default function App() {
             className="custom-button"
             onClick={async () => {
               await supabase.auth.signOut();
-              setSession(null); // Reset session state
+              setSession(null);
             }}
           >
             Log Out
           </button>
-          <div ref={scrollRef} className="main-container">
-            <div className="heading-container">
-              <h2 className="main-h2" data-scroll-section>
-                start building today
-              </h2>
-            </div>
-            <div className="projects-container">
+          <div>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
               {projects.map((project, index) => (
-                <div className="project-row" key={index} data-scroll-section>
-                  <Project 
-                    title={project.title}
-                    tech1={project.tech1}
-                    tech2={project.tech2}
-                    colour={project.colour}
-                    descript={project.descript}
-                  />
-                </div>
+                <Route
+                  key={index}
+                  path={`/project/${project.title}`}
+                  element={<ProjectDetails />}
+                />
               ))}
-                    {projects.map((project, index) => (
-                <div className="project-row lowered" key={index} data-scroll-section>
-                  <Project 
-                    title={project.title}
-                    tech1={project.tech1}
-                    tech2={project.tech2}
-                    colour={project.colour}
-                    descript={project.descript}
-                  />
-                </div>
-              ))}
-                    {projects.map((project, index) => (
-                <div className="project-row" key={index} data-scroll-section>
-                  <Project 
-                    title={project.title}
-                    tech1={project.tech1}
-                    tech2={project.tech2}
-                    colour={project.colour}
-                    descript={project.descript}
-                  />
-                </div>
-              ))}
-            </div>
+            </Routes>
           </div>
         </div>
       </>
     );
   }
 
-  // Display Auth component if "Get Started" is clicked
   if (showAuth) {
     return (
       <div className="login-container">
         <div className="back-container">
           <button
-            className="back-button" // Add styling for the back button
-            onClick={() => setShowAuth(false)} // Hide the Auth component and go back to the initial page
+            className="back-button"
+            onClick={() => setShowAuth(false)}
           >
             Go back
           </button>
@@ -206,18 +159,16 @@ export default function App() {
     );
   }
 
-  // Initial page with the scroller
   return (
     <div className="initial-container">
       <h2 className="initial-title">estia</h2>
       <h3 className="initial-slogan">Less Searching, More Creating</h3>
       <button
         className="initial-button"
-        onClick={() => setShowAuth(true)} // Show the Auth component when button is clicked
+        onClick={() => setShowAuth(true)}
       >
         Get Started
       </button>
-
       <div className="scroller" data-speed="slow">
         <ul className="tag-list scroller__inner">
           <li>Backend Programming</li>
@@ -232,4 +183,6 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+
+export default App;

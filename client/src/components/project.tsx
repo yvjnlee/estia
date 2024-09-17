@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
+// Define the props interface for the Project component
 interface ProjectProps {
   title: string;
   tech1: string;
@@ -8,53 +10,31 @@ interface ProjectProps {
   descript?: string;
 }
 
-const Project: React.FC<ProjectProps> = ({ title, tech1, tech2, colour, descript }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const projectRef = useRef<HTMLDivElement>(null);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => setIsModalOpen(false);
-
-  useEffect(() => {
-    if (isModalOpen && modalRef.current) {
-      modalRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [isModalOpen]);
-
-  const containerStyle = {
+const Project: React.FC<ProjectProps> = ({ title, tech1, tech2, colour }) => {
+  // Define the style object with the correct type
+  const containerStyle: React.CSSProperties = {
     backgroundColor: colour,
     cursor: 'pointer',
+    height: '13rem',
+    width: '14.36rem',
+    borderRadius: '4px',
+    padding: '24px',
+    display: 'flex',
+    flexDirection: 'column', // 'column' is a valid value for `flexDirection`
+    justifyContent: 'flex-start',
+    transition: 'transform 0.3s ease, filter 0.3s ease',
   };
 
   return (
-    <>
-      <div
-        className="project-container"
-        style={containerStyle}
-        onClick={openModal}
-        ref={projectRef}
-      >
+    <Link  to={`/project/${title}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <div className="project-container" style={containerStyle}>
         <h2 className="project-title">{title}</h2>
         <div className="project-tech">
           <span className="tech-item">{tech1}</span>
           <span className="tech-item">{tech2}</span>
         </div>
       </div>
-
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content" ref={modalRef}>
-          <button className="close-button" onClick={closeModal}>Close</button>
-            <h2>{title}</h2>
-            <p>{descript}</p>
-          </div>
-        </div>
-      )}
-    </>
+    </Link>
   );
 };
 
