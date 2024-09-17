@@ -1,5 +1,4 @@
-// src/components/HomePage.tsx
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Project from './Project';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
@@ -23,66 +22,109 @@ const projects: ProjectData[] = [
 ];
 
 const HomePage: React.FC = () => {
-    const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProjects, setFilteredProjects] = useState<ProjectData[]>(projects);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
-    
-    useEffect(() => {
-        const scrollElement = scrollRef.current;
-    
-        if (scrollElement) {
-          const locomotiveScroll = new LocomotiveScroll({
-            el: scrollElement,
-            smooth: true,
-            getDirection: true,
-          });
-    
-          return () => {
-            locomotiveScroll.destroy();
-          };
-        }
-      }, []);
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+
+    if (scrollElement) {
+      const locomotiveScroll = new LocomotiveScroll({
+        el: scrollElement,
+        smooth: true,
+        getDirection: true,
+      });
+
+      return () => {
+        locomotiveScroll.destroy();
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filtered = projects.filter(project =>
+      project.title.toLowerCase().includes(lowercasedQuery)
+    );
+    setFilteredProjects(filtered);
+  }, [searchQuery]);
+
   return (
     <div className="main-container">
       <div className="heading-container">
         <h2 className="main-h2" data-scroll-section>
           start building today
         </h2>
+        <input
+          type="text"
+          placeholder="Search projects..."
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          className="search-bar"
+        />
       </div>
       <div className="projects-container">
-        {projects.map((project, index) => (
-          <div className="project-row" key={index} data-scroll-section>
-            <Project
-              title={project.title}
-              tech1={project.tech1}
-              tech2={project.tech2}
-              colour={project.colour}
-              descript={project.descript}
-            />
-          </div>
-        ))}
-        {projects.map((project, index) => (
-          <div className="project-row" key={index} data-scroll-section>
-            <Project
-              title={project.title}
-              tech1={project.tech1}
-              tech2={project.tech2}
-              colour={project.colour}
-              descript={project.descript}
-            />
-          </div>
-        ))}
-        {projects.map((project, index) => (
-          <div className="project-row" key={index} data-scroll-section>
-            <Project
-              title={project.title}
-              tech1={project.tech1}
-              tech2={project.tech2}
-              colour={project.colour}
-              descript={project.descript}
-            />
-          </div>
-        ))}
-        
+        {filteredProjects.length > 0 ? (
+          filteredProjects.map((project, index) => (
+            <div className="project-row" key={index} data-scroll-section>
+              <Project
+                title={project.title}
+                tech1={project.tech1}
+                tech2={project.tech2}
+                colour={project.colour}
+                descript={project.descript}
+              />
+            </div>
+          ))
+        ) : (
+          <p>No projects found</p>
+        )}
+         {filteredProjects.length > 0 ? (
+          filteredProjects.map((project, index) => (
+            <div className="project-row" key={index} data-scroll-section>
+              <Project
+                title={project.title}
+                tech1={project.tech1}
+                tech2={project.tech2}
+                colour={project.colour}
+                descript={project.descript}
+              />
+            </div>
+          ))
+        ) : (
+          <p>No projects found</p>
+        )}
+         {filteredProjects.length > 0 ? (
+          filteredProjects.map((project, index) => (
+            <div className="project-row" key={index} data-scroll-section>
+              <Project
+                title={project.title}
+                tech1={project.tech1}
+                tech2={project.tech2}
+                colour={project.colour}
+                descript={project.descript}
+              />
+            </div>
+          ))
+        ) : (
+          <p>No projects found</p>
+        )}
+         {filteredProjects.length > 0 ? (
+          filteredProjects.map((project, index) => (
+            <div className="project-row" key={index} data-scroll-section>
+              <Project
+                title={project.title}
+                tech1={project.tech1}
+                tech2={project.tech2}
+                colour={project.colour}
+                descript={project.descript}
+              />
+            </div>
+          ))
+        ) : (
+          <p>No projects found</p>
+        )}
       </div>
     </div>
   );
