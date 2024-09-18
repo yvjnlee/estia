@@ -1,18 +1,107 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        /* Optional: small upward movement */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .details-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center horizontally */
-    text-align: center; /* Center text inside the container */
-    padding: 20px; /* Optional padding */
+    align-items: center;
+    text-align: center;
+    padding: 20px;
 }
 
 .details-title {
     display: block;
-    font-size: 2rem; /* Adjust as needed */
-    margin-bottom: 1rem; /* Space between title and description */
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
 .details-subtitle {
-    font-size: 1.2rem; /* Adjust as needed */
-    max-width: 800px; /* Optional max width for better readability */
+    font-size: 1.2rem;
+    max-width: 800px;
+}
+
+.details-heading {
+    margin-bottom: 2rem;
+}
+
+.youtube-embed-iframe {
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 18rem;
+}
+
+.embed-container {
+    display: flex;
+    animation: fadeIn 1s forwards;
+}
+.github-container {
+    display: block;
+    margin-left: 2rem;
+    padding: 2rem;
+    background-color: #151B23;
+    height: auto;
+    border-radius: 15px;
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit text color from parent */
+    position: relative; /* Position for the tooltip */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.github-container:hover {
+    background-color: #2C3E50;
+    transform: scale(1.05);
+}
+
+.github-container .tooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%; /* Position above the container */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    white-space: nowrap; /* Prevent text wrapping */
+    font-size: 0.875rem;
+    z-index: 10;
+}
+
+.github-container:hover .tooltip {
+    display: block;
+}
+.github-logo {
+    height: 4rem;
+    width: auto;
+}
+
+.github-name {
+    font-size: 1rem;
+}
+
+.github-description {
+    font-size: 1rem;
+}
+.github-additional-information {
+    display: flex;
+    justify-content: space-between; 
+    width: auto; /* Adjust the width to fit content */
+    height: auto; /* Adjust the width to fit content */
+    margin: 0; /* Remove any default margin */
+    padding: 0; /* Remove any default padding */
+}
+
+.github-additional-information p {
+    margin: 0; /* Remove margin from <p> elements */
+    padding: 0; /* Remove padding from <p> elements */
 }

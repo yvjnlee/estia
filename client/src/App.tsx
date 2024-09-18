@@ -11,8 +11,8 @@ import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 // Define projects array with unique titles
 const projects = [
-  { title: "Syllabus Extractor", tech1: "React", tech2: "TypeScript", colour: "#6F0000" },
-  { title: "Netflix Clone", tech1: "React", tech2: "TypeScript", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
+  { title: "Twitter Sentiment Analysis", tech1: "Tensorflow", tech2: "Python", colour: "#6F0000" },
+  { title: "Netflix Clone", tech1: "React", tech2: "TailwindCSS", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
   { title: "Spanish Writing Assistant", tech1: "React", tech2: "TypeScript", colour: "#006F5B" },
   { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
   { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" }

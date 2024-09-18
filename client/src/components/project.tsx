@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 interface ProjectProps {
   title: string;
   tech1: string;
-  tech2: string;
+  tech2?: string;
   colour: string;
   descript?: string;
 }
