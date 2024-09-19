@@ -2,9 +2,11 @@ import React, { useRef, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import ProjectDetails from './components/ProjectDetails';
-import { createClient, Session } from '@supabase/supabase-js';
+import { Session } from '@supabase/supabase-js';
 import { Auth } from '@supabase/auth-ui-react';
 import './index.css';
+
+import supabase from './SupabaseClient';
 
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
@@ -17,11 +19,6 @@ const projects = [
   { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
   { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" }
 ];
-
-const supabase = createClient(
-  process.env.REACT_APP_PROJECT_URL as string,
-  process.env.REACT_APP_ANON_KEY as string
-);
 
 const App: React.FC = () => {
   const [session, setSession] = React.useState<Session | null>(null);
