@@ -16,13 +16,13 @@ export const projects: Record<string, {
     videoId: string;
     repoPath: string;
   }> = {
-    "Twitter Sentiment Analysis": {
+    "Stock Prediction Program": {
       tech1: "Tensorflow",
       tech2: "Python",
       colour: "#6F0000",
       descript: "Details about Twitter Sentiment Analysis",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      videoId: "0E_31WqVzCY",
+      repoPath: "patrickloeber/python-fun"
     },
     "Netflix Clone": {
       tech1: "React",
@@ -32,13 +32,13 @@ export const projects: Record<string, {
       videoId: "ATz8wg6sg30",
       repoPath: "fireclint/netflix-react-tailwind"
     },
-    "Spanish Writing Assistant": {
-      tech1: "React",
-      tech2: "TypeScript",
+    "Password Manager": {
+      tech1: "Python",
+      tech2: "SQL",
       colour: "#006F5B",
-      descript: "Details about Spanish Writing Assistant",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      descript: "Details about Password Manager",
+      videoId: "hkhyKJj28Ac",
+      repoPath: "KalleHallden/pwManager"
     },
     "Football Webscraper": {
       tech1: "React",

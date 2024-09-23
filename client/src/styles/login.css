@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
 .login-container {
-    margin-top: 2%;
-    align-items: center;
-    flex-direction: column;
+ height: 100vh; /* Full viewport height */
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+}
 
-  }
-  
   .login-title {
     display: flex;
     align-items:center;

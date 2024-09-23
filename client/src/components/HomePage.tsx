@@ -2,29 +2,42 @@ import React, { useState, useEffect, useRef } from 'react';
 import Project from './Project';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
-
-// Define the props interface for the Project component
-interface ProjectData {
-  title: string;
-  tech1: string;
-  tech2: string;
-  colour: string;
-  descript?: string;
-}
-
-const projects: ProjectData[] = [
-  { title: "Twitter Sentiment Analysis", tech1: "Tensorflow", tech2: "Python", colour: "#6F0000" },
-  { title: "Netflix Clone", tech1: "React", tech2: "TypeScript", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
-  { title: "Spanish Writing Assistant", tech1: "React", tech2: "TypeScript", colour: "#006F5B" },
-  { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
-  { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" },
-  { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#000B6F" },
-];
+import { projects } from '../data/data'; // Import from the external data file
 
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredProjects, setFilteredProjects] = useState<ProjectData[]>(projects);
+  const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState(Object.entries(projects));
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // Tech stack options
+  const techStackOptions = ['React', 'TypeScript', 'Python', 'Tensorflow', 'TailwindCSS'];
+
+  // Toggle the tech stack selection
+  const handleTechStackChange = (tech: string) => {
+    if (selectedTechStack.includes(tech)) {
+      setSelectedTechStack(selectedTechStack.filter((item) => item !== tech));
+    } else {
+      setSelectedTechStack([...selectedTechStack, tech]);
+    }
+  };
+
+  // Filter projects based on search query and selected tech stack
+  const filterProjects = () => {
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filtered = Object.entries(projects).filter(([title, project]) => {
+      const matchesSearchQuery =
+        title.toLowerCase().includes(lowercasedQuery) ||
+        project.descript.toLowerCase().includes(lowercasedQuery);
+
+      const matchesTechStack =
+        selectedTechStack.length === 0 ||
+        selectedTechStack.some((tech) => project.tech1 === tech || project.tech2 === tech);
+
+      return matchesSearchQuery && matchesTechStack;
+    });
+    setFilteredProjects(filtered);
+  };
 
   useEffect(() => {
     const scrollElement = scrollRef.current;
@@ -42,79 +55,79 @@ const HomePage: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = projects.filter(project =>
-      project.title.toLowerCase().includes(lowercasedQuery)
-    );
-    setFilteredProjects(filtered);
-  }, [searchQuery]);
+  // Handle search when Enter key is pressed
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      filterProjects();
+    }
+  };
+
+  // Handle search when button is clicked
+  const handleSearch = () => {
+    filterProjects();
+  };
+
+  // Function to repeat projects
+  const repeatProjects = (projectsArray: [string, any][], times: number) => {
+    let repeatedProjects: [string, any][] = [];
+    for (let i = 0; i < times; i++) {
+      repeatedProjects = repeatedProjects.concat(projectsArray);
+    }
+    return repeatedProjects;
+  };
+
+  // Repeat the filtered projects 4 times
+  const repeatedProjects = repeatProjects(filteredProjects, 4);
 
   return (
-    <div className="main-container">
+    <div className="main-container" ref={scrollRef}>
       <div className="heading-container">
-        <h2 className="main-h2" data-scroll-section>
-          start building today
-        </h2>
-        <input
-          type="text"
-          placeholder="Search projects..."
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          className="search-bar"
-        />
+        <div className="heading-content">
+          <h2 className="main-h2" data-scroll-section>
+            start building today
+          </h2>
+          <div className="search-container" data-scroll-section>
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="search-bar"
+            />
+            <button onClick={handleSearch} className="search-button">
+              Search
+            </button>
+          </div>
+          <div className="filters" data-scroll-section>
+            {/* Dropdown for Tech Stack */}
+            <div className="dropdown-container">
+              <label className='filter-label'>Filter by Tech Stack:</label>
+              <div className="dropdown">
+                {techStackOptions.map((tech) => (
+                  <div key={tech} className="dropdown-item">
+                    <input
+                      type="checkbox"
+                      id={tech}
+                      value={tech}
+                      checked={selectedTechStack.includes(tech)}
+                      onChange={() => handleTechStackChange(tech)}
+                    />
+                    <label htmlFor={tech}>{tech}</label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div className="projects-container">
-        {filteredProjects.length > 0 ? (
-          filteredProjects.map((project, index) => (
+        {repeatedProjects.length > 0 ? (
+          repeatedProjects.map(([title, project], index) => (
             <div className="project-row" key={index} data-scroll-section>
               <Project
-                title={project.title}
-                tech1={project.tech1}
-                tech2={project.tech2}
-                colour={project.colour}
-                descript={project.descript}
-              />
-            </div>
-          ))
-        ) : (
-          <p>No projects found</p>
-        )}
-         {filteredProjects.length > 0 ? (
-          filteredProjects.map((project, index) => (
-            <div className="project-row" key={index} data-scroll-section>
-              <Project
-                title={project.title}
-                tech1={project.tech1}
-                tech2={project.tech2}
-                colour={project.colour}
-                descript={project.descript}
-              />
-            </div>
-          ))
-        ) : (
-          <p>No projects found</p>
-        )}
-         {filteredProjects.length > 0 ? (
-          filteredProjects.map((project, index) => (
-            <div className="project-row" key={index} data-scroll-section>
-              <Project
-                title={project.title}
-                tech1={project.tech1}
-                tech2={project.tech2}
-                colour={project.colour}
-                descript={project.descript}
-              />
-            </div>
-          ))
-        ) : (
-          <p>No projects found</p>
-        )}
-         {filteredProjects.length > 0 ? (
-          filteredProjects.map((project, index) => (
-            <div className="project-row" key={index} data-scroll-section>
-              <Project
-                title={project.title}
+                title={title}
                 tech1={project.tech1}
                 tech2={project.tech2}
                 colour={project.colour}

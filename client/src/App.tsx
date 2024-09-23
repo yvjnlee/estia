@@ -11,11 +11,11 @@ import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 // Define projects array with unique titles
 const projects = [
-  { title: "Twitter Sentiment Analysis", tech1: "Tensorflow", tech2: "Python", colour: "#6F0000" },
-  { title: "Netflix Clone", tech1: "React", tech2: "TailwindCSS", colour: "#456F00", descript: "The Netflix clone project is a web application developed using HTML, CSS, and JavaScript, aiming to replicate the user interface and some features of the popular streaming service, Netflix." },
-  { title: "Spanish Writing Assistant", tech1: "React", tech2: "TypeScript", colour: "#006F5B" },
-  { title: "Football Webscraper", tech1: "React", tech2: "TypeScript", colour: "#6F0050" },
-  { title: "Actorle", tech1: "React", tech2: "TypeScript", colour: "#45006F" }
+  { title: "Stock Prediction Program"},
+  { title: "Netflix Clone"},
+  { title: "Password Manager" },
+  { title: "Football Webscraper"},
+  { title: "Actorle" }
 ];
 
 const supabase = createClient(
@@ -26,22 +26,10 @@ const supabase = createClient(
 const App: React.FC = () => {
   const [session, setSession] = React.useState<Session | null>(null);
   const [showAuth, setShowAuth] = React.useState(false);
-
-  React.useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session as Session);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session as Session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  // Initialize Locomotive Scroll
+  const initializeScroll = () => {
     const scrollElement = scrollRef.current;
 
     if (scrollElement) {
@@ -55,7 +43,27 @@ const App: React.FC = () => {
         locomotiveScroll.destroy();
       };
     }
+  };
+
+  // Use Effect to handle session change
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session as Session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session as Session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  // Reinitialize scrolling effect on auth change
+  useEffect(() => {
+    if (!session) {
+      initializeScroll(); // Ensure scrolling is reinitialized on logout
+    }
+  }, [session]);
 
   useEffect(() => {
     const scrollers = document.querySelectorAll(".scroller");
@@ -85,15 +93,19 @@ const App: React.FC = () => {
     return (
       <>
         <div>
-          <button
-            className="custom-button"
-            onClick={async () => {
-              await supabase.auth.signOut();
-              setSession(null);
-            }}
-          >
-            Log Out
-          </button>
+          <div className='nav-bar' data-scroll-section>
+            <h1 className='logo'>estia</h1>
+            <button
+              className="log-out-button"
+              onClick={async () => {
+                await supabase.auth.signOut();
+                setSession(null);
+                initializeScroll(); // Reinitialize scroll after logout
+              }}
+            >
+              Log Out
+            </button>
+          </div>
           <div>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -122,7 +134,8 @@ const App: React.FC = () => {
             Go back
           </button>
         </div>
-        <h2 className="login-title">Create an account</h2>
+        <div className='registration-container'>
+        <h2 className="login-title">Let's get started</h2>
         <Auth
           supabaseClient={supabase}
           appearance={{
@@ -155,6 +168,7 @@ const App: React.FC = () => {
             },
           }}
         />
+      </div>
       </div>
     );
   }
