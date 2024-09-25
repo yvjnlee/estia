@@ -1,8 +1,10 @@
 import React from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./index.css";
-import { LandingPage } from "./pages/LandingPage";
+
 import { AuthProvider } from "./context";
+import AppRoutes from "./routes";
+import { ProjectProvider } from "./context/ProjectContext";
 
 const supabase = createClient(
   process.env.REACT_APP_PROJECT_URL as string,
@@ -14,7 +16,9 @@ const App: React.FC = () => {
     <AuthProvider 
       supabase={ supabase }
     >
-      <LandingPage />
+      <ProjectProvider>
+        <AppRoutes />
+      </ProjectProvider>
     </AuthProvider>
   );
 };

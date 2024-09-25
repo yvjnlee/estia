@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GithubLogo from "../img/githublogo.webp";
+import GithubLogo from "../../../img/githublogo.webp";
 
 interface GitHubRepoProps {
   repoPath: string; // Explicitly type the repoPath as a string

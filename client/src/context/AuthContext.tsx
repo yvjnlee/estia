@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<{
     await supabase.auth.signOut();
     setSession(null);
     setUser(null);
+    setShowAuth(false);
   };
 
   const value = {
