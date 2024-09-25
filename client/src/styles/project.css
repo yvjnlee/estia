@@ -28,6 +28,16 @@
     z-index: 3;
 }
 
+
+
+@media (max-width: 1300px) {
+  .projects-container {
+      grid-template-columns: repeat(2, 18rem); /* 3 columns */
+  }
+}
+
+
+
 .project-container {
     border-radius: 4px;
     padding: 24px;
