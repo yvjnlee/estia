@@ -4,6 +4,14 @@ import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { projects } from '../data/data'; // Import from the external data file
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
+
+
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
@@ -81,24 +89,27 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="main-container" ref={scrollRef}>
+      <Container fluid="md" className = "mx-auto">
+        <Row className = "mx-auto d-flex flex-column flex-md-row">
+          <Col md={10} className="mb-4">
       <div className="heading-container">
         <div className="heading-content">
           <h2 className="main-h2" data-scroll-section>
             start building today
           </h2>
           <div className="search-container" data-scroll-section>
-            <input
-              type="text"
-              placeholder="Search projects..."
+            <Form>
+             <Form.Control size="lg" 
+              type="text" 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="search-bar"
-            />
-            <button onClick={handleSearch} className="search-button">
-              Search
-            </button>
+              placeholder="Search Projects..." className="search-bar" />
+            </Form>
+            <Button onClick={handleSearch} className="search-button">Search</Button>
           </div>
+          
+            
           <div className="filters" data-scroll-section>
             {/* Dropdown for Tech Stack */}
             <div className="dropdown-container">
@@ -121,7 +132,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-
+      
       <div className="projects-container">
         {repeatedProjects.length > 0 ? (
           repeatedProjects.map(([title, project], index) => (
@@ -136,9 +147,12 @@ const HomePage: React.FC = () => {
             </div>
           ))
         ) : (
-          <p>No projects found</p>
+          <h3>No projects found</h3>
         )}
       </div>
+      </Col>
+      </Row>
+      </Container>
     </div>
   );
 };

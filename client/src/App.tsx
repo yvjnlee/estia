@@ -9,6 +9,10 @@ import './index.css';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 
+import EstiaLogo from "./img/AppLogo.svg"
+import MainEstiaLogo from "./img/MainAppLogo.svg"
+
+
 // Define projects array with unique titles
 const projects = [
   { title: "Stock Prediction Program"},
@@ -17,6 +21,7 @@ const projects = [
   { title: "Football Webscraper"},
   { title: "Actorle" }
 ];
+
 
 const supabase = createClient(
   process.env.REACT_APP_PROJECT_URL as string,
@@ -94,7 +99,7 @@ const App: React.FC = () => {
       <>
         <div>
           <div className='nav-bar' data-scroll-section>
-            <h1 className='logo'>estia</h1>
+            <img className='logo' src={EstiaLogo}></img>
             <button
               className="log-out-button"
               onClick={async () => {
@@ -175,7 +180,7 @@ const App: React.FC = () => {
 
   return (
     <div className="initial-container">
-      <h2 className="initial-title">estia</h2>
+      <img className="initial-logo" src={MainEstiaLogo}></img>
       <h3 className="initial-slogan">Less Searching, More Creating</h3>
       <button
         className="initial-button"

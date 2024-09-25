@@ -53,6 +53,7 @@
 }
 
 .nav-bar {
+    margin-top: 2rem;
     display: flex;
     margin-left: 4rem;
     margin-right: 4rem;
@@ -62,8 +63,7 @@
 }
 
 .logo {
-    letter-spacing: 2px;
-    font-weight: 100;
+    width: 175px;
 }
 
 .log-out-button {
@@ -73,7 +73,7 @@
     border-radius: var(--border-radius);
     cursor: pointer;
     border: 0.5px solid var(--button-text-color);
-    width: 270px;
+    width: 150px;
     height: 42px;
     margin-bottom: 10px;
     background-color: var(--button-background2);

@@ -21,6 +21,15 @@
     margin-bottom: 0px;
 }
 
+.initial-logo {
+  display: flex;
+  letter-spacing: 6px;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
 .initial-slogan {
     color: white;
     display: flex;
