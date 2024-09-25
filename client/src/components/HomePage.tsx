@@ -9,9 +9,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 981386632e2cfd463aeed5cdcc6c42b7af2a5070
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
