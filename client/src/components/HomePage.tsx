@@ -87,14 +87,14 @@ const HomePage: React.FC = () => {
     return repeatedProjects;
   };
 
+
+
   // Repeat the filtered projects 4 times
-  const repeatedProjects = repeatProjects(filteredProjects, 4);
+  const repeatedProjects = repeatProjects(filteredProjects,4);
 
   return (
     <div className="main-container" ref={scrollRef}>
-      <Container fluid="md" className = "mx-auto">
-        <Row className = "mx-auto d-flex flex-column flex-md-row">
-          <Col md={10} className="mb-4">
+      {/* <Container fluid="md" className = "mx-auto"> */}
       <div className="heading-container">
         <div className="heading-content">
           <h2 className="main-h2" data-scroll-section>
@@ -153,9 +153,7 @@ const HomePage: React.FC = () => {
           <h3>No projects found</h3>
         )}
       </div>
-      </Col>
-      </Row>
-      </Container>
+      {/* </Container> */}
     </div>
   );
 };
