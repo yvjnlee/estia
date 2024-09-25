@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Project from './Project';
+import Project from '../components/Project';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { projects } from '../data/data'; // Import from the external data file
