@@ -17,7 +17,7 @@
     border-radius: 8px;
     display: grid;
     grid-template-columns: repeat(4, 18rem); /* Fixed width for each column */
-    flex-wrap: wrap; /* Allow items to wrap onto new lines */
+    flex-wrap: nowrap; /* Allow items to wrap onto new lines */
     opacity: 0;
     border-radius: 2rem;
     transform: translateY(20px);
@@ -28,15 +28,18 @@
     z-index: 3;
 }
 
-
-
 @media (max-width: 1300px) {
   .projects-container {
-      grid-template-columns: repeat(2, 18rem); /* 3 columns */
+      grid-template-columns: repeat(2, 18rem); /* 2 column */
+      
   }
 }
 
-
+@media (max-width: 600px) {
+  .projects-container {
+      grid-template-columns: repeat(1, 18rem); /* 1 column */
+  }
+}
 
 .project-container {
     border-radius: 4px;
@@ -50,7 +53,14 @@
 .projects-container .project-row:nth-child(2n) {
     margin-top: 5rem;
     margin-bottom: -5rem;
+}
+
+@media (max-width: 600px) {
+  .projects-container .project-row:nth-child(2n){
+    margin-top: 0rem;
+    margin-bottom: 0rem;
   }
+}
 
 .project-container:hover {
     filter: brightness(1.2);
