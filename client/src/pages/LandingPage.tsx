@@ -37,9 +37,12 @@ export const LandingPage: React.FC = () => {
       <img className="initial-logo" src={MainEstiaLogo}></img>
       <h3 className="initial-slogan">Less Searching, More Creating</h3>
       <button className="initial-button" onClick={logIn}>
-        Get Started
+        Start Building
       </button>
       <LocomotiveScrollBar />
+      <h3 className="inital-feedback">
+        Got ideas or feedback? <a  target="_blank" href="https://forms.gle/RCfJKZtoGXo1Dq9DA">Contact us!</a>
+      </h3>
     </div>
   );
 };
