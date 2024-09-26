@@ -7,6 +7,8 @@ import { Navbar } from "../components/navbar/Navbar";
 import HomePage from "./HomePage";
 import { LoginPage } from "./LoginPage";
 
+import MainEstiaLogo from "../img/MainAppLogo.svg"
+
 export const LandingPage: React.FC = () => {
   const { session, showAuth, logIn } = useAuth();
 
@@ -32,7 +34,7 @@ export const LandingPage: React.FC = () => {
   //   Landing page
   return (
     <div className="initial-container">
-      <h2 className="initial-title">estia</h2>
+      <img className="initial-logo" src={MainEstiaLogo}></img>
       <h3 className="initial-slogan">Less Searching, More Creating</h3>
       <button className="initial-button" onClick={logIn}>
         Get Started
