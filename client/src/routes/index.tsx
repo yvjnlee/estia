@@ -1,18 +1,23 @@
+// src/routes/AppRoutes.tsx
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProjectsRoutes from './ProjectRoutes';
 
+import AddProjectPage from "../pages/AddProjectPage";
 import { LandingPage } from '../pages/LandingPage';
-
+import AppLayout from '../components/navbar/AppLayout'; 
 const AppRoutes = () => {
-  return (
-    <Routes>
-        <Route path="/" element={<LandingPage />} />
+    return (
+        <Routes>
+            <Route path="/" element={<LandingPage />} />
 
-        {/* Project Routes */}
-        <Route path="/project/*" element={ <ProjectsRoutes /> } />
-    </Routes>
-  );
+            {/* Wrap the nested routes with AppLayout without repeating the path */}
+       
+                <Route path="/add-project" element={<AddProjectPage />} />
+                <Route path="/project/*" element={<ProjectsRoutes />} />
+  
+        </Routes>
+    );
 };
 
 export default AppRoutes;

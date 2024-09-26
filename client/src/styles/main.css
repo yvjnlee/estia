@@ -68,7 +68,6 @@
 
 .log-out-button {
     position: relative;
-    margin-left: auto;
     padding: 10px 20px;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -92,7 +91,32 @@
     transform: scale(1.01);
 }
 
-  .more-btn {
+.nav-buttons {
+    margin-left: auto;
+}
+
+.create-project-button {
+    position: relative;
+    display: inline-block; 
+    margin-left: auto;
+    padding: 10px 20px;
+    border: none;
+    background: transparent; 
+    color: white; 
+    font-size: 16px; 
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease; 
+    text-decoration: none; 
+}
+
+.create-project-button:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    filter: brightness(1.2); /* Slightly brighten the text */
+}
+
+
+.more-btn {
     background: none;
     border: none;
     color: rgb(163, 163, 163);

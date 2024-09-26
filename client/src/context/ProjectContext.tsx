@@ -9,8 +9,7 @@ const ProjectContext = createContext<ProjectsProps | undefined>(undefined);
 export const ProjectProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-
-  const { supabase } = useAuth();
+  const { supabase } = useAuth(); // Ensure you have supabase here
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
   const [projects, setProjects] = useState(sampleProjects);
@@ -20,25 +19,20 @@ export const ProjectProvider: React.FC<{
     const fetchData = async () => {
       try {
         let { data, error } = await supabase
-        .from('estia_projects')
-        .select('*');
+          .from('estia_projects')
+          .select('*');
         if (error) {
           console.log(error)
         }
-        console.log(data);
-        console.log(sampleProjects)
         setProjects(data as ProjectInfo[]); // Set the fetched data to state
         setProjectFeed(data as ProjectInfo[]); // Set the fetched data to state
       } catch (err) {
         console.log(err)
-      } finally {
-        console.log("got data")
       }
     };
     fetchData();
-  }, []); 
+  }, [supabase]);
 
-  // Combined function to filter and search projects
   const searchProjects = () => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = projects.filter((project) => {
@@ -58,17 +52,14 @@ export const ProjectProvider: React.FC<{
     setProjectFeed(filtered);
   };
 
-  // Effect to run filterAndSearchProjects whenever search query or tech stack changes
   useEffect(() => {
     searchProjects();
   }, [searchQuery, selectedTechStack]);
 
-  // Handle search when button is clicked
   const handleSearch = (tech: string[]) => {
     setSelectedTechStack(tech);
   };
 
-  // Handle search when Enter key is pressed
   const handleEnter = (
     e: React.KeyboardEvent<HTMLInputElement>,
     tech: string[]
@@ -78,12 +69,12 @@ export const ProjectProvider: React.FC<{
     }
   };
 
-  // Handle key presses
   const handleKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
   const value = {
+    supabase, // Include supabase in the context value
     projects: projectFeed,
     searchQuery: searchQuery,
     searchProjects: (tech: string[]) => setSelectedTechStack(tech),
@@ -100,7 +91,7 @@ export const ProjectProvider: React.FC<{
 export const useProject = () => {
   const context = useContext(ProjectContext);
   if (context === undefined) {
-    throw new Error("useProject must be used within an ProjectProvider");
+    throw new Error("useProject must be used within a ProjectProvider");
   }
   return context;
 };
