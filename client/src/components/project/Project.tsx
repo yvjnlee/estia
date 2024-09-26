@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectInfo } from '../../types/project';
 
-const Project: React.FC<ProjectInfo> = ({ title, tech1, tech2, colour }) => {
+const Project: React.FC<ProjectInfo> = ({ project_name, tech1, tech2, colour }) => {
   // Define the style object with the correct type
   const containerStyle: React.CSSProperties = {
     backgroundColor: colour,
@@ -18,9 +18,9 @@ const Project: React.FC<ProjectInfo> = ({ title, tech1, tech2, colour }) => {
   };
 
   return (
-    <Link  to={`/project/${title}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link  to={`/project/${project_name}`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className="project-container" style={containerStyle}>
-        <h2 className="project-title">{title}</h2>
+        <h2 className="project-title">{project_name}</h2>
         <div className="project-tech">
           <span className="tech-item">{tech1}</span>
           <span className="tech-item">{tech2}</span>

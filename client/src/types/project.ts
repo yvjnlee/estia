@@ -1,11 +1,12 @@
 export interface ProjectInfo {
-    title: string;
+    project_name: string;
+    created_at: string;
     tech1?: string;
     tech2?: string;
     colour: string;
     descript?: string;
-    videoId?: string | null;
-    repoPath?: string | null;
+    video_Id?: string | null;
+    repo_Path?: string | null;
 }
 
 export interface ProjectsProps {
@@ -18,51 +19,56 @@ export interface ProjectsProps {
 }
   
 
-export const projects: ProjectInfo[] = [
+export const sampleProjects: ProjectInfo[] = [
     {
-      title: "Stock Prediction Program",
+      project_name: "Stock Prediction Program",
+      created_at: "2024-09-18 17:43:48+00",
       tech1: "Tensorflow",
       tech2: "Python",
       colour: "#6F0000",
       descript: "Details about Twitter Sentiment Analysis",
-      videoId: "0E_31WqVzCY",
-      repoPath: "patrickloeber/python-fun"
+      video_Id: "0E_31WqVzCY",
+      repo_Path: "patrickloeber/python-fun"
     },
     {
-      title: "Netflix Clone",
+      project_name: "Netflix Clone",
+      created_at: "2024-09-18 17:43:48+00",
       tech1: "React",
       tech2: "TypeScript",
       colour: "#456F00",
       descript: "The Netflix clone project is a web application developed using React JS, Tailwind CSS, and Firebase, aiming to replicate the user interface and some features of the popular streaming service, Netflix.",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      video_Id: "ATz8wg6sg30",
+      repo_Path: "fireclint/netflix-react-tailwind"
     },
     {
-      title: "Password Manager",
+      project_name: "Password Manager",
+      created_at: "2024-09-18 17:43:48+00",
       tech1: "Python",
       tech2: "SQL",
       colour: "#006F5B",
       descript: "Details about Password Manager",
-      videoId: "hkhyKJj28Ac",
-      repoPath: "KalleHallden/pwManager"
+      video_Id: "hkhyKJj28Ac",
+      repo_Path: "KalleHallden/pwManager"
     },
     {
-      title: "Football Webscraper",
+      project_name: "Football Webscraper",
+      created_at: "2024-09-18 17:43:48+00",
       tech1: "React",
       tech2: "TypeScript",
       colour: "#6F0050",
       descript: "Details about Football Webscraper",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      video_Id: "ATz8wg6sg30",
+      repo_Path: "fireclint/netflix-react-tailwind"
     },
     {
-      title: "Actorle",
+      project_name: "Actorle",
+      created_at: "2024-09-18 17:43:48+00",
       tech1: "React",
       tech2: "TypeScript",
       colour: "#45006F",
       descript: "Details about Actorle",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      video_Id: "ATz8wg6sg30",
+      repo_Path: "fireclint/netflix-react-tailwind"
     }
 ];
   
