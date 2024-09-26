@@ -1,6 +1,6 @@
 import React from "react";
 import { useProject } from "../../context/ProjectContext";
-import Project from "./Project";
+import Project from "./ProjectCard";
 
 export const ProjectFeed: React.FC = () => {
   const { projects } = useProject();
