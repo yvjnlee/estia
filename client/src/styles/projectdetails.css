@@ -43,7 +43,10 @@
 .embed-container {
     display: flex;
     animation: fadeIn 1s forwards;
+    
 }
+
+
 .github-container {
     display: block;
     margin-left: 2rem;

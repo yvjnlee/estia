@@ -1,30 +1,35 @@
-export interface Project {
-    tech1: string;
+export interface ProjectInfo {
+    title: string;
+    tech1?: string;
     tech2?: string;
     colour: string;
     descript?: string;
-    videoId?: string;
-    repoPath?: string;
-  }
+    videoId?: string | null;
+    repoPath?: string | null;
+}
+
+export interface ProjectsProps {
+  projects: ProjectInfo[];
+  searchQuery: string;
+  searchProjects: (tech: string[]) => void;
+  handleSearch: (tech: string[]) => void;
+  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => void;
+  handleKeyPress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
   
 
-export const projects: Record<string, {
-    tech1: string;
-    tech2: string;
-    colour: string;
-    descript: string;
-    videoId: string;
-    repoPath: string;
-  }> = {
-    "Twitter Sentiment Analysis": {
+export const projects: ProjectInfo[] = [
+    {
+      title: "Stock Prediction Program",
       tech1: "Tensorflow",
       tech2: "Python",
       colour: "#6F0000",
       descript: "Details about Twitter Sentiment Analysis",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      videoId: "0E_31WqVzCY",
+      repoPath: "patrickloeber/python-fun"
     },
-    "Netflix Clone": {
+    {
+      title: "Netflix Clone",
       tech1: "React",
       tech2: "TypeScript",
       colour: "#456F00",
@@ -32,15 +37,17 @@ export const projects: Record<string, {
       videoId: "ATz8wg6sg30",
       repoPath: "fireclint/netflix-react-tailwind"
     },
-    "Spanish Writing Assistant": {
-      tech1: "React",
-      tech2: "TypeScript",
+    {
+      title: "Password Manager",
+      tech1: "Python",
+      tech2: "SQL",
       colour: "#006F5B",
-      descript: "Details about Spanish Writing Assistant",
-      videoId: "ATz8wg6sg30",
-      repoPath: "fireclint/netflix-react-tailwind"
+      descript: "Details about Password Manager",
+      videoId: "hkhyKJj28Ac",
+      repoPath: "KalleHallden/pwManager"
     },
-    "Football Webscraper": {
+    {
+      title: "Football Webscraper",
       tech1: "React",
       tech2: "TypeScript",
       colour: "#6F0050",
@@ -48,7 +55,8 @@ export const projects: Record<string, {
       videoId: "ATz8wg6sg30",
       repoPath: "fireclint/netflix-react-tailwind"
     },
-    "Actorle": {
+    {
+      title: "Actorle",
       tech1: "React",
       tech2: "TypeScript",
       colour: "#45006F",
@@ -56,5 +64,5 @@ export const projects: Record<string, {
       videoId: "ATz8wg6sg30",
       repoPath: "fireclint/netflix-react-tailwind"
     }
-  };
+];
   

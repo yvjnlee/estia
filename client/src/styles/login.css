@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
 .login-container {
-    margin-top: 2%;
-    align-items: center;
-    flex-direction: column;
+ height: 100vh; /* Full viewport height */
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+}
 
-  }
-  
   .login-title {
     display: flex;
     align-items:center;
-    color: white;
+    color: white !important;
     font-size: 42px;
     padding: 0px;
     margin-top: 32px;
@@ -52,7 +53,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0) !important;
     transition: right 0.1s ease-in-out;
     z-index: -999;
   }
@@ -63,7 +64,7 @@
   
   .custom-button:hover {
     filter: brightness(1.2);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3) !important;
     transform: scale(1.01); /* Makes the element 5% larger */
   }
   
@@ -113,9 +114,9 @@
   .back-button {
     padding: 8px 16px;
     border-radius: 4px;
-    background-color: #121212;
-    color: #838383;
-    border: 1px solid #333333;
+    background-color: #121212 !important;
+    color: #838383 !important;
+    border: 1px solid #333333 !important;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -125,8 +126,8 @@
   }
   
   .back-button:hover {
-    background-color: #2e2e2e;
-    border-color: #bbb;
+    background-color: #2e2e2e !important;
+    border-color: #bbb !important;
   }
   
   .back-container {

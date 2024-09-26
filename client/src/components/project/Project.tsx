@@ -1,16 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ProjectInfo } from '../../types/project';
 
-// Define the props interface for the Project component
-interface ProjectProps {
-  title: string;
-  tech1: string;
-  tech2?: string;
-  colour: string;
-  descript?: string;
-}
-
-const Project: React.FC<ProjectProps> = ({ title, tech1, tech2, colour }) => {
+const Project: React.FC<ProjectInfo> = ({ title, tech1, tech2, colour }) => {
   // Define the style object with the correct type
   const containerStyle: React.CSSProperties = {
     backgroundColor: colour,

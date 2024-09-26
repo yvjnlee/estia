@@ -14,7 +14,9 @@
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
+    "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
+    "react-locomotive-scroll": "^0.2.2",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -44,13 +46,13 @@
     ]
   },
   "devDependencies": {
-    "@eslint/js": "^9.10.0",
+    "@eslint/js": "^9.11.1",
     "@types/locomotive-scroll": "^4.1.3",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.36.1",
     "globals": "^15.9.0",
     "prettier": "3.3.3",
-    "typescript-eslint": "^8.5.0"
+    "typescript-eslint": "^8.7.0"
   }
 }
