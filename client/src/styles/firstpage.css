@@ -11,7 +11,7 @@
 }
 
 .initial-title {
-    color: white;
+    color: white !important;
     font-size: 72px;
     font-weight: 100;
     display: flex;
@@ -21,8 +21,17 @@
     margin-bottom: 0px;
 }
 
+.initial-logo {
+  display: flex;
+  letter-spacing: 6px;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
 .initial-slogan {
-    color: white;
+    color: white !important;
     display: flex;
     margin-top: 0px;
     font-size: 20px;
@@ -41,7 +50,7 @@
     height: 36px;
     margin-bottom: 10px;
     background-color: white;
-    color: black;
+    color: black !important;
     display: flex;
     align-items: center;
     justify-content: center; 
@@ -50,7 +59,7 @@
   }
   
   .initial-button:hover {
-    background-color: rgb(148, 148, 148);
+    background-color: rgb(148, 148, 148) !important;
     z-index: 1; 
   }
 
@@ -114,11 +123,11 @@
   /* general styles */
   
   :root {
-    --clr-neutral-100: hsl(0, 0%, 100%);
-    --clr-primary-100: hsl(205, 15%, 58%);
-    --clr-primary-400: hsl(0, 0%, 27%);
-    --clr-primary-800: hsl(217, 33%, 17%);
-    --clr-primary-900: hsl(218, 33%, 9%);
+    --clr-neutral-100: hsl(0, 0%, 100%) !important;
+    --clr-primary-100: hsl(205, 15%, 58%) !important;
+    --clr-primary-400: hsl(0, 0%, 27%) !important;
+    --clr-primary-800: hsl(217, 33%, 17%) !important;
+    --clr-primary-900: hsl(218, 33%, 9%) !important;
   }
   
   html {

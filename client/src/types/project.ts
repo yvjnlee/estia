@@ -11,7 +11,7 @@ export interface ProjectInfo {
 export interface ProjectsProps {
   projects: ProjectInfo[];
   searchQuery: string;
-  filterProjects: (tech: string[]) => void;
+  searchProjects: (tech: string[]) => void;
   handleSearch: (tech: string[]) => void;
   handleEnter: (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => void;
   handleKeyPress: (e: React.ChangeEvent<HTMLInputElement>) => void;

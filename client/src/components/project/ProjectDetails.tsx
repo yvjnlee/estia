@@ -18,7 +18,9 @@ const ProjectDetails: React.FC = () => {
   const decodedTitle = decodeURIComponent(rawTitle);
 
   // Get the project details based on the decoded title parameter
-  const project = projects.find((project) => project.title === decodedTitle) || {
+  const project = projects.find(
+    (project) => project.title === decodedTitle,
+  ) || {
     tech1: "Not Found",
     tech2: "",
     colour: "#000000",
@@ -26,21 +28,36 @@ const ProjectDetails: React.FC = () => {
     videoId: "No video link found",
     repoPath: "No repo found",
   };
-  
 
   return (
     <>
       <button onClick={() => navigate(-1)} className="back-button">
         Back
       </button>
-      <div className="details-container">
-        <div className="details-heading">
-          <h1 className="details-title">{decodedTitle}</h1>
-          <p className="details-subtitle">{project.descript}</p>
+      <div className="grid-container">
+        <div className="grid-column">
+          <div className="row">
+            <div className="details-heading">
+              <h1 className="details-title">{decodedTitle}</h1>
+              <p className="details-subtitle">{project.descript}</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-5">
+              <div className="embed-container">
+                <YouTubeEmbed videoId={project.videoId as string} />
+              </div>
+            </div>
+            <div className="col-5">
+              <div>
+                <GitHubRepo repoPath={project.repoPath as string} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="embed-container">
-          <YouTubeEmbed videoId={project.videoId as string} />
-          <GitHubRepo repoPath={project.repoPath as string} />
+        <div className="grid-column">
+          <h2>Tech Stack</h2>
+          <div className="row"></div>
         </div>
       </div>
     </>

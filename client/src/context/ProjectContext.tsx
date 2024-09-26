@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { ProjectsProps } from "../types/project";
 import { projects } from "../types/project";
 
@@ -8,12 +8,11 @@ export const ProjectProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
+  const [projectFeed, setProjectFeed] = useState(projects);
 
-  // Filter projects based on search query and selected tech stack
-  const filterProjects = (
-    selectedTechStack?: string[],
-  ) => {
+  // Combined function to filter and search projects
+  const searchProjects = () => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = projects.filter((project) => {
       const matchesSearchQuery =
@@ -21,33 +20,34 @@ export const ProjectProvider: React.FC<{
         project.descript?.toLowerCase().includes(lowercasedQuery);
 
       const matchesTechStack =
-        selectedTechStack?.length === 0 ||
-        selectedTechStack?.some(
-          (tech) => project.tech1 === tech || project.tech2 === tech,
+        selectedTechStack.length === 0 ||
+        selectedTechStack.some(
+          (tech) => project.tech1 === tech || project.tech2 === tech
         );
 
       return matchesSearchQuery && matchesTechStack;
     });
 
-    if (selectedTechStack?.length === 0) {
-      setFilteredProjects(projects);
-    } else {
-      setFilteredProjects(filtered);
-    }
+    setProjectFeed(filtered);
   };
+
+  // Effect to run filterAndSearchProjects whenever search query or tech stack changes
+  useEffect(() => {
+    searchProjects();
+  }, [searchQuery, selectedTechStack]);
 
   // Handle search when button is clicked
   const handleSearch = (tech: string[]) => {
-    filterProjects(tech);
+    setSelectedTechStack(tech);
   };
 
   // Handle search when Enter key is pressed
   const handleEnter = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    tech: string[],
+    tech: string[]
   ) => {
     if (e.key === "Enter") {
-      filterProjects(tech);
+      setSelectedTechStack(tech);
     }
   };
 
@@ -57,9 +57,9 @@ export const ProjectProvider: React.FC<{
   };
 
   const value = {
-    projects: filteredProjects,
+    projects: projectFeed,
     searchQuery: searchQuery,
-    filterProjects: filterProjects,
+    searchProjects: (tech: string[]) => setSelectedTechStack(tech),
     handleSearch: handleSearch,
     handleEnter: handleEnter,
     handleKeyPress: handleKeyPress,

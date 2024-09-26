@@ -13,7 +13,7 @@ export const Filters: React.FC = () => {
 
   const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
 
-  const { filterProjects } = useProject();
+  const { searchProjects } = useProject();
 
   // Toggle the tech stack selection
   const handleFilter = (tech: string) => {
@@ -24,7 +24,7 @@ export const Filters: React.FC = () => {
         : [...prevSelected, tech]; // Check the tech
 
       // Call filterProjects with the updated selection
-      filterProjects(newSelected);
+      searchProjects(newSelected);
 
       return newSelected; // Return the updated selection
     });

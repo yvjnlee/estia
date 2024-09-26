@@ -3,8 +3,7 @@ import { useProject } from "../../context/ProjectContext";
 import Project from "./Project";
 
 export const ProjectFeed: React.FC = () => {
-
-    const { projects } = useProject();
+  const { projects } = useProject();
 
   return (
     <div className="projects-container">
@@ -21,7 +20,7 @@ export const ProjectFeed: React.FC = () => {
           </div>
         ))
       ) : (
-        <p>No projects found</p>
+        <h3>No projects found</h3>
       )}
     </div>
   );
