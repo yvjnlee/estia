@@ -224,24 +224,37 @@
 .filters-button {
   padding: 1rem;
   background-color: #202020 !important;
-  color: rgb(234, 234, 234);
   border: 2px solid #202020 !important;
   border-radius: 12px 12px 12px 12px;
+  color: rgb(125, 125, 125);
+
   margin-top: 1rem;
   margin-left: 1rem;
   cursor: pointer;
   font-size: 24px;
 }
 
+.white-filter {
+  color: rgb(234, 234, 234);
+}
+
+.grey-filter {
+  color: rgb(61, 61, 61);
+}
+
 
 .filters-button:hover {
-
-  color: rgb(149, 149, 149) !important;
+  background-color: rgb(38, 38, 38) !important;
 }
 
 /* Make sure the filters container is hidden by default */
 .filters {
   margin-top: 20px;
+}
+
+.filters-logo{
+  width: 30px;
+  margin-right: 8px;
 }
 
 /* Fade in from top */

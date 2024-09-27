@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { SearchBar } from "./SearchBar";
 import { Filters } from "./Filters";
 
+import GreyFilter from "../../img/Grey_Filters.svg";
+import WhiteFilter from "../../img/White_Filters.svg";
+
+
 export const SearchContainer: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
 
@@ -19,8 +23,9 @@ export const SearchContainer: React.FC = () => {
         <div className="search-bar-and-filters">
           <SearchBar />
 
-          <button className="filters-button" onClick={handleToggleFilters}>
-            {showFilters ? "Hide Filters" : "Show Filters"}
+          <button className={showFilters ? "filters-button white-filter" : "filters-button grey-Filter"} onClick={handleToggleFilters}>
+          <img className="filters-logo" src={showFilters ? WhiteFilter : GreyFilter} alt="Filter Icon" />         
+             Filters
           </button>
         </div>
 
