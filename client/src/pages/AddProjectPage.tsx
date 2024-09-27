@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProject } from "../context/ProjectContext";
 
+import { Navbar } from "../components/navbar/Navbar"
+
 const AddProject: React.FC = () => {
     const { supabase } = useProject(); // Access supabase from the ProjectContext
     const navigate = useNavigate();
@@ -54,6 +56,7 @@ const AddProject: React.FC = () => {
 
     return (
         <>
+            <Navbar/>
             <button onClick={() => navigate(-1)} className="back-button">
                 Back
             </button>
@@ -67,6 +70,8 @@ const AddProject: React.FC = () => {
                     <div>
                         <label>Project Name:</label>
                         <input
+                            placeholder="Give it a short name..."
+                            className="name-input"
                             type="text"
                             value={projectName}
                             onChange={(e) => setProjectName(e.target.value)}
@@ -77,6 +82,7 @@ const AddProject: React.FC = () => {
                         <label>Tech Stacks:</label>
                         <div className="tech-inputs-container">
                             <input
+                                placeholder="1st language/framework..."
                                 className="tech-input"
                                 type="text"
                                 value={tech1}
@@ -84,6 +90,7 @@ const AddProject: React.FC = () => {
                                 required
                             />
                             <input
+                                placeholder="2nd language/framework..."
                                 className="tech-input"
                                 type="text"
                                 value={tech2}
@@ -93,9 +100,10 @@ const AddProject: React.FC = () => {
                     </div>
                     <div>
                         <label>Description:</label>
-                        <input
+                        <textarea
+                            placeholder="Small blurb describing key concepts..."
+
                             className="description-input"
-                            type="text"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
@@ -121,6 +129,7 @@ const AddProject: React.FC = () => {
                         <div className="link-split-container">
                             <label className="link-split-font">https://www.youtube.com/watch?v=</label>
                             <input
+                                placeholder="video id"
                                 className="link-split-input"
                                 type="text"
                                 value={videoId}
@@ -133,6 +142,7 @@ const AddProject: React.FC = () => {
                         <div className="link-split-container">
                             <label className="link-split-font">https://github.com/</label>
                             <input
+                                placeholder="username/repo"
                                 className="link-split-input"
                                 type="text"
                                 value={repoPath}

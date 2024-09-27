@@ -4,7 +4,8 @@
     border-radius: 10px;
     width: 100%;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 4rem auto;
+    animation: fadeIn 1s forwards;
 }
 
 .add-project-form h2 {
@@ -31,7 +32,7 @@
 .add-project-form textarea {
     width: 100%;
     padding: 1rem;
-    font-size: 1rem;
+    font-size: 1.4rem; 
     border: none;
     margin-bottom: 15px;
     border-radius: 6px;
@@ -39,18 +40,29 @@
     color: #fff;
 }
 
+.name-input {  
+    width: 95% !important;
+    resize: none;
+
+
+}
+
+.description-input {     
+    height: 160px;
+    width: 95% !important;
+    resize: none;
+}
+
 .tech-inputs-container {
     display: flex;
-    width: 700px;
+    max-width: 700px;
+    width: 95% !important;
 }
 
 .tech-input:nth-child(2) {
     margin-left: 1rem;
 }
 
-.description-input {     
-    height: 160px;
-}
 
 .add-project-form input[type="color"] {
     width: 100px;
