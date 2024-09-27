@@ -1,11 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProject } from "../context/ProjectContext";
+import { Navbar } from "../components/navbar/Navbar";
 
-import { Navbar } from "../components/navbar/Navbar"
+// Sample dictionary of languages and frameworks
+const techStackOptions = [
+    "JavaScript",
+    "Python",
+    "Java",
+    "C#",
+    "Ruby",
+    "Go",
+    "React",
+    "Angular",
+    "Vue",
+    "Django",
+    "MERN",
+    "Node.js",
+    "Express",
+    "Spring",
+    "Laravel",
+    "HTML/CSS",
+    // Add more options as needed
+];
 
 const AddProject: React.FC = () => {
-    const { supabase } = useProject(); // Access supabase from the ProjectContext
+    const { supabase } = useProject();
     const navigate = useNavigate();
 
     const [projectName, setProjectName] = useState("");
@@ -14,7 +34,7 @@ const AddProject: React.FC = () => {
     const [description, setDescription] = useState("");
     const [videoId, setVideoId] = useState("");
     const [repoPath, setRepoPath] = useState("");
-    const [color, setColor] = useState("#6E00FF"); // Default color
+    const [color, setColor] = useState("#6E00FF");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,26 +57,24 @@ const AddProject: React.FC = () => {
                 console.error("Error inserting data:", error);
             } else {
                 console.log("Project added:", data);
-                navigate("/"); // Navigate back to projects list after submission
+                navigate("/");
             }
         } catch (err) {
             console.error(err);
         }
     };
 
-    // Predefined color palette
     const colors = [
         { hex: "#8A0303", label: "Red" },
         { hex: "#628400", label: "Green" },
         { hex: "#007562", label: "Teal" },
         { hex: "#6F0050", label: "Pink" },
         { hex: "#45006F", label: "Purple" },
-
     ];
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <button onClick={() => navigate(-1)} className="back-button">
                 Back
             </button>
@@ -81,28 +99,37 @@ const AddProject: React.FC = () => {
                     <div className="tech-stack">
                         <label>Tech Stacks:</label>
                         <div className="tech-inputs-container">
-                            <input
-                                placeholder="1st language/framework..."
-                                className="tech-input"
-                                type="text"
+                            <select
+                                className="tech-select"
                                 value={tech1}
                                 onChange={(e) => setTech1(e.target.value)}
                                 required
-                            />
-                            <input
-                                placeholder="2nd language/framework..."
-                                className="tech-input"
-                                type="text"
+                            >
+                                <option value="" disabled>1st language/framework...</option>
+                                {techStackOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                className="tech-select"
                                 value={tech2}
                                 onChange={(e) => setTech2(e.target.value)}
-                            />
+                            >
+                                <option value="" disabled>2nd language/framework...</option>
+                                {techStackOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                     <div>
                         <label>Description:</label>
                         <textarea
                             placeholder="Small blurb describing key concepts..."
-
                             className="description-input"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
@@ -116,8 +143,7 @@ const AddProject: React.FC = () => {
                                 <button
                                     key={col.hex}
                                     type="button"
-                                    className={`colour-button ${color === col.hex ? "active" : ""
-                                        }`}
+                                    className={`colour-button ${color === col.hex ? "active" : ""}`}
                                     style={{ backgroundColor: col.hex }}
                                     onClick={() => setColor(col.hex)}
                                 ></button>

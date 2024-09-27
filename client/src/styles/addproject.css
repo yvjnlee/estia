@@ -31,11 +31,11 @@
 .add-project-form input,
 .add-project-form textarea {
     width: 100%;
-    padding: 1rem;
     font-size: 1.4rem; 
-    border: none;
     margin-bottom: 15px;
     border-radius: 6px;
+    border: none;
+    padding: 1rem;
     background-color: #151B23;
     color: #fff;
 }
@@ -59,8 +59,24 @@
     width: 95% !important;
 }
 
-.tech-input:nth-child(2) {
+.tech-select {
     margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 1.4rem;
+    border: none;
+    padding: 1rem;
+    background-color: #151B23;
+    
+}
+
+.tech-select:first-child {
+    margin-left: 0; 
+}
+
+/* Optional: style the select options */
+.tech-select option {
+    padding: 0.5rem;
 }
 
 
