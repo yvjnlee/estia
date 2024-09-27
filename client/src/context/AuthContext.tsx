@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Session, SupabaseClient, User } from "@supabase/supabase-js";
+import { Session, SupabaseClient } from "@supabase/supabase-js";
 import { AuthProps } from "../types/auth";
+import { User } from "../types/user";
 
 const AuthContext = createContext<AuthProps | undefined>(undefined);
 
@@ -23,7 +24,7 @@ export const AuthProvider: React.FC<{
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setUser(session?.user ?? null);
+      setUser(session?.user as User);
     });
 
     return () => subscription.unsubscribe();

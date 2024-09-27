@@ -1,15 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
-
-// Define projects array with unique titles
-export const projects = [
-  { title: "Stock Prediction Program" },
-  { title: "Netflix Clone" },
-  { title: "Password Manager" },
-  { title: "Football Webscraper" },
-  { title: "Actorle" },
-];
+import { useProject } from "../context/ProjectContext";
 
 // Initialize Locomotive Scroll
 export const initializeScroll = ({

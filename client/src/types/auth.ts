@@ -1,4 +1,5 @@
-import { Session, SupabaseClient, User } from "@supabase/supabase-js";
+import { Session, SupabaseClient } from "@supabase/supabase-js";
+import { User } from "./user";
 
 export interface AuthProps {
     session: Session | null;

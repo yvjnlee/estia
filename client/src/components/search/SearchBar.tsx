@@ -1,11 +1,14 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useProject } from "../../context/ProjectContext";
+import { SearchBarProps } from "./type";
 
-export const SearchBar: React.FC = () => {
-  const { searchQuery, handleEnter, handleKeyPress, handleSearch } =
-    useProject();
+export const SearchBar: React.FC<SearchBarProps> = ({
+  searchQuery,
+  handleEnter,
+  handleKeyPress,
+  handleSearch
+}) => {
 
   return (
     <div className="search-container" data-scroll-section>
@@ -16,7 +19,7 @@ export const SearchBar: React.FC = () => {
           value={ searchQuery }
           onChange={ handleKeyPress }
           onKeyPress={ () => handleEnter }
-          placeholder="Search Projects..."
+          placeholder="Search..."
           className="search-bar"
         />
       </Form>

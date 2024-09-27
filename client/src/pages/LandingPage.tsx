@@ -8,6 +8,7 @@ import HomePage from "./HomePage";
 import { LoginPage } from "./LoginPage";
 
 import MainEstiaLogo from "../img/MainAppLogo.svg"
+import { Link } from "react-router-dom";
 
 export const LandingPage: React.FC = () => {
   const { session, showAuth, logIn } = useAuth();
@@ -37,9 +38,12 @@ export const LandingPage: React.FC = () => {
       <img className="initial-logo" src={MainEstiaLogo}></img>
       <h3 className="initial-slogan">Less Searching, More Creating</h3>
       <button className="initial-button" onClick={logIn}>
-        Get Started
+        Start Building
       </button>
       <LocomotiveScrollBar />
+      <h3 className="inital-feedback">
+        Got ideas or feedback? <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">Contact us!</Link>
+      </h3>
     </div>
   );
 };

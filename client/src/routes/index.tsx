@@ -3,14 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import ProjectsRoutes from './ProjectRoutes';
 
 import { LandingPage } from '../pages/LandingPage';
+import ProfileRoutes from './ProfileRoutes';
 
 const AppRoutes = () => {
   return (
     <Routes>
         <Route path="/" element={<LandingPage />} />
-
-        {/* Project Routes */}
         <Route path="/project/*" element={ <ProjectsRoutes /> } />
+        <Route path="/profile/*" element={ <ProfileRoutes /> } />
     </Routes>
   );
 };
