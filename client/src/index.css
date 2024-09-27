@@ -5,12 +5,12 @@
 @import './styles/main.css';
 @import './styles/project.css';
 @import './styles/projectdetails.css';
-
+@import './styles/addproject.css';
 
 
 :root {
   --background-color: #000000;
-  --button-background: #121212;
+  --button-background: #ffffff;
   --button-text-color: #626262;
   --input-background: #282828;
   --input-border: #626262;

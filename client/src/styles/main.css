@@ -68,7 +68,6 @@
 
 .log-out-button {
     position: relative;
-    margin-left: auto;
     padding: 10px 20px;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -76,38 +75,60 @@
     width: 150px;
     height: 42px;
     margin-bottom: 10px;
-    background-color: var(--button-background2);
+    background-color: var(--button-background);
     color: var(--button-text-color);
     overflow: hidden;
-    /* Hide the overflow of the pseudo-element */
     display: flex;
     align-items: center;
-    /* Vertically center items */
     justify-content: center;
-    /* Horizontally center items */
     font-size: 16px;
     text-align: center;
-    /* Center the text horizontally */
-}
-
-.log-out-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0, 0, 0) !important;
-    transition: right 0.1s ease-in-out;
-    z-index: -999;
-}
-
-.log-out-button:hover::before {
-    right: 0;
 }
 
 .log-out-button:hover {
-    filter: brightness(1.2);
+    filter: brightness(0.8);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3) !important;
     transform: scale(1.01);
-    /* Makes the element 5% larger */
 }
+
+.nav-buttons {
+    margin-left: auto;
+}
+
+.create-project-button {
+    position: relative;
+    display: inline-block; 
+    margin-left: auto;
+    padding: 10px 20px;
+    border: none;
+    background: transparent; 
+    color: white; 
+    font-size: 16px; 
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease; 
+    text-decoration: none; 
+}
+
+.create-project-button:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    filter: brightness(1.2); /* Slightly brighten the text */
+}
+
+
+.more-btn {
+    background: none;
+    border: none;
+    color: rgb(163, 163, 163);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 8px;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    .more-btn {
+      display: block; 
+      margin-top: 8px; /* Adds space above the button */
+    }
+  }

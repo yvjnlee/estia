@@ -7,8 +7,7 @@ const ProjectContext = createContext<ProjectsProps | undefined>(undefined);
 export const ProjectProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-
-  const { supabase } = useAuth();
+  const { supabase } = useAuth(); // Ensure you have supabase here
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
   const [projects, setProjects] = useState<ProjectInfo[] | null>();
@@ -18,8 +17,8 @@ export const ProjectProvider: React.FC<{
     const fetchData = async () => {
       try {
         const { data, error } = await supabase
-        .from('estia_projects')
-        .select('*');
+          .from('estia_projects')
+          .select('*');
         if (error) {
           console.log(error)
         }
@@ -33,9 +32,8 @@ export const ProjectProvider: React.FC<{
       }
     };
     fetchData();
-  }, []); 
+  }, [supabase]);
 
-  // Combined function to filter and search projects
   const searchProjects = () => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = projects?.filter((project) => {
@@ -55,19 +53,16 @@ export const ProjectProvider: React.FC<{
     setProjectFeed(filtered);
   };
 
-  // Effect to run filterAndSearchProjects whenever search query or tech stack changes
   useEffect(() => {
     searchProjects();
   }, [searchQuery, selectedTechStack]);
 
 
-  // Handle search when button is clicked
   const onSearch = (tech: string[]) => {
 
     setSelectedTechStack(tech);
   };
 
-  // Handle search when Enter key is pressed
   const onEnter = (
     e: React.KeyboardEvent<HTMLInputElement>,
     tech: string[]
@@ -77,13 +72,13 @@ export const ProjectProvider: React.FC<{
     }
   };
 
-  // Handle key presses
   const onKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
 
   const value = {
+    supabase, // Include supabase in the context value
     projects: projectFeed as ProjectInfo[],
     searchQuery: searchQuery,
     searchProjects: (tech: string[]) => setSelectedTechStack(tech),
@@ -100,7 +95,7 @@ export const ProjectProvider: React.FC<{
 export const useProject = () => {
   const context = useContext(ProjectContext);
   if (context === undefined) {
-    throw new Error("useProject must be used within an ProjectProvider");
+    throw new Error("useProject must be used within a ProjectProvider");
   }
   return context;
 };

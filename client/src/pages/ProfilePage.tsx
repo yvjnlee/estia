@@ -30,7 +30,7 @@ export const ProfilePage: React.FC = () => {
     <>
       <Navbar />
 
-      {profile && (
+      {profile && session?.user.id !== profile?.id && (
         <>
           <div>
             <p>Welcome to {profile.username}`s profile</p>
