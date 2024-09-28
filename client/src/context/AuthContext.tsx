@@ -3,20 +3,23 @@ import { Session, SupabaseClient } from "@supabase/supabase-js";
 import { AuthProps } from "../types/auth";
 import { User } from "../types/user";
 
+// Create AuthContext with an initial value of undefined
 const AuthContext = createContext<AuthProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{
   children: React.ReactNode;
   supabase: SupabaseClient;
 }> = ({ children, supabase }) => {
-  const [session, setSession] = React.useState<Session | null>(null);
-  const [showAuth, setShowAuth] = React.useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [showAuth, setShowAuth] = useState(false); // State to control showing login page
   const [user, setUser] = useState<User | null>(null);
 
-  // Use Effect to handle session change
+  // Handle session changes with useEffect
   useEffect(() => {
+    // Get current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session as Session);
+      setUser(session?.user as User || null);
     });
 
     // Set up session listener
@@ -24,35 +27,42 @@ export const AuthProvider: React.FC<{
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setUser(session?.user as User);
+      setUser(session?.user as User || null);
     });
 
+    // Cleanup subscription on component unmount
     return () => subscription.unsubscribe();
   }, [supabase]);
 
+  // Function to initiate login process (e.g., show the login page)
   const logIn = async () => {
     setShowAuth(true);
   };
 
+  // Function to log out and clear session data
   const logOut = async () => {
     await supabase.auth.signOut();
     setSession(null);
     setUser(null);
-    setShowAuth(false);
+    setShowAuth(false); // Hide the login page after logging out
   };
 
+  // Context value that includes session, user, login/logout, and showAuth
   const value = {
     session,
     supabase,
     showAuth,
+    setShowAuth, // Provide setShowAuth so it can be used in other components
     user,
     logIn,
     logOut,
   };
 
+  // Render the provider with the value
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
+// Custom hook to access AuthContext and throw an error if used outside the provider
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ProjectInfo } from '../../types/project';
 
 const Project: React.FC<ProjectInfo> = ({ project_name, tech1, tech2, colour }) => {
-  // Define the style object with the correct type
   const containerStyle: React.CSSProperties = {
     backgroundColor: colour,
     cursor: 'pointer',
@@ -12,7 +11,7 @@ const Project: React.FC<ProjectInfo> = ({ project_name, tech1, tech2, colour }) 
     borderRadius: '4px',
     padding: '24px',
     display: 'flex',
-    flexDirection: 'column', // 'column' is a valid value for `flexDirection`
+    flexDirection: 'column', 
     justifyContent: 'flex-start',
     transition: 'transform 0.3s ease, filter 0.3s ease',
   };
