@@ -60,6 +60,9 @@
     align-items: center;
     background-color: #000000 !important;
     z-index: 8;
+    justify-content: space-between; /* Distributes space between logo and buttons */
+    align-items: center; /* Aligns items vertically in the center */
+    padding: 0; /* Optional: Add padding for better spacing */
 }
 
 .logo {
@@ -84,6 +87,13 @@
     font-size: 16px;
     text-align: center;
 }
+
+
+.nav-buttons-container {
+    display: flex;
+    align-items: center; 
+    margin-left: auto; 
+  }
 
 .log-out-button:hover {
     filter: brightness(0.8);

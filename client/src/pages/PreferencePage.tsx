@@ -41,7 +41,6 @@ const PreferencePage: React.FC = () => {
 - DevOps
 - Machine Learning
 - Cloud computing
-- AI/ML
 - Database management
 - Security
 - UI/UX design
