@@ -13,6 +13,7 @@ const AppRoutes = () => {
     <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/add-project/*" element={ <AddProjectPage /> } />
+        <Route path="/preference/*" element={ <PreferencePage /> } />
         <Route path="/project/*" element={ <ProjectsRoutes /> } />
         <Route path="/profile/*" element={ <ProfileRoutes /> } />
     </Routes>

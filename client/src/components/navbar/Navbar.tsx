@@ -4,6 +4,7 @@ import EstiaLogo from "../../img/AppLogo.svg";
 import { LogOutButton } from "../buttons/LogOutButton";
 import { Link } from "react-router-dom";
 import { CreateProjectButton } from "../buttons/CreateProjectButton";
+import { LearnPreferencesButton } from "../buttons/LearnPreferencesButton";
 import { useAuth, useUser } from "../../context";
 import { UUID } from "crypto";
 
@@ -33,7 +34,9 @@ export const Navbar: React.FC = () => {
       </Link>
 
       <Link to={`/profile/${username}`}>profile</Link>
+      <LearnPreferencesButton/>
             <CreateProjectButton/>
+    
       <LogOutButton />
     </div>
   );
