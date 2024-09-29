@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import Groq from 'groq-sdk'; // Import the Groq SDK
 
 import { Navbar } from '../components/navbar/Navbar';
@@ -7,6 +9,9 @@ const PreferencePage: React.FC = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -55,7 +60,8 @@ Provide the recommendations in a JSON format, listing each theme with its associ
 frameworks.  Prioritize it so that there is the most relevent key at the top. Also only give themes when they are 
 relevent otherwise dont.  Do NOT give any other responses or anything unrelated; just return the JSON in the following format. 
 No extra works at all just a JSon file. Do not
-say you are giving a json formatted response jsut give the json file.:
+say you are giving a json formatted response just give the json file. Do not repeat stuff in different sections
+ Here is example just for formatting:
 
 {
   "Front end": {
@@ -158,7 +164,9 @@ say you are giving a json formatted response jsut give the json file.:
   return (
     <>
     <Navbar />
-
+    <button onClick={() => navigate(-1)} className="back-button">
+                Back
+            </button>
     <div className="preference-page">
       <h2 className="page-heading">What are you interested in learning?</h2>
       <form onSubmit={handleSubmit} className="input-form">
@@ -177,8 +185,8 @@ say you are giving a json formatted response jsut give the json file.:
 
       {output && (
         <div className="output-section">
-          <h3 className="output-heading">Identified Languages, Frameworks, and Themes:</h3>
-          <div>{formatOutput(output)}</div>
+          <h3 className="output-heading">Great idea! Here's stuff to learn to get started</h3>
+          <div className='outer-lfl-container'>{formatOutput(output)}</div>
         </div>
       )}
     </div>

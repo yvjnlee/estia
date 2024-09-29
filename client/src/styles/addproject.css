@@ -66,6 +66,7 @@
     font-size: 1.4rem;
     border: none;
     padding: 1rem;
+    width: 95%;
     background-color: #151B23;
     
 }
@@ -129,6 +130,9 @@
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 5rem;
+    position: absolute;
+    margin-top: 3rem;
 }
 
 .submit-button {
@@ -161,8 +165,4 @@
         height: 30px;
     }
 
-    .submit-button,
-    .back-button {
-        width: 100%;
-    }
 }

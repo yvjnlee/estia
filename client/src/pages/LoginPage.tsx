@@ -8,7 +8,7 @@ export const LoginPage: React.FC = () => {
     return(
         <div className="login-container">
         <div className="back-container">
-          <button className="back-button" onClick={ logOut }>
+          <button className="login-back-button" onClick={ logOut }>
             Go back
           </button>
         </div>
