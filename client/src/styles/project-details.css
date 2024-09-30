@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -11,12 +13,46 @@
     }
 }
 
+/* Used for tech stack, difficulty level, and similar project blocks */
+.sidebar-container{
+    background-color: #151B23;
+    border-radius: 15px;
+    width: 300px;
+    padding: 2rem;
+    margin-right: 3rem;
+    margin-bottom:2rem;
+}
+
+.tech-stack-details {
+    text-align: center;
+} 
+
+.comment-form {
+    background-color: #151B23;
+    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.comment-container {
+    border-radius: 15px;
+    padding-left: 2rem;
+    padding-right: 4rem;
+    padding-bottom: 4rem;
+    width: 700px;
+    margin: 1rem;
+}
+
 .details-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
     padding: 20px;
+    border: solid;
+    padding-left: 2rem;
+    padding-right: 4rem;
+    padding-bottom: 4rem;
+    width: 700px;
+    margin: 1rem;
 }
 
 .details-title {
@@ -31,6 +67,7 @@
 }
 
 .details-heading {
+    padding: 2.5rem;
     margin-bottom: 2rem;
 }
 
@@ -40,15 +77,16 @@
     height: 18rem;
 }
 
+
 .embed-container {
     display: flex;
     animation: fadeIn 1s forwards;
-    
+    padding-right: 2rem;
 }
 
 
 .github-container {
-    display: block;
+    display: flex;
     margin-left: 2rem;
     padding: 2rem;
     background-color: #151B23;

@@ -1,26 +1,36 @@
   .grid-container {
-    display: grid;
+    display: flex;
     grid-template-columns: 1fr 1fr; /* Two equal columns */
     gap: 10px; /* Space between columns */
     justify-content: center; /* Centers horizontally */
     align-items: center;
-    text-align: center;
-    border-style: dotted;
   }
   .grid-row {
     flex: 1; /* Each row will take equal space within the column */
     padding: 1rem;
-    text-align: center; /* Center text */
-    border: 1px solid #ccc; /* Optional: border for clarity */
+    text-align: center; 
   }
-  .grid-column {
-    display: flex; /* Enable Flexbox for rows inside each column */
+  [class*='grid-col-'] {
+    display:flex; /* Enable Flexbox for rows inside each column */
     flex-direction: column; /* Stack rows vertically */
-    justify-content: center; /* Centers horizontally */
-    align-items: center;
-    text-align: center;
-    border: solid;
+    border: dotted;
   }  
+
+    /* Col-1 to Col-12 */
+    .grid-col-1 { flex: 0 0 8.33%; max-width: 8.33%; }
+    .grid-col-2 { flex: 0 0 16.66%; max-width: 16.66%; }
+    .grid-col-3 { flex: 0 0 25%; max-width: 25%; }
+    .grid-col-4 { flex: 0 0 33.33%; max-width: 33.33%; }
+    .grid-col-5 { flex: 0 0 41.66%; max-width: 41.66%; }
+    .grid-col-6 { flex: 0 0 50%; max-width: 50%; }
+    .grid-col-7 { flex: 0 0 58.33%; max-width: 58.33%; }
+    .grid-col-8 { flex: 0 0 66.66%; max-width: 66.66%; }
+    .grid-col-9 { flex: 0 0 75%; max-width: 75%; }
+    .grid-col-10 { flex: 0 0 83.33%; max-width: 83.33%; }
+    .grid-col-11 { flex: 0 0 91.66%; max-width: 91.66%; }
+    .grid-col-12 { flex: 0 0 100%; max-width: 100%; }
+    
+
 /* Container */
 .container {
     width: 100%;
@@ -28,10 +38,8 @@
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    justify-content: center; /* Centers horizontally */
     align-items: center;
     text-align: center;
-    border-style: dotted;
   }
   
   @media (min-width: 576px) {
@@ -62,10 +70,6 @@
   .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    justify-content: center; /* Centers horizontally */
-    text-align: center;
   }
   
   /* Column */
@@ -74,10 +78,6 @@
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
-    justify-content: center; /* Centers horizontally */
-    align-items: center;
-    text-align: center;
-    border-style: solid;
   }
 
   

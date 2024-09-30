@@ -53,12 +53,15 @@
 }
 
 .nav-bar {
-    margin-top: 2rem;
+    position: sticky;
+    top: 0;
+    padding-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     margin-left: 4rem;
     margin-right: 4rem;
     align-items: center;
-    background-color: #000000 !important;
+    background-color: transparent;
     z-index: 8;
     justify-content: space-between; /* Distributes space between logo and buttons */
     align-items: center; /* Aligns items vertically in the center */
