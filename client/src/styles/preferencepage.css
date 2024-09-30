@@ -103,18 +103,43 @@
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
+.projects-section {
+    margin: 0.5rem 0.5rem 0rem;
+    padding: 4rem 4rem 4rem 4rem;
+    border-radius: 8px;
+    width: auto;
+    flex-direction: column;
+    max-width: 30%;
+    display: flex;
+    background-color: #151C24;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
 .languages-section:hover,
 .frameworks-section:hover,
-.libraries-section:hover {
+.libraries-section:hover,
+.projects-section:hover {
     transform: scale(1.01);
     background-color: #1E2833;
-    /* Adjust to a lighter color */
 }
 
 .category-heading {
     font-size: 1.2rem;
     margin-bottom: 0.3rem;
     font-weight: bold;
+}
+
+.projects-div {
+    align-items: center;
+}
+
+.projects-heading {
+    font-size: 2rem;
+    align-items: center;
+    padding: 1rem;
+    justify-content: center;
+    font-weight: bold;
+    display: flex;
 }
 
 .category-list {

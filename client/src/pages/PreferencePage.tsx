@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+
+import GiveProject from '../components/search/ai/GiveProject';
 
 import Groq from 'groq-sdk'; // Import the Groq SDK
 
@@ -23,13 +25,13 @@ const PreferencePage: React.FC = () => {
     if (loading) return;
 
     setLoading(true);
-    setOutput(null); 
+    setOutput(null);
 
     const apiKey = process.env.REACT_APP_GROQ_API_KEY;
-    console.log("API Key:", apiKey); 
+    console.log("API Key:", apiKey);
     const groq = new Groq({
       apiKey,
-      dangerouslyAllowBrowser: true 
+      dangerouslyAllowBrowser: true
     });
 
     try {
@@ -87,11 +89,14 @@ say you are giving a json formatted response just give the json file. Do not rep
   Here is the submission" "${input}".`,
           },
         ],
-        model: "llama3-8b-8192", 
+        model: "llama3-8b-8192",
         temperature: 0.5,
         max_tokens: 1024,
         top_p: 1,
         stream: false,
+        response_format: {
+          "type": "json_object"
+        },
       });
 
       setOutput(response.choices[0].message.content);
@@ -118,36 +123,36 @@ say you are giving a json formatted response just give the json file. Do not rep
           <div key={theme} className="theme-section">
             <h4 className="theme-heading">{theme}</h4>
             <div className='lfl-container'>
-            {Languages?.length > 0 && (
-              <div className="languages-section">
-                <h5 className="category-heading">Languages</h5>
-                <ul className="category-list">
-                  {Languages.map((language: string, index: number) => (
-                    <li key={index} className="category-item">{language}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {Frameworks?.length > 0 && (
-              <div className="frameworks-section">
-                <h5 className="category-heading">Frameworks</h5>
-                <ul className="category-list">
-                  {Frameworks.map((framework: string, index: number) => (
-                    <li key={index} className="category-item">{framework}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {Libraries?.length > 0 && (
-              <div className="libraries-section">
-                <h5 className="category-heading">Libraries</h5>
-                <ul className="category-list">
-                  {Libraries.map((library: string, index: number) => (
-                    <li key={index} className="category-item">{library}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              {Languages?.length > 0 && (
+                <div className="languages-section">
+                  <h5 className="category-heading">Languages</h5>
+                  <ul className="category-list">
+                    {Languages.map((language: string, index: number) => (
+                      <li key={index} className="category-item">{language}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {Frameworks?.length > 0 && (
+                <div className="frameworks-section">
+                  <h5 className="category-heading">Frameworks</h5>
+                  <ul className="category-list">
+                    {Frameworks.map((framework: string, index: number) => (
+                      <li key={index} className="category-item">{framework}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {Libraries?.length > 0 && (
+                <div className="libraries-section">
+                  <h5 className="category-heading">Libraries</h5>
+                  <ul className="category-list">
+                    {Libraries.map((library: string, index: number) => (
+                      <li key={index} className="category-item">{library}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -159,37 +164,40 @@ say you are giving a json formatted response just give the json file. Do not rep
   };
 
 
-  
+
 
   return (
     <>
-    <Navbar />
-    <button onClick={() => navigate(-1)} className="back-button">
-                Back
-            </button>
-    <div className="preference-page">
-      <h2 className="page-heading">What are you interested in learning?</h2>
-      <form onSubmit={handleSubmit} className="input-form">
-        <textarea
-          value={input}
-          onChange={handleInputChange}
-          rows={5}
-          placeholder="Enter a paragraph about your learning interests..."
-          required
-          className="input-field"
-        />
-        <button type="submit" disabled={loading} className="submit-button">
-          {loading ? 'Processing...' : 'Submit'}
-        </button>
-      </form>
+      <Navbar />
+      <button onClick={() => navigate(-1)} className="back-button">
+        Back
+      </button>
+      <Link to="/preference/give-project" className="back-button">
+        Give Me Something to Make
+      </Link>
+      <div className="preference-page">
+        <h2 className="page-heading">What are you interested in learning?</h2>
+        <form onSubmit={handleSubmit} className="input-form">
+          <textarea
+            value={input}
+            onChange={handleInputChange}
+            rows={5}
+            placeholder="Enter a paragraph about your learning interests..."
+            required
+            className="input-field"
+          />
+          <button type="submit" disabled={loading} className="submit-button">
+            {loading ? 'Processing...' : 'Submit'}
+          </button>
+        </form>
 
-      {output && (
-        <div className="output-section">
-          <h3 className="output-heading">Great idea! Here's stuff to learn to get started</h3>
-          <div className='outer-lfl-container'>{formatOutput(output)}</div>
-        </div>
-      )}
-    </div>
+        {output && (
+          <div className="output-section">
+            <h3 className="output-heading">Great idea! Here's stuff to learn to get started</h3>
+            <div className='outer-lfl-container'>{formatOutput(output)}</div>
+          </div>
+        )}
+      </div>
     </>
   );
 };
