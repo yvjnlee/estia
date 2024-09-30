@@ -5,7 +5,7 @@ import { Navbar } from "../../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 
 
-const GiveProject: React.FC = () => {
+const GiveProjectPage: React.FC = () => {
     const { projects } = useProject(); // Access project data from context
     const [input, setInput] = useState('');
     const [output, setOutput] = useState<string | null>(null);
@@ -25,7 +25,14 @@ const GiveProject: React.FC = () => {
                     <div className="project-theme-section" key={index}>
                         <div className='projects-section'>
                             <div className='projects-div'>
-                                <h5 className='projects-heading'>{project}</h5>
+                                {/* Make the project title clickable */}
+                                <h5 
+                                    className='projects-heading'
+                                    onClick={() => navigate(`/project/${encodeURIComponent(project)}`)} // Navigate to project details page
+                                    style={{ cursor: 'pointer'}} // Add pointer for clickable effect
+                                >
+                                    {project}
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -34,11 +41,19 @@ const GiveProject: React.FC = () => {
 
             // Handle the case for a single project recommendation
             if (parsedOutput["Recommended Project"]) {
+                const project = parsedOutput["Recommended Project"];
                 return (
-                    <div className="theme-section">
+                    <div className="project-theme-section">
                         <div className='projects-section'>
                             <div className='projects-div'>
-                                <h5 className='projects-heading'>{parsedOutput["Recommended Project"]}</h5>
+                                {/* Make the project title clickable */}
+                                <h5 
+                                    className='projects-heading'
+                                    onClick={() => navigate(`/project/${encodeURIComponent(project)}`)} // Navigate to project details page
+                                    style={{ cursor: 'pointer', textDecoration: 'underline' }} // Add pointer and underline for clickable effect
+                                >
+                                    {project}
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -76,9 +91,10 @@ const GiveProject: React.FC = () => {
                     {
                         role: "user",
                         content: `Given the following submission, recommend the most relevant project titles from the database. 
-                        The database project titles are: [${projectTitles}]. Here is the user's submission: "${input}". 
-                        Please provide the project names that are most relevant to the input. Format your response as JSON, 
-                        and provide the result in the format: 
+                        Please provide the project names that are most relevant to the input. You can
+                        give one if you think only one fits the description. The database project titles are: [${projectTitles}]. 
+                        Here is the user's submission: "${input}". Format your response as JSON, 
+                        and provide the result in the format:
                         {
                           "Recommended Projects": ["project name 1", "project name 2", ...]
                         }.` // Change the response format to an array of projects
@@ -133,8 +149,8 @@ const GiveProject: React.FC = () => {
                 </form>
                 {output && (
                     <div>
-                        <h3>Project Recommendation:</h3>
-                        <div>{formatOutput(output)}</div>
+                        <h3>Here are some related results:</h3>
+                        <div className='outer-theme-section-div'>{formatOutput(output)}</div>
                     </div>
                 )}
             </div>
@@ -142,4 +158,4 @@ const GiveProject: React.FC = () => {
     );
 };
 
-export default GiveProject;
+export default GiveProjectPage;

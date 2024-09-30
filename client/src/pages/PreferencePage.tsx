@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 
-import GiveProject from '../components/search/ai/GiveProject';
+import GiveProject from '../components/search/ai/GiveProjectPage';
 
 import Groq from 'groq-sdk'; // Import the Groq SDK
 

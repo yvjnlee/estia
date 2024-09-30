@@ -79,6 +79,16 @@
 }
 
 
+.project-theme-section {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    opacity: 0;
+    margin-left: 0rem;
+    margin-bottom: 1.5rem;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: calc(0.8s * var(--animation-order));
+}
 
 @keyframes fadeIn {
     to {
@@ -104,12 +114,10 @@
 }
 
 .projects-section {
-    margin: 0.5rem 0.5rem 0rem;
-    padding: 4rem 4rem 4rem 4rem;
+    margin: 0.1rem 0rem 0rem;
+    padding: 1rem;
     border-radius: 8px;
-    width: auto;
     flex-direction: column;
-    max-width: 30%;
     display: flex;
     background-color: #151C24;
     transition: transform 0.3s ease, background-color 0.3s ease;
@@ -134,12 +142,20 @@
 }
 
 .projects-heading {
-    font-size: 2rem;
+    font-size: 1rem;
     align-items: center;
     padding: 1rem;
     justify-content: center;
     font-weight: bold;
     display: flex;
+}
+
+.outer-theme-section-div {
+    gap: 1rem;
+    max-width: 100%;
+    margin-top: 2rem;
+    display:flex;
+    flex-wrap: wrap;
 }
 
 .category-list {

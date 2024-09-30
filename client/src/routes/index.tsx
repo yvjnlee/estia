@@ -7,7 +7,7 @@ import AddProjectPage from "../pages/AddProjectPage";
 import { LandingPage } from '../pages/LandingPage';
 import ProfileRoutes from './ProfileRoutes';
 import PreferencePage from '../pages/PreferencePage';
-import GiveProject from '../components/search/ai/GiveProject';
+import GiveProject from '../components/search/ai/GiveProjectPage';
 
 
 const AppRoutes = () => {
