@@ -2,8 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import YouTubeEmbed from "./embded/YoutubeEmbed";
 import GitHubRepo from "./embded/GithubEmbed";
+import { useProject } from "../../context/ProjectContext";
+
 // Import the new projects data
-import { projects } from "../../types/project";
 
 // Import components
 import {Navbar} from "../navbar/Navbar";
@@ -12,6 +13,7 @@ import DifficultyLevel from "./DifficultyLevel";
 import Comments from "./Comments";
 
 const ProjectDetails: React.FC = () => {
+  const { projects } = useProject();
   const navigate = useNavigate(); // Hook for navigation
 
   // Get the current URL and extract the project title
@@ -24,17 +26,17 @@ const ProjectDetails: React.FC = () => {
 
   // Get the project details based on the decoded title parameter
   const project = projects.find(
-    (project) => project.title === decodedTitle,
+    (project) => project.project_name === decodedTitle,
   ) || {
-    title: `${decodedTitle} was not found`,
+    project_name: `${decodedTitle} was not found`,
     tech1: "Not Found",
     tech2: "",
     colour: "#000000",
     descript: "Details not available",
-    videoId: "No video link found",
-    repoPath: "No repo found",
+    video_Id: "No video link found",
+    repo_Path: "No repo found",
   };
-
+  console.log(project.repo_Path)
   return (
     <>
     <Navbar/>
@@ -47,19 +49,19 @@ const ProjectDetails: React.FC = () => {
         <div className="grid-col-5">
           <div className="details-container">
        
-                <h1 className="details-title">{project.title}</h1>
+                <h1 className="details-title">{project.project_name}</h1>
                 <p className="details-subtitle">{project.descript}</p>
 
           <div className="row">
             <div className="col-6">
               <div className="embed-container">
-                <YouTubeEmbed videoId={project.videoId as string} />
+                <YouTubeEmbed videoId={project.video_Id as string} />
               </div>
             </div>
 
             <div className="col-5">
               <div>
-                <GitHubRepo repoPath={project.repoPath as string} />
+                <GitHubRepo repoPath={project.repo_Path as string} />
               </div>
             </div>
           </div>

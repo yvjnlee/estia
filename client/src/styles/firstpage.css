@@ -7,7 +7,9 @@
  align-items: center;
  margin-top: 10%;
  display: flex;
- flex-direction: column
+ flex-direction: column;
+ position: relative; /* Establishes positioning context */
+
 }
 
 .initial-title {
@@ -40,6 +42,15 @@
     align-items: center;
     margin-bottom: 32px;
 }
+
+.inital-feedback {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
 
 .initial-button {
     padding: 10px 20px;

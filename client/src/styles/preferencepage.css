@@ -1,0 +1,172 @@
+.preference-page {
+    max-width: 80%;
+    margin: 5rem;
+    padding: 2rem;
+}
+
+.page-heading {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.input-field {
+    width: 80%;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: none;
+    padding: 1rem;
+    background-color: #151B23;
+    color: #fff;
+    resize: none;
+
+}
+
+.submit-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    width: 15rem;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.submit-button:hover:enabled {
+    background-color: #0056b3;
+}
+
+.output-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.output-heading {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.theme-section {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    opacity: 0;
+    margin-left: 0rem;
+    margin-bottom: 1.5rem;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: calc(0.8s * var(--animation-order));
+}
+
+/* Apply the fade-in animation to all children */
+.theme-section:nth-child(n) {
+    --animation-order: n;
+}
+
+
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.theme-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.languages-section,
+.frameworks-section,
+.libraries-section {
+    margin: 0.5rem 0.5rem 0rem;
+    padding: 0 5rem 1rem 2rem;
+    border-radius: 8px;
+    background-color: #151C24;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.projects-section {
+    margin: 0.5rem 0.5rem 0rem;
+    padding: 4rem 4rem 4rem 4rem;
+    border-radius: 8px;
+    width: auto;
+    flex-direction: column;
+    max-width: 30%;
+    display: flex;
+    background-color: #151C24;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.languages-section:hover,
+.frameworks-section:hover,
+.libraries-section:hover,
+.projects-section:hover {
+    transform: scale(1.01);
+    background-color: #1E2833;
+}
+
+.category-heading {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+.projects-div {
+    align-items: center;
+}
+
+.projects-heading {
+    font-size: 2rem;
+    align-items: center;
+    padding: 1rem;
+    justify-content: center;
+    font-weight: bold;
+    display: flex;
+}
+
+.category-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.category-item {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+
+.outer-lfl-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    max-width: 100%;
+    margin-top: 2rem;
+
+}
+
+.lfl-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+}

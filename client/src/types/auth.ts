@@ -1,11 +1,14 @@
-import { Session, SupabaseClient, User } from "@supabase/supabase-js";
+import { Session, SupabaseClient } from "@supabase/supabase-js";
+import { User } from "./user";
+
 
 export interface AuthProps {
     session: Session | null;
-    supabase: SupabaseClient
+    supabase: SupabaseClient;
     showAuth: boolean;
+    setShowAuth: React.Dispatch<React.SetStateAction<boolean>>;
     user: User | null;
-    logIn: () => void;
-    logOut: () => void;
-}
+    logIn: () => Promise<void>;
+    logOut: () => Promise<void>;
+  }
   

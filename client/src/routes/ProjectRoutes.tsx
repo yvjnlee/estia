@@ -1,11 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { projects } from "../components/LocomotiveScrollBar";
 
 import HomePage from "../pages/HomePage";
 import ProjectDetails from "../components/project/ProjectDetails";
+import { useProject } from "../context/ProjectContext";
 
 const ProjectsRoutes = () => {
+  const { projects } = useProject();
+  
   return (
     <Routes>
       {/* need to change home page home */}
@@ -16,7 +18,7 @@ const ProjectsRoutes = () => {
       {projects.map((project, index) => (
         <Route
           key={index}
-          path={`/${project.title}`}
+          path={`/${project.project_name}`}
           element={<ProjectDetails />}
         />
       ))}

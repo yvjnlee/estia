@@ -1,0 +1,168 @@
+.add-project-form {
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 4rem auto;
+    animation: fadeIn 1s forwards;
+}
+
+.add-project-form h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.add-project-form .subtitle {
+    color: #aaa;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.add-project-form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.add-project-form input,
+.add-project-form textarea {
+    width: 100%;
+    font-size: 1.4rem; 
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: none;
+    padding: 1rem;
+    background-color: #151B23;
+    color: #fff;
+}
+
+.name-input {  
+    width: 95% !important;
+    resize: none;
+
+
+}
+
+.description-input {     
+    height: 160px;
+    width: 95% !important;
+    resize: none;
+}
+
+.tech-inputs-container {
+    display: flex;
+    max-width: 700px;
+    width: 95% !important;
+}
+
+.tech-select {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 1.4rem;
+    border: none;
+    padding: 1rem;
+    width: 95%;
+    background-color: #151B23;
+    
+}
+
+.tech-select:first-child {
+    margin-left: 0; 
+}
+
+/* Optional: style the select options */
+.tech-select option {
+    padding: 0.5rem;
+}
+
+
+.add-project-form input[type="color"] {
+    width: 100px;
+}
+
+.colours-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.colour-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.colour-button {
+    width: 170px;
+    height: 170px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.colour-button.active {
+    border: 2px solid #fff;
+}
+
+.link-split-container {
+    display: flex;
+    align-items: center;
+}
+
+.link-split-font {
+    margin-top: 0 !important;
+    font-weight: 100 !important;
+    font-size: 1rem !important;
+}
+
+.link-split-input {
+    margin-left: 1rem;
+    width: 300px !important; 
+}
+
+.back-button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5rem;
+    position: absolute;
+    margin-top: 3rem;
+}
+
+.submit-button {
+    margin-top: 2rem;
+    background-color: hsl(0, 0%, 100%);
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #9b51e0;
+}
+
+@media (max-width: 768px) {
+    .add-project-form {
+        padding: 10px;
+    }
+
+    .color-picker {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .color-button {
+        width: 30px;
+        height: 30px;
+    }
+
+}
