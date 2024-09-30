@@ -16,7 +16,7 @@ export interface ProjectInfo {
     tech1?: string;
     tech2?: string;
     colour: string;
-    descript?: string;
+    description?: string;
     video_Id?: string | null;
     repo_Path?: string | null;
 }

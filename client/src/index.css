@@ -25,6 +25,7 @@
   --border-radius: 10px;
   --anchor-color: #FFFFFF; /* Purple color, replace with desired color */
   --button-background2: #000000;
+  --element-height: 15rem
 }
 
 body {

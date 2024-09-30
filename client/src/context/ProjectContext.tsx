@@ -39,7 +39,7 @@ export const ProjectProvider: React.FC<{
     const filtered = projects?.filter((project) => {
       const matchesSearchQuery =
         project.project_name?.toLowerCase().includes(lowercasedQuery) ||
-        project.descript?.toLowerCase().includes(lowercasedQuery);
+        project.description?.toLowerCase().includes(lowercasedQuery);
 
       const matchesTechStack =
         selectedTechStack.length === 0 ||

@@ -176,7 +176,12 @@ say you are giving a json formatted response just give the json file. Do not rep
         Give Me Something to Make
       </Link>
       <div className="preference-page">
-        <h2 className="page-heading">What are you interested in learning?</h2>
+        <div className='page-heading-container'>
+        <h2 className="page-heading">Narrow Down Your Coding Aspirations</h2>
+        <p className='preference-description'>Broadly describe what/why you want to learn coding for, and we'll recommend the 
+          ideal languages and frameworks to support your goals.
+        </p>
+        </div>
         <form onSubmit={handleSubmit} className="input-form">
           <textarea
             value={input}

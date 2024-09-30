@@ -49,7 +49,7 @@ const GitHubRepo: React.FC<GitHubRepoProps> = ({ repoPath }) => {
       rel="noopener noreferrer"
       className='github-container'
     >
-      <div>
+      <div >
         <img className="github-logo" src={GithubLogo} alt="GitHub Logo" />
         <h2 className='github-name'>{repoData.full_name}</h2>
         <p className='github-description'>

@@ -133,6 +133,7 @@
     margin-left: 5rem;
     position: absolute;
     margin-top: 3rem;
+    z-index: 1000;
 }
 
 .submit-button {

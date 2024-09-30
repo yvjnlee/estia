@@ -45,14 +45,10 @@
 
 .details-container {
     display: flex;
+    margin-top: -9rem;
     flex-direction: column;
-    padding: 20px;
-    border: solid;
-    padding-left: 2rem;
-    padding-right: 4rem;
-    padding-bottom: 4rem;
-    width: 700px;
-    margin: 1rem;
+    margin-left: 5rem;
+    margin-right: 3rem;
 }
 
 .details-title {
@@ -73,34 +69,40 @@
 
 .youtube-embed-iframe {
     border-radius: 15px;
+    margin-right: 1rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    height: 18rem;
+    height: var(--element-height);
+    width: calc(var(--element-height) * 2); /* Width is three times the height */
 }
 
+.title-and-description {
+}
 
 .embed-container {
     display: flex;
     animation: fadeIn 1s forwards;
     padding-right: 2rem;
+    align-items: center;
+    justify-content: center;
 }
 
+.additional-information-container{
+}
 
 .github-container {
     display: flex;
-    margin-left: 2rem;
     padding: 2rem;
     background-color: #151B23;
-    height: auto;
+    width: 25rem;
     border-radius: 15px;
     text-decoration: none; /* Remove underline from the link */
     color: inherit; /* Inherit text color from parent */
-    position: relative; /* Position for the tooltip */
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .github-container:hover {
     background-color: #2C3E50;
-    transform: scale(1.05);
+    transform: scale(1.01);
 }
 
 .github-container .tooltip {

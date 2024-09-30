@@ -4,6 +4,7 @@ import "./index.css";
 
 import { AuthProvider, ProjectProvider, UserProvider } from "./context";
 import AppRoutes from "./routes";
+import { ThemeProvider } from "react-bootstrap";
 
 const supabase = createClient(
   process.env.REACT_APP_PROJECT_URL as string,
@@ -12,13 +13,15 @@ const supabase = createClient(
 
 const App: React.FC = () => {
   return (
-    <AuthProvider supabase={supabase}>
-      <UserProvider>
-        <ProjectProvider>
-          <AppRoutes />
-        </ProjectProvider>
-      </UserProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider supabase={supabase}>
+        <UserProvider>
+          <ProjectProvider>
+            <AppRoutes />
+          </ProjectProvider>
+        </UserProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 

@@ -16,7 +16,7 @@ export const ProjectFeed: React.FC = () => {
               tech1={project.tech1}
               tech2={project.tech2}
               colour={project.colour}
-              descript={project.descript}
+              description={project.description}
             />
           </div>
         ))

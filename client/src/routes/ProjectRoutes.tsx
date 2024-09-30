@@ -7,7 +7,11 @@ import { useProject } from "../context/ProjectContext";
 
 const ProjectsRoutes = () => {
   const { projects } = useProject();
-  
+
+  // Add check for projects before trying to map over them
+  if (!projects || !Array.isArray(projects)) {
+    return <div>Loading projects...</div>;
+  }  
   return (
     <Routes>
       {/* need to change home page home */}

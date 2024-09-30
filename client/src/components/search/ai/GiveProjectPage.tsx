@@ -133,8 +133,11 @@ const GiveProjectPage: React.FC = () => {
         Back
       </button>
             <div className='preference-page'>
-                <h2 className='page-heading'>Give Me Something to Make</h2>
-                <p>We'll give you a project idea to work on based on your selected skills and interests.</p>
+                <div className='page-heading-container'>
+                <h2 className='page-heading'>Tailored Projects for Your Learning Goals</h2>
+                <p className='preference-description'>Unleash your potential by finding projects that align with your learning goals. 
+                    Let us connect you with the right hands-on experiences!</p>
+                    </div>
                 <form className="input-form" onSubmit={handleSubmit}>
                     <textarea
                         value={input}

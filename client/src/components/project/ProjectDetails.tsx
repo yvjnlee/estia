@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import YouTubeEmbed from "./embded/YoutubeEmbed";
 import GitHubRepo from "./embded/GithubEmbed";
@@ -24,6 +24,13 @@ const ProjectDetails: React.FC = () => {
   // Decode the project name from URL
   const decodedTitle = decodeURIComponent(rawTitle);
 
+  
+  useEffect(() => {
+    console.log("Current URL:", url);
+    console.log("Decoded project title:", decodedTitle);
+    console.log("Projects available:", projects);
+  }, [url, decodedTitle, projects]);
+
   // Get the project details based on the decoded title parameter
   const project = projects.find(
     (project) => project.project_name === decodedTitle,
@@ -32,56 +39,57 @@ const ProjectDetails: React.FC = () => {
     tech1: "Not Found",
     tech2: "",
     colour: "#000000",
-    descript: "Details not available",
+    description: "Details not available",
     video_Id: "No video link found",
     repo_Path: "No repo found",
   };
+  console.log(project.description)
   console.log(project.repo_Path)
+console.log(projects);  // 
   return (
     <>
     <Navbar/>
-      <button onClick={() => navigate(-1)} className="back-button">
+    <button onClick={() => navigate(-1)} className="back-button">
         Back
       </button>
-
       {/* Left side of page */}
       <div className="grid-container">
-        <div className="grid-col-5">
+        <div className="">
           <div className="details-container">
-       
+            <div className="title-and-description">
                 <h1 className="details-title">{project.project_name}</h1>
-                <p className="details-subtitle">{project.descript}</p>
-
-          <div className="row">
-            <div className="col-6">
-              <div className="embed-container">
+                <p>{project.description}</p>
+                </div>
+          <div className="embed-container">
+            <div className="">
+              <div className="">
                 <YouTubeEmbed videoId={project.video_Id as string} />
               </div>
             </div>
 
-            <div className="col-5">
-              <div>
+            <div className="">
+            
                 <GitHubRepo repoPath={project.repo_Path as string} />
-              </div>
+        
             </div>
           </div>
           </div>
-          <div className="row">
-            <Comments/>
+          <div className="">
+            {/*<Comments/>*/}
           </div>
         </div>
 
         {/* Right side of page */}
-        <div className="grid-col-4">
-          <div className="row">
+        <div className="additional-information-container">
+          <div className="">
             <TechStack tech1={project.tech1} tech2={project.tech2}/>
           </div>
 
-          <div className="row">
+          <div className="">
             <DifficultyLevel/>
           </div>
 
-          <div className="row">
+          <div className="">
             <div className="sidebar-container">
               <h1>Similar Projects</h1>
             </div>
