@@ -1,7 +1,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 7rem;
   align-items: center;
   animation: fadeIn 1s forwards;

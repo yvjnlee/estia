@@ -5,6 +5,34 @@
     padding: 2rem;
 }
 
+.navigation-links {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-link {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    border-color: #007bff;
+}
+
+.active-nav-link {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    border-color: #0056b3;
+}
+
 .page-heading {
     font-size: 3rem;
     font-weight: 700;
@@ -127,7 +155,7 @@
 .languages-section:hover,
 .frameworks-section:hover,
 .libraries-section:hover,
-.projects-section:hover{
+.projects-section:hover {
     transform: scale(1.01);
     background-color: #1E2833;
 }
@@ -155,7 +183,7 @@
     gap: 1rem;
     max-width: 100%;
     margin-top: 2rem;
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
 }
 
@@ -166,7 +194,7 @@
 
 .category-item {
     font-size: 1rem;
-    margin-bottom: -0.8rem;  
+    margin-bottom: -0.8rem;
     background-color: inherit;
 
 }

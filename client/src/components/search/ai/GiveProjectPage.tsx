@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useProject } from '../../../context/ProjectContext';
 import Groq from 'groq-sdk'; // Import Groq SDK
 import { Navbar } from "../../navbar/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 
 const GiveProjectPage: React.FC = () => {
@@ -26,10 +26,10 @@ const GiveProjectPage: React.FC = () => {
                         <div className='projects-section'>
                             <div className='projects-div'>
                                 {/* Make the project title clickable */}
-                                <h5 
+                                <h5
                                     className='projects-heading'
                                     onClick={() => navigate(`/project/${encodeURIComponent(project)}`)} // Navigate to project details page
-                                    style={{ cursor: 'pointer'}} // Add pointer for clickable effect
+                                    style={{ cursor: 'pointer' }} // Add pointer for clickable effect
                                 >
                                     {project}
                                 </h5>
@@ -47,7 +47,7 @@ const GiveProjectPage: React.FC = () => {
                         <div className='projects-section'>
                             <div className='projects-div'>
                                 {/* Make the project title clickable */}
-                                <h5 
+                                <h5
                                     className='projects-heading'
                                     onClick={() => navigate(`/project/${encodeURIComponent(project)}`)} // Navigate to project details page
                                     style={{ cursor: 'pointer', textDecoration: 'underline' }} // Add pointer and underline for clickable effect
@@ -129,15 +129,27 @@ const GiveProjectPage: React.FC = () => {
     return (
         <>
             <Navbar />
-            <button onClick={() => navigate(-1)} className="back-button">
-        Back
-      </button>
             <div className='preference-page'>
+                <div className="navigation-links">
+                    <NavLink
+                        to="/preference"
+                        className={({ isActive }) => isActive ? 'active-nav-link' : 'nav-link'}
+                        end
+                    >
+                        AI Learning Tool
+                    </NavLink>
+                    <NavLink
+                        to="/preference/give-project"
+                        className={({ isActive }) => isActive ? 'active-nav-link' : 'nav-link'}
+                    >
+                        AI Project Finder
+                    </NavLink>
+                </div>
                 <div className='page-heading-container'>
-                <h2 className='page-heading'>Tailored Projects for Your Learning Goals</h2>
-                <p className='preference-description'>Unleash your potential by finding projects that align with your learning goals. 
-                    Let us connect you with the right hands-on experiences!</p>
-                    </div>
+                    <h2 className='page-heading'>Tailored Projects for Your Learning Goals</h2>
+                    <p className='preference-description'>Unleash your potential by finding projects that align with your learning goals.
+                        We find projects on estia and connect you with the right hands-on experiences!</p>
+                </div>
                 <form className="input-form" onSubmit={handleSubmit}>
                     <textarea
                         value={input}

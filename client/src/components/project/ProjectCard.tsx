@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectInfo } from '../../types/project';
 
-const Project: React.FC<ProjectInfo> = ({ project_name, tech1, tech2, colour }) => {
+const ProjectCard: React.FC<ProjectInfo> = ({ project_name, tech1, tech2, colour }) => {
   const containerStyle: React.CSSProperties = {
     backgroundColor: colour,
     cursor: 'pointer',
     height: '13rem',
-    width: '14.36rem',
+    width: '20.36rem',
     borderRadius: '4px',
     padding: '24px',
     display: 'flex',
@@ -29,4 +29,4 @@ const Project: React.FC<ProjectInfo> = ({ project_name, tech1, tech2, colour }) 
   );
 };
 
-export default Project;
+export default ProjectCard;

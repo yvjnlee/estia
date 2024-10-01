@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, NavLink, Route, Routes, useNavigate } from "react-router-dom"; // Import NavLink
 
 import GiveProject from '../components/search/ai/GiveProjectPage';
-
 import Groq from 'groq-sdk'; // Import the Groq SDK
-
 import { Navbar } from '../components/navbar/Navbar';
+
 
 const PreferencePage: React.FC = () => {
   const [input, setInput] = useState('');
@@ -169,18 +168,27 @@ say you are giving a json formatted response just give the json file. Do not rep
   return (
     <>
       <Navbar />
-      <button onClick={() => navigate(-1)} className="back-button">
-        Back
-      </button>
-      <Link to="/preference/give-project" className="back-button">
-        Give Me Something to Make
-      </Link>
       <div className="preference-page">
+      <div className="navigation-links">
+        <NavLink
+          to="/preference"
+          className={({ isActive }) => isActive ? 'active-nav-link' : 'nav-link'}
+          end
+        >
+          AI Learning Tool
+        </NavLink>
+        <NavLink
+          to="/preference/give-project"
+          className={({ isActive }) => isActive ? 'active-nav-link' : 'nav-link'}
+        >
+          AI Project Finder
+        </NavLink>
+      </div>
         <div className='page-heading-container'>
-        <h2 className="page-heading">Narrow Down Your Coding Aspirations</h2>
-        <p className='preference-description'>Broadly describe what/why you want to learn coding for, and we'll recommend the 
-          ideal languages and frameworks to support your goals.
-        </p>
+          <h2 className="page-heading">Narrow Down Your Coding Aspirations</h2>
+          <p className='preference-description'>Broadly describe what/why you want to learn coding for, and we'll recommend the
+            ideal languages and frameworks to support your goals.
+          </p>
         </div>
         <form onSubmit={handleSubmit} className="input-form">
           <textarea
