@@ -69,7 +69,7 @@ console.log(projects);  //
         {/* Right side of page */}
         <div className="additional-information-container">
           <div className="">
-            <TechStack tech1={project.tech1} tech2={project.tech2}/>
+          <TechStack tech1={project.tech1 || ''} tech2={project.tech2 || ''} />
           </div>
 
           <div className="">

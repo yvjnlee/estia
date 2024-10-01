@@ -27,12 +27,29 @@
     text-align: center;
 }
 
-.tech-images-div {
+.tech-images-div-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Space between the tech items */
+    gap: 20px; /* Optional: add some space between each tech div */
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
+.tech-images-div {
+    display: flex;
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center; /* Center them horizontally */
+    justify-content: center;
+}
+
+.tech-image {
+    width: 80px;
+}
+
+.tech-stack-details {
+    margin-top: 10px; /* Optional: Add some space between image and text */
+    text-align: center; /* Center the text */
+}
 .comment-form {
     background-color: #151B23;
     font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",

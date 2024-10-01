@@ -26,11 +26,11 @@
 
 .active-nav-link {
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color: #3f4c5b;
     color: white;
     border-radius: 6px;
     text-decoration: none;
-    border-color: #0056b3;
+    border-color: #151C24;
 }
 
 .page-heading {
