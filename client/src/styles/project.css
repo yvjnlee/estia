@@ -29,7 +29,7 @@
   z-index: 3;
 }
 
-@media (max-width: 1675px) {
+@media (max-width: 900px) {
   .projects-container {
     grid-template-columns: repeat(2, 24rem);
     /* 2 column */
@@ -37,7 +37,7 @@
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 440px) {
   .projects-container {
     grid-template-columns: repeat(1, 25rem);
     /* 1 column */

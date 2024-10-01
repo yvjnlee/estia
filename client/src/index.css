@@ -25,7 +25,7 @@
   --border-radius: 10px;
   --anchor-color: #FFFFFF; /* Purple color, replace with desired color */
   --button-background2: #000000;
-  --element-height: 15rem
+  --element-height: 42rem;
 }
 
 body {
@@ -33,6 +33,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
+    zoom: 0.6; /* 90% zoom */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-color);

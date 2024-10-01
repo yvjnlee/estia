@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;
-  margin-top: 7rem;
+  margin-top: 4rem;
   align-items: center;
   animation: fadeIn 1s forwards;
 }

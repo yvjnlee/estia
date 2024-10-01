@@ -24,13 +24,6 @@ const ProjectDetails: React.FC = () => {
   // Decode the project name from URL
   const decodedTitle = decodeURIComponent(rawTitle);
 
-  
-  useEffect(() => {
-    console.log("Current URL:", url);
-    console.log("Decoded project title:", decodedTitle);
-    console.log("Projects available:", projects);
-  }, [url, decodedTitle, projects]);
-
   // Get the project details based on the decoded title parameter
   const project = projects.find(
     (project) => project.project_name === decodedTitle,
@@ -43,8 +36,7 @@ const ProjectDetails: React.FC = () => {
     video_Id: "No video link found",
     repo_Path: "No repo found",
   };
-  console.log(project.description)
-  console.log(project.repo_Path)
+
 console.log(projects);  // 
   return (
     <>
@@ -58,19 +50,14 @@ console.log(projects);  //
           <div className="details-container">
             <div className="title-and-description">
                 <h1 className="details-title">{project.project_name}</h1>
-                <p>{project.description}</p>
                 </div>
           <div className="embed-container">
             <div className="">
               <div className="">
                 <YouTubeEmbed videoId={project.video_Id as string} />
               </div>
-            </div>
+              <p className="details-subtitle">{project.description}</p>
 
-            <div className="">
-            
-                <GitHubRepo repoPath={project.repo_Path as string} />
-        
             </div>
           </div>
           </div>
@@ -84,6 +71,12 @@ console.log(projects);  //
           <div className="">
             <TechStack tech1={project.tech1} tech2={project.tech2}/>
           </div>
+
+          <div className="">
+            
+            <GitHubRepo repoPath={project.repo_Path as string} />
+    
+        </div>
 
           <div className="">
             <DifficultyLevel/>

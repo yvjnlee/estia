@@ -3,26 +3,46 @@ import { useNavigate } from "react-router-dom";
 import { useProject } from "../context/ProjectContext";
 import { Navbar } from "../components/navbar/Navbar";
 
-// Sample dictionary of languages and frameworks
+// Expanded dictionary of languages and frameworks
 const techStackOptions = [
-    "JavaScript",
-    "Python",
-    "Java",
-    "C#",
-    "Ruby",
-    "Go",
-    "React",
     "Angular",
-    "Vue",
+    "ASP.NET",
+    "Backbone.js",
+    "Bootstrap",
+    "CodeIgniter",
+    "C++",
+    "C#",
+    "C",
+    "Dart",
     "Django",
-    "MERN",
-    "Node.js",
+    "Ember.js",
     "Express",
-    "Spring",
-    "Laravel",
+    "Flask",
+    "Gatsby",
+    "Go",
     "HTML/CSS",
-    // Add more options as needed
+    "Java",
+    "JavaScript",
+    "jQuery",
+    "Laravel",
+    "Materialize",
+    "MERN",
+    "NestJS",
+    "Next.js",
+    "PHP",
+    "React",
+    "Rails",
+    "Redux",
+    "Ruby",
+    "Rust",
+    "Svelte",
+    "Spring",
+    "Tailwind CSS",
+    "TypeScript",
+    "Vue",
+    "Haskell"
 ];
+
 
 const AddProject: React.FC = () => {
     const { supabase } = useProject();

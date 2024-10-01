@@ -14,24 +14,30 @@
 }
 
 /* Used for tech stack, difficulty level, and similar project blocks */
-.sidebar-container{
+.sidebar-container {
     background-color: #151B23;
     border-radius: 15px;
-    width: 300px;
+    width: 26rem;
     padding: 2rem;
     margin-right: 3rem;
-    margin-bottom:2rem;
+    margin-bottom: 2rem;
 }
 
-.tech-stack-details {
+.tech-stack-details:nth-child(1) {
     text-align: center;
-} 
+}
+
+.tech-images-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .comment-form {
     background-color: #151B23;
     font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
 }
 
 .comment-container {
@@ -45,21 +51,19 @@
 
 .details-container {
     display: flex;
-    margin-top: -9rem;
     flex-direction: column;
     margin-left: 5rem;
-    margin-right : 9.2rem;
+    margin-right: 4rem;
 }
 
 .details-title {
     display: block;
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
 }
 
 .details-subtitle {
     font-size: 1.2rem;
-    max-width: 800px;
 }
 
 .details-heading {
@@ -69,14 +73,13 @@
 
 .youtube-embed-iframe {
     border-radius: 15px;
-    margin-right: 1rem;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
     height: var(--element-height);
-    width: calc(var(--element-height) * 2); /* Width is three times the height */
+    width: calc(var(--element-height) * 2);
+    /* Width is three times the height */
 }
 
-.title-and-description {
-}
+.title-and-description {}
 
 .embed-container {
     display: flex;
@@ -86,18 +89,22 @@
     justify-content: center;
 }
 
-.additional-information-container{
+.additional-information-container {
+    width: 2rem;
 }
 
 .github-container {
     display: flex;
     padding: 2rem;
     background-color: #151B23;
-    width: 25rem;
+    width: 26rem;
     border-radius: 15px;
-    text-decoration: none; /* Remove underline from the link */
-    color: inherit; /* Inherit text color from parent */
+    text-decoration: none;
+    /* Remove underline from the link */
+    color: inherit;
+    /* Inherit text color from parent */
     transition: transform 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 2rem;
 }
 
 .github-container:hover {
@@ -108,14 +115,16 @@
 .github-container .tooltip {
     display: none;
     position: absolute;
-    bottom: 100%; /* Position above the container */
+    bottom: 100%;
+    /* Position above the container */
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
     color: #fff;
     padding: 0.5rem;
     border-radius: 5px;
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
+    /* Prevent text wrapping */
     font-size: 0.875rem;
     z-index: 10;
 }
@@ -123,6 +132,7 @@
 .github-container:hover .tooltip {
     display: block;
 }
+
 .github-logo {
     height: 4rem;
     width: auto;
@@ -135,16 +145,23 @@
 .github-description {
     font-size: 1rem;
 }
+
 .github-additional-information {
     display: flex;
-    justify-content: space-between; 
-    width: auto; /* Adjust the width to fit content */
-    height: auto; /* Adjust the width to fit content */
-    margin: 0; /* Remove any default margin */
-    padding: 0; /* Remove any default padding */
+    justify-content: space-between;
+    width: auto;
+    /* Adjust the width to fit content */
+    height: auto;
+    /* Adjust the width to fit content */
+    margin: 0;
+    /* Remove any default margin */
+    padding: 0;
+    /* Remove any default padding */
 }
 
 .github-additional-information p {
-    margin: 0; /* Remove margin from <p> elements */
-    padding: 0; /* Remove padding from <p> elements */
+    margin: 0;
+    /* Remove margin from <p> elements */
+    padding: 0;
+    /* Remove padding from <p> elements */
 }
