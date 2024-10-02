@@ -64,21 +64,6 @@
     /* Center the text */
 }
 
-.comment-form {
-    background-color: #151B23;
-    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
-}
-
-.comment-container {
-    border-radius: 15px;
-    padding-left: 2rem;
-    padding-right: 4rem;
-    padding-bottom: 4rem;
-    width: 700px;
-    margin: 1rem;
-}
 
 .details-container {
   flex: 1; /* Take up remaining space on the left side */
