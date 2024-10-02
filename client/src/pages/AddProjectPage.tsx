@@ -43,6 +43,7 @@ const techStackOptions = [
     "Pandas",
     "PHP",
     "PostgreSQL",
+    "Python",
     "Rails",
     "React",
     "React Native",

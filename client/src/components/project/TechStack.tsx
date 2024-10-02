@@ -4,7 +4,8 @@ import cSharp from "../../img/programminglogos/c#.svg";
 import css from "../../img/programminglogos/css.svg"
 import cPlusPlus from "../../img/programminglogos/c++.svg";
 import c from "../../img/programminglogos/c.svg";
-import html from "../../img/programminglogos/html.svg"
+import html from "../../img/programminglogos/html.svg";
+import htmlcss from "../../img/programminglogos/htmlcss.svg";
 import dart from "../../img/programminglogos/dart.svg";
 import go from "../../img/programminglogos/go.svg";
 import haskell from "../../img/programminglogos/haskell.svg";
@@ -60,6 +61,7 @@ const techImages: { [key: string]: string } = {
     go,
     haskell,
     html,
+    htmlcss,
     java,
     javascript,
     kotlin,
@@ -105,7 +107,9 @@ const TechStack: React.FC<{ tech1: string; tech2: string }> = ({ tech1, tech2 })
     const translateTechName = (tech: string): string => {
         const translations: { [key: string]: string } = {
             'C++': 'cPlusPlus',
-            'C#': 'Csharp'
+            'C#': 'Csharp',
+            'HTML/CSS': 'htmlcss',
+            'React Native': 'reactnative',
         };
         return translations[tech] || tech.toLowerCase();
     };

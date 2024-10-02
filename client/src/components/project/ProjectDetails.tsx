@@ -41,6 +41,7 @@ console.log(projects);  //
   return (
     <>
     <Navbar/>
+    <div className="details-main-container">
     <button onClick={() => navigate(-1)} className="back-button">
         Back
       </button>
@@ -88,7 +89,7 @@ console.log(projects);  //
             </div>
           </div>
         </div>
-
+        </div>
       </div>
     </>
   );

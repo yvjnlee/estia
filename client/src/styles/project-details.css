@@ -13,6 +13,13 @@
     }
 }
 
+.details-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 /* Used for tech stack, difficulty level, and similar project blocks */
 .sidebar-container {
     background-color: #151B23;
@@ -29,16 +36,20 @@
 
 .tech-images-div-container {
     display: flex;
-    justify-content: space-between; /* Space between the tech items */
-    gap: 20px; /* Optional: add some space between each tech div */
+    justify-content: space-between;
+    /* Space between the tech items */
+    gap: 20px;
+    /* Optional: add some space between each tech div */
     margin-left: 50px;
     margin-right: 50px;
 }
 
 .tech-images-div {
     display: flex;
-    flex-direction: column; /* Stack image and text vertically */
-    align-items: center; /* Center them horizontally */
+    flex-direction: column;
+    /* Stack image and text vertically */
+    align-items: center;
+    /* Center them horizontally */
     justify-content: center;
 }
 
@@ -47,9 +58,12 @@
 }
 
 .tech-stack-details {
-    margin-top: 10px; /* Optional: Add some space between image and text */
-    text-align: center; /* Center the text */
+    margin-top: 10px;
+    /* Optional: Add some space between image and text */
+    text-align: center;
+    /* Center the text */
 }
+
 .comment-form {
     background-color: #151B23;
     font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
@@ -67,10 +81,9 @@
 }
 
 .details-container {
-    display: flex;
-    flex-direction: column;
-    margin-left: 5rem;
-    margin-right: 4rem;
+  flex: 1; /* Take up remaining space on the left side */
+  display: flex;
+  flex-direction: column;
 }
 
 .details-title {
@@ -81,6 +94,7 @@
 
 .details-subtitle {
     font-size: 1.2rem;
+    width: calc(var(--element-height) * 2);
 }
 
 .details-heading {
@@ -96,6 +110,8 @@
     /* Width is three times the height */
 }
 
+
+
 .title-and-description {}
 
 .embed-container {
@@ -106,9 +122,6 @@
     justify-content: center;
 }
 
-.additional-information-container {
-    width: 2rem;
-}
 
 .github-container {
     display: flex;

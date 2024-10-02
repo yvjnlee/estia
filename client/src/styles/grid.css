@@ -1,10 +1,9 @@
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-content: space-between;
-  margin-top: 4rem;
-  align-items: center;
-  animation: fadeIn 1s forwards;
+  display: flex;
+  justify-content: space-between; /* Ensure the left and right columns are spread apart */
+  align-items: flex-start; /* Align items to the top of the container */
+  width: 88%; /* Full width of the container */
+  padding: 2rem; /* Optional: Add some padding around the container */
 }
 
 .grid-row {
