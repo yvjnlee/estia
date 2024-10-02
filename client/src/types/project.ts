@@ -6,19 +6,22 @@ export interface ProjectsProps {
   searchQuery: string;
   searchProjects: (tech: string[]) => void;
   handleSearch: (tech: string[]) => void;
-  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => void;
+  handleEnter: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    tech: string[],
+  ) => void;
   handleKeyPress: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface ProjectInfo {
-    project_name: string;
-    created_at: string;
-    tech1?: string;
-    tech2?: string;
-    colour: string;
-    description?: string;
-    video_Id?: string | null;
-    repo_Path?: string | null;
+  project_name: string;
+  created_at: string;
+  tech1?: string;
+  tech2?: string;
+  colour: string;
+  description?: string;
+  video_Id?: string | null;
+  repo_Path?: string | null;
 }
 
 export interface ProjectsProps {
@@ -27,6 +30,9 @@ export interface ProjectsProps {
   searchQuery: string;
   searchProjects: (tech: string[]) => void;
   handleSearch: (tech: string[]) => void;
-  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => void;
+  handleEnter: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    tech: string[],
+  ) => void;
   handleKeyPress: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

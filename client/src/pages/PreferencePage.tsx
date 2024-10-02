@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { Link, NavLink, Route, Routes, useNavigate } from "react-router-dom"; // Import NavLink
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom"; // Import NavLink
 
-import GiveProject from '../components/search/ai/GiveProjectPage';
-import Groq from 'groq-sdk'; // Import the Groq SDK
-import { Navbar } from '../components/navbar/Navbar';
-
+// import GiveProject from '../components/search/ai/GiveProjectPage';
+import Groq from "groq-sdk"; // Import the Groq SDK
+import { Navbar } from "../components/navbar/Navbar";
 
 const PreferencePage: React.FC = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [output, setOutput] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -30,7 +28,7 @@ const PreferencePage: React.FC = () => {
     console.log("API Key:", apiKey);
     const groq = new Groq({
       apiKey,
-      dangerouslyAllowBrowser: true
+      dangerouslyAllowBrowser: true,
     });
 
     try {
@@ -94,14 +92,14 @@ say you are giving a json formatted response just give the json file. Do not rep
         top_p: 1,
         stream: false,
         response_format: {
-          "type": "json_object"
+          type: "json_object",
         },
       });
 
       setOutput(response.choices[0].message.content);
     } catch (error) {
-      console.error('Error fetching data from Groq:', error);
-      setOutput('Error processing your request. Please try again.');
+      console.error("Error fetching data from Groq:", error);
+      setOutput("Error processing your request. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -112,7 +110,11 @@ say you are giving a json formatted response just give the json file. Do not rep
       const parsedOutput = JSON.parse(jsonString); // Parse the JSON string
 
       return Object.entries(parsedOutput).map(([theme, categories]) => {
-        const { Languages, Frameworks, Libraries } = categories as any;
+        const { Languages, Frameworks, Libraries } = categories as {
+          Languages: string[];
+          Frameworks: string[];
+          Libraries: string[];
+        };
 
         if (!Languages?.length && !Frameworks?.length && !Libraries?.length) {
           return null;
@@ -121,13 +123,15 @@ say you are giving a json formatted response just give the json file. Do not rep
         return (
           <div key={theme} className="theme-section">
             <h4 className="theme-heading">{theme}</h4>
-            <div className='lfl-container'>
+            <div className="lfl-container">
               {Languages?.length > 0 && (
                 <div className="languages-section">
                   <h5 className="category-heading">Languages</h5>
                   <ul className="category-list">
                     {Languages.map((language: string, index: number) => (
-                      <li key={index} className="category-item">{language}</li>
+                      <li key={index} className="category-item">
+                        {language}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -137,7 +141,9 @@ say you are giving a json formatted response just give the json file. Do not rep
                   <h5 className="category-heading">Frameworks</h5>
                   <ul className="category-list">
                     {Frameworks.map((framework: string, index: number) => (
-                      <li key={index} className="category-item">{framework}</li>
+                      <li key={index} className="category-item">
+                        {framework}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -147,7 +153,9 @@ say you are giving a json formatted response just give the json file. Do not rep
                   <h5 className="category-heading">Libraries</h5>
                   <ul className="category-list">
                     {Libraries.map((library: string, index: number) => (
-                      <li key={index} className="category-item">{library}</li>
+                      <li key={index} className="category-item">
+                        {library}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -157,37 +165,40 @@ say you are giving a json formatted response just give the json file. Do not rep
         );
       });
     } catch (error) {
-      console.error('Error parsing JSON output:', error);
+      console.error("Error parsing JSON output:", error);
       return <p>Error formatting output.</p>;
     }
   };
-
-
-
 
   return (
     <>
       <Navbar />
       <div className="preference-page">
-      <div className="navigation-links">
-        <NavLink
-          to="/preference"
-          className={({ isActive }) => isActive ? 'active-nav-link' : 'nav-link'}
-          end
-        >
-          AI Learning Tool
-        </NavLink>
-        <NavLink
-          to="/preference/give-project"
-          className={({ isActive }) => isActive ? 'active-nav-link' : 'nav-link'}
-        >
-          AI Project Finder
-        </NavLink>
-      </div>
-        <div className='page-heading-container'>
+        <div className="navigation-links">
+          <NavLink
+            to="/preference"
+            className={({ isActive }) =>
+              isActive ? "active-nav-link" : "nav-link"
+            }
+            end
+          >
+            AI Learning Tool
+          </NavLink>
+          <NavLink
+            to="/preference/give-project"
+            className={({ isActive }) =>
+              isActive ? "active-nav-link" : "nav-link"
+            }
+          >
+            AI Project Finder
+          </NavLink>
+        </div>
+        <div className="page-heading-container">
           <h2 className="page-heading">Narrow Down Your Coding Aspirations</h2>
-          <p className='preference-description'>Broadly describe what/why you want to learn coding for, and we'll recommend the
-            ideal languages and frameworks to support your goals.
+          <p className="preference-description">
+            Broadly describe what/why you want to learn coding for, and
+            we&apos;ll recommend the ideal languages and frameworks to support
+            your goals.
           </p>
         </div>
         <form onSubmit={handleSubmit} className="input-form">
@@ -200,14 +211,16 @@ say you are giving a json formatted response just give the json file. Do not rep
             className="input-field"
           />
           <button type="submit" disabled={loading} className="submit-button">
-            {loading ? 'Processing...' : 'Submit'}
+            {loading ? "Processing..." : "Submit"}
           </button>
         </form>
 
         {output && (
           <div className="output-section">
-            <h3 className="output-heading">Great idea! Here's stuff to learn to get started</h3>
-            <div className='outer-lfl-container'>{formatOutput(output)}</div>
+            <h3 className="output-heading">
+              Great idea! Here&apos;s stuff to learn to get started
+            </h3>
+            <div className="outer-lfl-container">{formatOutput(output)}</div>
           </div>
         )}
       </div>

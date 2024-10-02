@@ -19,7 +19,7 @@ export const AuthProvider: React.FC<{
     // Get current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session as Session);
-      setUser(session?.user as User || null);
+      setUser((session?.user as User) || null);
     });
 
     // Set up session listener
@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setUser(session?.user as User || null);
+      setUser((session?.user as User) || null);
     });
 
     // Cleanup subscription on component unmount

@@ -7,7 +7,9 @@ import { SearchBar } from "../SearchBar";
 export const ProfileSearch: React.FC = () => {
   const { users, retrieveUser } = useUser();
 
-  const [userResults, setUserResults] = useState<User[] | User>( users as User[] );
+  const [userResults, setUserResults] = useState<User[] | User>(
+    users as User[],
+  );
   const [searchQuery, setSearchQuery] = useState<string>();
 
   // console.log(users);
@@ -21,12 +23,9 @@ export const ProfileSearch: React.FC = () => {
   };
 
   // Handle search when Enter key is pressed
-  const handleEnter = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    id: UUID,
-  ) => {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>, id: UUID) => {
     if (e.key === "Enter") {
-        handleSearch(id);
+      handleSearch(id);
     }
   };
 

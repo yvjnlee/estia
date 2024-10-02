@@ -17,16 +17,16 @@ export const ProjectProvider: React.FC<{
     const fetchData = async () => {
       try {
         const { data, error } = await supabase
-          .from('estia_projects')
-          .select('*');
+          .from("estia_projects")
+          .select("*");
         if (error) {
-          console.log(error)
+          console.log(error);
         }
         // console.log(data);
         setProjects(data as ProjectInfo[]); // Set the fetched data to state
         setProjectFeed(data as ProjectInfo[]); // Set the fetched data to state
       } catch (err) {
-        console.log(err)
+        console.log(err);
       } finally {
         // console.log("got data")
       }
@@ -44,7 +44,7 @@ export const ProjectProvider: React.FC<{
       const matchesTechStack =
         selectedTechStack.length === 0 ||
         selectedTechStack.some(
-          (tech) => project.tech1 === tech || project.tech2 === tech
+          (tech) => project.tech1 === tech || project.tech2 === tech,
         );
 
       return matchesSearchQuery && matchesTechStack;
@@ -57,15 +57,13 @@ export const ProjectProvider: React.FC<{
     searchProjects();
   }, [searchQuery, selectedTechStack]);
 
-
   const onSearch = (tech: string[]) => {
-
     setSelectedTechStack(tech);
   };
 
   const onEnter = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    tech: string[]
+    tech: string[],
   ) => {
     if (e.key === "Enter") {
       setSelectedTechStack(tech);
@@ -75,7 +73,6 @@ export const ProjectProvider: React.FC<{
   const onKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-
 
   const value = {
     supabase, // Include supabase in the context value

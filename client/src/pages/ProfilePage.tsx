@@ -50,9 +50,7 @@ export const ProfilePage: React.FC = () => {
 
       {loading && (
         <>
-            <div>
-                loading...
-            </div>
+          <div>loading...</div>
         </>
       )}
 

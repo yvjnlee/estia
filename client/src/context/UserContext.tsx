@@ -44,10 +44,9 @@ export const UserProvider: React.FC<{
       }
 
       return profile as User;
-
     } catch (err) {
       console.log(err);
-      return null
+      return null;
     }
   };
 
@@ -64,10 +63,9 @@ export const UserProvider: React.FC<{
       }
 
       return profile as User;
-
     } catch (err) {
       console.log(err);
-      return null
+      return null;
     }
   };
 
