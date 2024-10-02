@@ -6,6 +6,10 @@ import { useProject } from "../../context/ProjectContext";
 
 // Import the new projects data
 
+// Imported icons
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import StarIcon from '@mui/icons-material/Star';
+
 // Import components
 import {Navbar} from "../navbar/Navbar";
 import TechStack from "./TechStack";
@@ -38,13 +42,18 @@ const ProjectDetails: React.FC = () => {
   };
 
 console.log(projects);  // 
+
+  const save = () => {
+
+  }
   return (
     <>
     <Navbar/>
-    <div className="details-main-container">
     <button onClick={() => navigate(-1)} className="back-button">
-        Back
-      </button>
+      Back
+    </button>
+
+    <div className="details-main-container">
       {/* Left side of page */}
       <div className="grid-container">
         <div className="">
@@ -58,12 +67,23 @@ console.log(projects);  //
                 <YouTubeEmbed videoId={project.video_Id as string} />
               </div>
               <p className="details-subtitle">{project.description}</p>
-
             </div>
           </div>
+            <div className ="button-container">
+              <button className="save-and-like-button">
+                 <StarIcon fontSize="medium" style={{ marginRight: '10px' }}/>
+                 <p>Save</p> 
+                <p></p>  {/* change to number of saves */}
+              </button>
+              <button className="save-and-like-button" >
+                <ThumbUpAltIcon style={{ marginRight: '10px' }}/>
+                <p>Like</p>
+                <p></p> {/*  change to number of likes */}
+              </button>
+            </div>
           </div>
           <div className="">
-            {/*<Comments/>*/}
+            <Comments/>
           </div>
         </div>
 

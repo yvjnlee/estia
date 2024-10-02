@@ -195,3 +195,31 @@
     padding: 0;
     /* Remove padding from <p> elements */
 }
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.save-and-like-button {
+    display: flex;
+    flex-direction: row;
+    font-size: 15px;
+    background-color: #151B23;
+    align-items: center;
+    margin-right: 2rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-radius: 1rem;
+    border: none;
+    transition: transform 1s ease;
+    transition: background-color 0.75s ease;
+}
+
+.save-and-like-button:hover {
+    background-color: #2C3E50;
+    transform: scale(1.01);
+}
