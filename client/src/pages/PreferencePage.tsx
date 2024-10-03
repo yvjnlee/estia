@@ -89,7 +89,7 @@ say you are giving a json formatted response just give the json file. Do not rep
           },
         ],
         model: "llama3-8b-8192",
-        temperature: 0.5,
+        temperature: 0.05,
         max_tokens: 1024,
         top_p: 1,
         stream: false,

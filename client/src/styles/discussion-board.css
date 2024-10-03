@@ -17,28 +17,32 @@ body {
     margin: 20px 0;
     background-color: #151B23;
     border-radius: 10px;
-    padding: 2.5rem;
+    padding: 3rem;
+    padding-top: 5rem !important;
     height: 100px;
 
 }
 .discussion-input input {
     position: relative;
     border: none;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #ffffff;
     background-color: transparent;
-    padding: 0.5rem;
     font-size: 16px;
 }
 
 .discussion-input input:hover {
+    padding-bottom: 1rem;
+
     border-bottom: 1px solid white;
     background-color: transparent;
 }
 
 .discussion-input input:focus {
+    padding-bottom: 1rem; 
     border: none;
     outline:none;
-    border-bottom: 1px solid #858282;
+    border-bottom: 1px solid #444444;
     background-color: transparent;
 }
 
@@ -48,7 +52,7 @@ body {
     top: 35%;
     left: 3%;
     transform: translateY(-50%);
-    font-size: 14px;
+    font-size: 1.5rem;
     color: #ffffff;
     padding: 1.6rem;
     pointer-events: none;
@@ -58,7 +62,7 @@ body {
 .discussion-input input:focus~label,
 .discussion-input input:valid~label {
     top: 20%;
-    font-size: 12px;
+    font-size: 1.2rem;
     color: #858282;
 }
 
@@ -120,6 +124,10 @@ body {
     padding-bottom: 1.5rem;
     padding-left: 1.5rem;
     
+}
+
+.placeholders {
+    color: #181818;
 }
 
 .vote {

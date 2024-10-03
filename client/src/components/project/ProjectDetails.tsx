@@ -7,8 +7,8 @@ import { useProject } from "../../context/ProjectContext";
 // Import the new projects data
 
 // Imported icons
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import StarIcon from '@mui/icons-material/Star';
+import LikeImage from "../../img/ThumbsUp.svg";
+import FavImage from "../../img/Star.svg";
 
 // Import components
 import {Navbar} from "../navbar/Navbar";
@@ -71,13 +71,13 @@ console.log(projects);  //
           </div>
             <div className ="button-container">
               <button className="save-and-like-button">
-                 <StarIcon fontSize="medium" style={{ marginRight: '10px' }}/>
+                 <img className="like-fav-icon" src={FavImage}/>
                  <p>Save</p> 
                 <p></p>  {/* change to number of saves */}
               </button>
               <button className="save-and-like-button" >
-                <ThumbUpAltIcon style={{ marginRight: '10px' }}/>
-                <p>Like</p>
+              <img className="like-fav-icon" src={LikeImage}/>
+              <p>Like</p>
                 <p></p> {/*  change to number of likes */}
               </button>
             </div>

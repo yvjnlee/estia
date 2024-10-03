@@ -183,6 +183,7 @@
 
 .button-container {
     display: flex;
+    margin-top: 1rem;
     flex-direction: row;
     
 }
@@ -190,21 +191,36 @@
 .save-and-like-button {
     display: flex;
     flex-direction: row;
-    font-size: 15px;
+    font-size: 1rem;
     background-color: #151B23;
     align-items: center;
     margin-right: 2rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
     border-radius: 1rem;
     border: none;
-    transition: transform 1s ease;
-    transition: background-color 0.75s ease;
+    transition: transform 10s ease;
+    transition: background-color 0.3s ease;
 }
 
 .save-and-like-button:hover {
     background-color: #2C3E50;
     transform: scale(1.01);
+}
+
+.like-fav-icon{
+    width: 20px;
+    margin-right: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.existing-comment-header{
+    font-size: 1.5rem;
+
+}
+
+.existing-comment-body {
+    font-size: 1.5rem;
 }
