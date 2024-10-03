@@ -10,16 +10,16 @@ import PreferencePage from "../pages/PreferencePage";
 import GiveProject from "../components/search/ai/GiveProjectPage";
 
 const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/add-project/*" element={<AddProjectPage />} />
-      <Route path="/preference/" element={<PreferencePage />} />
-      <Route path="/preference/give-project" element={<GiveProject />} />
-      <Route path="/project/*" element={<ProjectsRoutes />} />
-      <Route path="/profile/*" element={<ProfileRoutes />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/add-project/*" element={<AddProjectPage />} />
+            <Route path="/preference/" element={<PreferencePage />} />
+            <Route path="/preference/give-project" element={<GiveProject />} />
+            <Route path="/project/*" element={<ProjectsRoutes />} />
+            <Route path="/profile/*" element={<ProfileRoutes />} />
+        </Routes>
+    );
 };
 
 export default AppRoutes;
