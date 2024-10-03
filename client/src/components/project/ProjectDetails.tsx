@@ -73,28 +73,18 @@ const ProjectDetails: React.FC = () => {
               <DiscussionBoard/>
             </div>
           </div>
+          
           {/* Right side of page */}
           <div className="additional-information-container">
-            <div className="">
               <TechStack
                 tech1={project?.tech1 || ""}
                 tech2={project?.tech2 || ""}
               />
-            </div>
-
-            <div className="">
               <GitHubRepo repoPath={project?.repoPath as string} />
-            </div>
-
-            <div className="">
               <DifficultyLevel />
-            </div>
-
-            <div className="">
               <div className="sidebar-container">
                 <h1>Similar Projects</h1>
               </div>
-            </div>
           </div>
         </div>
         </div>

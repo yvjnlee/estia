@@ -1,75 +1,87 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
-
+import { useAuth } from "../../context/AuthContext";
 
 const DiscussionBoard: React.FC = () => {
-    // const [focused, setFocused] = useState<boolean>(false);
-    // const handleFocus = () => {
-    //     setFocused(true);
-    // }
-    // const handleBlur = () => {
-    //     setFocused(false);
-    // }
+    type Comment = {
+        user: string,
+        comment: string,
+        votes: number
+    }
+    const commentArr: Comment[] = [
+        {
+            user: 'michaelzhou1232',
+            comment: 'For the people who have the account page black when you just create the account, I...',
+            votes: 0
+        },
+        {
+            user: 'anne123',
+            comment: 'jdghjhglkhark',
+            votes: 0
+        },
+        {
+            user: 'anne1234',
+            comment: 'flglkajlkejkg',
+            votes: 0
+        }
+    ]
+    let { user } = useAuth();
 
-    const [voteUpHovered, setUpHovered] = useState<boolean>(false);
-    const [voteDownHovered, setDownHovered] = useState<boolean>(false);
-    const voteUpHover = () => {
-        setUpHovered(!voteUpHovered);
-    }
-    const voteDownHover = () => {
-        setDownHovered(!voteDownHovered);
-    }
-    
-
-    const [votes, setVotes] = useState(0); // fetch votes from backend
-    const voteUp = () => {
-        setVotes(votes + 1);
-    }
-    const voteDown = () => {
-        setVotes(votes - 1);
+    const changeVote = (user: string, numVotes: number) => {
+        setAllComments(allComments =>
+            allComments.map(comment =>
+              comment.user === user ? { ...comment, votes: comment.votes + numVotes } : comment
+            ));
     }
 
-    const [comment, setComment] = useState('');
-    const postComment = () => {
+    const [newComment, setNewComment] = useState('');
+    const [allComments, setAllComments] = useState<Comment[]>(commentArr);
 
-    }
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setComment(event.target.value);
+        console.log(event.target.value);
+        setNewComment(event.target.value);
     }
+
+    const postComment = () => {
+        if (newComment !== '') {
+            commentArr.push({  
+                user: user?.username ? user.username : 'Unknown User',
+                comment: newComment,
+                votes: 0
+            } )
+            console.log(commentArr);
+            setAllComments(commentArr);
+            setNewComment(''); // reset comment input
+        } else {
+            console.log("Your comment is empty.")
+        }
+    }
+
     return (
         <div className='comment-container'>
-
             <h1> Discussion (20)</h1>
             <div className="discussion-input">
-                <input type='text' placeholder={comment} onChange={updateComment} required></input>
+                <input type='text' value={newComment}  onChange={updateComment} required></input>
                 <label className='placeholders' >Add a comment...</label>
                 <button onClick={postComment}>Post</button>
             </div>
-
-            <div className="comment-section">
-                <div className="vote">
-                    <button onClick={voteUp}>
-                        <img src={UpChevron} />
-                    </button>
-                    <span>{votes}</span>
-                    <button onClick={voteDown}>
-                        <img src={DownChevron} />
-                    </button>
-                </div>
-                <div className="comment">
-                    <h3 className='existing-comment-header'>michaelzhou1232</h3> 
-                    <p className='existing-comment-body'>
-                        For the people who have the account page black when you just create the account, I've found that you must to Sign up, log out, and then login in order to the account creation actually
-                        impacts in firebase cloud and you can save your shows and get display at your account-
-                        At least I'm having this issue, and solved like that.
-                    </p>
-                    <button className="reply-btn">
-                        Reply
-                    </button>
-                </div>
-            </div>
+            <ul>
+            {allComments.map((comment) => (
+                <li className="comment-section" key={comment.user}>
+                    <div className="vote">
+                        <button onClick={() => changeVote(comment.user, 1)}><img src={UpChevron} /></button>
+                        <span>{comment.votes}</span>
+                        <button onClick={() => changeVote(comment.user, -1)}><img src={DownChevron} /></button>
+                    </div>
+                    <div className="comment">
+                        <h3 className = "existing-comment-header">{comment.user}</h3> 
+                        <p className = "existing-comment-body">{comment.comment}</p>
+                        <button className="reply-btn">Reply</button>
+                    </div>
+                </li>))}
+            </ul>
         </div>
     );
 };
