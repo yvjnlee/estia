@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
-import { useAuth, useUser } from "../../context";
-import { UUID } from "crypto";
+import { useAuth } from "../../context";
 
 export const ProfileButton = () => {
   const { session } = useAuth();
-  const { retrieveUser } = useUser();
+  // const { retrieveUser } = useUser();
 
-  const [username, setUsername] = useState<string>();
+  const [username, setUsername] = useState<string | null>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchUser = async () => {
     try {
-      const userData = await retrieveUser(session?.user.id as UUID);
-      setUsername(userData?.username);
+      if (session?.user?.id) {
+        // const user = await retrieveUser(session.user.id);
+        // console.log(user);
+        setUsername(session.user.email); // Assuming the user object has a username property
+      }
     } catch (error) {
       console.error("Error fetching user:", error);
     }
@@ -21,11 +24,22 @@ export const ProfileButton = () => {
 
   useEffect(() => {
     fetchUser();
-  }, [session]);
+    setLoading(false);
+  }, []);
 
   return (
-    <Link to={`/profile/${username}`} className="create-project-button">
-      Profile
-    </Link>
+    <>
+      {/* {loading && (
+        <>
+          Loading
+        </>
+      )}  */}
+      
+      {!loading && (
+        <Link to={`/profile/${username}`} className="create-project-button">
+          Profile
+        </Link>
+      )}
+    </>
   );
 };

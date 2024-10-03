@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAuth, useUser } from "../context";
 import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
+import { VisitProfile } from "../components/profile/VisitProfile";
 
 export const ProfilePage: React.FC = () => {
   const { username } = useParams();
@@ -10,7 +11,7 @@ export const ProfilePage: React.FC = () => {
   const { session } = useAuth();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [profile, setProfile] = useState<User>();
+  const [profile, setProfile] = useState<User | null>();
 
   const fetchUser = async () => {
     try {
@@ -38,14 +39,10 @@ export const ProfilePage: React.FC = () => {
         </>
       )}
 
-      {session?.user.id === profile?.id && (
-        <>
-          <div>
-            <p>Welcome back, {profile?.username}</p>
-            <p>Your id is: {profile?.id}</p>
-            <p>Your email is: {profile?.email}</p>
-          </div>
-        </>
+      {session?.user.id === profile?.id && profile &&(
+        <VisitProfile
+          profile={profile} 
+        />
       )}
 
       {loading && (

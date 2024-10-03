@@ -1,13 +1,16 @@
-import { UUID } from "crypto";
+export interface ProfileProps {
+  profile: User | null;
+}
 
 export interface UserProps {
   users: User[] | null;
-  retrieveUser: (id: UUID) => Promise<User | null>;
+  retrieveUser: (id: string) => Promise<User | null>;
   searchUser: (username: string) => Promise<User | null>;
+  syncUser: (id: string) => void;
 }
 
 export interface User {
-  id: UUID;
-  email: string;
+  id: string;
+  email?: string | undefined;
   username?: string;
 }
