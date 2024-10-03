@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { ProjectInfo, ProjectsProps } from "../types/project";
+import { ProjectInfo, ProjectsDB, ProjectsProps } from "../types/project";
 import { useAuth } from "./AuthContext";
 
 const ProjectContext = createContext<ProjectsProps | undefined>(undefined);
@@ -23,8 +23,21 @@ export const ProjectProvider: React.FC<{
           console.log(error);
         }
         // console.log(data);
-        setProjects(data as ProjectInfo[]); // Set the fetched data to state
-        setProjectFeed(data as ProjectInfo[]); // Set the fetched data to state
+        if (data) {
+          const mappedData : ProjectInfo[] = data.map((row: ProjectsDB) => ({
+            projectName: row.project_name,
+            createdAt: row.created_at,
+            tech1: row.tech1,
+            tech2: row.tech2,
+            colour: row.colour,
+            description: row.description,
+            videoId: row.video_Id,
+            repoPath: row.repo_Path,
+          }));
+
+          setProjects(mappedData);
+          setProjectFeed(mappedData);
+        }
       } catch (err) {
         console.log(err);
       } finally {
@@ -38,7 +51,7 @@ export const ProjectProvider: React.FC<{
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = projects?.filter((project) => {
       const matchesSearchQuery =
-        project.project_name?.toLowerCase().includes(lowercasedQuery) ||
+        project.projectName?.toLowerCase().includes(lowercasedQuery) ||
         project.description?.toLowerCase().includes(lowercasedQuery);
 
       const matchesTechStack =

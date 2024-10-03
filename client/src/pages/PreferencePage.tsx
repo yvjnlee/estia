@@ -25,7 +25,7 @@ const PreferencePage: React.FC = () => {
     setOutput(null);
 
     const apiKey = process.env.REACT_APP_GROQ_API_KEY;
-    console.log("API Key:", apiKey);
+    // console.log("API Key:", apiKey);
     const groq = new Groq({
       apiKey,
       dangerouslyAllowBrowser: true,

@@ -12,7 +12,7 @@ export const ProfileSearch: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>();
 
   // console.log(users);
-  console.log(userResults);
+  // console.log(userResults);
 
   // Handle search when button is clicked
   const handleSearch = async (id: string) => {

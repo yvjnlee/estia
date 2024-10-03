@@ -11,19 +11,20 @@ body {
 }
 
 .discussion-input {
+    display: flex;
+    flex-direction: column;
     position: relative;
     margin: 20px 0;
     background-color: #151B23;
     border-radius: 10px;
-    width: 100%;
-    padding-left: 2.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2.5rem;
+    padding: 2.5rem;
+    height: 100px;
+
 }
 .discussion-input input {
     position: relative;
     border: none;
-    border-bottom: 1px solid rgb(94, 94, 94);
+    border-bottom: 1px solid #ffffff;
     background-color: transparent;
     padding: 0.5rem;
     font-size: 16px;
@@ -37,26 +38,18 @@ body {
 .discussion-input input:focus {
     border: none;
     outline:none;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid #858282;
     background-color: transparent;
 }
-
-/* .add-comment-clicked{
-    border: none;
-    border-radius: 2px;
-    border-bottom: 1px solid rgb(139, 139, 139);
-    background-color: transparent;
-    padding: 0.5rem;
-} */
 
 /* input placeholder */
 .discussion-input label {
     position: absolute;
-    top: 50%;
-    left: 6%;
+    top: 35%;
+    left: 3%;
     transform: translateY(-50%);
     font-size: 14px;
-    color:  rgb(139, 139, 139);
+    color: #ffffff;
     padding: 1.6rem;
     pointer-events: none;
     transition: .5s;
@@ -64,79 +57,108 @@ body {
 
 .discussion-input input:focus~label,
 .discussion-input input:valid~label {
-    top: 30%;
+    top: 20%;
     font-size: 12px;
-    color: white;
+    color: #858282;
 }
 
 .discussion-input button {
     position: absolute;
-    background: white;
-    border: none;
-    color:  #151B23;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 8px;
-    height: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    margin-right: 0;
+    background: transparent;
+    border: solid;
+    border-width: 1px;
+    color:  #ffffff;
+    font-size: 18px;
+    height: 2rem;
+    width: 5rem;
     right: 5%;
-    top: 50%;
+    top: 70%;
     text-align: center;
+    border-radius: 0.5rem;
+    transition: border-color 0.25s ease;
+    transition: color 0.25s ease;
 }
 
 .discussion-input button:hover {
-    background: rgb(139, 139, 139);
-    transition: .5s;
-    transform: scale(1.1);
+    color:  #858282;
+    border-color:  #858282;
 }
 
 
 /* comment section css */
 .comment-section {
-    background: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    background-color: #151B23;
+    border-radius: 10px;
+    padding: 2rem;
+}
+.comment-form {
+    background-color: #151B23;
+    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+}
+
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding-right: 1.5rem;
+    padding-bottom: 4rem;
+    margin-top: 2rem;
+  
 }
 
 .comment {
-    background-color: #151B23;
-}
-
-/* textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    resize: none; 
-} */
-
-.comment button {
-    background-color: transparent;
-    border: none;
-}
-
-.comment button:hover {
-    transform: scale(1.05);
-}
-
-.comments-list {
-    margin-top: 20px;
-}
-
-.vote {
-    border: solid;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 10px;
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
     
 }
 
-
-ul {
-    list-style: none;
-    padding: 0;
+.vote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid;
+    border-width: 1px;
 }
 
-li {
-    background: #f1f1f1;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 4px;
+.vote button {
+    /* position: ; */
+    background-color: transparent;
+    border: none;
+    transition: color 0.25s ease;
+}
+
+.vote button:hover
+ {
+    transform: scale(1.05);
+    color: #858282;
+ }
+
+
+.reply-btn {
+    display: flex;
+    flex-direction: row;
+    width: 60px;
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    align-items: center;
+    margin-top: 0.75rem;
+    margin-left: -0.5rem;
+    font-size: 18px;
+    transition: color 0.25s ease;
+}
+
+.reply-btn:hover {
+    color: #858282;
 }

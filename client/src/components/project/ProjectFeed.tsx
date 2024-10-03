@@ -11,8 +11,8 @@ export const ProjectFeed: React.FC = () => {
         projects.map((project, index) => (
           <div className="project-row" key={index} data-scroll-section>
             <Project
-              project_name={project.project_name}
-              created_at={project.created_at}
+              projectName={project.projectName}
+              createdAt={project.createdAt}
               tech1={project.tech1}
               tech2={project.tech2}
               colour={project.colour}

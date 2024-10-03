@@ -11,7 +11,6 @@ import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import Comments from "./Comments";
-// import Comments from "./Comments";
 
 const ProjectDetails: React.FC = () => {
   const { projects } = useProject();
@@ -26,19 +25,13 @@ const ProjectDetails: React.FC = () => {
   const decodedTitle = decodeURIComponent(rawTitle);
 
   // Get the project details based on the decoded title parameter
-  const project = projects.find(
-    (project) => project.project_name === decodedTitle,
-  ) || {
-    project_name: `${decodedTitle} was not found`,
-    tech1: "Not Found",
-    tech2: "",
-    colour: "#000000",
-    description: "Details not available",
-    video_Id: "No video link found",
-    repo_Path: "No repo found",
-  };
+  const project = projects.find((project) => {
+    if (project.projectName === decodedTitle) {
+      return project
+    }
+  });
 
-  console.log(projects); //
+  // console.log(projects);
   return (
     <>
       <Navbar />
@@ -51,31 +44,33 @@ const ProjectDetails: React.FC = () => {
           <div className="">
             <div className="details-container">
               <div className="title-and-description">
-                <h1 className="details-title">{project.project_name}</h1>
+                <h1 className="details-title">{project?.projectName}</h1>
               </div>
               <div className="embed-container">
                 <div className="">
                   <div className="">
-                    <YouTubeEmbed videoId={project.video_Id as string} />
+                    <YouTubeEmbed videoId={project?.videoId as string} />
                   </div>
-                  <p className="details-subtitle">{project.description}</p>
+                  <p className="details-subtitle">{project?.description}</p>
                 </div>
               </div>
             </div>
-            <div className=""><Comments/></div>
+            <div className="">
+              <Comments />
+            </div>
           </div>
 
           {/* Right side of page */}
           <div className="additional-information-container">
             <div className="">
               <TechStack
-                tech1={project.tech1 || ""}
-                tech2={project.tech2 || ""}
+                tech1={project?.tech1 || ""}
+                tech2={project?.tech2 || ""}
               />
             </div>
 
             <div className="">
-              <GitHubRepo repoPath={project.repo_Path as string} />
+              <GitHubRepo repoPath={project?.repoPath as string} />
             </div>
 
             <div className="">

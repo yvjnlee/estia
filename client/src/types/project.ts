@@ -1,5 +1,19 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
+export interface ProjectsDB {
+  project_name: string;
+  created_at: string;
+  tech1?: string;
+  tech2?: string;
+  colour: string;
+  description?: string;
+  video_Id?: string;
+  repo_Path?: string;
+  theme?: string;
+  Likes?: number;
+  comment_thread_id?: number;
+}
+
 export interface ProjectsProps {
   supabase: SupabaseClient;
   projects: ProjectInfo[];
@@ -14,14 +28,14 @@ export interface ProjectsProps {
 }
 
 export interface ProjectInfo {
-  project_name: string;
-  created_at: string;
+  projectName: string;
+  createdAt: string;
   tech1?: string;
   tech2?: string;
   colour: string;
   description?: string;
-  video_Id?: string | null;
-  repo_Path?: string | null;
+  videoId?: string | null;
+  repoPath?: string | null;
 }
 
 export interface ProjectsProps {

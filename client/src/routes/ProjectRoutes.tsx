@@ -22,7 +22,7 @@ const ProjectsRoutes = () => {
       {projects.map((project, index) => (
         <Route
           key={index}
-          path={`/${project.project_name}`}
+          path={`/${project.projectName}`}
           element={<ProjectDetails />}
         />
       ))}

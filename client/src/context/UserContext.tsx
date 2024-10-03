@@ -33,7 +33,6 @@ export const UserProvider: React.FC<{
 
   // Retrieves user information based off of id
   const retreiveUser = async (id: string) => {
-    console.log(id)
     if (id) {
       try {
         const { data: profile, error } = await supabase
@@ -78,8 +77,6 @@ export const UserProvider: React.FC<{
   // Syncs user information from Auth table to public table
   const syncUser = async (id: string) => {
     console.log("Syncing User")
-    console.log(user)
-    console.log(id)
 
     if (user) {
       const { email } = user;
@@ -99,8 +96,6 @@ export const UserProvider: React.FC<{
         if (targetError) {
           console.error("Error checking target data:", targetError);
         }
-
-        console.log(targetData);
 
         if (!targetData) {
           const { error: insertError } = await supabase

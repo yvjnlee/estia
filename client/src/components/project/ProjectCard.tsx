@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ProjectInfo } from "../../types/project";
 
 const ProjectCard: React.FC<ProjectInfo> = ({
-  project_name,
+  projectName,
   tech1,
   tech2,
   colour,
@@ -23,11 +23,11 @@ const ProjectCard: React.FC<ProjectInfo> = ({
 
   return (
     <Link
-      to={`/project/${project_name}`}
+      to={`/project/${projectName}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <div className="project-container" style={containerStyle}>
-        <h2 className="project-title">{project_name}</h2>
+        <h2 className="project-title">{projectName}</h2>
         <div className="project-tech">
           <span className="tech-item">{tech1}</span>
           <span className="tech-item">{tech2}</span>

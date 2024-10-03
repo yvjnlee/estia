@@ -4,6 +4,8 @@ import { useAuth, useUser } from "../context";
 import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
 import { VisitProfile } from "../components/profile/VisitProfile";
+import { UserProfile } from "../components/profile/UserProfile";
+import { UserProjects } from "../components/profile/UserProjects";
 
 export const ProfilePage: React.FC = () => {
   const { username } = useParams();
@@ -33,16 +35,18 @@ export const ProfilePage: React.FC = () => {
 
       {profile && session?.user.id !== profile?.id && (
         <>
-          <div>
-            <p>Welcome to {profile.username}`s profile</p>
-          </div>
+          <UserProfile profile={profile} />
+
+          <UserProjects />
         </>
       )}
 
-      {session?.user.id === profile?.id && profile &&(
-        <VisitProfile
-          profile={profile} 
-        />
+      {session?.user.id === profile?.id && profile && (
+        <>
+          <VisitProfile profile={profile} />
+          
+          <UserProjects />
+        </>
       )}
 
       {loading && (

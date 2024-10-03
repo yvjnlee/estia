@@ -81,10 +81,10 @@ const GiveProjectPage: React.FC = () => {
 
     // Get project titles from the context
     const projectTitles =
-      projects?.map((project) => project.project_name).join(", ") || "";
+      projects?.map((project) => project.projectName).join(", ") || "";
 
     const apiKey = process.env.REACT_APP_GROQ_API_KEY;
-    console.log("API Key:", apiKey);
+    // console.log("API Key:", apiKey);
     const groq = new Groq({
       apiKey,
       dangerouslyAllowBrowser: true,
