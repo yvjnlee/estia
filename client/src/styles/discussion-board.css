@@ -137,6 +137,7 @@ body {
     justify-content: center;
     border: solid;
     border-width: 1px;
+    height: 80px;
 }
 
 .vote button {

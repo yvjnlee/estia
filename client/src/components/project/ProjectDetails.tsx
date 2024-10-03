@@ -14,7 +14,7 @@ import FavImage from "../../img/Star.svg";
 import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
-import Comments from "./Comments";
+import DiscussionBoard from "./DiscussionBoard";
 
 const ProjectDetails: React.FC = () => {
   const { projects } = useProject();
@@ -50,14 +50,12 @@ const ProjectDetails: React.FC = () => {
               <div className="title-and-description">
                 <h1 className="details-title">{project?.projectName}</h1>
               </div>
-              <div className="embed-container">
-                <div className="">
-                  <div className="">
+              {/* <div className="embed-container"> */}
+                <div className="description-container">
                     <YouTubeEmbed videoId={project?.videoId as string} />
-                  </div>
-                  <p className="details-subtitle">{project?.description}</p>
+                    <p className="details-subtitle">{project?.description}</p>
                 </div>
-              </div>
+              {/* </div> */}
             </div>
             <div className ="button-container">
               <button className="save-and-like-button">
@@ -72,7 +70,7 @@ const ProjectDetails: React.FC = () => {
               </button>
 </div>
             <div className="">
-              <Comments />
+              <DiscussionBoard/>
             </div>
           </div>
           {/* Right side of page */}

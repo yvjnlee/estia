@@ -95,18 +95,21 @@
     /* Width is three times the height */
 }
 
+.description-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -5rem;
+}
 
-
-.title-and-description {}
-
-.embed-container {
+/* .embed-container {
     display: flex;
     animation: fadeIn 1s forwards;
     padding-right: 2rem;
     align-items: center;
     margin-left: -8rem;
     justify-content: center;
-}
+} */
 
 
 .github-container {

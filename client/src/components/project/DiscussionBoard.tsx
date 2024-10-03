@@ -4,7 +4,7 @@ import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
 
 
-const Comments: React.FC = () => {
+const DiscussionBoard: React.FC = () => {
     // const [focused, setFocused] = useState<boolean>(false);
     // const handleFocus = () => {
     //     setFocused(true);
@@ -59,7 +59,7 @@ const Comments: React.FC = () => {
                     </button>
                 </div>
                 <div className="comment">
-                    <h3 className='existing-comment-header'>michaelzhou1232</h3>
+                    <h3 className='existing-comment-header'>michaelzhou1232</h3> 
                     <p className='existing-comment-body'>
                         For the people who have the account page black when you just create the account, I've found that you must to Sign up, log out, and then login in order to the account creation actually
                         impacts in firebase cloud and you can save your shows and get display at your account-
@@ -74,4 +74,4 @@ const Comments: React.FC = () => {
     );
 };
 
-export default Comments;
+export default DiscussionBoard;
