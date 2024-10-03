@@ -54,7 +54,7 @@ const GiveProjectPage: React.FC = () => {
                   onClick={() =>
                     navigate(`/project/${encodeURIComponent(project)}`)
                   } // Navigate to project details page
-                  style={{ cursor: "pointer", textDecoration: "underline" }} // Add pointer and underline for clickable effect
+                  style={{ cursor: "pointer", textDecoration: "underline" }} 
                 >
                   {project}
                 </h5>
@@ -79,12 +79,14 @@ const GiveProjectPage: React.FC = () => {
     setLoading(true);
     setOutput(null);
 
-    // Get project titles from the context
-    const projectTitles =
-      projects?.map((project) => project.projectName).join(", ") || "";
+    // Get project titles and tech from the context
+    const projectTitlesWithTech =
+      projects
+        ?.map((project) => `[Titie: ${project.projectName}, Tech Stack: ${project.tech1} and ${project.tech2}]`)
+        .join(", ") || "";
 
     const apiKey = process.env.REACT_APP_GROQ_API_KEY;
-    // console.log("API Key:", apiKey);
+    console.log(projectTitlesWithTech)
     const groq = new Groq({
       apiKey,
       dangerouslyAllowBrowser: true,
@@ -97,16 +99,16 @@ const GiveProjectPage: React.FC = () => {
             role: "user",
             content: `Given the following submission, recommend the most relevant project titles from the database. 
                         Please provide the project names that are most relevant to the input. You can
-                        give one if you think only one fits the description. The database project titles are: [${projectTitles}]. 
+                        give one if you think only one fits the description. The database project titles and descriptions are: [${projectTitlesWithTech}]. 
                         Here is the user's submission: "${input}". Format your response as JSON, 
-                        and provide the result in the format:
+                        and provide the result in the format. Do NOT include the tech used, just the title:
                         {
-                          "Recommended Projects": ["project name 1", "project name 2", ...]
+                          "Recommended Projects": ["project title", "project title", ...]
                         }.`, // Change the response format to an array of projects
           },
         ],
         model: "llama3-8b-8192", // Ensure this is the correct model for your use case
-        temperature: 0.5,
+        temperature: 0.3,
         max_tokens: 1024,
         top_p: 1,
         stream: false,
