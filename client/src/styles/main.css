@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
 
 .main-container {
     padding-bottom: 100px;
     /* Adds space at the bottom */
     position: relative;
     /* Ensure the container is in a stacking context */
-
-
 }
 
 .heading-container {
@@ -19,7 +17,6 @@
     border-radius: 32px;
     border-top-left-radius: 32px;
     border-top-right-radius: 32px;
-
 }
 
 .heading-background {
@@ -93,19 +90,17 @@
     border: none;
 }
 
-
 .nav-buttons-container {
     display: flex;
-    align-items: center; 
-    margin-left: auto; 
-  }
+    align-items: center;
+    margin-left: auto;
+}
 
 .log-out-button:hover {
     /* filter: brightness(0.8);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); */
     background-color: #151b23;
     color: #fff;
-    
 }
 
 .nav-buttons {
@@ -114,24 +109,23 @@
 
 .create-project-button {
     position: relative;
-    display: inline-block; 
+    display: inline-block;
     margin-left: auto;
     padding: 10px 20px;
     border: none;
-    background: transparent; 
-    color: white; 
-    font-size: 16px; 
+    background: transparent;
+    color: white;
+    font-size: 16px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.2s ease; 
-    text-decoration: none; 
+    transition: transform 0.2s ease;
+    text-decoration: none;
 }
 
 .create-project-button:hover {
     transform: scale(1.1); /* Scale up on hover */
     filter: brightness(1.2); /* Slightly brighten the text */
 }
-
 
 .more-btn {
     background: none;
@@ -141,11 +135,11 @@
     text-decoration: underline;
     padding: 8px;
     font-size: 1rem;
-  }
-  
-  @media (max-width: 480px) {
+}
+
+@media (max-width: 480px) {
     .more-btn {
-      display: block; 
-      margin-top: 8px; /* Adds space above the button */
+        display: block;
+        margin-top: 8px; /* Adds space above the button */
     }
-  }
+}

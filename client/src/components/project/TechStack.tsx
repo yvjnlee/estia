@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 import cSharp from "../../img/programminglogos/c#.svg";
-import css from "../../img/programminglogos/css.svg"
+import css from "../../img/programminglogos/css.svg";
 import cPlusPlus from "../../img/programminglogos/c++.svg";
 import c from "../../img/programminglogos/c.svg";
 import html from "../../img/programminglogos/html.svg";
@@ -106,34 +106,34 @@ const techImages: { [key: string]: string } = {
 const TechStack: React.FC<{ tech1: string; tech2: string }> = ({ tech1, tech2 }) => {
     const translateTechName = (tech: string): string => {
         const translations: { [key: string]: string } = {
-            'C++': 'cPlusPlus',
-            'C#': 'Csharp',
-            'HTML/CSS': 'htmlcss',
-            'React Native': 'reactnative',
+            "C++": "cPlusPlus",
+            "C#": "Csharp",
+            "HTML/CSS": "htmlcss",
+            "React Native": "reactnative",
         };
         return translations[tech] || tech.toLowerCase();
     };
-    
+
     const getTechImage = (tech: string): string | undefined => {
         const translatedTech = translateTechName(tech);
         return techImages[translatedTech] || undefined; // Return the corresponding image or undefined if not found
     };
 
-return (
-    <div className="sidebar-container">
-        <h1>Tech Stack</h1>
-        <div className='tech-images-div-container'>
-            <div className='tech-images-div'>
-                <img src={getTechImage(tech1)} alt={tech1} className='tech-image' />
-                <p className='tech-stack-details'>{tech1}</p>
-            </div>
-            <div className='tech-images-div'>
-                <img src={getTechImage(tech2)} alt={tech2} className='tech-image' />
-                <p className='tech-stack-details'>{tech2}</p>
+    return (
+        <div className="sidebar-container">
+            <h1>Tech Stack</h1>
+            <div className="tech-images-div-container">
+                <div className="tech-images-div">
+                    <img src={getTechImage(tech1)} alt={tech1} className="tech-image" />
+                    <p className="tech-stack-details">{tech1}</p>
+                </div>
+                <div className="tech-images-div">
+                    <img src={getTechImage(tech2)} alt={tech2} className="tech-image" />
+                    <p className="tech-stack-details">{tech2}</p>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default TechStack;
