@@ -40,12 +40,12 @@ const ProjectDetails: React.FC = () => {
     <>
       <Navbar />
       <div className="details-main-container">
-        <button onClick={() => navigate(-1)} className="back-button">
-          Back
-        </button>
         {/* Left side of page */}
         <div className="grid-container">
           <div className="">
+          <button onClick={() => navigate(-1)} className="back-button">
+          Back
+        </button>
             <div className="details-container">
               <div className="title-and-description">
                 <h1 className="details-title">{project?.projectName}</h1>
@@ -59,10 +59,6 @@ const ProjectDetails: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="">
-              <Comments />
-            </div>
-          </div>
             <div className ="button-container">
               <button className="save-and-like-button">
                  <img className="like-fav-icon" src={FavImage}/>
@@ -74,7 +70,11 @@ const ProjectDetails: React.FC = () => {
               <p>Like</p>
                 <p></p> {/*  change to number of likes */}
               </button>
-
+</div>
+            <div className="">
+              <Comments />
+            </div>
+          </div>
           {/* Right side of page */}
           <div className="additional-information-container">
             <div className="">
@@ -99,8 +99,7 @@ const ProjectDetails: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-      </div>
+        </div>
     </>
   );
 };

@@ -131,9 +131,6 @@
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 5rem;
-    position: absolute;
-    margin-top: 1rem;
     z-index: 1000;
     transition: background-color 0.75s ease;
     transition: color 0.75s ease;

@@ -104,6 +104,7 @@
     animation: fadeIn 1s forwards;
     padding-right: 2rem;
     align-items: center;
+    margin-left: -8rem;
     justify-content: center;
 }
 
