@@ -11,7 +11,7 @@ const ProjectsRoutes = () => {
   // Add check for projects before trying to map over them
   if (!projects || !Array.isArray(projects)) {
     return <div>Loading projects...</div>;
-  }  
+  }
   return (
     <Routes>
       {/* need to change home page home */}
@@ -22,7 +22,7 @@ const ProjectsRoutes = () => {
       {projects.map((project, index) => (
         <Route
           key={index}
-          path={`/${project.project_name}`}
+          path={`/${project.projectName}`}
           element={<ProjectDetails />}
         />
       ))}

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
-import { useProject } from "../context/ProjectContext";
 
 // Initialize Locomotive Scroll
 export const initializeScroll = ({

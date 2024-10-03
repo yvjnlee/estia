@@ -1,32 +1,30 @@
 import React, { useState } from "react";
 import { useUser } from "../../../context";
-import { UUID } from "crypto";
 import { User } from "../../../types/user";
 import { SearchBar } from "../SearchBar";
 
 export const ProfileSearch: React.FC = () => {
   const { users, retrieveUser } = useUser();
 
-  const [userResults, setUserResults] = useState<User[] | User>( users as User[] );
+  const [userResults, setUserResults] = useState<User[] | User>(
+    users as User[],
+  );
   const [searchQuery, setSearchQuery] = useState<string>();
 
   // console.log(users);
-  console.log(userResults);
+  // console.log(userResults);
 
   // Handle search when button is clicked
-  const handleSearch = async (id: UUID) => {
+  const handleSearch = async (id: string) => {
     const user = await retrieveUser(id);
     setUserResults(user as User);
     console.log(userResults);
   };
 
   // Handle search when Enter key is pressed
-  const handleEnter = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    id: UUID,
-  ) => {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>, id: string) => {
     if (e.key === "Enter") {
-        handleSearch(id);
+      handleSearch(id);
     }
   };
 

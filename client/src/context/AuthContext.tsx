@@ -12,14 +12,20 @@ export const AuthProvider: React.FC<{
 }> = ({ children, supabase }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [showAuth, setShowAuth] = useState(false); // State to control showing login page
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>();
 
   // Handle session changes with useEffect
   useEffect(() => {
     // Get current session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session as Session);
-      setUser(session?.user as User || null);
+      setSession(session);
+
+      if (session?.user) {
+        const temp: User = session.user;
+        setUser(temp);
+      } else {
+        setUser(null);
+      }
     });
 
     // Set up session listener
@@ -27,7 +33,12 @@ export const AuthProvider: React.FC<{
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setUser(session?.user as User || null);
+      if (session?.user) {
+        const temp: User = session.user;
+        setUser(temp);
+      } else {
+        setUser(null);
+      }
     });
 
     // Cleanup subscription on component unmount

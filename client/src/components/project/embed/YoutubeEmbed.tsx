@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
 interface YouTubeEmbedProps {
-  videoId: string;  // Explicitly type the videoId as a string
+  videoId: string; // Explicitly type the videoId as a string
 }
 
 const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ videoId }) => {
   return (
-    <div className='youtube-container'>
+    <div className="youtube-container">
       <iframe
-      className="youtube-embed-iframe"
+        className="youtube-embed-iframe"
         width="560"
         height="315"
         src={`https://www.youtube.com/embed/${videoId}`}

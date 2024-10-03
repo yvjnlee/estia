@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { useAuth, useUser } from "../context";
 import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
+import { VisitProfile } from "../components/profile/VisitProfile";
+import { UserProfile } from "../components/profile/UserProfile";
+import { UserProjects } from "../components/profile/UserProjects";
 
 export const ProfilePage: React.FC = () => {
   const { username } = useParams();
@@ -10,7 +13,7 @@ export const ProfilePage: React.FC = () => {
   const { session } = useAuth();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [profile, setProfile] = useState<User>();
+  const [profile, setProfile] = useState<User | null>();
 
   const fetchUser = async () => {
     try {
@@ -32,27 +35,23 @@ export const ProfilePage: React.FC = () => {
 
       {profile && session?.user.id !== profile?.id && (
         <>
-          <div>
-            <p>Welcome to {profile.username}`s profile</p>
-          </div>
+          <UserProfile profile={profile} />
+
+          <UserProjects />
         </>
       )}
 
-      {session?.user.id === profile?.id && (
+      {session?.user.id === profile?.id && profile && (
         <>
-          <div>
-            <p>Welcome back, {profile?.username}</p>
-            <p>Your id is: {profile?.id}</p>
-            <p>Your email is: {profile?.email}</p>
-          </div>
+          <VisitProfile profile={profile} />
+          
+          <UserProjects />
         </>
       )}
 
       {loading && (
         <>
-            <div>
-                loading...
-            </div>
+          <div>loading...</div>
         </>
       )}
 

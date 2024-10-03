@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import GithubLogo from "../../../img/githublogo.webp";
 
 interface GitHubRepoProps {
@@ -20,7 +20,9 @@ const GitHubRepo: React.FC<GitHubRepoProps> = ({ repoPath }) => {
   useEffect(() => {
     const fetchRepoData = async () => {
       try {
-        const response = await fetch(`https://api.github.com/repos/${repoPath}`);
+        const response = await fetch(
+          `https://api.github.com/repos/${repoPath}`,
+        );
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
@@ -43,26 +45,32 @@ const GitHubRepo: React.FC<GitHubRepoProps> = ({ repoPath }) => {
   }
 
   return (
-    <a 
-      href={`https://github.com/${repoPath}`} 
-      target="_blank" 
+    <a
+      href={`https://github.com/${repoPath}`}
+      target="_blank"
       rel="noopener noreferrer"
-      className='github-container'
+      className="github-container"
     >
-      <div >
+      <div>
         <img className="github-logo" src={GithubLogo} alt="GitHub Logo" />
-        <h2 className='github-name'>{repoData.full_name}</h2>
-        <p className='github-description'>
+        <h2 className="github-name">{repoData.full_name}</h2>
+        <p className="github-description">
           {repoData.description
             ? repoData.description
-            : 'No description, website, or topics provided.'}
+            : "No description, website, or topics provided."}
         </p>
-        <div className='github-additional-information'>
-          <p className='github-additional-information-stars'>⭐ Stars: {repoData.stargazers_count}</p>
-          <p className='github-additional-information-forks'>🍴 Forks: {repoData.forks_count}</p>
-          <p className='github-additional-information-open-issues'>🐛 Open Issues: {repoData.open_issues_count}</p>
+        <div className="github-additional-information">
+          <p className="github-additional-information-stars">
+            ⭐ Stars: {repoData.stargazers_count}
+          </p>
+          <p className="github-additional-information-forks">
+            🍴 Forks: {repoData.forks_count}
+          </p>
+          <p className="github-additional-information-open-issues">
+            🐛 Open Issues: {repoData.open_issues_count}
+          </p>
         </div>
-        <div className='tooltip'>Open link on GitHub</div>
+        <div className="tooltip">Open link on GitHub</div>
       </div>
     </a>
   );

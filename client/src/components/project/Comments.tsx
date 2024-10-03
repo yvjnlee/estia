@@ -3,17 +3,25 @@ import { useState } from 'react';
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
 
-import ReplyIcon from '@mui/icons-material/Reply';
 
 const Comments: React.FC = () => {
-    // const [voteUpHovered, setUpHovered] = useState<boolean>(false);
-    // const [voteDownHovered, setDownHovered] = useState<boolean>(false);
-    // const voteUpHover = () => {
-    //     setUpHovered(!voteUpHovered);
+    // const [focused, setFocused] = useState<boolean>(false);
+    // const handleFocus = () => {
+    //     setFocused(true);
     // }
-    // const voteDownHover = () => {
-    //     setDownHovered(!voteDownHovered);
+    // const handleBlur = () => {
+    //     setFocused(false);
     // }
+
+    const [voteUpHovered, setUpHovered] = useState<boolean>(false);
+    const [voteDownHovered, setDownHovered] = useState<boolean>(false);
+    const voteUpHover = () => {
+        setUpHovered(!voteUpHovered);
+    }
+    const voteDownHover = () => {
+        setDownHovered(!voteDownHovered);
+    }
+    
 
     const [votes, setVotes] = useState(0); // fetch votes from backend
     const voteUp = () => {
@@ -40,7 +48,6 @@ const Comments: React.FC = () => {
                 <button onClick={postComment}>Post</button>
             </div>
 
-
             <div className="comment-section">
                 <div className="vote">
                     <button onClick={voteUp}>
@@ -62,7 +69,6 @@ const Comments: React.FC = () => {
                         Reply
                     </button>
                 </div>
-
             </div>
         </div>
     );

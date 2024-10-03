@@ -7,14 +7,14 @@ import GreyFilter from "../../../img/Grey_Filters.svg";
 import WhiteFilter from "../../../img/White_Filters.svg";
 
 export const ProjectSearch: React.FC = () => {
-  const { searchQuery, handleEnter, handleKeyPress, handleSearch } = useProject();
+  const { searchQuery, handleEnter, handleKeyPress, handleSearch } =
+    useProject();
 
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   const handleToggleFilters = () => {
     setShowFilters(!showFilters);
   };
-
 
   return (
     <div className="heading-container">
