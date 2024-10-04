@@ -1,46 +1,35 @@
+import supabase from "../../SupabaseClient";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
-import { ProjectInfo } from "../../types/project";
 import { User } from "../../types/user";
+import { ProjectInfo } from "../../types/project";
 import { CommentInfo, CommentDB } from "../../types/comment";
-import supabase from "../../SupabaseClient";
+import { useUser } from "../../context/UserContext"
+
 
 const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }> = ({ project, comments }) => {
-    
-    
-    // const commentArr: Comment[] = [
-    //     {
-    //         user: 'michaelzhou1232',
-    //         comment: 'For the people who have the account page black when you just create the account, I...',
-    //         votes: 0
-    //     },
-    //     {
-    //         user: 'anne123',
-    //         comment: 'jdghjhglkhark',
-    //         votes: 0
-    //     },
-    //     {
-    //         user: 'anne1234',
-    //         comment: 'flglkajlkejkg',
-    //         votes: 0
-    //     }
-    // ]
-
-    
-// export interface CommentInfo{
-//     commentId: number,
-//     projectId: string,
-//     userId: string,
-//     content: string,
-//     likes: number
-//     username: string
-// }
+    const { retrieveUser } = useUser();
     const { user } = useAuth();
-    const currProject = project;
+
+    const [currUser, setCurrUser] = useState<User | null>(null);
     const [newComment, setNewComment] = useState('');
     const [existingComments, setExistingComments] = useState<CommentInfo[]>(comments);
+
+    useEffect(() => {
+        // fetch user and set it
+        const fetchUser = async () => {
+            const userId = user?.id; // Safely get user.id
+
+            if (userId) {
+                const userData = await retrieveUser(userId); // Await the promise
+                setCurrUser(userData); // Set the user data in state
+            }
+        };
+
+        fetchUser(); // Call the async function
+    }, [retrieveUser]);
 
     const changeVote = ( commentId : number, votes: number) => {
         setExistingComments(existingComments =>
@@ -54,41 +43,44 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
         console.log(event.target.value);
         setNewComment(event.target.value);
     }
+
     // output temporary comment but it'll be in the database at the next reload
     const postComment = async () => {
-        
-        const { data, error } = await supabase
+        if (currUser) {
+            const { data, error } = await supabase
             .from('comments')
             .insert({
-                    projectId: project.projectId,
-                    userId: user.id,
+                    project_id: project.projectId,
+                    user_id: currUser.id,
                     content: newComment,
                     likes: 0,
-                    username: user.username
+                    username: currUser.username
                 })
             .select() // data holds the column object that was just added
-        if (error) {
-            console.log("Could not add comment!")
-        }
 
-        console.log(data);
-        console.log(comments);
+            if (error) {
+                console.log(error);
+                console.log("Could not add comment!")
+            }
 
-        if (data) {
-            const mappedData : CommentInfo = data[0].map((row: CommentDB) => ({
-                commentId: row.comment_id,
-                projectId: row.project_id,
-                userId: row.user_id,
-                content: row.content,
-                likes: row.likes,
-                username: row.username
-            }));
-            comments.push(mappedData);
+            if (data) {
+                const mappedData : CommentInfo = {
+                    commentId: data[0].comment_id,
+                    projectId: data[0].project_id,
+                    userId: data[0].user_id,
+                    content: data[0].content,
+                    likes: data[0].likes,
+                    username: data[0].username
+                };
+                comments.push(mappedData);
+            }
+            
+            console.log(comments);
+            setExistingComments(comments);
+            setNewComment('');
+        } else {
+            console.log("You can't comment!")
         }
-        
-        console.log(comments);
-        setExistingComments(comments);
-        setNewComment('');
     }
 
     return (
@@ -100,7 +92,7 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
                 <button onClick={postComment}>Post</button>
             </div>
             <ul>
-            {existingComments.map((comment) => (
+            {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
                         <button onClick={() => changeVote(comment.likes, 1)}><img src={UpChevron} /></button>

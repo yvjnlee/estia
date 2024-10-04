@@ -23,7 +23,7 @@ export const ProjectProvider: React.FC<{
                 // console.log(data);
                 if (data) {
                     const mappedData: ProjectInfo[] = data.map((row: ProjectsDB) => ({
-                        projectID: row.project_id,
+                        projectId: row.project_id,
                         projectName: row.project_name,
                         createdAt: row.created_at,
                         tech1: row.tech1,

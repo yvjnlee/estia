@@ -21,6 +21,7 @@ export const UserProjects: React.FC = () => {
                     // console.log(data);
                     if (data) {
                         const mappedData: ProjectInfo[] = data.map((row: ProjectsDB) => ({
+                            projectId: row.project_id,
                             projectName: row.project_name,
                             createdAt: row.created_at,
                             tech1: row.tech1,

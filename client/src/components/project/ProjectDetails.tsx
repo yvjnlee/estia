@@ -43,8 +43,10 @@ const ProjectDetails: React.FC = () => {
 
   // fetching the comments
   const [comments, setComments] = useState<CommentInfo[]>([]);
+
   useEffect(() => {
-    const fetchComments = async () => {
+    
+      const fetchComments = async () => {
         const { data, error } = await supabase
             .from("comments")
             .select("*")
@@ -53,7 +55,7 @@ const ProjectDetails: React.FC = () => {
         if (error) {
             console.log(error);
         } 
-
+        console.log("hiii")
         if (data) {
             const mappedData : CommentInfo[] = data.map((row: CommentDB) => ({
                 commentId: row.comment_id,
@@ -64,8 +66,11 @@ const ProjectDetails: React.FC = () => {
                 username: row.username
               }));
             setComments(mappedData);
+            
         }
-      }}, [])
+      }
+      fetchComments();
+    }, [])
 
   return (
     <>
