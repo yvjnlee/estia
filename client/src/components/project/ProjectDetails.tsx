@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
 import { useProject } from "../../context/ProjectContext";
-
-// Import the new projects data
+import { useState, useEffect } from "react";
+import { CommentInfo, CommentDB } from "../../types/comment";
+import supabase from "../../SupabaseClient";
 
 // Imported icons
 import LikeImage from "../../img/ThumbsUp.svg";
@@ -15,6 +16,7 @@ import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
+import { existsSync } from "fs";
 
 const ProjectDetails: React.FC = () => {
   const { projects } = useProject();
@@ -35,7 +37,36 @@ const ProjectDetails: React.FC = () => {
     }
   });
 
-  // console.log(projects);
+  if (!project) {
+    throw new Error("This project doesn't exist");
+  }
+
+  // fetching the comments
+  const [comments, setComments] = useState<CommentInfo[]>([]);
+  useEffect(() => {
+    const fetchComments = async () => {
+        const { data, error } = await supabase
+            .from("comments")
+            .select("*")
+            .eq("project_id", project.projectId) // fix later
+
+        if (error) {
+            console.log(error);
+        } 
+
+        if (data) {
+            const mappedData : CommentInfo[] = data.map((row: CommentDB) => ({
+                commentId: row.comment_id,
+                projectId: row.project_id,
+                userId: row.user_id,
+                content: row.content,
+                likes: row.likes,
+                username: row.username
+              }));
+            setComments(mappedData);
+        }
+      }}, [])
+
   return (
     <>
       <Navbar />
@@ -68,9 +99,9 @@ const ProjectDetails: React.FC = () => {
               <p>Like</p>
                 <p></p> {/*  change to number of likes */}
               </button>
-</div>
+            </div>
             <div className="">
-              <DiscussionBoard/>
+              <DiscussionBoard project={project} comments={comments}/>
             </div>
           </div>
           
