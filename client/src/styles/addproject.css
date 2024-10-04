@@ -31,23 +31,21 @@
 .add-project-form input,
 .add-project-form textarea {
     width: 100%;
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
     margin-bottom: 15px;
     border-radius: 6px;
     border: none;
     padding: 1rem;
-    background-color: #151B23;
+    background-color: #151b23;
     color: #fff;
 }
 
-.name-input {  
+.name-input {
     width: 95% !important;
     resize: none;
-
-
 }
 
-.description-input {     
+.description-input {
     height: 160px;
     width: 95% !important;
     resize: none;
@@ -67,19 +65,17 @@
     border: none;
     padding: 1rem;
     width: 95%;
-    background-color: #151B23;
-    
+    background-color: #151b23;
 }
 
 .tech-select:first-child {
-    margin-left: 0; 
+    margin-left: 0;
 }
 
 /* Optional: style the select options */
 .tech-select option {
     padding: 0.5rem;
 }
-
 
 .add-project-form input[type="color"] {
     width: 100px;
@@ -120,7 +116,7 @@
 
 .link-split-input {
     margin-left: 1rem;
-    width: 300px !important; 
+    width: 300px !important;
 }
 
 .back-button {
@@ -169,5 +165,4 @@
         width: 30px;
         height: 30px;
     }
-
 }

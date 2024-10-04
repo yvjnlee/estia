@@ -19,23 +19,23 @@ import DiscussionBoard from "./DiscussionBoard";
 import { existsSync } from "fs";
 
 const ProjectDetails: React.FC = () => {
-  const { projects } = useProject();
-  const navigate = useNavigate(); // Hook for navigation
+    const { projects } = useProject();
+    const navigate = useNavigate(); // Hook for navigation
 
-  // Get the current URL and extract the project title
-  const url = window.location.href;
-  const urlParts = url.split("/");
-  const rawTitle = urlParts[urlParts.length - 1];
+    // Get the current URL and extract the project title
+    const url = window.location.href;
+    const urlParts = url.split("/");
+    const rawTitle = urlParts[urlParts.length - 1];
 
-  // Decode the project name from URL
-  const decodedTitle = decodeURIComponent(rawTitle);
+    // Decode the project name from URL
+    const decodedTitle = decodeURIComponent(rawTitle);
 
-  // Get the project details based on the decoded title parameter
-  const project = projects.find((project) => {
-    if (project.projectName === decodedTitle) {
-      return project
-    }
-  });
+    // Get the project details based on the decoded title parameter
+    const project = projects.find((project) => {
+        if (project.projectName === decodedTitle) {
+            return project;
+        }
+    });
 
   if (!project) {
     throw new Error("This project doesn't exist");
@@ -86,7 +86,6 @@ const ProjectDetails: React.FC = () => {
                     <YouTubeEmbed videoId={project?.videoId as string} />
                     <p className="details-subtitle">{project?.description}</p>
                 </div>
-              {/* </div> */}
             </div>
             <div className ="button-container">
               <button className="save-and-like-button">

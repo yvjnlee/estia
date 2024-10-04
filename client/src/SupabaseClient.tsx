@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-
+/* eslint-disable no-undef */
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
     process.env.REACT_APP_PROJECT_URL as string,

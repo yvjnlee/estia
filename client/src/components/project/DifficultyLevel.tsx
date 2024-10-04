@@ -1,6 +1,6 @@
 import React from "react";
 
-const DifficultyLevel: React.FC = ( ) => {
+const DifficultyLevel: React.FC = () => {
     return (
         <div className="sidebar-container">
             <h1>Difficulty Level</h1>

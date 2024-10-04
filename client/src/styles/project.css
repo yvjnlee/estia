@@ -1,308 +1,305 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-    /* Optional: small upward movement */
-  }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        /* Optional: small upward movement */
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .projects-container {
-  border-radius: 8px;
-  display: grid;
-  grid-template-columns: repeat(4, 24rem);
-  /* Fixed width for each column */
-  flex-wrap: nowrap;
-  opacity: 0;
-  border-radius: 2rem;
-  transform: translateY(20px);
-  animation: fadeIn 1s forwards;
-  align-items: start;
-  justify-content: center;
-  margin-top: -14rem;
-  z-index: 3;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 24rem);
+    /* Fixed width for each column */
+    flex-wrap: nowrap;
+    opacity: 0;
+    border-radius: 2rem;
+    transform: translateY(20px);
+    animation: fadeIn 1s forwards;
+    align-items: start;
+    justify-content: center;
+    margin-top: -14rem;
+    z-index: 3;
 }
 
 @media (max-width: 900px) {
-  .projects-container {
-    grid-template-columns: repeat(2, 24rem);
-    /* 2 column */
-
-  }
+    .projects-container {
+        grid-template-columns: repeat(2, 24rem);
+        /* 2 column */
+    }
 }
 
 @media (max-width: 440px) {
-  .projects-container {
-    grid-template-columns: repeat(1, 25rem);
-    /* 1 column */
-  }
+    .projects-container {
+        grid-template-columns: repeat(1, 25rem);
+        /* 1 column */
+    }
 }
 
 .project-container {
-  border-radius: 4px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  margin-bottom: 0px;
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+    margin-bottom: 0px;
 }
 
 .projects-container .project-row:nth-child(2n) {
-  margin-top: 5rem;
-  margin-bottom: -5rem;
+    margin-top: 5rem;
+    margin-bottom: -5rem;
 }
 
 @media (max-width: 950px) {
-  .projects-container .project-row:nth-child(2n) {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-  }
+    .projects-container .project-row:nth-child(2n) {
+        margin-top: 0rem;
+        margin-bottom: 0rem;
+    }
 }
 
 .project-container:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  transform: scale(1.01);
-  /* Makes the element 5% larger */
+    filter: brightness(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.01);
+    /* Makes the element 5% larger */
 }
 
-
 .project-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #f3f3f3;
-  max-width: 50%;
-  /* Adjust as needed to fit within container */
-  margin-bottom: auto;
-  /* Pushes the .project-tech to the bottom */
-
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f3f3f3;
+    max-width: 50%;
+    /* Adjust as needed to fit within container */
+    margin-bottom: auto;
+    /* Pushes the .project-tech to the bottom */
 }
 
 .project-tech {
-  display: flex;
-  gap: 10px;
-  margin-top: auto;
-  /* Ensures this sticks to the bottom */
-
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    /* Ensures this sticks to the bottom */
 }
 
 .tech-item {
-  font-size: 12px;
-  color: #000000;
-  background-color: #e0e0e0;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: 800;
+    font-size: 12px;
+    color: #000000;
+    background-color: #e0e0e0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 800;
 }
 
 .project-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 /* Modal overlay for background blur */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5) !important;
-  /* Semi-transparent background */
-  backdrop-filter: blur(8px);
-  /* Blurs the background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  /* Ensure modal is on top */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5) !important;
+    /* Semi-transparent background */
+    backdrop-filter: blur(8px);
+    /* Blurs the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Ensure modal is on top */
 }
 
 /* Modal content */
 .modal-content {
-  background: #121212 !important;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 50rem;
-  text-align: center;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important;
-  position: relative;
-  /* Required for positioning the close button */
+    background: #121212 !important;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 50rem;
+    text-align: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important;
+    position: relative;
+    /* Required for positioning the close button */
 }
 
 /* Close button */
 .close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .close-button:hover {
-  background-color: darkred;
+    background-color: darkred;
 }
 
 .search-container {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .search-bar {
-  z-index: 5;
-  padding: 1rem;
-  width: 100%;
-  border-radius: 12px;
-  background-color: #202020 !important;
-  border: none;
-  margin-top: 1rem;
-  font-size: 24px;
-  color: white;
+    z-index: 5;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #202020 !important;
+    border: none;
+    margin-top: 1rem;
+    font-size: 24px;
+    color: white;
 }
 
-.search-bar[type=text] {
-  color: white;
+.search-bar[type="text"] {
+    color: white;
 }
 
 .search-button {
-  padding: 1rem;
-  background-color: #202020 !important;
-  color: rgb(234, 234, 234);
-  border: 2px solid #202020 !important;
-  border-radius: 12px 12px 12px 12px;
-  margin-top: 1rem;
-  margin-left: 4rem;
-  cursor: pointer;
-  font-size: 24px;
+    padding: 1rem;
+    background-color: #202020 !important;
+    color: rgb(234, 234, 234);
+    border: 2px solid #202020 !important;
+    border-radius: 12px 12px 12px 12px;
+    margin-top: 1rem;
+    margin-left: 4rem;
+    cursor: pointer;
+    font-size: 24px;
 }
 
 .search-button:hover {
-  color: rgb(149, 149, 149) !important;
+    color: rgb(149, 149, 149) !important;
 }
 
 .dropdown-container {
-  display: flex;
-  margin-top: 2.5rem;
+    display: flex;
+    margin-top: 2.5rem;
 }
 
 .dropdown {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 20px;
-  margin-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 20px;
+    margin-left: 1rem;
 }
 
 .dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .filter-label {
-  font-size: 24px;
+    font-size: 24px;
 }
 
 .search-bar-and-filters {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .filters-button {
-  padding: 1rem;
-  background-color: #202020 !important;
-  border: 2px solid #202020 !important;
-  border-radius: 12px 12px 12px 12px;
-  color: rgb(125, 125, 125);
-  margin-top: 1rem;
-  margin-left: 1rem;
-  cursor: pointer;
-  font-size: 24px;
+    padding: 1rem;
+    background-color: #202020 !important;
+    border: 2px solid #202020 !important;
+    border-radius: 12px 12px 12px 12px;
+    color: rgb(125, 125, 125);
+    margin-top: 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    font-size: 24px;
 }
 
 .white-filter {
-  color: rgb(234, 234, 234);
+    color: rgb(234, 234, 234);
 }
 
 .grey-filter {
-  color: rgb(61, 61, 61);
+    color: rgb(61, 61, 61);
 }
 
-
 .filters-button:hover {
-  background-color: rgb(38, 38, 38) !important;
+    background-color: rgb(38, 38, 38) !important;
 }
 
 /* Make sure the filters container is hidden by default */
 .filters {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
-.filters-logo{
-  width: 30px;
-  margin-right: 8px;
+.filters-logo {
+    width: 30px;
+    margin-right: 8px;
 }
 
 /* Fade in from top */
 @keyframes fadeInFromTop {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Fade out to top */
 @keyframes fadeOutToTop {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 }
 
 /* Animation classes */
 .filters {
-  opacity: 1;
-  animation-duration: 0.15s;
-  animation-fill-mode: both;
+    opacity: 1;
+    animation-duration: 0.15s;
+    animation-fill-mode: both;
 }
 
 .filters.fade-in {
-  animation-name: fadeInFromTop;
+    animation-name: fadeInFromTop;
 }
 
 .filters.fade-out {
-  animation-name: fadeOutToTop;
-  animation-fill-mode: forwards;
+    animation-name: fadeOutToTop;
+    animation-fill-mode: forwards;
 }
 
 /* Transition for smooth expansion */
 .filters-container {
-  overflow: hidden;
-  height: 0;
-  transition: height 0.8s ease-in-out;
+    overflow: hidden;
+    height: 0;
+    transition: height 0.8s ease-in-out;
 }
 
 /* When the filters are shown */
 .filters-container.show {
-  height: 110px;
+    height: 110px;
 }

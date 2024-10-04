@@ -92,11 +92,11 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
     }
 
     return (
-        <div className='comment-container'>
+        <div className="comment-container">
             <h1> Discussion (20)</h1>
             <div className="discussion-input">
-                <input type='text' value={newComment}  onChange={updateComment} required></input>
-                <label className='placeholders' >Add a comment...</label>
+                <input type="text" value={newComment} onChange={updateComment} required></input>
+                <label className="placeholders">Add a comment...</label>
                 <button onClick={postComment}>Post</button>
             </div>
             <ul>
