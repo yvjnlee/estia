@@ -1,15 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 
 .initial-container {
-    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;;
- align-items: center;
- margin-top: 10%;
- display: flex;
- flex-direction: column;
- position: relative; /* Establishes positioning context */
-
+    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    align-items: center;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Establishes positioning context */
 }
 
 .initial-title {
@@ -24,12 +22,12 @@
 }
 
 .initial-logo {
-  display: flex;
-  letter-spacing: 6px;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  margin-bottom: 1rem;
+    display: flex;
+    letter-spacing: 6px;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    margin-bottom: 1rem;
 }
 
 .initial-slogan {
@@ -44,13 +42,12 @@
 }
 
 .inital-feedback {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
 }
-
 
 .initial-button {
     padding: 10px 20px;
@@ -64,103 +61,93 @@
     color: black !important;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     font-size: 16px;
-    text-align: center; 
-  }
-  
-  .initial-button:hover {
-    background-color: rgb(148, 148, 148) !important;
-    z-index: 1; 
-  }
+    text-align: center;
+}
 
+.initial-button:hover {
+    background-color: rgb(148, 148, 148) !important;
+    z-index: 1;
+}
 
 /* Horizontal Scroller */
 
-  
-  .scroller {
+.scroller {
     max-width: 600px;
     margin-top: 2rem;
-  }
-  
-  .scroller__inner {
+}
+
+.scroller__inner {
     padding-block: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-  }
-  
-  .scroller[data-animated="true"] {
+}
+
+.scroller[data-animated="true"] {
     overflow: hidden;
-    -webkit-mask: linear-gradient(
-      90deg,
-      transparent,
-      white 20%,
-      white 80%,
-      transparent
-    );
+    -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
     mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-  }
-  
-  .scroller[data-animated="true"] .scroller__inner {
+}
+
+.scroller[data-animated="true"] .scroller__inner {
     width: max-content;
     flex-wrap: nowrap;
-    animation: scroll var(--_animation-duration, 40s)
-      var(--_animation-direction, forwards) linear infinite;
-  }
-  
-  .scroller[data-direction="right"] {
+    animation: scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear
+        infinite;
+}
+
+.scroller[data-direction="right"] {
     --_animation-direction: reverse;
-  }
-  
-  .scroller[data-direction="left"] {
+}
+
+.scroller[data-direction="left"] {
     --_animation-direction: forwards;
-  }
-  
-  .scroller[data-speed="fast"] {
+}
+
+.scroller[data-speed="fast"] {
     --_animation-duration: 20s;
-  }
-  
-  .scroller[data-speed="slow"] {
+}
+
+.scroller[data-speed="slow"] {
     --_animation-duration: 80s;
-  }
-  
-  @keyframes scroll {
+}
+
+@keyframes scroll {
     to {
-      transform: translate(calc(-50% - 0.5rem));
+        transform: translate(calc(-50% - 0.5rem));
     }
-  }
-  
-  /* general styles */
-  
-  :root {
+}
+
+/* general styles */
+
+:root {
     --clr-neutral-100: hsl(0, 0%, 100%) !important;
     --clr-primary-100: hsl(205, 15%, 58%) !important;
     --clr-primary-400: hsl(0, 0%, 27%) !important;
     --clr-primary-800: hsl(217, 33%, 17%) !important;
     --clr-primary-900: hsl(218, 33%, 9%) !important;
-  }
-  
-  html {
+}
+
+html {
     color-scheme: dark;
-  }
-  
-  
-  .tag-list {
+}
+
+.tag-list {
     margin: 0;
     padding-inline: 0;
     list-style: none;
-  }
-  
-  .tag-list li {
+}
+
+.tag-list li {
     padding: 0.8rem;
     background: var(--clr-primary-400);
     border-radius: 0.5rem;
     box-shadow: 0 0.5rem 1rem -0.25rem var(--clr-primary-900);
-  }
-  
-  /* for testing purposed to ensure the animation lined up correctly */
-  .test {
+}
+
+/* for testing purposed to ensure the animation lined up correctly */
+.test {
     background: red !important;
-  }
-  
+}

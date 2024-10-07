@@ -1,135 +1,110 @@
-import { useState } from 'react';
-
+import supabase from "../../SupabaseClient";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
+import { User } from "../../types/user";
+import { ProjectInfo } from "../../types/project";
+import { CommentInfo, CommentDB } from "../../types/comment";
+import { useUser } from "../../context/UserContext"
 
-import UpChevronClicked from "../../img/UpChevronClicked.svg";
-import DownChevronClicked from "../../img/DownChevronClicked.svg";
 
-import { useAuth } from "../../context/AuthContext";
-
-const DiscussionBoard: React.FC = () => {
-    type Comment = {
-        user: string,
-        comment: string,
-        votes: number,
-        userVote: 'none' | 'up' | 'down' // Track user's vote state
-    };
-
-    const commentArr: Comment[] = [
-        {
-            user: 'michaelzhou1232',
-            comment: 'For the people who have the account page black when you just create the account, I...',
-            votes: 0,
-            userVote: 'none'
-        },
-        {
-            user: 'anne123',
-            comment: 'jdghjhglkhark',
-            votes: 0,
-            userVote: 'none'
-        },
-        {
-            user: 'anne1234',
-            comment: 'flglkajlkejkg',
-            votes: 0,
-            userVote: 'none'
-        }
-    ];
-
+const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }> = ({ project, comments }) => {
+    const { retrieveUser } = useUser();
     const { user } = useAuth();
+
+    const [currUser, setCurrUser] = useState<User | null>(null);
     const [newComment, setNewComment] = useState('');
-    const [allComments, setAllComments] = useState<Comment[]>(commentArr);
+    const [existingComments, setExistingComments] = useState<CommentInfo[]>(comments);
 
-    const changeVote = (commentUser: string, action: 'up' | 'down') => {
-        setAllComments(allComments =>
-            allComments.map(comment => {
-                if (comment.user === commentUser) {
-                    let updatedVotes = comment.votes;
+    useEffect(() => {
+        // fetch user and set it
+        const fetchUser = async () => {
+            const userId = user?.id; // Safely get user.id
 
-                    // Handle vote logic
-                    if (action === 'up') {
-                        if (comment.userVote === 'up') {
-                            // Remove upvote
-                            updatedVotes -= 1;
-                            return { ...comment, votes: updatedVotes, userVote: 'none' };
-                        } else if (comment.userVote === 'down') {
-                            // Switch from downvote to upvote
-                            updatedVotes += 2; // remove downvote and add upvote
-                            return { ...comment, votes: updatedVotes, userVote: 'up' };
-                        } else {
-                            // First-time upvote
-                            updatedVotes += 1;
-                            return { ...comment, votes: updatedVotes, userVote: 'up' };
-                        }
-                    } else if (action === 'down') {
-                        if (comment.userVote === 'down') {
-                            // Remove downvote
-                            updatedVotes += 1;
-                            return { ...comment, votes: updatedVotes, userVote: 'none' };
-                        } else if (comment.userVote === 'up') {
-                            // Switch from upvote to downvote
-                            updatedVotes -= 2; // remove upvote and add downvote
-                            return { ...comment, votes: updatedVotes, userVote: 'down' };
-                        } else {
-                            // First-time downvote
-                            updatedVotes -= 1;
-                            return { ...comment, votes: updatedVotes, userVote: 'down' };
-                        }
-                    }
-                }
-                return comment;
-            })
-        );
-    };
+            if (userId) {
+                const userData = await retrieveUser(userId); // Await the promise
+                setCurrUser(userData); // Set the user data in state
+            }
+        };
 
+        fetchUser(); // Call the async function
+    }, [retrieveUser]);
+
+    const changeVote = ( commentId : number, votes: number) => {
+        setExistingComments(existingComments =>
+            existingComments.map(comment =>
+              comment.commentId === commentId ? { ...comment, votes: comment.likes + votes } : comment
+            ));
+    }
+
+    
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.value);
         setNewComment(event.target.value);
-    };
+    }
 
-    const postComment = () => {
-        if (newComment !== '') {
-            const newCommentEntry: Comment = {
-                user: user?.username ? user.username : 'Unknown User',
-                comment: newComment,
-                votes: 0,
-                userVote: 'none' // Default user vote state
-            };
-            // Prepend the new comment to the existing comments
-            setAllComments(prevComments => [newCommentEntry, ...prevComments]);
-            setNewComment(''); // Reset comment input
+    // output temporary comment but it'll be in the database at the next reload
+    const postComment = async () => {
+        if (currUser) {
+            const { data, error } = await supabase
+            .from('comments')
+            .insert({
+                    project_id: project.projectId,
+                    user_id: currUser.id,
+                    content: newComment,
+                    likes: 0,
+                    username: currUser.username
+                })
+            .select() // data holds the column object that was just added
+
+            if (error) {
+                console.log(error);
+                console.log("Could not add comment!")
+            }
+
+            if (data) {
+                const mappedData : CommentInfo = {
+                    commentId: data[0].comment_id,
+                    projectId: data[0].project_id,
+                    userId: data[0].user_id,
+                    content: data[0].content,
+                    likes: data[0].likes,
+                    username: data[0].username
+                };
+                comments.push(mappedData);
+            }
+            
+            console.log(comments);
+            setExistingComments(comments);
+            setNewComment('');
         } else {
-            console.log("Your comment is empty.");
+            console.log("You can't comment!")
         }
-    };
+    }
 
     return (
-        <div className='comment-container'>
+        <div className="comment-container">
             <h1> Discussion (20)</h1>
             <div className="discussion-input">
-                <input type='text' value={newComment} onChange={updateComment} required />
-                <label className='placeholders'>Add a comment...</label>
+                <input type="text" value={newComment} onChange={updateComment} required></input>
+                <label className="placeholders">Add a comment...</label>
                 <button onClick={postComment}>Post</button>
             </div>
-            <ul className='posted-comments-container'>
-                {allComments.map((comment) => (
-                    <li className="comment-section" key={comment.user}>
-                        <div className="vote">
-                            <button onClick={() => changeVote(comment.user, 'up')}>
-                                <img src={comment.userVote === 'up' ? UpChevronClicked : UpChevron} alt="Upvote" />
-                            </button>
-                            <span className='vote-count'>{comment.votes}</span>
-                            <button onClick={() => changeVote(comment.user, 'down')}>
-                                <img src={comment.userVote === 'down' ? DownChevronClicked : DownChevron} alt="Downvote" />
-                            </button>
-                        </div>
-                        <div className="comment">
-                            <h3 className="existing-comment-header">{comment.user}</h3>
-                            <p className="existing-comment-body">{comment.comment}</p>
-                            <button className="reply-btn">Reply</button>
-                        </div>
-                    </li>
-                ))}
+            <ul className="comments">
+            {comments.map((comment) => (
+                <li className="comment-section" key={comment.commentId}>
+                    <div className="vote">
+                        <button onClick={() => changeVote(comment.likes, 1)}><img src={UpChevron} /></button>
+                        <span>{comment.likes}</span>
+                        <button onClick={() => changeVote(comment.likes, -1)}><img src={DownChevron} /></button>
+                    </div>
+                    <div className="comment">
+                        <h3 className = "existing-comment-header">{comment.username}</h3> 
+                        <p className = "existing-comment-body">{comment.content}</p>
+                        <button className="reply-btn">Reply</button>
+                    </div>
+                </li>))}
             </ul>
         </div>
     );

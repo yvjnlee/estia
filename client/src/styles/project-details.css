@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 
 @keyframes fadeIn {
     from {
@@ -22,13 +22,12 @@
 
 /* Used for tech stack, difficulty level, and similar project blocks */
 .sidebar-container {
-    background-color: #151B23;
+    background-color: #151b23;
     border-radius: 15px;
     width: 26rem;
     padding: 2rem;
     margin-right: 3rem;
     margin-bottom: 2rem;
-
 }
 
 .tech-stack-details:nth-child(1) {
@@ -65,11 +64,10 @@
     /* Center the text */
 }
 
-
 .details-container {
-  flex: 1; /* Take up remaining space on the left side */
-  display: flex;
-  flex-direction: column;
+    flex: 1; /* Take up remaining space on the left side */
+    display: flex;
+    flex-direction: column;
 }
 
 .details-title {
@@ -112,23 +110,24 @@
     justify-content: center;
 } */
 
-
 .github-container {
     display: flex;
     padding: 2rem;
-    background-color: #151B23;
+    background-color: #151b23;
     width: 26rem;
     border-radius: 15px;
     text-decoration: none;
     /* Remove underline from the link */
     color: inherit;
     /* Inherit text color from parent */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
     margin-bottom: 2rem;
 }
 
 .github-container:hover {
-    background-color: #2C3E50;
+    background-color: #2c3e50;
     transform: scale(1.01);
 }
 
@@ -190,14 +189,13 @@
     display: flex;
     margin-top: 1rem;
     flex-direction: row;
-    
 }
 
 .save-and-like-button {
     display: flex;
     flex-direction: row;
     font-size: 1rem;
-    background-color: #151B23;
+    background-color: #151b23;
     align-items: center;
     margin-right: 2rem;
     padding-left: 4rem;
@@ -209,21 +207,19 @@
 }
 
 .save-and-like-button:hover {
-    background-color: #2C3E50;
+    background-color: #2c3e50;
     transform: scale(1.01);
 }
 
-.like-fav-icon{
+.like-fav-icon {
     width: 20px;
     margin-right: 12px;
     align-items: center;
     justify-content: center;
 }
 
-
-.existing-comment-header{
+.existing-comment-header {
     font-size: 1.5rem;
-
 }
 
 .existing-comment-body {

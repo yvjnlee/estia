@@ -10,63 +10,52 @@ import { UserProjects } from "../components/profile/UserProjects";
 import { UserSavedProjects } from "../components/profile/UserSaved";
 
 export const ProfilePage: React.FC = () => {
-  const { username } = useParams();
-  const { searchUser } = useUser();
-  const { session } = useAuth();
+    const { username } = useParams();
+    const { searchUser } = useUser();
+    const { session } = useAuth();
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [profile, setProfile] = useState<User | null>();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [profile, setProfile] = useState<User | null>(null);
 
-  const fetchUser = async () => {
-    try {
-      const userData = await searchUser(username as string);
-      setProfile(userData as User);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching user:", error);
+    const fetchUser = async () => {
+        try {
+            const userData = await searchUser(username as string);
+            setProfile(userData as User);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, [username]);
+
+    if (loading) {
+        return <div>loading...</div>;
     }
-  };
 
-  useEffect(() => {
-    fetchUser();
-  }, [username]);
+    if (!profile) {
+        return (
+            <div>
+                <p>This account does not exist</p>
+            </div>
+        );
+    }
 
-  return (
-    <>
-      <Navbar />
-
-      {profile && session?.user.id !== profile?.id && (
+    return (
         <>
-          <UserProfile profile={profile} />
-          <UserProjects />
-          
+            <Navbar />
+            <UserProfile profile={profile} />
+            <UserProjects />
 
+            {session?.user.id === profile?.id && (
+                <>
+                    <VisitProfile profile={profile} />
+                    <UserSavedProjects />
+                    <UserProjects />
+                </>
+            )}
         </>
-      )}
-
-      {session?.user.id === profile?.id && profile && (
-        <>
-          <VisitProfile profile={profile} />
-          <UserSavedProjects/>
-          <UserProjects />
-
-
-        </>
-      )}
-
-      {loading && (
-        <>
-          <div>loading...</div>
-        </>
-      )}
-
-      {!profile && !loading && (
-        <>
-          <div>
-            <p>This account does not exist</p>
-          </div>
-        </>
-      )}
-    </>
-  );
+    );
 };

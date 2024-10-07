@@ -4,6 +4,9 @@ import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
 import { useProject } from "../../context/ProjectContext";
 import { useAuth } from "../../context"; // Ensure you're using useAuth for user context
+import { useState, useEffect } from "react";
+import { CommentInfo, CommentDB } from "../../types/comment";
+import supabase from "../../SupabaseClient";
 
 // Imported icons
 import LikeImage from "../../img/ThumbsUp.svg";
@@ -14,22 +17,21 @@ import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
+import { existsSync } from "fs";
 
 const ProjectDetails: React.FC = () => {
   const { projects } = useProject();
   const navigate = useNavigate(); // Hook for navigation
   const { supabase, user } = useAuth(); // Ensure you're getting the user properly
 
-  // Get the current URL and extract the project title
-  const url = window.location.href;
-  const urlParts = url.split("/");
-  const rawTitle = urlParts[urlParts.length - 1];
+    // Get the current URL and extract the project title
+    const url = window.location.href;
+    const urlParts = url.split("/");
+    const rawTitle = urlParts[urlParts.length - 1];
 
-  // Decode the project name from URL
-  const decodedTitle = decodeURIComponent(rawTitle);
+    // Decode the project name from URL
+    const decodedTitle = decodeURIComponent(rawTitle);
 
-  // Get the project details based on the decoded title parameter
-  const project = projects?.find((project) => project.projectName === decodedTitle);
 
   // Function to save the project
   const saveProject = async (projectData: any) => {
@@ -76,6 +78,47 @@ const ProjectDetails: React.FC = () => {
       console.error('User is not logged in');
     }
   };
+    // Get the project details based on the decoded title parameter
+    const project = projects.find((project) => {
+        if (project.projectName === decodedTitle) {
+            return project;
+        }
+    });
+
+  if (!project) {
+    throw new Error("This project doesn't exist");
+  }
+
+  // fetching the comments
+  const [comments, setComments] = useState<CommentInfo[]>([]);
+
+  useEffect(() => {
+    
+      const fetchComments = async () => {
+        const { data, error } = await supabase
+            .from("comments")
+            .select("*")
+            .eq("project_id", project.projectId) // fix later
+
+        if (error) {
+            console.log(error);
+        } 
+        console.log("hiii")
+        if (data) {
+            const mappedData : CommentInfo[] = data.map((row: CommentDB) => ({
+                commentId: row.comment_id,
+                projectId: row.project_id,
+                userId: row.user_id,
+                content: row.content,
+                likes: row.likes,
+                username: row.username
+              }));
+            setComments(mappedData);
+            
+        }
+      }
+      fetchComments();
+    }, [])
 
   return (
     <>
@@ -91,10 +134,12 @@ const ProjectDetails: React.FC = () => {
               <div className="title-and-description">
                 <h1 className="details-title">{project?.projectName}</h1>
               </div>
-              <div className="description-container">
-                <YouTubeEmbed videoId={project?.videoId as string} />
-                <p className="details-subtitle">{project?.description}</p>
-              </div>
+              <div className="embed-container">
+                <div className="description-container">
+                    <YouTubeEmbed videoId={project?.videoId as string} />
+                    <p className="details-subtitle">{project?.description}</p>
+                </div>
+            </div>
             </div>
             <div className="button-container">
               <button
@@ -113,7 +158,7 @@ const ProjectDetails: React.FC = () => {
               </button>
             </div>
             <div className="">
-              <DiscussionBoard />
+              <DiscussionBoard project={project} comments={comments}/>
             </div>
           </div>
 

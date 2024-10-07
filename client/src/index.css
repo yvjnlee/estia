@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 
 @import './styles/firstpage.css';
 @import './styles/login.css';
@@ -6,53 +6,52 @@
 @import './styles/project.css';
 @import './styles/profiles.css';
 /* @import './styles/projectdetails.css'; */
-@import './styles/addproject.css';
-@import './styles/preferencepage.css';
-
+@import "./styles/addproject.css";
+@import "./styles/preferencepage.css";
 
 /* Project details styles */
-@import './styles/project-details.css';
-@import './styles/margin.css';
-@import './styles/grid.css';
-@import './styles/padding.css';
-@import './styles/discussion-board.css';
+@import "./styles/project-details.css";
+@import "./styles/margin.css";
+@import "./styles/grid.css";
+@import "./styles/padding.css";
+@import "./styles/discussion-board.css";
 
 :root {
-  --background-color: #000000;
-  --button-background: #ffffff;
-  --button-text-color: #626262;
-  --input-background: #282828;
-  --input-border: #626262;
-  --border-radius: 10px;
-  --anchor-color: #FFFFFF; /* Purple color, replace with desired color */
-  --button-background2: #000000;
-  --element-height: clamp(200px, 44vw, 1440px); /* Height scales between 200px and 600px based on viewport width */
+    --background-color: #000000;
+    --button-background: #ffffff;
+    --button-text-color: #626262;
+    --input-background: #282828;
+    --input-border: #626262;
+    --border-radius: 10px;
+    --anchor-color: #ffffff; /* Purple color, replace with desired color */
+    --button-background2: #000000;
+    --element-height: clamp(
+        200px,
+        44vw,
+        1440px
+    ); /* Height scales between 200px and 600px based on viewport width */
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     zoom: 0.6; /* 90% zoom */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background-color);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
-  -webkit-text-fill-color: #333;
+    -webkit-box-shadow: 0 0 0 50px white inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: #333;
 }
 
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 50px white inset;/*your box-shadow*/
-  -webkit-text-fill-color: #333;
-} 
-
-
+    -webkit-box-shadow: 0 0 0 50px white inset; /*your box-shadow*/
+    -webkit-text-fill-color: #333;
+}
