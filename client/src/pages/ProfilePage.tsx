@@ -6,8 +6,8 @@ import { Navbar } from "../components/navbar/Navbar";
 
 import { VisitProfile } from "../components/profile/VisitProfile";
 import { UserProfile } from "../components/profile/UserProfile";
-import { UserProjects } from "../components/profile/UserProjects";
-import { UserSavedProjects } from "../components/profile/UserSaved";
+import { UserCreated } from "../components/profile/UserCreated";
+import { UserSaved } from "../components/profile/UserSaved";
 
 export const ProfilePage: React.FC = () => {
     const { username } = useParams();
@@ -46,14 +46,13 @@ export const ProfilePage: React.FC = () => {
     return (
         <>
             <Navbar />
-            <UserProfile profile={profile} />
-            <UserProjects />
-
             {session?.user.id === profile?.id && (
                 <>
-                    <VisitProfile profile={profile} />
-                    <UserSavedProjects />
-                    <UserProjects />
+                    <div className="profile-page">
+                        <VisitProfile profile={profile} />
+                        <UserSaved />
+                        <UserCreated />
+                    </div>
                 </>
             )}
         </>

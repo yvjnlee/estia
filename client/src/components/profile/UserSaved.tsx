@@ -3,7 +3,7 @@ import { ProjectInfo, ProjectsDB } from "../../types/project";
 import { useAuth } from "../../context";
 import { useNavigate } from "react-router-dom";
 
-export const UserSavedProjects: React.FC = () => {
+export const UserSaved: React.FC = () => {
   const { supabase, user } = useAuth();
   const [savedProjects, setSavedProjects] = useState<ProjectInfo[]>([]);
 

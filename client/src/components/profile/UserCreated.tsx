@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { ProjectInfo, ProjectsDB } from "../../types/project";
 import { useAuth } from "../../context";
+import { useNavigate } from "react-router-dom";
 
-export const UserProjects: React.FC = () => {
+export const UserCreated: React.FC = () => {
     const { supabase, user } = useAuth();
     const [userProjects, setUserProjects] = useState<ProjectInfo[]>([]);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchUserProjects = async () => {
@@ -14,7 +17,7 @@ export const UserProjects: React.FC = () => {
                         .from("estia_projects")
                         .select("*")
                         .eq("created_by", user.id);
-                    
+
                     if (error) {
                         console.log("Error fetching projects:", error);
                         return;
@@ -46,15 +49,30 @@ export const UserProjects: React.FC = () => {
 
     return (
         <>
+            <h2>Your Created Projects</h2>
+            <div className="outer-saved-section-div">
+            <div className="project-theme-section">
             {userProjects.length > 0 ? (
                 userProjects.map((project: ProjectInfo, index: number) => (
-                    <div key={index}>
-                        <p>{project.projectName}</p>
+                    <div key={index} className="projects-section">
+                        <div className="projects-div">
+
+                            <h5
+                                className="projects-heading"
+                                onClick={() =>
+                                    navigate(`/project/${encodeURIComponent(project.projectName)}`)
+                                }
+                                style={{ cursor: "pointer", textDecoration: "underline" }}
+                            >{project.projectName}
+                            </h5>
+                        </div>
                     </div>
                 ))
             ) : (
                 <p>No projects found.</p>
             )}
+            </div>
+            </div>
         </>
     );
 };

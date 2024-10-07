@@ -101,14 +101,14 @@
     margin-left: -5rem;
 }
 
-/* .embed-container {
+.embed-container {
     display: flex;
     animation: fadeIn 1s forwards;
     padding-right: 2rem;
     align-items: center;
-    margin-left: -8rem;
+    margin-left: 5rem;
     justify-content: center;
-} */
+} 
 
 .github-container {
     display: flex;
@@ -216,6 +216,10 @@
     margin-right: 12px;
     align-items: center;
     justify-content: center;
+}
+
+.comments {
+    margin-left: -2.6rem;
 }
 
 .existing-comment-header {

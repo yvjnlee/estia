@@ -17,14 +17,15 @@ export interface ProjectsDB {
   project_id: string;
 }
 
+
 export interface ProjectsProps {
-    supabase: SupabaseClient;
-    projects: ProjectInfo[];
-    searchQuery: string;
-    searchProjects: (tech: string[]) => void;
-    handleSearch: (tech: string[]) => void;
-    handleEnter: (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => void;
-    handleKeyPress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  supabase: SupabaseClient;
+  projects: ProjectInfo[]; 
+  searchQuery: string; 
+  handleSearch: (tech: string[], theme: string) => void; 
+  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => void; 
+  handleKeyPress: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+  searchProjects: () => ProjectInfo[];
 }
 
 export interface ProjectInfo {
@@ -37,4 +38,5 @@ export interface ProjectInfo {
     description?: string;
     videoId?: string | null;
     repoPath?: string | null;
+    theme?: string;
 }

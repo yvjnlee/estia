@@ -4,45 +4,39 @@ import { useAuth } from "./AuthContext";
 
 const ProjectContext = createContext<ProjectsProps | undefined>(undefined);
 
-export const ProjectProvider: React.FC<{
-    children: React.ReactNode;
-}> = ({ children }) => {
-    const { supabase } = useAuth(); // Ensure you have supabase here
-    const [searchQuery, setSearchQuery] = useState("");
+export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { supabase } = useAuth(); // Ensure supabase is available
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
-    const [projects, setProjects] = useState<ProjectInfo[] | null>();
-    const [projectFeed, setProjectFeed] = useState<ProjectInfo[] | null>();
+    const [selectedTheme, setSelectedTheme] = useState<string>("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("estia_projects")
-          .select("*");
-        if (error) {
-          console.log(error);
-        }
-        // console.log(data);
-        if (data) {
-          const mappedData : ProjectInfo[] = data.map((row: ProjectsDB) => ({
-            projectName: row.project_name,
-            createdAt: row.created_at,
-            tech1: row.tech1,
-            tech2: row.tech2,
-            colour: row.colour,
-            description: row.description,
-            videoId: row.video_Id,
-            repoPath: row.repo_Path,
-            projectId: row.project_id,
-          }));
+    const [projects, setProjects] = useState<ProjectInfo[] | null>(null);
+    const [projectFeed, setProjectFeed] = useState<ProjectInfo[] | null>(null);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data, error } = await supabase.from("estia_projects").select("*");
+                if (error) {
+                    console.error(error);
+                } else if (data) {
+                    const mappedData: ProjectInfo[] = data.map((row: ProjectsDB) => ({
+                        projectName: row.project_name,
+                        createdAt: row.created_at,
+                        tech1: row.tech1,
+                        tech2: row.tech2,
+                        colour: row.colour,
+                        description: row.description,
+                        videoId: row.video_Id,
+                        repoPath: row.repo_Path,
+                        projectId: row.project_id,
+                        theme: row.theme, // Ensure to map the theme if it's part of the data
+                    }));
                     setProjects(mappedData);
                     setProjectFeed(mappedData);
                 }
             } catch (err) {
-                console.log(err);
-            } finally {
-                // console.log("got data")
+                console.error(err);
             }
         };
         fetchData();
@@ -52,45 +46,49 @@ export const ProjectProvider: React.FC<{
         const lowercasedQuery = searchQuery.toLowerCase();
         const filtered = projects?.filter((project) => {
             const matchesSearchQuery =
-                project.projectName?.toLowerCase().includes(lowercasedQuery) ||
+                project.projectName.toLowerCase().includes(lowercasedQuery) ||
                 project.description?.toLowerCase().includes(lowercasedQuery);
 
             const matchesTechStack =
                 selectedTechStack.length === 0 ||
                 selectedTechStack.some((tech) => project.tech1 === tech || project.tech2 === tech);
 
-            return matchesSearchQuery && matchesTechStack;
+            const matchesTheme = !selectedTheme || project.theme === selectedTheme;
+
+            return matchesSearchQuery && matchesTechStack && matchesTheme;
         });
 
-        setProjectFeed(filtered);
+        return filtered || [];
     };
 
     useEffect(() => {
-        searchProjects();
-    }, [searchQuery, selectedTechStack]);
+        const filteredProjects = searchProjects();
+        setProjectFeed(filteredProjects);
+    }, [searchQuery, selectedTechStack, selectedTheme]);
 
-    const onSearch = (tech: string[]) => {
+    const handleSearch = (tech: string[], theme: string) => {
         setSelectedTechStack(tech);
+        setSelectedTheme(theme);
     };
 
-    const onEnter = (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => {
+    const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => {
         if (e.key === "Enter") {
             setSelectedTechStack(tech);
         }
     };
 
-    const onKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
 
     const value = {
-        supabase, // Include supabase in the context value
+        supabase,
         projects: projectFeed as ProjectInfo[],
-        searchQuery: searchQuery,
-        searchProjects: (tech: string[]) => setSelectedTechStack(tech),
-        handleSearch: onSearch,
-        handleEnter: onEnter,
-        handleKeyPress: onKeyPress,
+        searchQuery,
+        handleSearch,
+        handleEnter,
+        handleKeyPress,
+        searchProjects,
     };
 
     return <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>;
