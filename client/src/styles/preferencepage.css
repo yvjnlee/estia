@@ -113,6 +113,9 @@
     text-align: left;
     opacity: 0;
     margin-left: 0rem;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
     margin-bottom: 1.5rem;
     transform: translateY(20px);
     animation: fadeIn 0.5s ease-in-out forwards;

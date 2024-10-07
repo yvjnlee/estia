@@ -79,12 +79,29 @@
     padding-left: 12px;
     padding-top: 4px;
     padding-bottom: 4px;
-    width: 85px;
     font-weight: 400;
     border-radius: 8px;
     background-color: #40925c;
     color: #b5f5cc;
 }
+  
+  .project-difficulty.beginner {
+    width: 85px;
+    background-color: #40925c;
+    color: #b5f5cc;  
+}
+  
+  .project-difficulty.intermediate {
+    width: 115px;
+    background-color: #929240;
+    color: #e6f5b5;
+  }
+  
+  .project-difficulty.advanced {
+    width: 95px;
+    background-color: #924040;
+    color: #f4c1c1;
+  }
 
 .project-title {
     font-size: 1.6rem;
@@ -99,7 +116,6 @@
 
 .project-tech {
     display: flex;
-    gap: 10px;
     margin-top: auto;
     /* Ensures this sticks to the bottom */
 }
@@ -107,7 +123,6 @@
 .tech-item {
     font-size: 18px;
     color: #ffffff;
-    padding: 4px 8px;
     border-radius: 4px;
 }
 

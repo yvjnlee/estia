@@ -3,12 +3,12 @@
         padding: 20px;
         border-radius: 10px;
         width: 100%;
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 4rem auto;
         animation: fadeIn 1s forwards;
 }
 
-.profile-page h2 {
+.profile-title {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -23,13 +23,10 @@
 
 .saved-heading {
     display: block;
+    font-size: 2rem;
 }
 
 .outer-saved-section-div {
-    gap: 1rem;
-    max-width: 100%;
-    margin-top: 2rem;
-    display: flex;
-    flex-wrap: wrap;
+
 
 }

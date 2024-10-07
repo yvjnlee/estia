@@ -3,6 +3,8 @@ import { ProjectInfo, ProjectsDB } from "../../types/project";
 import { useAuth } from "../../context";
 import { useNavigate } from "react-router-dom";
 
+import ProjectCard from "../project/ProjectCard";
+
 export const UserCreated: React.FC = () => {
     const { supabase, user } = useAuth();
     const [userProjects, setUserProjects] = useState<ProjectInfo[]>([]);
@@ -34,6 +36,7 @@ export const UserCreated: React.FC = () => {
                             description: row.description,
                             videoId: row.video_Id,
                             repoPath: row.repo_Path,
+                            difficulty: row.difficulty,
                         }));
 
                         setUserProjects(mappedData);
@@ -49,29 +52,25 @@ export const UserCreated: React.FC = () => {
 
     return (
         <>
-            <h2>Your Created Projects</h2>
+            <h2 className="saved-heading">Your Created Projects</h2>
             <div className="outer-saved-section-div">
-            <div className="project-theme-section">
-            {userProjects.length > 0 ? (
-                userProjects.map((project: ProjectInfo, index: number) => (
-                    <div key={index} className="projects-section">
-                        <div className="projects-div">
-
-                            <h5
-                                className="projects-heading"
-                                onClick={() =>
-                                    navigate(`/project/${encodeURIComponent(project.projectName)}`)
-                                }
-                                style={{ cursor: "pointer", textDecoration: "underline" }}
-                            >{project.projectName}
-                            </h5>
-                        </div>
-                    </div>
-                ))
-            ) : (
-                <p>No projects found.</p>
-            )}
-            </div>
+                <div className="project-theme-section">
+                    {userProjects.length > 0 ? (
+                        userProjects.map((project: ProjectInfo, index: number) => (
+                            <ProjectCard
+                                key={index}
+                                projectName={project.projectName}
+                                tech1={project.tech1}
+                                tech2={project.tech2}
+                                difficulty={project.difficulty || "Beginner"} // Default difficulty if null
+                                createdAt={project.createdAt} // Pass createdAt
+                                colour={project.colour} // Pass colour
+                            />
+                        ))
+                    ) : (
+                        <p>No projects found.</p>
+                    )}
+                </div>
             </div>
         </>
     );

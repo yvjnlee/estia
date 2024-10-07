@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ProjectInfo } from "../../types/project";
 
-const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, colour }) => {
+const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, difficulty, }) => {
     const containerStyle: React.CSSProperties = {
         //backgroundColor: colour,
         backgroundColor: "#151B23",
@@ -21,7 +21,9 @@ const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, colour 
     return (
         <Link to={`/project/${projectName}`} style={{ textDecoration: "none", color: "inherit" }}>
             <div className="project-container" style={containerStyle}>
-                <h2 className="project-difficulty">Beginner</h2>
+                <h2 className={`project-difficulty ${difficulty?.toLowerCase() || "beginner"}`}>
+                    {difficulty || "Beginner"}
+                </h2>           
                 <h2 className="project-title">{projectName}</h2>
                 <div className="project-tech">
                     <span className="tech-item">

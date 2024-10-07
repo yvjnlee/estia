@@ -16,7 +16,10 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data, error } = await supabase.from("estia_projects").select("*");
+                const { data, error } = await supabase
+                .from("estia_projects")
+                .select("*");
+                
                 if (error) {
                     console.error(error);
                 } else if (data) {
@@ -30,7 +33,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
                         videoId: row.video_Id,
                         repoPath: row.repo_Path,
                         projectId: row.project_id,
-                        theme: row.theme, // Ensure to map the theme if it's part of the data
+                        theme: row.theme,
+                        difficulty: row.difficulty,
                     }));
                     setProjects(mappedData);
                     setProjectFeed(mappedData);

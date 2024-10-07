@@ -15,6 +15,7 @@ export interface ProjectsDB {
   Likes?: number;
   comment_thread_id?: number;
   project_id: string;
+  difficulty?: string;
 }
 
 
@@ -39,4 +40,5 @@ export interface ProjectInfo {
     videoId?: string | null;
     repoPath?: string | null;
     theme?: string;
+    difficulty?: string;
 }

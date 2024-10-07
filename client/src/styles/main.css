@@ -53,18 +53,20 @@
 }
 
 .nav-bar {
-    position: sticky;
+    position: sticky !important;
     padding: 1rem;
     margin-top: 0.5rem;
     display: flex;
     margin-left: 4rem;
     margin-right: 4rem;
+    top: 28px;
     align-items: center;
     border-radius: 48px;
     z-index: 8;
     border: 2px solid rgb(56, 56, 56);
     justify-content: space-between;
     align-items: center; /* Aligns items vertically in the center */
+    background-color: var(--background-color);
 }
 
 .logo {
