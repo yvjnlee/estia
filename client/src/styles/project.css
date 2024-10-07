@@ -16,7 +16,7 @@
 .projects-container {
     border-radius: 8px;
     display: grid;
-    grid-template-columns: repeat(4, 24rem);
+    grid-template-columns: repeat(4, 31rem);
     /* Fixed width for each column */
     flex-wrap: nowrap;
     opacity: 0;
@@ -29,14 +29,14 @@
     z-index: 3;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1250px) {
     .projects-container {
-        grid-template-columns: repeat(2, 24rem);
+        grid-template-columns: repeat(2, 31rem);
         /* 2 column */
     }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 680px) {
     .projects-container {
         grid-template-columns: repeat(1, 25rem);
         /* 1 column */
@@ -73,11 +73,25 @@
     /* Makes the element 5% larger */
 }
 
+.project-difficulty {
+    font-size: 1rem;
+    margin-bottom: 0;
+    padding-left: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 85px;
+    font-weight: 400;
+    border-radius: 8px;
+    background-color: #40925c;
+    color: #b5f5cc;
+}
+
 .project-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #f3f3f3;
-    max-width: 50%;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #d5d5d5;
+    max-width: 90%;
+    margin-top: 20px;
     /* Adjust as needed to fit within container */
     margin-bottom: auto;
     /* Pushes the .project-tech to the bottom */
@@ -91,12 +105,10 @@
 }
 
 .tech-item {
-    font-size: 12px;
-    color: #000000;
-    background-color: #e0e0e0;
+    font-size: 18px;
+    color: #ffffff;
     padding: 4px 8px;
     border-radius: 4px;
-    font-weight: 800;
 }
 
 .project-row {

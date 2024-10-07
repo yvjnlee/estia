@@ -19,7 +19,7 @@ export const ProjectSearch: React.FC = () => {
         <div className="heading-container">
             <div className="heading-content">
                 <h2 className="main-h2" data-scroll-section>
-                    start building today
+                Welcome to the world's largest collective of coding projects.
                 </h2>
 
                 <div className="search-bar-and-filters">
