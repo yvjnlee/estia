@@ -12,6 +12,7 @@ export interface ProjectsDB {
   theme?: string;
   Likes?: number;
   comment_thread_id?: number;
+  project_id: string;
 }
 
 export interface ProjectsProps {

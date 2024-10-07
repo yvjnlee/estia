@@ -95,7 +95,8 @@ const DiscussionBoard: React.FC = () => {
                 votes: 0,
                 userVote: 'none' // Default user vote state
             };
-            setAllComments(prevComments => [...prevComments, newCommentEntry]);
+            // Prepend the new comment to the existing comments
+            setAllComments(prevComments => [newCommentEntry, ...prevComments]);
             setNewComment(''); // Reset comment input
         } else {
             console.log("Your comment is empty.");
@@ -110,14 +111,14 @@ const DiscussionBoard: React.FC = () => {
                 <label className='placeholders'>Add a comment...</label>
                 <button onClick={postComment}>Post</button>
             </div>
-            <ul>
+            <ul className='posted-comments-container'>
                 {allComments.map((comment) => (
                     <li className="comment-section" key={comment.user}>
                         <div className="vote">
                             <button onClick={() => changeVote(comment.user, 'up')}>
                                 <img src={comment.userVote === 'up' ? UpChevronClicked : UpChevron} alt="Upvote" />
                             </button>
-                            <span>{comment.votes}</span>
+                            <span className='vote-count'>{comment.votes}</span>
                             <button onClick={() => changeVote(comment.user, 'down')}>
                                 <img src={comment.userVote === 'down' ? DownChevronClicked : DownChevron} alt="Downvote" />
                             </button>

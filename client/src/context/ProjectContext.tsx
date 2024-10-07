@@ -33,6 +33,7 @@ export const ProjectProvider: React.FC<{
             description: row.description,
             videoId: row.video_Id,
             repoPath: row.repo_Path,
+            projectId: row.project_id,
           }));
 
           setProjects(mappedData);

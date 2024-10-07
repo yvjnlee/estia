@@ -28,7 +28,7 @@ body {
     padding-bottom: 1rem;
     border-bottom: 1px solid #ffffff;
     background-color: transparent;
-    font-size: 16px;
+    font-size: 1.5rem;
 }
 
 .discussion-input input:hover {
@@ -113,6 +113,7 @@ body {
     padding-right: 1.5rem;
     padding-bottom: 4rem;
     margin-top: 2rem;
+    width: 100%;
   
 }
 
@@ -126,6 +127,11 @@ body {
     
 }
 
+.posted-comments-container{
+    width:100%;
+    margin-left: -2.3rem;
+}
+
 .placeholders {
     color: #181818;
 }
@@ -137,7 +143,9 @@ body {
     justify-content: center;
     border: solid;
     border-width: 1px;
-    height: 80px;
+    border-radius: 4px;
+    height: 130px;
+    width: 45px;
 }
 
 .vote button {
@@ -149,8 +157,13 @@ body {
 
 .vote button:hover
  {
-    transform: scale(1.05);
+    transform: scale(1.01);
     color: #858282;
+ }
+
+ .vote-count {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
  }
 
 

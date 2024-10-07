@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import { useAuth, useUser } from "../context";
 import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
+
 import { VisitProfile } from "../components/profile/VisitProfile";
 import { UserProfile } from "../components/profile/UserProfile";
 import { UserProjects } from "../components/profile/UserProjects";
+import { UserSavedProjects } from "../components/profile/UserSaved";
 
 export const ProfilePage: React.FC = () => {
   const { username } = useParams();
@@ -36,16 +38,19 @@ export const ProfilePage: React.FC = () => {
       {profile && session?.user.id !== profile?.id && (
         <>
           <UserProfile profile={profile} />
-
           <UserProjects />
+          
+
         </>
       )}
 
       {session?.user.id === profile?.id && profile && (
         <>
           <VisitProfile profile={profile} />
-          
+          <UserSavedProjects/>
           <UserProjects />
+
+
         </>
       )}
 

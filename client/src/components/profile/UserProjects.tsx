@@ -29,6 +29,7 @@ export const UserProjects: React.FC = () => {
                     description: row.description,
                     videoId: row.video_Id,
                     repoPath: row.repo_Path,
+                    project_id: row.project_id,
                 }));
 
                 setUserProjects(mappedData);

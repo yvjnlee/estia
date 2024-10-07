@@ -48,7 +48,6 @@ const GiveProjectPage: React.FC = () => {
           <div className="project-theme-section">
             <div className="projects-section">
               <div className="projects-div">
-                {/* Make the project title clickable */}
                 <h5
                   className="projects-heading"
                   onClick={() =>

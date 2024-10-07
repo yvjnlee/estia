@@ -15,7 +15,7 @@ export const ProfileButton = () => {
       if (session?.user?.id) {
         // const user = await retrieveUser(session.user.id);
         // console.log(user);
-        setUsername(session.user.email); // Assuming the user object has a username property
+        setUsername(session.user.email); // User object has a username property
       }
     } catch (error) {
       console.error("Error fetching user:", error);
