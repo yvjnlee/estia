@@ -55,3 +55,8 @@ input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 50px white inset; /*your box-shadow*/
     -webkit-text-fill-color: #333;
 }
+
+::selection {
+    background-color: #ffffff; /* Change the highlight color */
+    color: #000; /* Change the text color inside the selection */
+}

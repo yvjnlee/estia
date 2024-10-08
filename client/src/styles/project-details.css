@@ -200,16 +200,20 @@
     margin-right: 2rem;
     padding-left: 4rem;
     padding-right: 4rem;
-    border-radius: 1rem;
+    border-radius: 8px;
     border: none;
     transition: transform 10s ease;
     transition: background-color 0.3s ease;
 }
 
 .save-and-like-button:hover {
-    background-color: #2c3e50;
+    filter: brightness(1.2);
     transform: scale(1.01);
     cursor:pointer;
+}
+
+.saved {
+    background-color: #007bff;
 }
 
 .like-fav-icon {

@@ -7,6 +7,12 @@
     /* Ensure the container is in a stacking context */
 }
 
+.homepage-radial-pattern {
+    position: absolute;
+    top: -2rem;
+    right: -2rem;
+}
+
 .heading-container {
     display: flex;
     flex-direction: column;
