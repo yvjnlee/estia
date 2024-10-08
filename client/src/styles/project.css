@@ -93,14 +93,14 @@
   
   .project-difficulty.intermediate {
     width: 115px;
-    background-color: #929240;
-    color: #e6f5b5;
+    background-color: #828217;
+    color: #e2ebd0;
   }
   
   .project-difficulty.advanced {
     width: 95px;
     background-color: #924040;
-    color: #f4c1c1;
+    color: #ffe5e5;
   }
 
 .project-title {

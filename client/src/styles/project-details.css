@@ -51,6 +51,7 @@
     align-items: center;
     /* Center them horizontally */
     justify-content: center;
+    cursor: pointer;
 }
 
 .tech-image {
@@ -62,6 +63,11 @@
     /* Optional: Add some space between image and text */
     text-align: center;
     /* Center the text */
+}
+
+.tech-stack-subtitle{
+    margin-top: -0.6rem;
+    margin-bottom: 2rem;
 }
 
 .details-container {
@@ -233,4 +239,105 @@
 
 .existing-comment-body {
     font-size: 1.5rem;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+   
+    overflow: hidden;
+
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 82%;
+    max-height: 150vh; /* Ensure modal stays within viewport and can scroll */
+    align-items: center;
+    max-width: 2500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+
+.what-is-it-content{
+    width: 95%;
+    font-size: 1.25rem;
+}
+
+.common-use-ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Enable flexbox */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between items */
+}
+
+.common-use-li {
+    background-color: #151b23; /* Dark blue background */
+    color: white; /* White text color */
+    width: 200px;
+    padding: 21px 22px; /* Add padding inside the box */
+    border-radius: 5px; /* Optional: rounded corners */
+    margin: 5px 0; /* Space between items vertically */
+    display: flex; /* Keep the list items flex for alignment */
+    justify-content: center; /* Center the text horizontally */
+    text-align: center;
+    align-items: center; /* Center the text vertically */
+}
+
+.advantage-disadvantage-container{
+    display: flex;
+}
+
+.av-dv-ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Enable flexbox */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between items */
+}
+
+.advantage-container, .disadvantage-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.advantage-container{
+    margin-right: 3rem;
+}
+
+.tech-title{
+    font-size: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center !important;
+}
+
+.res-link {
+    color: white;
+    font-weight: 500;
 }

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProject } from "../context/ProjectContext";
 import { Navbar } from "../components/navbar/Navbar";
+import DifficultyLevel from "../components/project/DifficultyLevel";
 
 // Expanded dictionary of languages and frameworks
 const techStackOptions = [
@@ -73,6 +74,12 @@ const themeOptions = [
     "Web Development",
 ]
 
+const difficultyOptions = [
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+]
+
 const AddProject: React.FC = () => {
     const { supabase } = useProject();
     const navigate = useNavigate();
@@ -85,6 +92,8 @@ const AddProject: React.FC = () => {
     const [repoPath, setRepoPath] = useState("");
     const [color, setColor] = useState("#6E00FF");
     const [theme, setTheme] = useState("");
+    const [difficulty, setDifficulty] = useState("");
+
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -100,6 +109,7 @@ const AddProject: React.FC = () => {
                     repo_Path: repoPath,
                     colour: color,
                     theme: theme,
+                    difficulty: difficulty,
                 },
             ]);
 
@@ -190,6 +200,26 @@ const AddProject: React.FC = () => {
                                     Choose Theme...
                                 </option>
                                 {themeOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="tech-stack">
+                        <label>Difficulty Level</label>
+                        <div className="tech-inputs-container">
+                            <select
+                                className="tech-select"
+                                value={difficulty}
+                                onChange={(e) => setDifficulty(e.target.value)}
+                                required
+                            >
+                                <option value="" disabled>
+                                    Choose Difficulty...
+                                </option>
+                                {difficultyOptions.map((option, index) => (
                                     <option key={index} value={option}>
                                         {option}
                                     </option>

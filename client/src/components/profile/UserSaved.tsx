@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ProjectInfo, ProjectsDB } from "../../types/project";
 import { useAuth } from "../../context";
 import { useNavigate } from "react-router-dom";
-import ProjectCard from "../project/ProjectCard"; 
 
 import { Link } from "react-router-dom";
 
@@ -10,6 +9,7 @@ import { Link } from "react-router-dom";
 export const UserSaved: React.FC = () => {
   const { supabase, user } = useAuth();
   const [savedProjects, setSavedProjects] = useState<ProjectInfo[]>([]);
+
 
   const navigate = useNavigate();
 
@@ -56,6 +56,7 @@ export const UserSaved: React.FC = () => {
               videoId: row.video_Id,
               repoPath: row.repo_Path,
               project_id: row.project_id,
+              difficulty: row.difficulty,
             }));
 
             setSavedProjects(mappedProjects);
