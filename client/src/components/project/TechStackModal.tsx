@@ -11,6 +11,14 @@ const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
 
+    // States to control the gradual reveal of each section
+    const [showWhatIs, setShowWhatIs] = React.useState(false);
+    const [showCommonUses, setShowCommonUses] = React.useState(false);
+    const [showAdvantages, setShowAdvantages] = React.useState(false);
+    const [showDisadvantages, setShowDisadvantages] = React.useState(false);
+    const [showResources, setShowResources] = React.useState(false);
+    const [showNextSteps, setShowNextSteps] = React.useState(false);
+
     // Add or remove the 'modal-open' class on the body element
     useEffect(() => {
         document.body.classList.add("modal-open");
@@ -20,7 +28,8 @@ const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
         };
     }, []);
 
-    React.useEffect(() => {
+    // Effect to fetch data and progressively reveal content
+    useEffect(() => {
         const fetchTechData = async () => {
             setLoading(true);
             setError(null);
@@ -110,7 +119,15 @@ Here is the input
                 });
 
                 const jsonResponse = response.choices[0]?.message?.content;
-                setData(JSON.parse(jsonResponse as string)); // Parse and set data
+                setData(JSON.parse(jsonResponse as string));
+
+                // Gradually show sections
+                setTimeout(() => setShowWhatIs(true), 200);
+                setTimeout(() => setShowCommonUses(true), 400);
+                setTimeout(() => setShowAdvantages(true), 600);
+                setTimeout(() => setShowResources(true), 800);
+                setTimeout(() => setShowNextSteps(true), 1000);
+
             } catch (error) {
                 console.error("Error fetching tech data:", error);
                 setError("Error fetching tech data.");
@@ -127,57 +144,79 @@ Here is the input
 
     return (
         <div className="modal-overlay">
-            <div className="modal-content">
+            <div className="modal-content growing-modal">
                 <button className="close-button" onClick={onClose}>X</button>
+
                 {data && (
                     <div>
                         <h2 className="tech-title">{tech}</h2>
-                        <h3>What is it?</h3>
-                        <p className="what-is-it-content">{data.what_is}</p>
-                        <h3>Common Uses</h3>
-                        <ul className="common-use-ul">
-                            {data.common_uses.map((cu: string, index: number) => (
-                                <li className="common-use-li" key={index}>{cu}</li>
-                            ))}
-                        </ul>
-                        <div className="advantage-disadvantage-container">
-                            <div className="advantage-container">
-                        <h3>Advantages</h3>
-                        <ul className="av-dv-ul">
-                            {data.advantages.map((adv: string, index: number) => (
-                                <li className="common-use-li" key={index}>{adv}</li>
-                            ))}
-                        </ul>
-                        </div>
-                        <div className="disadvantage-container">
-                        <h3>Disadvantages</h3>
-                        <ul className="av-dv-ul">
-                            {data.disadvantages.map((dis: string, index: number) => (
-                                <li className="common-use-li" key={index}>{dis}</li>
-                            ))}
-                        </ul>
-                        </div>
-                        </div>
-                        <h3>Resources</h3>
-                        {data.resources && data.resources.length > 0 ? (
-                            <ul className="resources-ul">
-                                {data.resources.map((res: { title: string; link: string }, index: number) => (
-                                    <li className="resources-li" key={index}>
-                                        <a className="res-link" href={res.link} target="_blank" rel="noopener noreferrer">
-                                            {res.title}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No resources available.</p>
+
+                        {showWhatIs && (
+                            <>
+                                <h3>What is it?</h3>
+                                <p className="what-is-it-content">{data.what_is}</p>
+                            </>
                         )}
-                        <h3>Next Steps</h3>
-                        <ul className="next-steps-ul">
-                            {data.next_steps.map((ns: string, index: number) => (
-                                <li className="next-steps-li" key={index}>{ns}</li>
-                            ))}
-                        </ul>
+
+                        {showCommonUses && (
+                            <>
+                                <h3>Common Uses</h3>
+                                <ul className="common-use-ul">
+                                    {data.common_uses.map((cu: string, index: number) => (
+                                        <li className="common-use-li" key={index}>{cu}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                        <div className="advantage-disadvantage-container">
+
+                            {showAdvantages && (
+                                <>
+                                    <div className="advantage-container">
+                                        <h3>Advantages</h3>
+                                        <ul className="av-dv-ul">
+                                            {data.advantages.map((adv: string, index: number) => (
+                                                <li className="common-use-li" key={index}>{adv}</li>
+                                            ))}
+                                        </ul>
+                                    </div>            
+                                    <div className="disadvantage-container">
+                                        <h3>Disadvantages</h3>
+                                        <ul className="av-dv-ul">
+                                            {data.disadvantages.map((dis: string, index: number) => (
+                                                <li className="common-use-li" key={index}>{dis}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+
+                        {showResources && (
+                            <>
+                                <h3>Resources</h3>
+                                <ul className="resources-ul">
+                                    {data.resources.map((res: { title: string; link: string }, index: number) => (
+                                        <li key={index}>
+                                            <a href={res.link} target="_blank" rel="noopener noreferrer">
+                                                {res.title}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+
+                        {showNextSteps && (
+                            <>
+                                <h3>Next Steps</h3>
+                                <ul className="next-steps-ul">
+                                    {data.next_steps.map((ns: string, index: number) => (
+                                        <li key={index}>{ns}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
                     </div>
                 )}
             </div>
