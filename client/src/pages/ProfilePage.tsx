@@ -5,7 +5,6 @@ import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
 
 import { VisitProfile } from "../components/profile/VisitProfile";
-import { UserProfile } from "../components/profile/UserProfile";
 import { UserCreated } from "../components/profile/UserCreated";
 import { UserSaved } from "../components/profile/UserSaved";
 
@@ -29,6 +28,7 @@ export const ProfilePage: React.FC = () => {
 
     useEffect(() => {
         fetchUser();
+        console.log("profile: ", username)
     }, [username]);
 
     if (loading) {
