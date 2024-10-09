@@ -1,10 +1,14 @@
 import React from "react";
 
-const DifficultyLevel: React.FC = () => {
+interface DifficultyProps {
+    difficulty: string; // i hate typescript why do i gotta do this
+}
+
+
+const DifficultyLevel: React.FC<DifficultyProps>  = ( { difficulty }) => {
     return (
-        <div className="sidebar-container">
-            <h1>Difficulty Level</h1>
-            <p>Intermediate</p>
+        <div className={`difficulty-pill ${difficulty?.toLowerCase() || "beginner"}`}>
+           {difficulty || "Beginner"}
         </div>
     );
 };

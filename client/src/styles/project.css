@@ -93,15 +93,15 @@
   
   .project-difficulty.beginner {
     width: 85px;
-    background-color: #214b2f;
+    background-color: var(--beginner-colour);
     color: #fff;  
     font-weight: 400;
     font-size: var(--font-size-xs);
 }
-  
+
   .project-difficulty.intermediate {
     width: 115px;
-    background-color: #5d5d25;
+    background-color: var(--intermediate-colour);
     color: #fff;
     font-weight: 400;
     font-size: var(--font-size-xs);
@@ -109,7 +109,7 @@
   
   .project-difficulty.advanced {
     width: 95px;
-    background-color: #582727;
+    background-color: var(--advanced-colour);
     color: #fff;
     font-weight: 400;
     font-size: var(--font-size-xs);

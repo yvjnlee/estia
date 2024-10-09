@@ -27,7 +27,7 @@ export const DifficultyFilter: React.FC = () => {
                 className="difficulty-select"
                 onChange={(e) => handleDifficultyChange(e.target.value)}
             >
-                <option value="">-- Select Difficulty --</option>
+                <option value="">Select Difficulty</option>
                 {difficultyOptions.map((difficulty) => (
                     <option key={difficulty} value={difficulty}>
                         {difficulty}

@@ -131,8 +131,9 @@ const ProjectDetails: React.FC = () => {
               Back
             </button>
             <div className="details-container">
-              <div className="title-and-description">
+              <div className="title-and-difficulty-container">
                 <h1 className="details-title">{project?.projectName}</h1>
+                <DifficultyLevel difficulty={project.difficulty as string} />
               </div>
               <div className="embed-container">
                 <div className="description-container">
@@ -163,7 +164,6 @@ const ProjectDetails: React.FC = () => {
           <div className="additional-information-container">
             <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
             <GitHubRepo repoPath={project?.repoPath as string} />
-            <DifficultyLevel />
             <div className="sidebar-container">
               <h1>Similar Projects</h1>
             </div>

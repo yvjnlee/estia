@@ -39,6 +39,10 @@
     --font-size-xl: 3rem;      /* Extra large */
     --font-size-xxl: 3.5rem;   /* Extra extra large */
     --font-size-xxxl: 4rem;    /* Extra extra extra large */
+
+    --beginner-colour: #214b2f;
+    --intermediate-colour: #5d5d25;
+    --advanced-colour: #582727;
 }
 
 body {
