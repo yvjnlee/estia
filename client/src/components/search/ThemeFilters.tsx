@@ -20,7 +20,7 @@ export const ThemeFilters: React.FC = () => {
                 : [...prevSelected, theme];
             
             // Trigger project search whenever filter is updated
-            handleSearch([], newSelected.length ? newSelected[0] : "");
+            handleSearch([], newSelected.length ? newSelected[0] : "", "");
             return newSelected;
         });
     };

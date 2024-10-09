@@ -37,7 +37,7 @@ export const LandingPage: React.FC = () => {
                     <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
                     <h3 className="initial-slogan">Less Searching, More Creating</h3>
                     <button className="initial-button" onClick={logIn}>
-                        Start Building
+                        start building
                     </button>
                     <LocomotiveScrollBar />
                     <h3 className="inital-feedback">

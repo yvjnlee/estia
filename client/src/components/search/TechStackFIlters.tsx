@@ -20,7 +20,7 @@ export const TechStackFilters: React.FC = () => {
                 : [...prevSelected, tech];
             
             // Trigger project search whenever filter is updated
-            handleSearch(newSelected, "");
+            handleSearch(newSelected, "", "");
             return newSelected;
         });
     };

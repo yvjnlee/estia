@@ -7,6 +7,8 @@ const ProjectContext = createContext<ProjectsProps | undefined>(undefined);
 export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { supabase } = useAuth(); // Ensure supabase is available
     const [searchQuery, setSearchQuery] = useState<string>("");
+
+    const  [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
     const [selectedTheme, setSelectedTheme] = useState<string>("");
 
@@ -61,7 +63,10 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
             const matchesTheme = !selectedTheme || project.theme === selectedTheme;
 
-            return matchesSearchQuery && matchesTechStack && matchesTheme;
+            const matchesDifficulty = !selectedDifficulty|| project.difficulty === selectedDifficulty;
+
+
+            return matchesSearchQuery && matchesTechStack && matchesTheme && matchesDifficulty;
         });
 
         return filtered || [];
@@ -70,11 +75,13 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     useEffect(() => {
         const filteredProjects = searchProjects();
         setProjectFeed(filteredProjects);
-    }, [searchQuery, selectedTechStack, selectedTheme]);
+    }, [searchQuery, selectedTechStack, selectedTheme, selectedDifficulty]);
 
-    const handleSearch = (tech: string[], theme: string) => {
+    const handleSearch = (tech: string[], theme: string, difficulty: string) => {
         setSelectedTechStack(tech);
         setSelectedTheme(theme);
+        setSelectedDifficulty(difficulty);
+
     };
 
     const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => {

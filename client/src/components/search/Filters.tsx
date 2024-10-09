@@ -1,12 +1,14 @@
 import { TechStackFilters } from "./TechStackFIlters";
 import { ThemeFilters } from "./ThemeFilters";
+import { DifficultyFilter } from "./DifficultyFilters";
 
 
 export const Filters: React.FC = () => {
     return (
         <>
-          <TechStackFilters/>
+          <DifficultyFilter/>
           <ThemeFilters/>
+          <TechStackFilters/>
         </>
 
     );

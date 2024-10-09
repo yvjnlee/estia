@@ -251,7 +251,7 @@
 }
 
 .filter-label {
-    font-size: 24px;
+    font-size: var(--font-size-sm);
 }
 
 .search-bar-and-filters {
@@ -342,5 +342,23 @@
 
 /* When the filters are shown */
 .filters-container.show {
-    height: 200px;
+    height: 300px;
+}
+
+
+.difficulty-filter {
+    margin-top: 2.5rem;
+}
+
+.difficulty-filter-label {
+    margin-right: 5rem;
+    font-size: var(--font-size-sm);
+}
+
+.difficulty-select {
+    padding: 0.5rem;
+    font-size: var(--font-size-sm);
+    background-color: #151b23;
+    border: none;
+    border-radius: 4px;
 }
