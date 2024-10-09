@@ -93,20 +93,26 @@
   
   .project-difficulty.beginner {
     width: 85px;
-    background-color: #40925c;
-    color: #b5f5cc;  
+    background-color: #214b2f;
+    color: #fff;  
+    font-weight: 400;
+    font-size: var(--font-size-xs);
 }
   
   .project-difficulty.intermediate {
     width: 115px;
-    background-color: #828217;
-    color: #e2ebd0;
+    background-color: #5d5d25;
+    color: #fff;
+    font-weight: 400;
+    font-size: var(--font-size-xs);
   }
   
   .project-difficulty.advanced {
     width: 95px;
-    background-color: #924040;
-    color: #ffe5e5;
+    background-color: #582727;
+    color: #fff;
+    font-weight: 400;
+    font-size: var(--font-size-xs);
   }
 
 .project-title {
