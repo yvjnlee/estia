@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @import './styles/firstpage.css';
 @import './styles/login.css';
@@ -30,11 +30,20 @@
         44vw,
         1440px
     ); /* Height scales between 200px and 600px based on viewport width */
+
+    --font-size-xxs: 0.5rem;   /* Extra extra small */
+    --font-size-xs: 1rem;      /* Extra small */
+    --font-size-sm: 1.5rem;    /* Small */
+    --font-size-md: 2rem;      /* Medium */
+    --font-size-lg: 2.5rem;    /* Large */
+    --font-size-xl: 3rem;      /* Extra large */
+    --font-size-xxl: 3.5rem;   /* Extra extra large */
+    --font-size-xxxl: 4rem;    /* Extra extra extra large */
 }
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen", "Ubuntu",
+    font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Roboto", "Oxygen", "Ubuntu",
         "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     zoom: 0.6; /* 90% zoom */
     -webkit-font-smoothing: antialiased;
@@ -57,6 +66,6 @@ input:-webkit-autofill:focus {
 }
 
 ::selection {
-    background-color: #ffffff; /* Change the highlight color */
-    color: #000; /* Change the text color inside the selection */
+    background-color: #b32f92; /* Change the highlight color */
+    color: #fff; /* Change the text color inside the selection */
 }

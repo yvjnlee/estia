@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @keyframes fadeIn {
     from {
@@ -54,6 +54,10 @@
     cursor: pointer;
 }
 
+.tech-images-div:hover {
+    transform: scale(1.15);
+}
+
 .tech-image {
     width: 80px;
 }
@@ -78,12 +82,12 @@
 
 .details-title {
     display: block;
-    font-size: 3rem;
+    font-size: var(--font-size-xxl);
     margin-bottom: 1rem;
 }
 
 .details-subtitle {
-    font-size: 1.2rem;
+    font-size: var(--font-size-sm);
     width: calc(var(--element-height) * 2);
 }
 
@@ -168,7 +172,7 @@
 }
 
 .github-description {
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
 }
 
 .github-additional-information {
@@ -219,7 +223,7 @@
 }
 
 .saved {
-    background-color: #007bff;
+    background-color: #AF0880;
 }
 
 .like-fav-icon {

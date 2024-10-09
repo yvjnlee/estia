@@ -5,9 +5,10 @@ import { ProjectInfo } from "../../types/project";
 const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, difficulty, }) => {
     const containerStyle: React.CSSProperties = {
         //backgroundColor: colour,
-        backgroundColor: "#151B23",
+        backgroundColor: "",
         cursor: "pointer",
-        height: "13rem",
+        border: "1px solid #383838",
+        height: "15rem",
         width: "27rem",
         borderRadius: "4px",
         padding: "24px",

@@ -7,6 +7,22 @@ import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
 
 const GiveProjectPage: React.FC = () => {
+    const containerStyle: React.CSSProperties = {
+        //backgroundColor: colour,
+        backgroundColor: "",
+        cursor: "pointer",
+        border: "1px solid #383838",
+        height: "5rem",
+        width: "32rem",
+        borderRadius: "4px",
+        padding: "24px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        transition: "transform 0.3s ease, filter 0.3s ease",
+        // border: "2px solid grey",
+    };
+
     const { projects } = useProject(); // Access project data from context
     const [input, setInput] = useState("");
     const [output, setOutput] = useState<string | null>(null);
@@ -23,47 +39,32 @@ const GiveProjectPage: React.FC = () => {
             if (Array.isArray(parsedOutput["Recommended Projects"])) {
                 return parsedOutput["Recommended Projects"].map(
                     (project: string, index: number) => (
-                        <div className="project-theme-section" key={index}>
-                            <div className="projects-section">
-                                <div className="projects-div">
-                                    {/* Make the project title clickable */}
-                                    <h5
-                                        className="projects-heading"
-                                        onClick={() =>
-                                            navigate(`/project/${encodeURIComponent(project)}`)
-                                        } // Navigate to project details page
-                                        style={{ cursor: "pointer" }} // Add pointer for clickable effect
-                                    >
-                                        {project}
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                            <h2 className="project-title"
+                                onClick={() =>
+                                    navigate(`/project/${encodeURIComponent(project)}`)
+                                } // Navigate to project details page
+                                style={{ cursor: "pointer" }}
+                            >
+                                {project}
+                            </h2>
                     )
                 );
             }
 
-      // Handle the case for a single project recommendation
-      if (parsedOutput["Recommended Project"]) {
-        const project = parsedOutput["Recommended Project"];
-        return (
-          <div className="project-theme-section">
-            <div className="projects-section">
-              <div className="projects-div">
-                <h5
-                  className="projects-heading"
-                  onClick={() =>
-                    navigate(`/project/${encodeURIComponent(project)}`)
-                  } // Navigate to project details page
-                  style={{ cursor: "pointer", textDecoration: "underline" }} 
-                >
-                  {project}
-                </h5>
-              </div>
-            </div>
-          </div>
-        );
-      }
+            // Handle the case for a single project recommendation
+            if (parsedOutput["Recommended Project"]) {
+                const project = parsedOutput["Recommended Project"];
+                return (
+                    <h2 className="project-title"
+                        onClick={() =>
+                            navigate(`/project/${encodeURIComponent(project)}`)
+                        } // Navigate to project details page
+                        style={{ cursor: "pointer", textDecoration: "underline" }}
+                    >
+                        {project}
+                    </h2>
+                );
+            }
 
             return null; // Return null if no recommendations are found
         } catch (error) {
@@ -171,8 +172,10 @@ const GiveProjectPage: React.FC = () => {
                 </form>
                 {output && (
                     <div>
-                        <h3>Here are some related results:</h3>
-                        <div className="outer-theme-section-div">{formatOutput(output)}</div>
+                        <h3 className="related-results">Related results:</h3>
+                        <div className="project-container" style={containerStyle}>        
+                            {formatOutput(output)}
+                        </div>
                     </div>
                 )}
             </div>

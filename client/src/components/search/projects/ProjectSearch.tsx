@@ -33,14 +33,14 @@ export const ProjectSearch: React.FC = () => {
                     <button
                         className={
                             showFilters
-                                ? "filters-button white-filter"
-                                : "filters-button grey-Filter"
+                                ? "filters-button grey-Filter"
+                                : "filters-button white-filter"
                         }
                         onClick={handleToggleFilters}
                     >
                         <img
                             className="filters-logo"
-                            src={showFilters ? WhiteFilter : GreyFilter}
+                            src={showFilters ? GreyFilter : WhiteFilter}
                             alt="Filter Icon"
                         />
                         Filters

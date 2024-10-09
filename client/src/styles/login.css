@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
-
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .login-container {
     height: 100vh; /* Full viewport height */
@@ -31,7 +29,7 @@
 
 .custom-container {
     display: flex;
-    font-family: "Poppins";
+    font-family: "Montserrat";
     flex-direction: column;
     align-items: center;
     justify-content: center;

@@ -51,7 +51,9 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
         const filtered = projects?.filter((project) => {
             const matchesSearchQuery =
                 project.projectName.toLowerCase().includes(lowercasedQuery) ||
-                project.description?.toLowerCase().includes(lowercasedQuery);
+                project.description?.toLowerCase().includes(lowercasedQuery) ||
+                project.tech1?.toLowerCase().includes(lowercasedQuery) ||
+                project.tech2?.toLowerCase().includes(lowercasedQuery);
 
             const matchesTechStack =
                 selectedTechStack.length === 0 ||

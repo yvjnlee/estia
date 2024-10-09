@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .main-container {
     padding-bottom: 100px;
@@ -35,13 +35,14 @@
     height: 100%;
     background-color: #000000 !important;
     z-index: 0;
-    /* Keep the background below everything */
+    /* Keep the background below everything */ 
 }
 
 .heading-content {
     margin-top: -4rem;
     position: relative;
     align-items: center;
+    justify-content: center;
     display: flex;
     z-index: 2;
     flex-direction: column;
@@ -49,13 +50,13 @@
 }
 
 .main-h2 {
-    font-size: 48px;
     font-weight: 600;
-    font-size: 4rem !important;
+    font-size: var(--font-size-xxxl);
     letter-spacing: 2px;
+    max-width: 1450px;
     align-items: center;
     text-align: center;
-    color: rgb(255, 255, 255) !important;
+    color: rgb(255, 255, 255);
 }
 
 .nav-bar {
@@ -78,23 +79,21 @@
 .logo {
     width: 150px;
     margin-left: 1.5rem;
-    margin-top: 8px;
 }
 
 .log-out-button {
     position: relative;
-    padding: 1rem 1rem;
+    padding: 2rem 1rem;
     border-radius: 32px;
     cursor: pointer;
     width: 150px;
     height: 50px;
-    margin-bottom: 10px;
     background-color: var(--background-color);
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: var(--font-size-sm);
     text-align: center;
     transition: background-color 0.75s ease;
     transition: color 0.75s ease;
@@ -123,11 +122,11 @@
     position: relative;
     display: inline-block;
     margin-left: auto;
-    padding: 15px 28px;
+    padding: 15px 2rem;
     border: none;
     background: transparent;
     color: white;
-    font-size: 20px;
+    font-size: var(--font-size-sm);
     text-align: center;
     cursor: pointer;
     border-radius: 32px;
@@ -146,17 +145,7 @@
     align-items: center;
 }
 
-.ai-tag {
-    background-color: white !important;
-    background-color: rgb(198, 198, 198);
-    padding: 6px;
-    font-size: 16px;
-    justify-content: center;
-    align-items: center;
-    color: black;
-    border-radius: 8px;
-    margin-right: 9px;
-}
+
 
 .more-btn {
     background: none;
@@ -164,8 +153,8 @@
     color: rgb(163, 163, 163);
     cursor: pointer;
     text-decoration: underline;
-    padding: 8px;
-    font-size: 1rem;
+    margin-left: 2rem;
+    font-size: var(--font-size-sm);
 }
 
 @media (max-width: 480px) {

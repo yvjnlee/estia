@@ -16,9 +16,10 @@ export const Navbar: React.FC = () => {
             </Link>
 
             <div className="nav-buttons-continer">
-                <ProfileButton />
-                <LearnPreferencesButton />
+                
                 <CreateProjectButton />
+                <LearnPreferencesButton />
+                <ProfileButton />
             </div>
             <LogOutButton />
         </nav>

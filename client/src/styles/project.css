@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @keyframes fadeIn {
     from {
@@ -73,6 +73,12 @@
     /* Makes the element 5% larger */
 }
 
+.related-results {
+    margin-top: 3rem;
+    font-size: var(--font-size-md);
+    margin-bottom: 3rem;
+}
+
 .project-difficulty {
     font-size: 1rem;
     margin-bottom: 0;
@@ -104,7 +110,7 @@
   }
 
 .project-title {
-    font-size: 1.6rem;
+    font-size: var(--font-size-md);
     font-weight: 300;
     color: #d5d5d5;
     max-width: 90%;
@@ -188,12 +194,14 @@
 .search-bar {
     z-index: 5;
     padding: 1rem;
-    width: 100%;
+    width: 60rem;
     border-radius: 12px;
+    justify-content: center;
+    align-items: center;
     background-color: #202020 !important;
     border: none;
     margin-top: 1rem;
-    font-size: 24px;
+    font-size: var(--font-size-sm);
     color: white;
 }
 
