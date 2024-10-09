@@ -19,7 +19,8 @@
 :root {
     --background-color: #0E1011;
     --button-background: #1C1D1E;
-    --button-text-color: #626262;
+    --button-text-color: #e2e2e2;
+    --placeholder-text-color: #a4a4a4;
     --input-background: #282828;
     --input-border: #626262;
     --border-radius: 8px;

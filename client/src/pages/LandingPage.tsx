@@ -33,6 +33,7 @@ export const LandingPage: React.FC = () => {
 
             {/* Initial landing page when not logged in */}
             {!session && !showAuth && (
+                 <div className="wrapper">
                 <div className="initial-container">
                     <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
                     <h3 className="initial-slogan">Less Searching, More Creating</h3>
@@ -40,12 +41,13 @@ export const LandingPage: React.FC = () => {
                         start building
                     </button>
                     <LocomotiveScrollBar />
-                    <h3 className="inital-feedback">
+                    <h3 className="initial-feedback">
                         Got ideas or feedback?{" "}
                         <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
                             Contact us!
                         </Link>
                     </h3>
+                </div>
                 </div>
             )}
         </>

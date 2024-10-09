@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{
     const logIn = async () => {
         setShowAuth(true);
     };
-
+ 
     // Function to log out and clear session data
     const logOut = async () => {
         await supabase.auth.signOut();

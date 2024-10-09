@@ -7,7 +7,7 @@ const UserContext = createContext<UserProps | undefined>(undefined);
 export const UserProvider: React.FC<{
     children: React.ReactNode;
 }> = ({ children }) => {
-    const { supabase, user } = useAuth();
+    const { supabase, session } = useAuth(); // Use session instead of user
 
     const [users, setUsers] = useState<User[] | null>();
 
@@ -21,19 +21,17 @@ export const UserProvider: React.FC<{
                 setUsers(profiles); // Set the fetched data to state
             } catch (err) {
                 console.log(err);
-            } finally {
-                // console.log("got data")
             }
         };
 
-        if (user) {
-            syncUser(user.id);
+        if (session?.user?.id) {
+            syncUser(session.user.id); // Use session.user.id to sync user
         }
         fetchData();
-    }, []);
+    }, [session]);
 
     // Retrieves user information based off of id
-    const retreiveUser = async (id: string) => {
+    const retrieveUser = async (id: string) => {
         if (id) {
             try {
                 const { data: profile, error } = await supabase
@@ -55,7 +53,7 @@ export const UserProvider: React.FC<{
         return null;
     };
 
-    // Retrieves user information based off of id
+    // Retrieves user information based off of username
     const searchUser = async (username: string) => {
         try {
             const { data: profile, error } = await supabase
@@ -75,52 +73,25 @@ export const UserProvider: React.FC<{
         }
     };
 
-    // Syncs user information from Auth table to public table
+    // Syncs user information from Auth table to profiles table
     const syncUser = async (id: string) => {
         console.log("Syncing User");
-
-        if (user) {
-            const { email } = user;
-            const userInfo: User = { id, email };
-
-            // temporary for now while we dont have usernames
-            userInfo.username = email;
-
-            try {
-                // Check if the user exists in the target table
-                const { data: targetData, error: targetError } = await supabase
-                    .from("profiles")
-                    .select("*")
-                    .eq("id", id)
-                    .single();
-
-                if (targetError) {
-                    console.error("Error checking target data:", targetError);
-                }
-
-                if (!targetData) {
-                    const { error: insertError } = await supabase
-                        .from("profiles")
-                        .insert([{ ...userInfo }]);
-
-                    if (insertError) {
-                        console.error("Error inserting user data:", insertError);
-                    } else {
-                        console.log("User data inserted successfully.");
-                    }
-                } else {
-                    const { error } = await supabase
-                        .from("profiles")
-                        .update({ ...userInfo })
-                        .eq("id", id)
-                        .select("id");
-                    if (error) {
-                        console.log(error);
-                    }
-                    console.log("User data updated successfully");
-                }
-            } catch (err) {
-                console.log(err);
+    
+        if (session?.user) {
+            const { email } = session.user;
+            console.log("email:", email);
+            console.log("id:", id);
+            
+            // Update the user's email and username if they already exist
+            const { error: updateError } = await supabase
+                .from("profiles")
+                .update({ email, username: email }) // Ensure you're updating with existing `id`
+                .eq("id", id); // This line is critical to ensure you're targeting the correct profile
+    
+            if (updateError) {
+                console.error("Error updating user data:", updateError);
+            } else {
+                console.log("User data updated successfully");
             }
         }
     };
@@ -128,7 +99,7 @@ export const UserProvider: React.FC<{
     const value = {
         users: users as User[],
         searchUser: searchUser,
-        retrieveUser: retreiveUser,
+        retrieveUser: retrieveUser,
         syncUser: syncUser,
     };
 
@@ -138,7 +109,7 @@ export const UserProvider: React.FC<{
 export const useUser = () => {
     const context = useContext(UserContext);
     if (context === undefined) {
-        throw new Error("useProject must be used within an UserProvider");
+        throw new Error("useUser must be used within a UserProvider");
     }
     return context;
 };

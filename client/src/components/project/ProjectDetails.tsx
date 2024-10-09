@@ -9,6 +9,8 @@ import supabase from "../../SupabaseClient";
 
 // Imported icons
 import LikeImage from "../../img/ThumbsUp.svg";
+import LikedImage from "../../img/Liked.svg";
+
 import FavImage from "../../img/Star.svg";
 import SavedImage from "../../img/Starred.svg"
 
@@ -23,6 +25,7 @@ const ProjectDetails: React.FC = () => {
   const navigate = useNavigate(); // Hook for navigation
   const { supabase, user } = useAuth(); // Ensure you're getting the user properly
 
+  const [isLiked, setIsLiked] = useState(false); // Manage liked state
   const [isSaved, setIsSaved] = useState(false); // Manage saved state
   const [comments, setComments] = useState<CommentInfo[]>([]);
 
@@ -56,9 +59,28 @@ const ProjectDetails: React.FC = () => {
     }
   };
 
+  
+  // Function to check if the project is already saved
+  const checkIfLiked = async () => {
+    if (user) {
+      const { data: likedProjects, error } = await supabase
+        .from("liked_projects")
+        .select("project_id")
+        .eq("profile_id", user.id)
+        .eq("project_id", project.projectId); // Check if this project is liked
+
+      if (likedProjects && likedProjects.length > 0) {
+        setIsLiked(true); // Project is already liked
+      } else {
+        setIsLiked(false); // Project is not liked
+      }
+    }
+  };
+
   // Run checkIfSaved when component mounts
   useEffect(() => {
     checkIfSaved();
+    checkIfLiked();
   }, [user, project]);
 
   // Function to save or unsave the project
@@ -90,6 +112,38 @@ const ProjectDetails: React.FC = () => {
     }
   };
 
+
+  // Function to save or unsave the project
+  const toggleLikeProject = async () => {
+    if (user) {
+      if (isLiked) {
+        // Unlike project
+        const { error } = await supabase
+          .from("liked_projects")
+          .delete()
+          .eq("profile_id", user.id)
+          .eq("project_id", project.projectId);
+        
+        if (!error) {
+          setIsLiked(false); // Update state to "not liked"
+        }
+      } else {
+        // Like project
+        const { error } = await supabase
+          .from("liked_projects")
+          .insert([{ profile_id: user.id, project_id: project.projectId }]);
+
+        if (!error) {
+          setIsLiked(true); // Update state to "liked"
+        }
+      }
+    } else {
+      console.error("User is not logged in");
+    }
+  };
+
+
+
   // fetching the comments
   useEffect(() => {
     const fetchComments = async () => {
@@ -118,6 +172,7 @@ const ProjectDetails: React.FC = () => {
   }, [project]);
 
   const saveButtonClass = isSaved ? "saved" : "save"; // classname for save button
+  const likeButtonClass = isLiked ? "saved" : "save"; // using same class name as it is same aesthetics
 
 
   return (
@@ -150,9 +205,11 @@ const ProjectDetails: React.FC = () => {
                 <img className="like-fav-icon" src={ isSaved ? SavedImage : FavImage} alt="Save" />
                 <p>{isSaved ? "Saved" : "Save"}</p>
               </button>
-              <button className="save-and-like-button">
-                <img className="like-fav-icon" src={LikeImage} alt="Like" />
-                <p>Like</p>
+
+              <button className={`save-and-like-button ${likeButtonClass}`}
+               onClick={toggleLikeProject}>
+                <img className="like-fav-icon" src={ isLiked ? LikedImage : LikeImage} alt="Like" />
+                <p>{isLiked ? "Unlike" : "Like"}</p>
               </button>
             </div>
             <div className="">

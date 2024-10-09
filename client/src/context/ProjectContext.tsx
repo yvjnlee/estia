@@ -37,6 +37,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
                         projectId: row.project_id,
                         theme: row.theme,
                         difficulty: row.difficulty,
+                        likes: row.likes,
                     }));
                     setProjects(mappedData);
                     setProjectFeed(mappedData);
