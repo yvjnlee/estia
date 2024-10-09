@@ -1,39 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth, useUser } from "../context";
-import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
 import { VisitProfile } from "../components/profile/VisitProfile";
 import { UserProfile } from "../components/profile/UserProfile";
 import { UserProjects } from "../components/profile/UserProjects";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { fetchUserByUsername } from "../store/slices/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { Session } from "@supabase/supabase-js";
+import { supabase } from "../common/clients";
+import { User } from "../common/types";
 
 export const ProfilePage: React.FC = () => {
     const { username } = useParams();
-    const { searchUser } = useUser();
-    const { session } = useAuth();
-
-    const [loading, setLoading] = useState<boolean>(true);
-    const [profile, setProfile] = useState<User | null>();
-
-    const fetchUser = async () => {
-        try {
-            const userData = await searchUser(username as string);
-            setProfile(userData as User);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching user:", error);
-        }
-    };
+    const dispatch = useAppDispatch();
+    const { users, usersLoading } = useSelector((state: RootState) => state.users);
+    const [session, setSession] = useState<Session | null>(null);
+    const [sessionLoading, setSessionLoading] = useState(true);
 
     useEffect(() => {
-        fetchUser();
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+        });
+        setSessionLoading(false);
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchUserByUsername(username as string));
     }, [username]);
+
+    const profile: User | null = users?.find((user) => user.username === username) ?? null;
 
     return (
         <>
             <Navbar />
 
-            {profile && session?.user.id !== profile?.id && (
+            {users && session?.user.id !== profile?.id && (
                 <>
                     <UserProfile profile={profile} />
 
@@ -49,13 +52,13 @@ export const ProfilePage: React.FC = () => {
                 </>
             )}
 
-            {loading && (
+            {usersLoading && sessionLoading && (
                 <>
                     <div>loading...</div>
                 </>
             )}
 
-            {!profile && !loading && (
+            {!users && !usersLoading && !sessionLoading && (
                 <>
                     <div>
                         <p>This account does not exist</p>

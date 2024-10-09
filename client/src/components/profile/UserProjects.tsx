@@ -1,51 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { ProjectInfo, ProjectsDB } from "../../types/project";
-import { useAuth } from "../../context";
+import { RootState, AppDispatch } from "../../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProjects } from "../../store/slices/projectSlice";
+import { supabase } from "../../common/clients";
+import { Project } from "../../common/types";
 
 export const UserProjects: React.FC = () => {
-    const { supabase, user } = useAuth();
-    const [userProjects, setUserProjects] = useState<ProjectInfo[]>();
+    const dispatch = useDispatch<AppDispatch>();
+    const { projects, projectsLoading, projectsError } = useSelector(
+        (state: RootState) => state.projects
+    );
+    const [userId, setUserId] = useState<string>("");
 
-    // Need to put this in an api folder or something at some point
     useEffect(() => {
-        const fetchUserProjects = async () => {
-            try {
-                if (user) {
-                    const { data, error } = await supabase
-                        .from("estia_projects")
-                        .select("*")
-                        .eq("created_by", user.id);
-                    if (error) {
-                        console.log(error);
-                    }
-                    // console.log(data);
-                    if (data) {
-                        const mappedData: ProjectInfo[] = data.map((row: ProjectsDB) => ({
-                            projectName: row.project_name,
-                            createdAt: row.created_at,
-                            tech1: row.tech1,
-                            tech2: row.tech2,
-                            colour: row.colour,
-                            description: row.description,
-                            videoId: row.video_Id,
-                            repoPath: row.repo_Path,
-                        }));
-
-                        setUserProjects(mappedData);
-                    }
-                }
-            } catch (err) {
-                console.log(err);
-            }
+        const fetchSession = async () => {
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            setUserId(session?.user.id || "");
         };
-
-        fetchUserProjects();
+        fetchSession();
     }, []);
+
+    useEffect(() => {
+        if (userId) {
+            dispatch(fetchUserProjects(userId));
+        }
+    }, [dispatch, userId]);
+
+    if (projectsLoading) return <div>Loading projects...</div>;
+    if (projectsError) return <div>Error: {projectsError}</div>;
 
     return (
         <>
-            {userProjects?.map((project: ProjectInfo, index: number) => (
-                <div key={index}>
+            {projects?.map((project: Project, index: number) => (
+                <div key={project.projectId || index}>
                     <p>{project.projectName}</p>
                 </div>
             ))}

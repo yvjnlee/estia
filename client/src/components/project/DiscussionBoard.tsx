@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
-import { useAuth } from "../../context/AuthContext";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { fetchUserById } from "../../store/slices/userSlice";
+import { Session } from "@supabase/supabase-js";
+import { User } from "../../common/types";
+import { supabase } from "../../common/clients";
 
 const DiscussionBoard: React.FC = () => {
     type Comment = {
@@ -29,7 +33,37 @@ const DiscussionBoard: React.FC = () => {
             votes: 0,
         },
     ];
-    const { user } = useAuth();
+
+    const dispatch = useAppDispatch();
+
+    const [session, setSession] = useState<Session | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [newComment, setNewComment] = useState("");
+    const [allComments, setAllComments] = useState<Comment[]>(commentArr);
+
+    const userID: string = session?.user?.id || "";
+
+    useEffect(() => {
+        dispatch(fetchUserById(userID))
+            .unwrap()
+            .then((user) => {
+                setCurrentUser(user);
+            });
+    }, [dispatch, userID]);
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+        });
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
 
     const changeVote = (user: string, numVotes: number) => {
         setAllComments((allComments) =>
@@ -39,9 +73,6 @@ const DiscussionBoard: React.FC = () => {
         );
     };
 
-    const [newComment, setNewComment] = useState("");
-    const [allComments, setAllComments] = useState<Comment[]>(commentArr);
-
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
         setNewComment(event.target.value);
@@ -50,7 +81,7 @@ const DiscussionBoard: React.FC = () => {
     const postComment = () => {
         if (newComment !== "") {
             commentArr.push({
-                user: user?.username ? user.username : "Unknown User",
+                user: currentUser?.username ? currentUser.username : "Unknown User",
                 comment: newComment,
                 votes: 0,
             });

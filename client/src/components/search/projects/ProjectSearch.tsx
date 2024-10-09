@@ -1,15 +1,38 @@
 import React, { useState } from "react";
-import { useProject } from "../../../context";
 import { SearchBar } from "../SearchBar";
 import { Filters } from "../Filters";
 
 import GreyFilter from "../../../img/Grey_Filters.svg";
 import WhiteFilter from "../../../img/White_Filters.svg";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { searchProjects } from "../../../store/slices/projectSlice";
 
 export const ProjectSearch: React.FC = () => {
-    const { searchQuery, handleEnter, handleKeyPress, handleSearch } = useProject();
-
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const dispatch = useAppDispatch();
+
+    const handleEnter = () => {
+        handleSearch(searchQuery);
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleSearch(searchQuery);
+        }
+    };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        dispatch(searchProjects({ searchQuery }))
+            .unwrap()
+            .then((projects) => {
+                console.log(projects);
+            })
+            .catch((error) => {
+                console.error("Error fetching projects:", error);
+            });
+    };
 
     const handleToggleFilters = () => {
         setShowFilters(!showFilters);

@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProject } from "../context/ProjectContext";
 import { Navbar } from "../components/navbar/Navbar";
+import { createProject } from "../store/slices/projectSlice";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 
 // Expanded dictionary of languages and frameworks
 const techStackOptions = [
@@ -61,8 +62,8 @@ const techStackOptions = [
 ];
 
 const AddProject: React.FC = () => {
-    const { supabase } = useProject();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [projectName, setProjectName] = useState("");
     const [tech1, setTech1] = useState("");
@@ -74,27 +75,27 @@ const AddProject: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const { data, error } = await supabase.from("estia_projects").insert([
-                {
-                    project_name: projectName,
-                    tech1: tech1,
-                    tech2: tech2,
-                    description: description,
-                    video_Id: videoId,
-                    repo_Path: repoPath,
-                    colour: color,
-                },
-            ]);
 
-            if (error) {
-                console.error("Error inserting data:", error);
-            } else {
-                console.log("Project added:", data);
-                navigate("/");
-            }
+        try {
+            // Dispatch the createProject action
+            const createdAt = new Date().toISOString();
+            const result = await dispatch(
+                createProject({
+                    projectName,
+                    tech1,
+                    tech2,
+                    description,
+                    videoId,
+                    repoPath,
+                    colour: color,
+                    createdAt,
+                })
+            ).unwrap();
+
+            console.log("Project added:", result);
+            navigate("/");
         } catch (err) {
-            console.error(err);
+            console.error("Error creating project:", err);
         }
     };
 

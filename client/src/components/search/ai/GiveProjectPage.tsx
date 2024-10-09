@@ -1,12 +1,14 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
-import { useProject } from "../../../context/ProjectContext";
 import Groq from "groq-sdk"; // Import Groq SDK
 import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
+import { RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
 
 const GiveProjectPage: React.FC = () => {
-    const { projects } = useProject(); // Access project data from context
+    const { projects } = useSelector((state: RootState) => state.projects);
+
     const [input, setInput] = useState("");
     const [output, setOutput] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useProject } from "../../context/ProjectContext";
+import { searchProjects } from "../../store/slices/projectSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export const Filters: React.FC = () => {
     const techStackOptions = [
@@ -14,11 +15,9 @@ export const Filters: React.FC = () => {
         "HTML/CSS",
         "C++",
     ];
-
+    const dispatch = useAppDispatch();
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
     const [showMore, setShowMore] = useState(false); // State to toggle the visibility
-
-    const { searchProjects } = useProject();
 
     const handleFilter = (tech: string) => {
         setSelectedTechStack((prevSelected) => {
@@ -26,10 +25,17 @@ export const Filters: React.FC = () => {
             const newSelected = isChecked
                 ? prevSelected.filter((item) => item !== tech)
                 : [...prevSelected, tech];
-
-            searchProjects(newSelected);
             return newSelected;
         });
+
+        dispatch(searchProjects({ techStack: selectedTechStack }))
+            .unwrap()
+            .then((projects) => {
+                console.log(projects);
+            })
+            .catch((error) => {
+                console.error("Error fetching projects:", error);
+            });
     };
 
     return (

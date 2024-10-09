@@ -3,15 +3,17 @@ import { Routes, Route } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
 import ProjectDetails from "../components/project/ProjectDetails";
-import { useProject } from "../context/ProjectContext";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
 
 const ProjectsRoutes = () => {
-    const { projects } = useProject();
+    const { projects, projectsLoading } = useSelector((state: RootState) => state.projects);
 
     // Add check for projects before trying to map over them
-    if (!projects || !Array.isArray(projects)) {
+    if (!projects || !Array.isArray(projects) || projectsLoading) {
         return <div>Loading projects...</div>;
     }
+
     return (
         <Routes>
             {/* need to change home page home */}

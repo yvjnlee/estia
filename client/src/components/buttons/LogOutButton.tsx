@@ -1,17 +1,16 @@
 import React from "react";
-import { useAuth } from "../../context";
+import { supabase } from "../../common/clients";
 
 export const LogOutButton = () => {
-    const { supabase, logOut } = useAuth();
+    const handleLogOut = () => {
+        supabase.auth.signOut();
+    };
+
     return (
-        <button
-            className="log-out-button"
-            onClick={async () => {
-                await supabase.auth.signOut();
-                logOut();
-            }}
-        >
-            Log Out
-        </button>
+        <>
+            <button className="log-out-button" onClick={handleLogOut}>
+                Log Out
+            </button>
+        </>
     );
 };

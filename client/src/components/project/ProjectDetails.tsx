@@ -2,8 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
-import { useProject } from "../../context/ProjectContext";
-
 // Import the new projects data
 
 // Imported icons
@@ -15,9 +13,11 @@ import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 const ProjectDetails: React.FC = () => {
-    const { projects } = useProject();
+    const { projects } = useSelector((state: RootState) => state.projects);
     const navigate = useNavigate(); // Hook for navigation
 
     // Get the current URL and extract the project title
@@ -29,7 +29,8 @@ const ProjectDetails: React.FC = () => {
     const decodedTitle = decodeURIComponent(rawTitle);
 
     // Get the project details based on the decoded title parameter
-    const project = projects.find((project) => {
+    // probably should make a GET project by name here
+    const project = projects?.find((project) => {
         if (project.projectName === decodedTitle) {
             return project;
         }
