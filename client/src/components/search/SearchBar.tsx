@@ -18,13 +18,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     value={searchQuery}
                     onChange={handleKeyPress}
                     onKeyPress={() => handleEnter}
-                    placeholder="Search..."
+                    placeholder="Search for projects, languages, themes..."
                     className="search-bar"
                 />
             </Form>
-            <Button onClick={() => handleSearch} className="search-button">
-                Search
-            </Button>
         </div>
     );
 };

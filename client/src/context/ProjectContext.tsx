@@ -4,26 +4,28 @@ import { useAuth } from "./AuthContext";
 
 const ProjectContext = createContext<ProjectsProps | undefined>(undefined);
 
-export const ProjectProvider: React.FC<{
-    children: React.ReactNode;
-}> = ({ children }) => {
-    const { supabase } = useAuth(); // Ensure you have supabase here
-    const [searchQuery, setSearchQuery] = useState("");
+export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { supabase } = useAuth(); // Ensure supabase is available
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    const  [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
-    const [projects, setProjects] = useState<ProjectInfo[] | null>();
-    const [projectFeed, setProjectFeed] = useState<ProjectInfo[] | null>();
+    const [selectedTheme, setSelectedTheme] = useState<string>("");
+
+    const [projects, setProjects] = useState<ProjectInfo[] | null>(null);
+    const [projectFeed, setProjectFeed] = useState<ProjectInfo[] | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data, error } = await supabase.from("estia_projects").select("*");
+                const { data, error } = await supabase
+                .from("estia_projects")
+                .select("*");
+                
                 if (error) {
-                    console.log(error);
-                }
-                // console.log(data);
-                if (data) {
+                    console.error(error);
+                } else if (data) {
                     const mappedData: ProjectInfo[] = data.map((row: ProjectsDB) => ({
-                        projectId: row.project_id,
                         projectName: row.project_name,
                         createdAt: row.created_at,
                         tech1: row.tech1,
@@ -32,63 +34,80 @@ export const ProjectProvider: React.FC<{
                         description: row.description,
                         videoId: row.video_Id,
                         repoPath: row.repo_Path,
+                        projectId: row.project_id,
+                        theme: row.theme,
+                        difficulty: row.difficulty,
+                        likes: row.likes,
                     }));
-
                     setProjects(mappedData);
                     setProjectFeed(mappedData);
                 }
             } catch (err) {
-                console.log(err);
-            } finally {
-                // console.log("got data")
+                console.error(err);
             }
         };
         fetchData();
     }, [supabase]);
 
     const searchProjects = () => {
-        const lowercasedQuery = searchQuery.toLowerCase();
-        const filtered = projects?.filter((project) => {
-            const matchesSearchQuery =
-                project.projectName?.toLowerCase().includes(lowercasedQuery) ||
-                project.description?.toLowerCase().includes(lowercasedQuery);
+    const lowercasedQuery = searchQuery.toLowerCase();
+    
+    // Split the query by commas and trim whitespace from each term
+    const searchTerms = lowercasedQuery.split(',').map(term => term.trim()).filter(term => term.length > 0);
+    
+    const filtered = projects?.filter((project) => {
+        // Check if the project matches any of the search terms
+        const matchesSearchQuery = searchTerms.some(term => 
+            project.projectName.toLowerCase().includes(term) ||
+            project.description?.toLowerCase().includes(term) ||
+            project.tech1?.toLowerCase().includes(term) ||
+            project.tech2?.toLowerCase().includes(term)
+        );
 
-            const matchesTechStack =
-                selectedTechStack.length === 0 ||
-                selectedTechStack.some((tech) => project.tech1 === tech || project.tech2 === tech);
+        const matchesTechStack =
+            selectedTechStack.length === 0 ||
+            selectedTechStack.some((tech) => project.tech1 === tech || project.tech2 === tech);
 
-            return matchesSearchQuery && matchesTechStack;
-        });
+        const matchesTheme = !selectedTheme || project.theme === selectedTheme;
 
-        setProjectFeed(filtered);
-    };
+        const matchesDifficulty = !selectedDifficulty || project.difficulty === selectedDifficulty;
+
+        return matchesSearchQuery && matchesTechStack && matchesTheme && matchesDifficulty;
+    });
+
+    return filtered || [];
+};
 
     useEffect(() => {
-        searchProjects();
-    }, [searchQuery, selectedTechStack]);
+        const filteredProjects = searchProjects();
+        setProjectFeed(filteredProjects);
+    }, [searchQuery, selectedTechStack, selectedTheme, selectedDifficulty]);
 
-    const onSearch = (tech: string[]) => {
+    const handleSearch = (tech: string[], theme: string, difficulty: string) => {
         setSelectedTechStack(tech);
+        setSelectedTheme(theme);
+        setSelectedDifficulty(difficulty);
+
     };
 
-    const onEnter = (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => {
+    const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>, tech: string[]) => {
         if (e.key === "Enter") {
             setSelectedTechStack(tech);
         }
     };
 
-    const onKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleKeyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
 
     const value = {
-        supabase, // Include supabase in the context value
+        supabase,
         projects: projectFeed as ProjectInfo[],
-        searchQuery: searchQuery,
-        searchProjects: (tech: string[]) => setSelectedTechStack(tech),
-        handleSearch: onSearch,
-        handleEnter: onEnter,
-        handleKeyPress: onKeyPress,
+        searchQuery,
+        handleSearch,
+        handleEnter,
+        handleKeyPress,
+        searchProjects,
     };
 
     return <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>;

@@ -1,11 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .initial-container {
-    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen", "Ubuntu",
+    font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Roboto", "Oxygen", "Ubuntu",
         "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     align-items: center;
     margin-top: 10%;
     display: flex;
+    height: 134vh;
     flex-direction: column;
     position: relative; /* Establishes positioning context */
 }
@@ -26,7 +27,7 @@
     letter-spacing: 6px;
     justify-content: center;
     align-items: center;
-    width: 200px;
+    width: 250px;
     margin-bottom: 1rem;
 }
 
@@ -34,14 +35,14 @@
     color: white !important;
     display: flex;
     margin-top: 0px;
-    font-size: 20px;
+    font-size: var(--font-size-md);
     font-weight: 100;
     justify-content: center;
     align-items: center;
     margin-bottom: 32px;
 }
 
-.inital-feedback {
+.initial-feedback {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -50,19 +51,19 @@
 }
 
 .initial-button {
-    padding: 10px 20px;
+    padding: 25px 40px;
     border-radius: var(--border-radius);
     cursor: pointer;
     border: 0.5px solid var(--button-text-color);
-    width: 320px;
+    width: 300px;
     height: 36px;
     margin-bottom: 10px;
     background-color: white;
-    color: black !important;
+    color: #2d2d2d !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: var(--font-size-md);
     text-align: center;
 }
 
@@ -70,19 +71,22 @@
     background-color: rgb(148, 148, 148) !important;
     z-index: 1;
 }
-
 /* Horizontal Scroller */
 
 .scroller {
-    max-width: 600px;
-    margin-top: 2rem;
+    max-width: 1200px; /* Doubled the width */
+    margin-top: 4rem; /* Doubled the margin */
 }
 
 .scroller__inner {
-    padding-block: 1rem;
+    padding-block: 2rem; /* Doubled the padding */
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 2rem; /* Doubled the gap */
+}
+
+.scroller__inner li {
+    font-size: var(--font-size-md);
 }
 
 .scroller[data-animated="true"] {
@@ -116,7 +120,7 @@
 
 @keyframes scroll {
     to {
-        transform: translate(calc(-50% - 0.5rem));
+        transform: translate(calc(-50% - 1rem)); /* Adjusted translation for the doubled size */
     }
 }
 
@@ -141,13 +145,14 @@ html {
 }
 
 .tag-list li {
-    padding: 0.8rem;
-    background: var(--clr-primary-400);
-    border-radius: 0.5rem;
-    box-shadow: 0 0.5rem 1rem -0.25rem var(--clr-primary-900);
+    padding: 1.6rem; /* Doubled the padding */
+    background: var(--clr-primary-900);
+    border: 0.5px solid #AF0880;
+    border-radius: 1rem; /* Doubled the border-radius */
+    box-shadow: 0 1rem 2rem -0.5rem var(--clr-primary-900); /* Adjusted the shadow */
 }
 
-/* for testing purposed to ensure the animation lined up correctly */
+/* for testing purposes to ensure the animation lined up correctly */
 .test {
     background: red !important;
 }

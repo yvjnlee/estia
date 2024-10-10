@@ -17,6 +17,7 @@ export const ProjectFeed: React.FC = () => {
                             tech2={project.tech2}
                             colour={project.colour}
                             description={project.description}
+                            difficulty={project.difficulty}
                         />
                     </div>
                 ))

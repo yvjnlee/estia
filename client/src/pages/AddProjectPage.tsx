@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProject } from "../context/ProjectContext";
 import { Navbar } from "../components/navbar/Navbar";
+import DifficultyLevel from "../components/project/DifficultyLevel";
 
 // Expanded dictionary of languages and frameworks
 const techStackOptions = [
@@ -60,6 +61,25 @@ const techStackOptions = [
     "VueJS",
 ];
 
+const themeOptions = [
+    "Game Development",
+    "Full Stack",
+    "Portfolio",
+    "Clone App (Full Stack)",
+    "Clone App (Frontend)",
+    "Frontend",
+    "Backend",
+    "Machine Learning",
+    "Simple",
+    "Web Development",
+]
+
+const difficultyOptions = [
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+]
+
 const AddProject: React.FC = () => {
     const { supabase } = useProject();
     const navigate = useNavigate();
@@ -71,6 +91,10 @@ const AddProject: React.FC = () => {
     const [videoId, setVideoId] = useState("");
     const [repoPath, setRepoPath] = useState("");
     const [color, setColor] = useState("#6E00FF");
+    const [theme, setTheme] = useState("");
+    const [difficulty, setDifficulty] = useState("");
+
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -84,6 +108,8 @@ const AddProject: React.FC = () => {
                     video_Id: videoId,
                     repo_Path: repoPath,
                     colour: color,
+                    theme: theme,
+                    difficulty: difficulty,
                 },
             ]);
 
@@ -109,9 +135,6 @@ const AddProject: React.FC = () => {
     return (
         <>
             <Navbar />
-            <button onClick={() => navigate(-1)} className="back-button">
-                Back
-            </button>
             <div className="add-project-form">
                 <h2>Add New Project</h2>
                 <p className="subtitle">
@@ -157,6 +180,46 @@ const AddProject: React.FC = () => {
                                     2nd language/framework...
                                 </option>
                                 {techStackOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="tech-stack">
+                        <label>Main Area of Focus:</label>
+                        <div className="tech-inputs-container">
+                            <select
+                                className="tech-select"
+                                value={theme}
+                                onChange={(e) => setTheme(e.target.value)}
+                                required
+                            >
+                                <option value="" disabled>
+                                    Choose Theme...
+                                </option>
+                                {themeOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="tech-stack">
+                        <label>Difficulty Level</label>
+                        <div className="tech-inputs-container">
+                            <select
+                                className="tech-select"
+                                value={difficulty}
+                                onChange={(e) => setDifficulty(e.target.value)}
+                                required
+                            >
+                                <option value="" disabled>
+                                    Choose Difficulty...
+                                </option>
+                                {difficultyOptions.map((option, index) => (
                                     <option key={index} value={option}>
                                         {option}
                                     </option>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @keyframes fadeIn {
     from {
@@ -16,7 +16,7 @@
 .projects-container {
     border-radius: 8px;
     display: grid;
-    grid-template-columns: repeat(4, 24rem);
+    grid-template-columns: repeat(4, 31rem);
     /* Fixed width for each column */
     flex-wrap: nowrap;
     opacity: 0;
@@ -29,14 +29,14 @@
     z-index: 3;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1250px) {
     .projects-container {
-        grid-template-columns: repeat(2, 24rem);
+        grid-template-columns: repeat(2, 31rem);
         /* 2 column */
     }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 680px) {
     .projects-container {
         grid-template-columns: repeat(1, 25rem);
         /* 1 column */
@@ -73,11 +73,54 @@
     /* Makes the element 5% larger */
 }
 
+.related-results {
+    margin-top: 3rem;
+    font-size: var(--font-size-md);
+    margin-bottom: 3rem;
+}
+
+.project-difficulty {
+    font-size: 1rem;
+    margin-bottom: 0;
+    padding-left: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-weight: 400;
+    border-radius: 8px;
+    background-color: #40925c;
+    color: #b5f5cc;
+}
+  
+  .project-difficulty.beginner {
+    width: 85px;
+    background-color: var(--beginner-colour);
+    color: #fff;  
+    font-weight: 400;
+    font-size: var(--font-size-xs);
+}
+
+  .project-difficulty.intermediate {
+    width: 115px;
+    background-color: var(--intermediate-colour);
+    color: #fff;
+    font-weight: 400;
+    font-size: var(--font-size-xs);
+  }
+  
+  .project-difficulty.advanced {
+    width: 95px;
+    background-color: var(--advanced-colour);
+    color: #fff;
+    font-weight: 400;
+    font-size: var(--font-size-xs);
+  }
+
 .project-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #f3f3f3;
-    max-width: 50%;
+    font-size: var(--font-size-md);
+    font-weight: 300;
+    color: #d5d5d5;
+    max-width: 90%;
+    margin-top: 20px;
     /* Adjust as needed to fit within container */
     margin-bottom: auto;
     /* Pushes the .project-tech to the bottom */
@@ -85,18 +128,14 @@
 
 .project-tech {
     display: flex;
-    gap: 10px;
     margin-top: auto;
     /* Ensures this sticks to the bottom */
 }
 
 .tech-item {
-    font-size: 12px;
-    color: #000000;
-    background-color: #e0e0e0;
-    padding: 4px 8px;
+    font-size: 18px;
+    color: #ffffff;
     border-radius: 4px;
-    font-weight: 800;
 }
 
 .project-row {
@@ -161,12 +200,14 @@
 .search-bar {
     z-index: 5;
     padding: 1rem;
-    width: 100%;
+    width: 60rem;
     border-radius: 12px;
+    justify-content: center;
+    align-items: center;
     background-color: #202020 !important;
     border: none;
     margin-top: 1rem;
-    font-size: 24px;
+    font-size: var(--font-size-sm);
     color: white;
 }
 
@@ -210,7 +251,7 @@
 }
 
 .filter-label {
-    font-size: 24px;
+    font-size: var(--font-size-sm);
 }
 
 .search-bar-and-filters {
@@ -301,5 +342,23 @@
 
 /* When the filters are shown */
 .filters-container.show {
-    height: 110px;
+    height: 300px;
+}
+
+
+.difficulty-filter {
+    margin-top: 2.5rem;
+}
+
+.difficulty-filter-label {
+    margin-right: 5rem;
+    font-size: var(--font-size-sm);
+}
+
+.difficulty-select {
+    padding: 0.5rem;
+    font-size: var(--font-size-sm);
+    background-color: #151b23;
+    border: none;
+    border-radius: 4px;
 }

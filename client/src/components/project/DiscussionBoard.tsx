@@ -106,7 +106,7 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
                 <label className="placeholders">Add a comment...</label>
                 <button onClick={postComment}>Post</button>
             </div>
-            <ul>
+            <ul className="comments">
             {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">

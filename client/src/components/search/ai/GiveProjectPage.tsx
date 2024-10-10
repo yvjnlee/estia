@@ -7,6 +7,22 @@ import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
 
 const GiveProjectPage: React.FC = () => {
+    const containerStyle: React.CSSProperties = {
+        //backgroundColor: colour,
+        backgroundColor: "",
+        cursor: "pointer",
+        border: "1px solid #383838",
+        height: "5rem",
+        width: "32rem",
+        borderRadius: "4px",
+        padding: "24px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        transition: "transform 0.3s ease, filter 0.3s ease",
+        // border: "2px solid grey",
+    };
+
     const { projects } = useProject(); // Access project data from context
     const [input, setInput] = useState("");
     const [output, setOutput] = useState<string | null>(null);
@@ -23,22 +39,14 @@ const GiveProjectPage: React.FC = () => {
             if (Array.isArray(parsedOutput["Recommended Projects"])) {
                 return parsedOutput["Recommended Projects"].map(
                     (project: string, index: number) => (
-                        <div className="project-theme-section" key={index}>
-                            <div className="projects-section">
-                                <div className="projects-div">
-                                    {/* Make the project title clickable */}
-                                    <h5
-                                        className="projects-heading"
-                                        onClick={() =>
-                                            navigate(`/project/${encodeURIComponent(project)}`)
-                                        } // Navigate to project details page
-                                        style={{ cursor: "pointer" }} // Add pointer for clickable effect
-                                    >
-                                        {project}
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                            <h2 className="project-title"
+                                onClick={() =>
+                                    navigate(`/project/${encodeURIComponent(project)}`)
+                                } // Navigate to project details page
+                                style={{ cursor: "pointer" }}
+                            >
+                                {project}
+                            </h2>
                     )
                 );
             }
@@ -47,22 +55,14 @@ const GiveProjectPage: React.FC = () => {
             if (parsedOutput["Recommended Project"]) {
                 const project = parsedOutput["Recommended Project"];
                 return (
-                    <div className="project-theme-section">
-                        <div className="projects-section">
-                            <div className="projects-div">
-                                {/* Make the project title clickable */}
-                                <h5
-                                    className="projects-heading"
-                                    onClick={() =>
-                                        navigate(`/project/${encodeURIComponent(project)}`)
-                                    } // Navigate to project details page
-                                    style={{ cursor: "pointer", textDecoration: "underline" }} // Add pointer and underline for clickable effect
-                                >
-                                    {project}
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
+                    <h2 className="project-title"
+                        onClick={() =>
+                            navigate(`/project/${encodeURIComponent(project)}`)
+                        } // Navigate to project details page
+                        style={{ cursor: "pointer", textDecoration: "underline" }}
+                    >
+                        {project}
+                    </h2>
                 );
             }
 
@@ -135,34 +135,40 @@ const GiveProjectPage: React.FC = () => {
         <>
             <Navbar />
             <div className="preference-page">
+            <h2 className="page-heading">Hey Estia, find me...</h2>
                 <div className="navigation-links">
-                    <NavLink
+                <NavLink
                         to="/preference"
                         className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
                         end
                     >
-                        AI Learning Tool
+                        Programming languages/frameworks to learn
                     </NavLink>
                     <NavLink
                         to="/preference/give-project"
                         className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
                     >
-                        AI Project Finder
+                        A project within your collection
+                    </NavLink>
+                    <NavLink
+                        to="/preference/project-idea"
+                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
+                    >
+                        A fresh new project idea
                     </NavLink>
                 </div>
+                <div className="fade-in-div">
                 <div className="page-heading-container">
-                    <h2 className="page-heading">Tailored Projects for Your Learning Goals</h2>
                     <p className="preference-description">
-                        Unleash your potential by finding projects that align with your learning
-                        goals. We find projects on estia and connect you with the right hands-on
-                        experiences!
+                        Let us know what you are interested in making. We find projects on Estia based on your input and 
+                        connect you with the right hands-on experiences.
                     </p>
                 </div>
                 <form className="input-form" onSubmit={handleSubmit}>
                     <textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        rows={5}
+                        rows={3}
                         placeholder="Describe what you're interested in building..."
                         className="input-field"
                     />
@@ -172,10 +178,13 @@ const GiveProjectPage: React.FC = () => {
                 </form>
                 {output && (
                     <div>
-                        <h3>Here are some related results:</h3>
-                        <div className="outer-theme-section-div">{formatOutput(output)}</div>
+                        <h3 className="related-results">Related results:</h3>
+                        <div className="project-container" style={containerStyle}>        
+                            {formatOutput(output)}
+                        </div>
                     </div>
                 )}
+            </div>
             </div>
         </>
     );

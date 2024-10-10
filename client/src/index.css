@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-@import "./styles/firstpage.css";
-@import "./styles/login.css";
-@import "./styles/main.css";
-@import "./styles/project.css";
+@import './styles/firstpage.css';
+@import './styles/login.css';
+@import './styles/main.css';
+@import './styles/project.css';
+@import './styles/profiles.css';
 /* @import './styles/projectdetails.css'; */
 @import "./styles/addproject.css";
 @import "./styles/preferencepage.css";
@@ -16,12 +17,13 @@
 @import "./styles/discussion-board.css";
 
 :root {
-    --background-color: #000000;
-    --button-background: #ffffff;
-    --button-text-color: #626262;
+    --background-color: #0E1011;
+    --button-background: #1C1D1E;
+    --button-text-color: #e2e2e2;
+    --placeholder-text-color: #a4a4a4;
     --input-background: #282828;
     --input-border: #626262;
-    --border-radius: 10px;
+    --border-radius: 8px;
     --anchor-color: #ffffff; /* Purple color, replace with desired color */
     --button-background2: #000000;
     --element-height: clamp(
@@ -29,11 +31,24 @@
         44vw,
         1440px
     ); /* Height scales between 200px and 600px based on viewport width */
+
+    --font-size-xxs: 0.5rem;   /* Extra extra small */
+    --font-size-xs: 1rem;      /* Extra small */
+    --font-size-sm: 1.5rem;    /* Small */
+    --font-size-md: 2rem;      /* Medium */
+    --font-size-lg: 2.5rem;    /* Large */
+    --font-size-xl: 3rem;      /* Extra large */
+    --font-size-xxl: 3.5rem;   /* Extra extra large */
+    --font-size-xxxl: 4rem;    /* Extra extra extra large */
+
+    --beginner-colour: #214b2f;
+    --intermediate-colour: #5d5d25;
+    --advanced-colour: #582727;
 }
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Roboto", "Oxygen", "Ubuntu",
+    font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Roboto", "Oxygen", "Ubuntu",
         "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     zoom: 0.6; /* 90% zoom */
     -webkit-font-smoothing: antialiased;
@@ -53,4 +68,9 @@ input:-webkit-autofill {
 input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 50px white inset; /*your box-shadow*/
     -webkit-text-fill-color: #333;
+}
+
+::selection {
+    background-color: #b32f92; /* Change the highlight color */
+    color: #fff; /* Change the text color inside the selection */
 }

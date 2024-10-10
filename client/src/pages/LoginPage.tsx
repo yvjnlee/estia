@@ -27,7 +27,7 @@ export const LoginPage: React.FC = () => {
                             anchor: "custom-anchor",
                             label: "custom-label",
                             message: "custom_message",
-                        },
+                        }, 
                     }}
                     localization={{
                         variables: {

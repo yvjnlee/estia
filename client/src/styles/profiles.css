@@ -1,0 +1,32 @@
+.profile-page{
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 4rem auto;
+        animation: fadeIn 1s forwards;
+}
+
+.profile-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+
+
+.profile-heading{
+    font-size: 3rem;
+}
+
+
+.saved-heading {
+    display: block;
+    font-size: 2rem;
+}
+
+.outer-saved-section-div {
+
+
+}
