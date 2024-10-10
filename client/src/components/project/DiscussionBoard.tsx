@@ -15,7 +15,7 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
 
     const [currUser, setCurrUser] = useState<User | null>(null);
     const [newComment, setNewComment] = useState('');
-    const [existingComments, setExistingComments] = useState<CommentInfo[]>(comments);
+    // const [existingComments, setExistingComments] = useState<CommentInfo[]>(comments);
 
     useEffect(() => {
         // fetch user and set it
@@ -29,13 +29,28 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
         };
 
         fetchUser(); // Call the async function
+
     }, [retrieveUser]);
 
-    const changeVote = ( commentId : number, votes: number) => {
-        setExistingComments(existingComments =>
-            existingComments.map(comment =>
-              comment.commentId === commentId ? { ...comment, votes: comment.likes + votes } : comment
-            ));
+    const changeVote = async ( comment : CommentInfo, likes: number) => {
+        console.log("vote")
+        
+
+        const { data, error } = await supabase
+            .from('comments')
+            .update({ likes: comment.likes + likes })
+            .eq('comment_id', comment.commentId)
+        if (error) {
+        console.log(error);
+        console.log("Cannot upvote this comment")
+        }
+        // setExistingComments(existingComments =>
+        //     existingComments.map(comment =>
+        //       comment.commentId === comment.commentId ? { ...comment, votes: comment.likes + likes } : comment
+        //     ));
+        comments =
+            comments.map(comment =>
+              comment.commentId === comment.commentId ? { ...comment, votes: comment.likes + likes } : comment);
     }
 
     
@@ -76,7 +91,7 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
             }
             
             console.log(comments);
-            setExistingComments(comments);
+            // setExistingComments(comments);
             setNewComment('');
         } else {
             console.log("You can't comment!")
@@ -95,9 +110,9 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
             {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
-                        <button onClick={() => changeVote(comment.likes, 1)}><img src={UpChevron} /></button>
+                        <button onClick={() => changeVote(comment, 1)}><img src={UpChevron} /></button>
                         <span>{comment.likes}</span>
-                        <button onClick={() => changeVote(comment.likes, -1)}><img src={DownChevron} /></button>
+                        <button onClick={() => changeVote(comment, -1)}><img src={DownChevron} /></button>
                     </div>
                     <div className="comment">
                         <h3 className = "existing-comment-header">{comment.username}</h3> 
