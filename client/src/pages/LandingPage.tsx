@@ -10,35 +10,39 @@ import { LoginPage } from "./LoginPage";
 import MainEstiaLogo from "../img/MainAppLogo.svg";
 import { Link } from "react-router-dom";
 import { Session } from "@supabase/supabase-js";
-import { supabase } from "../common/clients";
+import { getSession } from "../api/authAPI";
 
 export const LandingPage: React.FC = () => {
-    const [showLogin, setShowLogin] = useState(false);
     const [session, setSession] = useState<Session | null>(null);
+    const [showAuth, setShowAuth] = useState<boolean>(false);
+
+    const handleShowLogin = () => {
+        setShowAuth(true);
+    };
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        getSession().then((session) => {
             setSession(session);
         });
     }, []);
 
-    const handleShowLogin = () => {
-        setShowLogin(true);
-    };
+    console.log(session, showAuth);
+
+    // Render different views based on session state
+    if (session && !showAuth) {
+        return (
+            <>
+                <Navbar />
+                <HomePage />
+            </>
+        );
+    }
 
     return (
-        <>
-            {/* Render Navbar if there is a session */}
-            {session && <Navbar />}
-
-            {/* Home page, rendered only if there is a session */}
-            {session && <HomePage />}
-
-            {/* Login page, rendered if there is no session and showLogin is true */}
-            {!session && showLogin && <LoginPage />}
-
-            {/* Initial landing page when not logged in and showLogin is false */}
-            {!session && !showLogin && (
+        <div className="landing-page-wrapper">
+            {showAuth ? (
+                <LoginPage />
+            ) : (
                 <div className="initial-container">
                     <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
                     <h3 className="initial-slogan">Less Searching, More Creating</h3>
@@ -46,7 +50,7 @@ export const LandingPage: React.FC = () => {
                         Start Building
                     </button>
                     <LocomotiveScrollBar />
-                    <h3 className="inital-feedback">
+                    <h3 className="initial-feedback">
                         Got ideas or feedback?{" "}
                         <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
                             Contact us!
@@ -54,6 +58,6 @@ export const LandingPage: React.FC = () => {
                     </h3>
                 </div>
             )}
-        </>
+        </div>
     );
 };

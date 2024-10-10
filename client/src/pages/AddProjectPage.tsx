@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/navbar/Navbar";
-import { createProject } from "../store/slices/projectSlice";
-import { useAppDispatch } from "../hooks/useAppDispatch";
+import { supabase } from "../common/clients";
 
 // Expanded dictionary of languages and frameworks
 const techStackOptions = [
@@ -63,7 +62,6 @@ const techStackOptions = [
 
 const AddProject: React.FC = () => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
 
     const [projectName, setProjectName] = useState("");
     const [tech1, setTech1] = useState("");
@@ -75,27 +73,27 @@ const AddProject: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
-            // Dispatch the createProject action
-            const createdAt = new Date().toISOString();
-            const result = await dispatch(
-                createProject({
-                    projectName,
-                    tech1,
-                    tech2,
-                    description,
-                    videoId,
-                    repoPath,
+            const { data, error } = await supabase.from("estia_projects").insert([
+                {
+                    project_name: projectName,
+                    tech1: tech1,
+                    tech2: tech2,
+                    description: description,
+                    video_Id: videoId,
+                    repo_Path: repoPath,
                     colour: color,
-                    createdAt,
-                })
-            ).unwrap();
+                },
+            ]);
 
-            console.log("Project added:", result);
-            navigate("/");
+            if (error) {
+                console.error("Error inserting data:", error);
+            } else {
+                console.log("Project added:", data);
+                navigate("/");
+            }
         } catch (err) {
-            console.error("Error creating project:", err);
+            console.error(err);
         }
     };
 

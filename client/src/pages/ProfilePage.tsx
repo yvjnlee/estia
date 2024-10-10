@@ -2,66 +2,73 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Navbar } from "../components/navbar/Navbar";
 import { VisitProfile } from "../components/profile/VisitProfile";
-import { UserProfile } from "../components/profile/UserProfile";
-import { UserProjects } from "../components/profile/UserProjects";
-import { useAppDispatch } from "../hooks/useAppDispatch";
-import { fetchUserByUsername } from "../store/slices/userSlice";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { Session } from "@supabase/supabase-js";
-import { supabase } from "../common/clients";
 import { User } from "../common/types";
+import { Session } from "@supabase/supabase-js";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { getUserByUsername } from "../api/userAPI";
+import { getSession } from "../api/authAPI";
+import { UserSaved } from "../components/profile/UserSaved";
+import { UserCreated } from "../components/profile/UserCreated";
 
 export const ProfilePage: React.FC = () => {
     const { username } = useParams();
     const dispatch = useAppDispatch();
-    const { users, usersLoading } = useSelector((state: RootState) => state.users);
+
+    const [profile, setProfile] = useState<User | null>(null);
+    const [profileLoading, setProfileLoading] = useState<boolean>(true);
     const [session, setSession] = useState<Session | null>(null);
-    const [sessionLoading, setSessionLoading] = useState(true);
+    const [sessionLoading, setSessionLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-        });
-        setSessionLoading(false);
+        getSession()
+            .then((session) => {
+                setSession(session);
+                setSessionLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching session:", error);
+                setSessionLoading(false);
+            });
     }, []);
 
     useEffect(() => {
-        dispatch(fetchUserByUsername(username as string));
-    }, [username]);
+        if (username && !sessionLoading) {
+            setProfileLoading(true);
+            getUserByUsername(dispatch, username)
+                .then((user) => {
+                    setProfile(user);
+                })
+                .catch((error) => {
+                    console.error("Error fetching user:", error);
+                    setProfile(null);
+                })
+                .finally(() => {
+                    setProfileLoading(false);
+                });
+        }
+    }, [username, sessionLoading, dispatch]);
 
-    const profile: User | null = users?.find((user) => user.username === username) ?? null;
+    if (profileLoading) {
+        return <div>loading...</div>;
+    }
+
+    if (!profile) {
+        return (
+            <div>
+                <p>This account does not exist</p>
+            </div>
+        );
+    }
 
     return (
         <>
             <Navbar />
-
-            {users && session?.user.id !== profile?.id && (
+            {session?.user.id === profile?.id && (
                 <>
-                    <UserProfile profile={profile} />
-
-                    <UserProjects />
-                </>
-            )}
-
-            {session?.user.id === profile?.id && profile && (
-                <>
-                    <VisitProfile profile={profile} />
-
-                    <UserProjects />
-                </>
-            )}
-
-            {usersLoading && sessionLoading && (
-                <>
-                    <div>loading...</div>
-                </>
-            )}
-
-            {!users && !usersLoading && !sessionLoading && (
-                <>
-                    <div>
-                        <p>This account does not exist</p>
+                    <div className="profile-page">
+                        <VisitProfile profile={profile} />
+                        <UserSaved />
+                        <UserCreated />
                     </div>
                 </>
             )}

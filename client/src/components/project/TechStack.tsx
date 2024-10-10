@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import TechStackModal from "./TechStackModal";
 
 import cSharp from "../../img/programminglogos/c#.svg";
 import css from "../../img/programminglogos/css.svg";
@@ -104,6 +105,14 @@ const techImages: { [key: string]: string } = {
 };
 
 const TechStack: React.FC<{ tech1: string; tech2: string }> = ({ tech1, tech2 }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTech, setSelectedTech] = useState<string>("");
+
+    const handleTechClick = (tech: string) => {
+        setSelectedTech(tech);
+        setIsModalOpen(true);
+    };
+
     const translateTechName = (tech: string): string => {
         const translations: { [key: string]: string } = {
             "C++": "cPlusPlus",
@@ -122,16 +131,20 @@ const TechStack: React.FC<{ tech1: string; tech2: string }> = ({ tech1, tech2 })
     return (
         <div className="sidebar-container">
             <h1>Tech Stack</h1>
+            <p className="tech-stack-subtitle">Select one for additional AI-generated info</p>
             <div className="tech-images-div-container">
-                <div className="tech-images-div">
+                <div className="tech-images-div" onClick={() => handleTechClick(tech1)}>
                     <img src={getTechImage(tech1)} alt={tech1} className="tech-image" />
                     <p className="tech-stack-details">{tech1}</p>
                 </div>
-                <div className="tech-images-div">
+                <div className="tech-images-div" onClick={() => handleTechClick(tech2)}>
                     <img src={getTechImage(tech2)} alt={tech2} className="tech-image" />
                     <p className="tech-stack-details">{tech2}</p>
                 </div>
             </div>
+            {isModalOpen && (
+                <TechStackModal tech={selectedTech} onClose={() => setIsModalOpen(false)} />
+            )}
         </div>
     );
 };

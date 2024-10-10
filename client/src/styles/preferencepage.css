@@ -3,6 +3,8 @@
     margin-left: 5rem;
     margin-top: 3rem;
     padding: 2rem;
+    animation: fadeIn 1s forwards;
+
 }
 
 .navigation-links {
@@ -16,27 +18,29 @@
     color: #fff;
     border: 1px solid transparent;
     border-radius: 6px;
+    font-size: var(--font-size-sm);
     transition:
         background-color 0.3s,
         border-color 0.3s;
 }
 
 .nav-link:hover {
-    background-color: #f0f0f0;
-    border-color: #007bff;
+    background-color: #151b23;
+    color: #fff;
 }
 
 .active-nav-link {
-    padding: 10px 15px;
+    padding: 16px 17px;
     background-color: #3f4c5b;
     color: white;
     border-radius: 6px;
+    font-size: var(--font-size-sm);
     text-decoration: none;
     border-color: #151c24;
 }
 
 .page-heading {
-    font-size: 3rem;
+    font-size: var(--font-size-xxl);
     font-weight: 700;
     margin-bottom: -1rem;
     text-align: left;
@@ -50,7 +54,7 @@
 
 .input-field {
     width: 80%;
-    font-size: 1.4rem;
+    font-size: var(--font-size-md);
     margin-bottom: 15px;
     border-radius: 6px;
     border: none;
@@ -65,7 +69,7 @@
     font-size: 1.1rem;
     border: none;
     border-radius: 8px;
-    background-color: #007bff;
+    background-color: #AF0880;
     color: white;
     cursor: pointer;
     width: 15rem;
@@ -113,6 +117,9 @@
     text-align: left;
     opacity: 0;
     margin-left: 0rem;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
     margin-bottom: 1.5rem;
     transform: translateY(20px);
     animation: fadeIn 0.5s ease-in-out forwards;
@@ -198,7 +205,7 @@
 
 .category-item {
     font-size: 1rem;
-    margin-bottom: -0.8rem;
+    margin-bottom: 1rem;
     background-color: inherit;
 }
 
@@ -220,7 +227,7 @@
 }
 
 .preference-description {
-    font-size: 1.5rem;
+    font-size: var(--font-size-sm);
     max-width: 1000px;
 }
 

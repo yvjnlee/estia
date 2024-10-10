@@ -1,10 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .main-container {
     padding-bottom: 100px;
     /* Adds space at the bottom */
     position: relative;
     /* Ensure the container is in a stacking context */
+}
+
+.homepage-radial-pattern {
+    position: absolute;
+    top: -2rem;
+    right: -0.9rem;
 }
 
 .heading-container {
@@ -29,13 +35,14 @@
     height: 100%;
     background-color: #000000 !important;
     z-index: 0;
-    /* Keep the background below everything */
+    /* Keep the background below everything */ 
 }
 
 .heading-content {
     margin-top: -4rem;
     position: relative;
     align-items: center;
+    justify-content: center;
     display: flex;
     z-index: 2;
     flex-direction: column;
@@ -43,51 +50,55 @@
 }
 
 .main-h2 {
-    font-size: 48px;
     font-weight: 600;
+    font-size: var(--font-size-xxxl);
     letter-spacing: 2px;
-    color: rgb(255, 255, 255) !important;
+    max-width: 1450px;
+    align-items: center;
+    text-align: center;
+    color: rgb(255, 255, 255);
 }
 
 .nav-bar {
-    position: sticky;
-    top: 0;
-    padding-top: 2rem;
-    margin-top: 1rem;
+    position: sticky !important;
+    padding: 1rem;
+    margin-top: 0.5rem;
     display: flex;
     margin-left: 4rem;
     margin-right: 4rem;
+    top: 28px;
     align-items: center;
+    border-radius: 48px;
     z-index: 8;
+    border: 2px solid rgb(56, 56, 56);
     justify-content: space-between;
     align-items: center; /* Aligns items vertically in the center */
-    padding: 0; /* Optional: Add padding for better spacing */
+    background-color: var(--background-color);
 }
 
 .logo {
-    width: 175px;
+    width: 150px;
+    margin-left: 1.5rem;
 }
 
 .log-out-button {
     position: relative;
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
+    padding: 2rem 1rem;
+    border-radius: 32px;
     cursor: pointer;
-    border: 0.5px solid var(--button-text-color);
     width: 150px;
-    height: 42px;
-    margin-bottom: 10px;
-    background-color: var(--button-background);
-    color: var(--button-text-color);
+    height: 50px;
+    background-color: var(--background-color);
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: var(--font-size-sm);
     text-align: center;
     transition: background-color 0.75s ease;
     transition: color 0.75s ease;
-    border: none;
+    border: 1px solid rgb(56, 56, 56);
+    margin-right: 1rem;
 }
 
 .nav-buttons-container {
@@ -111,21 +122,30 @@
     position: relative;
     display: inline-block;
     margin-left: auto;
-    padding: 10px 20px;
+    padding: 15px 2rem;
     border: none;
     background: transparent;
     color: white;
-    font-size: 16px;
+    font-size: var(--font-size-sm);
     text-align: center;
     cursor: pointer;
+    border-radius: 32px;
     transition: transform 0.2s ease;
     text-decoration: none;
 }
 
 .create-project-button:hover {
-    transform: scale(1.1); /* Scale up on hover */
     filter: brightness(1.2); /* Slightly brighten the text */
+    background-color: #151b23;
 }
+
+.ai-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 .more-btn {
     background: none;
@@ -133,8 +153,8 @@
     color: rgb(163, 163, 163);
     cursor: pointer;
     text-decoration: underline;
-    padding: 8px;
-    font-size: 1rem;
+    margin-left: 2rem;
+    font-size: var(--font-size-sm);
 }
 
 @media (max-width: 480px) {

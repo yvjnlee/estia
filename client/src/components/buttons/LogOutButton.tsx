@@ -1,14 +1,10 @@
 import React from "react";
-import { supabase } from "../../common/clients";
+import { logOut } from "../../api/authAPI";
 
 export const LogOutButton = () => {
-    const handleLogOut = () => {
-        supabase.auth.signOut();
-    };
-
     return (
         <>
-            <button className="log-out-button" onClick={handleLogOut}>
+            <button className="log-out-button" onClick={logOut}>
                 Log Out
             </button>
         </>

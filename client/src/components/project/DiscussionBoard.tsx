@@ -3,9 +3,6 @@ import { useState } from "react";
 
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { fetchUserById } from "../../store/slices/userSlice";
-import { Session } from "@supabase/supabase-js";
 import { User } from "../../common/types";
 import { supabase } from "../../common/clients";
 
@@ -15,6 +12,7 @@ const DiscussionBoard: React.FC = () => {
         comment: string;
         votes: number;
     };
+
     const commentArr: Comment[] = [
         {
             user: "michaelzhou1232",
@@ -34,37 +32,6 @@ const DiscussionBoard: React.FC = () => {
         },
     ];
 
-    const dispatch = useAppDispatch();
-
-    const [session, setSession] = useState<Session | null>(null);
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
-    const [newComment, setNewComment] = useState("");
-    const [allComments, setAllComments] = useState<Comment[]>(commentArr);
-
-    const userID: string = session?.user?.id || "";
-
-    useEffect(() => {
-        dispatch(fetchUserById(userID))
-            .unwrap()
-            .then((user) => {
-                setCurrentUser(user);
-            });
-    }, [dispatch, userID]);
-
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-        });
-
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
     const changeVote = (user: string, numVotes: number) => {
         setAllComments((allComments) =>
             allComments.map((comment) =>
@@ -72,6 +39,20 @@ const DiscussionBoard: React.FC = () => {
             )
         );
     };
+
+    const [newComment, setNewComment] = useState("");
+    const [allComments, setAllComments] = useState<Comment[]>(commentArr);
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        const fetchSession = async () => {
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            setUser(session?.user || null);
+        };
+        fetchSession();
+    }, []);
 
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
@@ -81,7 +62,7 @@ const DiscussionBoard: React.FC = () => {
     const postComment = () => {
         if (newComment !== "") {
             commentArr.push({
-                user: currentUser?.username ? currentUser.username : "Unknown User",
+                user: user?.username ? user.username : "Unknown User",
                 comment: newComment,
                 votes: 0,
             });

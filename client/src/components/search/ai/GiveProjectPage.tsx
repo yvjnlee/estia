@@ -1,19 +1,38 @@
 /* eslint-disable camelcase */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Groq from "groq-sdk"; // Import Groq SDK
 import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
-import { RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { Project } from "../../../common/types";
+import { fetchProjects } from "../../../store/slices/projectSlice";
 
 const GiveProjectPage: React.FC = () => {
-    const { projects } = useSelector((state: RootState) => state.projects);
-
     const [input, setInput] = useState("");
     const [output, setOutput] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const fetchAllProjects = async () => {
+            try {
+                dispatch(fetchProjects())
+                    .unwrap()
+                    .then((projects) => {
+                        setProjects(projects);
+                    });
+            } catch (error) {
+                console.error("Error fetching projects:", error);
+            }
+        };
+
+        fetchAllProjects();
+    }, []);
 
     // Helper function to format and parse JSON output
     const formatOutput = (jsonString: string) => {

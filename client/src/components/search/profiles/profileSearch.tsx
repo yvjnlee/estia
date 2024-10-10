@@ -35,12 +35,16 @@ export const ProfileSearch: React.FC = () => {
         setSearchQuery(e.target.value);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
     return (
         <SearchBar
             searchQuery={searchQuery as string}
             handleEnter={handleEnter}
             handleKeyPress={handleKeyPress}
-            handleSearch={handleSearch}
+            handleInputChange={handleInputChange}
         />
     );
 };

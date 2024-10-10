@@ -1,37 +1,58 @@
-/* eslint-disable indent */
-/* eslint-disable no-undef */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAPI } from "../../utils/fetchAPI";
-import { Project } from "../../common/types";
+import { Project, ProjectDB } from "../../common/types";
+import { RootState } from "../store";
 
 interface ProjectState {
-    projects: Project[] | null;
+    projects: ProjectDB[] | null;
     projectsLoading: boolean;
     projectsError: string | null;
+    searchFilter: string;
+    techStackFilter: string[];
+    themeFilter: string[];
+    difficultyFilter: string;
 }
 
 const initialState: ProjectState = {
     projects: null,
     projectsLoading: false,
     projectsError: null,
+    searchFilter: '',
+    techStackFilter: [],
+    themeFilter: [],
+    difficultyFilter: '',
 };
 
 // Thunks
 export const createProject = createAsyncThunk(
     "projects/createProject",
     async (newProject: Project) => {
-        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects`, "POST", newProject);
+        return await fetchAPI(
+            `${process.env.REACT_APP_API_BASE_URL}/projects/`,
+            "POST",
+            newProject
+        );
     }
 );
 
 export const fetchProjects = createAsyncThunk("projects/fetchProjects", async () => {
-    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects`, "GET");
+    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects/`, "GET");
 });
 
 export const fetchProjectById = createAsyncThunk(
     "projects/fetchProjectById",
     async (id: string) => {
-        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects/${id}`, "GET");
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects/id/${id}`, "GET");
+    }
+);
+
+export const fetchProjectByName = createAsyncThunk(
+    "projects/fetchProjectByName",
+    async (projectName: string) => {
+        return await fetchAPI(
+            `${process.env.REACT_APP_API_BASE_URL}/projects/name/${projectName}`,
+            "GET"
+        );
     }
 );
 
@@ -55,102 +76,67 @@ export const fetchUserProjects = createAsyncThunk(
     "projects/fetchUserProjects",
     async (userId: string) => {
         return await fetchAPI(
-            `${process.env.REACT_APP_API_BASE_URL}/users/${userId}/projects`,
+            `${process.env.REACT_APP_API_BASE_URL}/projects/user/${userId}`,
             "GET"
         );
-    }
-);
-
-export const searchProjects = createAsyncThunk(
-    "projects/searchProjects",
-    async (params: { searchQuery?: string; techStack?: string[] }, { getState }) => {
-        const state = getState() as { projects: { projects: Project[] } };
-        const { projects } = state.projects;
-
-        const lowercasedQuery = params.searchQuery?.toLowerCase();
-        const selectedTechStack = params.techStack;
-
-        if (lowercasedQuery && selectedTechStack) {
-            const filtered = projects?.filter((project) => {
-                const matchesSearchQuery =
-                    project.projectName?.toLowerCase().includes(lowercasedQuery) ||
-                    project.description?.toLowerCase().includes(lowercasedQuery);
-
-                const matchesTechStack =
-                    selectedTechStack.length === 0 ||
-                    selectedTechStack.some(
-                        (tech) => project.tech1 === tech || project.tech2 === tech
-                    );
-
-                return matchesSearchQuery && matchesTechStack;
-            });
-
-            // Return the filtered projects instead of modifying state directly
-            return filtered;
-        }
-        // If no filtering is done, return the original projects
-        return projects;
     }
 );
 
 const projectSlice = createSlice({
     name: "projects",
     initialState,
-    reducers: {},
+    reducers: {
+        // Add reducers for updating filter states
+        setSearchFilter: (state, action: PayloadAction<string>) => {
+            state.searchFilter = action.payload;
+        },
+        setTechStackFilter: (state, action: PayloadAction<string[]>) => {
+            state.techStackFilter = action.payload;
+        },
+        setThemeFilter: (state, action: PayloadAction<string[]>) => {
+            state.themeFilter = action.payload;
+        },
+        setDifficultyFilter: (state, action: PayloadAction<string>) => {
+            state.difficultyFilter = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
-            .addCase(searchProjects.pending, (state) => {
+            .addCase(fetchProjects.pending, (state) => {
                 state.projectsLoading = true;
                 state.projectsError = null;
             })
-            .addCase(searchProjects.fulfilled, (state, action: PayloadAction<Project[]>) => {
+            .addCase(fetchProjects.fulfilled, (state, action) => {
                 state.projectsLoading = false;
                 state.projects = action.payload;
             })
-            .addMatcher(
-                (action) => action.type.endsWith("/pending"),
-                (state) => {
-                    state.projectsLoading = true;
-                    state.projectsError = null;
-                }
-            )
-            .addMatcher(
-                (action) => action.type.endsWith("/fulfilled"),
-                (state, action: PayloadAction<Project | Project[]>) => {
-                    state.projectsLoading = false;
-
-                    if (Array.isArray(action.payload)) {
-                        // Handle fetchProjects and fetchUserProjects
-                        state.projects = action.payload;
-                    } else if (action.payload) {
-                        // Handle create/update actions
-                        if (
-                            action.type.startsWith("projects/createProject") ||
-                            action.type.startsWith("projects/updateProject")
-                        ) {
-                            state.projects = state.projects
-                                ? [
-                                      ...state.projects.filter(
-                                          (p) =>
-                                              p.projectId !==
-                                              (Array.isArray(action.payload)
-                                                  ? action.payload[0].projectId
-                                                  : action.payload.projectId)
-                                      ),
-                                      Array.isArray(action.payload)
-                                          ? action.payload[0]
-                                          : action.payload,
-                                  ]
-                                : [
-                                      Array.isArray(action.payload)
-                                          ? action.payload[0]
-                                          : action.payload,
-                                  ];
-                        }
+            .addCase(fetchProjects.rejected, (state, action) => {
+                state.projectsLoading = false;
+                state.projectsError = action.error.message || "An error occurred while fetching projects";
+            })
+            .addCase(createProject.fulfilled, (state, action) => {
+                state.projectsLoading = false;
+                state.projects = state.projects ? [...state.projects, action.payload] : [action.payload];
+            })
+            .addCase(updateProject.fulfilled, (state, action) => {
+                state.projectsLoading = false;
+                if (state.projects) {
+                    const index = state.projects.findIndex(p => p.project_id === action.payload.project_id);
+                    if (index !== -1) {
+                        state.projects[index] = action.payload;
                     }
                 }
-            );
+            })
+            .addCase(deleteProject.fulfilled, (state, action) => {
+                state.projectsLoading = false;
+                if (state.projects) {
+                    state.projects = state.projects.filter(p => p.project_id !== action.payload);
+                }
+            });
     },
 });
+
+// Export action creators
+export const { setSearchFilter, setTechStackFilter, setThemeFilter, setDifficultyFilter } = projectSlice.actions;
 
 export default projectSlice.reducer;

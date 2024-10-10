@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
+
 // Import the new projects data
 
 // Imported icons
@@ -13,12 +14,15 @@ import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
-import { RootState } from "../../store/store";
-import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { getProjectByName } from "../../api/projectAPI";
+import { Project } from "../../common/types";
 
 const ProjectDetails: React.FC = () => {
-    const { projects } = useSelector((state: RootState) => state.projects);
     const navigate = useNavigate(); // Hook for navigation
+    const dispatch = useAppDispatch();
+    const [project, setProject] = useState<Project | null>(null);
+    const [projectLoading, setProjectLoading] = useState<boolean>(true);
 
     // Get the current URL and extract the project title
     const url = window.location.href;
@@ -29,63 +33,69 @@ const ProjectDetails: React.FC = () => {
     const decodedTitle = decodeURIComponent(rawTitle);
 
     // Get the project details based on the decoded title parameter
-    // probably should make a GET project by name here
-    const project = projects?.find((project) => {
-        if (project.projectName === decodedTitle) {
-            return project;
+    useEffect(() => {
+        if (decodedTitle) {
+            getProjectByName(dispatch, decodedTitle).then((project) => {
+                console.log("HIHI", project);
+                setProject(project);
+                setProjectLoading(false);
+            });
         }
-    });
+    }, [dispatch, decodedTitle]);
 
-    // console.log(projects);
     return (
         <>
             <Navbar />
-            <div className="details-main-container">
-                {/* Left side of page */}
-                <div className="grid-container">
-                    <div className="">
-                        <button onClick={() => navigate(-1)} className="back-button">
-                            Back
-                        </button>
-                        <div className="details-container">
-                            <div className="title-and-description">
-                                <h1 className="details-title">{project?.projectName}</h1>
-                            </div>
-                            {/* <div className="embed-container"> */}
-                            <div className="description-container">
-                                <YouTubeEmbed videoId={project?.videoId as string} />
-                                <p className="details-subtitle">{project?.description}</p>
-                            </div>
-                            {/* </div> */}
-                        </div>
-                        <div className="button-container">
-                            <button className="save-and-like-button">
-                                <img className="like-fav-icon" src={FavImage} />
-                                <p>Save</p>
-                                <p></p> {/* change to number of saves */}
-                            </button>
-                            <button className="save-and-like-button">
-                                <img className="like-fav-icon" src={LikeImage} />
-                                <p>Like</p>
-                                <p></p> {/*  change to number of likes */}
-                            </button>
-                        </div>
+            {projectLoading ? (
+                <div>Loading...</div>
+            ) : (
+                <div className="details-main-container">
+                    {/* Left side of page */}
+                    <div className="grid-container">
                         <div className="">
-                            <DiscussionBoard />
+                            <button onClick={() => navigate(-1)} className="back-button">
+                                Back
+                            </button>
+                            <div className="details-container">
+                                <div className="title-and-description">
+                                    <h1 className="details-title">{project?.projectName}</h1>
+                                </div>
+                                {/* <div className="embed-container"> */}
+                                <div className="description-container">
+                                    <YouTubeEmbed videoId={project?.videoId as string} />
+                                    <p className="details-subtitle">{project?.description}</p>
+                                </div>
+                                {/* </div> */}
+                            </div>
+                            <div className="button-container">
+                                <button className="save-and-like-button">
+                                    <img className="like-fav-icon" src={FavImage} />
+                                    <p>Save</p>
+                                    <p></p> {/* change to number of saves */}
+                                </button>
+                                <button className="save-and-like-button">
+                                    <img className="like-fav-icon" src={LikeImage} />
+                                    <p>Like</p>
+                                    <p></p> {/*  change to number of likes */}
+                                </button>
+                            </div>
+                            <div className="">
+                                <DiscussionBoard />
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Right side of page */}
-                    <div className="additional-information-container">
-                        <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
-                        <GitHubRepo repoPath={project?.repoPath as string} />
-                        <DifficultyLevel />
-                        <div className="sidebar-container">
-                            <h1>Similar Projects</h1>
+                        {/* Right side of page */}
+                        <div className="additional-information-container">
+                            <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
+                            <GitHubRepo repoPath={project?.repoPath as string} />
+                            <DifficultyLevel />
+                            <div className="sidebar-container">
+                                <h1>Similar Projects</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Project } from "../../common/types";
+import { ProjectInfo } from "../../types/project";
 
-const ProjectCard: React.FC<Project> = ({ projectName, tech1, tech2, colour }) => {
+const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, colour }) => {
     const containerStyle: React.CSSProperties = {
         backgroundColor: colour,
         cursor: "pointer",

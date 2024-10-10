@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @keyframes fadeIn {
     from {
@@ -51,6 +51,11 @@
     align-items: center;
     /* Center them horizontally */
     justify-content: center;
+    cursor: pointer;
+}
+
+.tech-images-div:hover {
+    transform: scale(1.15);
 }
 
 .tech-image {
@@ -64,6 +69,11 @@
     /* Center the text */
 }
 
+.tech-stack-subtitle{
+    margin-top: -0.6rem;
+    margin-bottom: 2rem;
+}
+
 .details-container {
     flex: 1; /* Take up remaining space on the left side */
     display: flex;
@@ -72,12 +82,12 @@
 
 .details-title {
     display: block;
-    font-size: 3rem;
+    font-size: var(--font-size-xxl);
     margin-bottom: 1rem;
 }
 
 .details-subtitle {
-    font-size: 1.2rem;
+    font-size: var(--font-size-sm);
     width: calc(var(--element-height) * 2);
 }
 
@@ -101,14 +111,14 @@
     margin-left: -5rem;
 }
 
-/* .embed-container {
+.embed-container {
     display: flex;
     animation: fadeIn 1s forwards;
     padding-right: 2rem;
     align-items: center;
-    margin-left: -8rem;
+    margin-left: 5rem;
     justify-content: center;
-} */
+} 
 
 .github-container {
     display: flex;
@@ -162,7 +172,7 @@
 }
 
 .github-description {
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
 }
 
 .github-additional-information {
@@ -200,15 +210,20 @@
     margin-right: 2rem;
     padding-left: 4rem;
     padding-right: 4rem;
-    border-radius: 1rem;
+    border-radius: 8px;
     border: none;
     transition: transform 10s ease;
     transition: background-color 0.3s ease;
 }
 
 .save-and-like-button:hover {
-    background-color: #2c3e50;
+    filter: brightness(1.2);
     transform: scale(1.01);
+    cursor:pointer;
+}
+
+.saved {
+    background-color: #AF0880;
 }
 
 .like-fav-icon {
@@ -218,10 +233,125 @@
     justify-content: center;
 }
 
+.comments {
+    margin-left: -2.6rem;
+}
+
 .existing-comment-header {
     font-size: 1.5rem;
 }
 
 .existing-comment-body {
     font-size: 1.5rem;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+   
+    overflow: hidden;
+
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 82%;
+    max-height: 150vh; /* Ensure modal stays within viewport and can scroll */
+    align-items: center;
+    max-width: 2500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+
+.what-is-it-content{
+    width: 95%;
+    font-size: 1.25rem;
+}
+
+.common-use-ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Enable flexbox */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between items */
+}
+
+.common-use-li {
+    background-color: #151b23; /* Dark blue background */
+    color: white; /* White text color */
+    width: 200px;
+    padding: 21px 22px; /* Add padding inside the box */
+    border-radius: 5px; /* Optional: rounded corners */
+    margin: 5px 0; /* Space between items vertically */
+    display: flex; /* Keep the list items flex for alignment */
+    justify-content: center; /* Center the text horizontally */
+    text-align: center;
+    align-items: center; /* Center the text vertically */
+}
+
+.advantage-disadvantage-container{
+    display: flex;
+}
+
+.av-dv-ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Enable flexbox */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between items */
+}
+
+.advantage-container, .disadvantage-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.advantage-container{
+    margin-right: 3rem;
+}
+
+.tech-title{
+    font-size: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center !important;
+}
+
+.res-link {
+    color: white;
+    font-weight: 500;
+}
+
+.growing-modal {
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    max-height: 0; /* start collapsed */
+}
+
+.modal-overlay .growing-modal {
+    max-height: 1000px; /* or some upper limit */
 }

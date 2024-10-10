@@ -4,10 +4,10 @@ import { ProfileProps } from "../../types";
 export const VisitProfile: React.FC<ProfileProps> = ({ profile }) => {
     return (
         <>
-            <div>
-                <p>Welcome back, {profile?.username}</p>
-                <p>Your id is: {profile?.id}</p>
-                <p>Your email is: {profile?.email}</p>
+            <div className="">
+                <h2 className="profile-title">Welcome back, {profile?.username}!</h2>
+                <p>ID: {profile?.id}</p>
+                <p>Email: {profile?.email}</p>
             </div>
         </>
     );

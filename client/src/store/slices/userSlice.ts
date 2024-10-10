@@ -17,15 +17,15 @@ const initialState: userState = {
 
 // Thunks
 export const createUser = createAsyncThunk("users/createUser", async (newuser: User) => {
-    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/users`, "POST", newuser);
+    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/users/`, "POST", newuser);
 });
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/users`, "GET");
+    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/users/`, "GET");
 });
 
 export const fetchUserById = createAsyncThunk("users/fetchUserById", async (id: string) => {
-    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/users/${id}`, "GET");
+    return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/users/id/${id}`, "GET");
 });
 
 export const updateUser = createAsyncThunk(

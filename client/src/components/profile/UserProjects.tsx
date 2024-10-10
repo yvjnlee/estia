@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { RootState, AppDispatch } from "../../store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchUserProjects } from "../../store/slices/projectSlice";
-import { supabase } from "../../common/clients";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
 import { Project } from "../../common/types";
+import { getUserProjects } from "../../api/projectAPI";
+import { ProfileProps } from "../../types";
 
-export const UserProjects: React.FC = () => {
+export const UserProjects: React.FC<ProfileProps> = ({ profile }) => {
     const dispatch = useDispatch<AppDispatch>();
-    const { projects, projectsLoading, projectsError } = useSelector(
-        (state: RootState) => state.projects
-    );
-    const [userId, setUserId] = useState<string>("");
+    const userId = profile?.id;
 
-    useEffect(() => {
-        const fetchSession = async () => {
-            const {
-                data: { session },
-            } = await supabase.auth.getSession();
-            setUserId(session?.user.id || "");
-        };
-        fetchSession();
-    }, []);
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [projectsLoading, setProjectsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (userId) {
-            dispatch(fetchUserProjects(userId));
+            setProjectsLoading(true);
+            getUserProjects(dispatch, userId)
+                .then((fetchedProjects) => {
+                    setProjects(fetchedProjects || []);
+                    setProjectsLoading(false);
+                })
+                .catch((err) => {
+                    console.error("Error fetching user projects:", err);
+                    setProjectsLoading(false);
+                });
+        } else {
+            setProjectsLoading(false);
         }
     }, [dispatch, userId]);
 
     if (projectsLoading) return <div>Loading projects...</div>;
-    if (projectsError) return <div>Error: {projectsError}</div>;
+    if (projects.length === 0) return <div>No projects found.</div>;
 
     return (
         <>
-            {projects?.map((project: Project, index: number) => (
-                <div key={project.projectId || index}>
-                    <p>{project.projectName}</p>
+            {projects.map((project: Project, index: number) => (
+                <div key={project.projectId || `project-${index}`}>
+                    <p>{project.projectName || "Unnamed Project"}</p>
                 </div>
             ))}
         </>

@@ -10,17 +10,17 @@ import { ProfileButton } from "../buttons/ProfileButton";
 
 export const Navbar: React.FC = () => {
     return (
-        <div className="nav-bar" data-scroll-section>
+        <nav className="nav-bar" data-scroll-section>
             <Link to="/">
                 <img className="logo" src={EstiaLogo}></img>
             </Link>
 
             <div className="nav-buttons-continer">
-                <ProfileButton />
-                <LearnPreferencesButton />
                 <CreateProjectButton />
+                <LearnPreferencesButton />
+                <ProfileButton />
             </div>
             <LogOutButton />
-        </div>
+        </nav>
     );
 };
