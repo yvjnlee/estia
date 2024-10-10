@@ -6,7 +6,7 @@ import Groq from "groq-sdk"; // Import Groq SDK
 import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
 
-const GiveProjectPage: React.FC = () => {
+const ProjectGenerator: React.FC = () => {
     const containerStyle: React.CSSProperties = {
         //backgroundColor: colour,
         backgroundColor: "",
@@ -34,41 +34,40 @@ const GiveProjectPage: React.FC = () => {
     const formatOutput = (jsonString: string) => {
         try {
             const parsedOutput = JSON.parse(jsonString); // Parse the JSON string
-
-            // Check if the parsed output is an array of projects
-            if (Array.isArray(parsedOutput["Recommended Projects"])) {
-                return parsedOutput["Recommended Projects"].map(
-                    (project: string, index: number) => (
-                            <h2 className="project-title"
-                                onClick={() =>
-                                    navigate(`/project/${encodeURIComponent(project)}`)
-                                } // Navigate to project details page
-                                style={{ cursor: "pointer" }}
-                            >
-                                {project}
-                            </h2>
-                    )
-                );
-            }
-
-            // Handle the case for a single project recommendation
-            if (parsedOutput["Recommended Project"]) {
-                const project = parsedOutput["Recommended Project"];
-                return (
-                    <h2 className="project-title"
-                        onClick={() =>
-                            navigate(`/project/${encodeURIComponent(project)}`)
-                        } // Navigate to project details page
-                        style={{ cursor: "pointer", textDecoration: "underline" }}
-                    >
-                        {project}
-                    </h2>
-                );
-            }
-
-            return null; // Return null if no recommendations are found
+    
+            // Destructure necessary fields from the parsed output
+            const {
+                "Project Idea": projectIdea,
+                "Tech Stack": techStack,
+                "Estimated Time Commitment": timeCommitment,
+                "Time Breakdown/Checklist": checklist,
+                "Potential Project Names": potentialNames,
+                "Project Description": projectDescription
+            } = parsedOutput;
+    
+            return (
+                <div className="project-details">
+                    <h2 className="project-idea-title">{projectIdea}</h2>
+                    <p className="project-idea-description">{projectDescription}</p>
+                    <h3 className="project-idea-tech-stack">Tech Stack: {techStack.join(', ')}</h3>
+                    <p className="estimated-time">Estimated Time Commitment: {timeCommitment}</p>
+                    <h4>Time Breakdown/Checklist:</h4>
+                    <ul className="checklist">
+                        {Object.entries(checklist).map(([week, task]) => (
+                            <li key={week}>{`${week}: ${task}`}</li>
+                        ))}
+                    </ul>
+                    <h4>Potential Project Names:</h4>
+                    <ul className="project-idea-potential-names">
+                        {potentialNames.map((name: string, index: number) => (
+                            <li key={index}>{name}</li>
+                        ))}
+                    </ul>
+                </div>
+            );
         } catch (error) {
             console.error("Error parsing JSON output:", error);
+            console.log(jsonString)
             return <p>Error parsing the response</p>;
         }
     };
@@ -96,14 +95,41 @@ const GiveProjectPage: React.FC = () => {
                 messages: [
                     {
                         role: "user",
-                        content: `Given the following submission, recommend the most relevant project titles from the database. 
-                        Please provide the project names that are most relevant to the input. You can
-                        give one if you think only one fits the description. The database project titles are: [${projectTitles}]. 
-                        Here is the user's submission: "${input}". Format your response as JSON, 
-                        and provide the result in the format:
-                        {
-                          "Recommended Projects": ["project name 1", "project name 2", ...]
-                        }.`, // Change the response format to an array of projects
+                        content: `Given the user's input, recommend a personalized project idea, 
+                        tech stack, estimated time commitment, and a weekly breakdown/checklist for completing the project. 
+                        If the user inputs "Any," provide a random project idea. Also, suggest potential project names and provide a 
+                        full description of the project’s features and functionality. Make sure to tailor the recommendation 
+                        based on the input provided. Format your response in the following JSON structure:
+
+{
+  "Project Idea": "Brief summary of the project",
+  "Tech Stack": ["language 1", "framework 2", "tool 3", ...],
+  "Estimated Time Commitment": "Estimated number of hours/weeks",
+  "Time Breakdown/Checklist": {
+    "Week 1": "Tasks for week 1",
+    "Week 2": "Tasks for week 2",
+    ...
+  },
+  "Potential Project Names": ["Name 1", "Name 2", "Name 3"],
+  "Project Description": "Detailed explanation of the project, its features, and functionality"
+}
+
+Here is a sample response: {
+  "Project Idea": "Build a task management web app with real-time collaboration features",
+  "Tech Stack": ["React", "Node.js", "Socket.io", "MongoDB"],
+  "Estimated Time Commitment": "4 weeks, 10-12 hours per week",
+  "Time Breakdown/Checklist": {
+    "Week 1": "Set up project structure, initialize React and Node.js environment, create basic task CRUD functionality",
+    "Week 2": "Implement real-time collaboration with Socket.io, set up MongoDB for storing tasks",
+    "Week 3": "Create user authentication and role-based access, design the UI for task management",
+    "Week 4": "Testing, optimization, and deployment using Heroku or Vercel"
+  },
+  "Potential Project Names": ["CollabTask", "RealTimeTasks", "SyncManage"],
+  "Project Description": "A task management app where users can create, update, and delete tasks. The app allows real-time collaboration between multiple users, where updates to tasks are instantly synced across users' screens. Features include real-time notifications, user authentication, and role-based permissions for managing tasks."
+}
+
+
+User Input: "${input}"`, // Change the response format to an array of projects
                     },
                 ],
                 model: "llama3-8b-8192", // Ensure this is the correct model for your use case
@@ -160,8 +186,8 @@ const GiveProjectPage: React.FC = () => {
                 <div className="fade-in-div">
                 <div className="page-heading-container">
                     <p className="preference-description">
-                        Let us know what you are interested in making. We find projects on Estia based on your input and 
-                        connect you with the right hands-on experiences.
+                    Provide us with a theme or concept, and we'll expand it into a comprehensive project idea, 
+                    complete with recommended technologies and a checklist of tasks to accomplish.
                     </p>
                 </div>
                 <form className="input-form" onSubmit={handleSubmit}>
@@ -179,15 +205,15 @@ const GiveProjectPage: React.FC = () => {
                 {output && (
                     <div>
                         <h3 className="related-results">Related results:</h3>
-                        <div className="project-container" style={containerStyle}>        
+                        <div className="project-idea-container">
                             {formatOutput(output)}
                         </div>
                     </div>
                 )}
-            </div>
+                </div>
             </div>
         </>
     );
 };
 
-export default GiveProjectPage;
+export default ProjectGenerator;

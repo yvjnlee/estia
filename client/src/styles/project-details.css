@@ -22,8 +22,9 @@
 
 /* Used for tech stack, difficulty level, and similar project blocks */
 .sidebar-container {
-    background-color: #151b23;
-    border-radius: 15px;
+    background-color: none;
+    border: 1px solid #383838;
+    border-radius: 8px;
     width: 26rem;
     padding: 2rem;
     margin-right: 3rem;
@@ -100,7 +101,7 @@
 }
 
 .youtube-embed-iframe {
-    border-radius: 15px;
+    border-radius: 8px;
     margin-bottom: 2rem;
     height: var(--element-height);
     width: calc(var(--element-height) * 2);
@@ -135,6 +136,82 @@
 .difficulty-pill.advanced {
     background-color: var(--advanced-colour);
 }
+/* Container for the video and overlay */
+.youtube-container {
+    position: relative;
+    display: inline-block;
+}
+.youtube-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.76);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.lock-unlock-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.overlay-text {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+
+.youtube-overlay:hover .overlay-click-text {
+    opacity: 1; 
+}
+
+.youtube-overlay:hover .lock-icon {
+    display: none; 
+}
+
+.youtube-overlay:hover .unlock-icon {
+    display: block;
+}
+
+
+
+.overlay-text, .overlay-click-text {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    transition: opacity 0.3s ease;
+}
+
+.overlay-click-text {
+    opacity: 0; 
+}
+
+.lock-icon, .unlock-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+}
+
+.unlock-icon {
+    display: none; 
+}
+
+.youtube-embed-iframe {
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    height: var(--element-height);
+    width: calc(var(--element-height) * 2);
+}
 
 .description-container {
     display: flex;
@@ -142,6 +219,7 @@
     align-items: center;
     margin-left: -5rem;
 }
+
 
 .embed-container {
     display: flex;
@@ -157,7 +235,7 @@
     padding: 2rem;
     background-color: #151b23;
     width: 26rem;
-    border-radius: 15px;
+    border-radius: 8px;
     text-decoration: none;
     /* Remove underline from the link */
     color: inherit;
@@ -236,14 +314,14 @@
 .save-and-like-button {
     display: flex;
     flex-direction: row;
-    font-size: 1rem;
-    background-color: #151b23;
+    font-size: var(--font-size-sm);
+    background-color: #0E1011;
     align-items: center;
     margin-right: 2rem;
-    padding-left: 4rem;
-    padding-right: 4rem;
-    border-radius: 8px;
-    border: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 10px;
+    border: 1px solid #383838;
     transition: transform 10s ease;
     transition: background-color 0.3s ease;
 }
@@ -267,6 +345,10 @@
 
 .comments {
     margin-left: -2.6rem;
+}
+
+.project-details-button-text{
+    margin: 1rem;
 }
 
 .existing-comment-header {

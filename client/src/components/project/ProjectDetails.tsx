@@ -59,7 +59,7 @@ const ProjectDetails: React.FC = () => {
     }
   };
 
-  
+
   // Function to check if the project is already saved
   const checkIfLiked = async () => {
     if (user) {
@@ -93,7 +93,7 @@ const ProjectDetails: React.FC = () => {
           .delete()
           .eq("profile_id", user.id)
           .eq("project_id", project.projectId);
-        
+
         if (!error) {
           setIsSaved(false); // Update state to "not saved"
         }
@@ -123,7 +123,7 @@ const ProjectDetails: React.FC = () => {
           .delete()
           .eq("profile_id", user.id)
           .eq("project_id", project.projectId);
-        
+
         if (!error) {
           setIsLiked(false); // Update state to "not liked"
         }
@@ -202,14 +202,14 @@ const ProjectDetails: React.FC = () => {
                 className={`save-and-like-button ${saveButtonClass}`}
                 onClick={toggleSaveProject}
               >
-                <img className="like-fav-icon" src={ isSaved ? SavedImage : FavImage} alt="Save" />
-                <p>{isSaved ? "Saved" : "Save"}</p>
+                <img className="like-fav-icon" src={isSaved ? SavedImage : FavImage} alt="Save" />
+                <p className="project-details-button-text">{isSaved ? "Saved" : "Save"}</p>
               </button>
 
               <button className={`save-and-like-button ${likeButtonClass}`}
-               onClick={toggleLikeProject}>
-                <img className="like-fav-icon" src={ isLiked ? LikedImage : LikeImage} alt="Like" />
-                <p>{isLiked ? "Unlike" : "Like"}</p>
+                onClick={toggleLikeProject}>
+                <img className="like-fav-icon" src={isLiked ? LikedImage : LikeImage} alt="Like" />
+                <p className="project-details-button-text">{isLiked ? "Unlike" : "Like"}</p>
               </button>
             </div>
             <div className="">
@@ -219,8 +219,8 @@ const ProjectDetails: React.FC = () => {
 
           {/* Right side of page */}
           <div className="additional-information-container">
-            <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
             <GitHubRepo repoPath={project?.repoPath as string} />
+            <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
             <div className="sidebar-container">
               <h1>Similar Projects</h1>
             </div>

@@ -131,7 +131,7 @@ const TechStack: React.FC<{ tech1: string; tech2: string }> = ({ tech1, tech2 })
     return (
         <div className="sidebar-container">
             <h1>Tech Stack</h1>
-            <p className="tech-stack-subtitle">Select one for additional AI-generated info</p>
+            <p className="tech-stack-subtitle">Select one for additional generated info</p>
             <div className="tech-images-div-container">
                 <div className="tech-images-div" onClick={() => handleTechClick(tech1)}>
                     <img src={getTechImage(tech1)} alt={tech1} className="tech-image" />

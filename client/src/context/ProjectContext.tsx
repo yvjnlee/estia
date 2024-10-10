@@ -50,28 +50,33 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }, [supabase]);
 
     const searchProjects = () => {
-        const lowercasedQuery = searchQuery.toLowerCase();
-        const filtered = projects?.filter((project) => {
-            const matchesSearchQuery =
-                project.projectName.toLowerCase().includes(lowercasedQuery) ||
-                project.description?.toLowerCase().includes(lowercasedQuery) ||
-                project.tech1?.toLowerCase().includes(lowercasedQuery) ||
-                project.tech2?.toLowerCase().includes(lowercasedQuery);
+    const lowercasedQuery = searchQuery.toLowerCase();
+    
+    // Split the query by commas and trim whitespace from each term
+    const searchTerms = lowercasedQuery.split(',').map(term => term.trim()).filter(term => term.length > 0);
+    
+    const filtered = projects?.filter((project) => {
+        // Check if the project matches any of the search terms
+        const matchesSearchQuery = searchTerms.some(term => 
+            project.projectName.toLowerCase().includes(term) ||
+            project.description?.toLowerCase().includes(term) ||
+            project.tech1?.toLowerCase().includes(term) ||
+            project.tech2?.toLowerCase().includes(term)
+        );
 
-            const matchesTechStack =
-                selectedTechStack.length === 0 ||
-                selectedTechStack.some((tech) => project.tech1 === tech || project.tech2 === tech);
+        const matchesTechStack =
+            selectedTechStack.length === 0 ||
+            selectedTechStack.some((tech) => project.tech1 === tech || project.tech2 === tech);
 
-            const matchesTheme = !selectedTheme || project.theme === selectedTheme;
+        const matchesTheme = !selectedTheme || project.theme === selectedTheme;
 
-            const matchesDifficulty = !selectedDifficulty|| project.difficulty === selectedDifficulty;
+        const matchesDifficulty = !selectedDifficulty || project.difficulty === selectedDifficulty;
 
+        return matchesSearchQuery && matchesTechStack && matchesTheme && matchesDifficulty;
+    });
 
-            return matchesSearchQuery && matchesTechStack && matchesTheme && matchesDifficulty;
-        });
-
-        return filtered || [];
-    };
+    return filtered || [];
+};
 
     useEffect(() => {
         const filteredProjects = searchProjects();
