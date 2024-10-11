@@ -1,4 +1,5 @@
 // src/routes/AppRoutes.tsx
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ProjectsRoutes from "./ProjectRoutes";
 
@@ -28,7 +29,6 @@ const AppRoutes = () => {
                 <Route path="/profile/*" element={<ProfileRoutes />} />
             </Routes>
         </>
-
     );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Groq from "groq-sdk"; // Import Groq SDK
+import { groq } from "../../common/clients";
 
 interface TechStackModalProps {
     tech: string;
@@ -33,11 +33,6 @@ const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
         const fetchTechData = async () => {
             setLoading(true);
             setError(null);
-            const apiKey = process.env.REACT_APP_GROQ_API_KEY;
-            const groq = new Groq({
-                apiKey,
-                dangerouslyAllowBrowser: true,
-            });
 
             try {
                 const response = await groq.chat.completions.create({

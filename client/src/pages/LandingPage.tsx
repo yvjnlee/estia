@@ -1,55 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LocomotiveScrollBar } from "../components/LocomotiveScrollBar";
-import { useAuth } from "../context";
+
 import "../index.css";
 
 import { Navbar } from "../components/navbar/Navbar";
 import HomePage from "./HomePage";
 import { LoginPage } from "./LoginPage";
 
-import MainEstiaLogo from "../img/MainAppLogo.svg";
+import MainEstiaLogo from "../img/MainAppLogo.svg"
+import { Session } from "@supabase/supabase-js";
+import { getSession } from "../api/authAPI";
 import { Link } from "react-router-dom";
 
 export const LandingPage: React.FC = () => {
-    const { session, showAuth, logIn, setShowAuth } = useAuth(); // Added setShowAuth to control showAuth state
+    const [session, setSession] = useState<Session | null>(null);
+    const [showAuth, setShowAuth] = useState<boolean>(false);
 
-    // Ensure showAuth is false once the user is logged in
-    React.useEffect(() => {
-        if (session) {
-            setShowAuth(false); // Hide login page if session is active
-        }
-    }, [session, setShowAuth]);
+    const handleShowLogin = () => {
+        setShowAuth(true);
+    };
+
+    useEffect(() => {
+        getSession().then((session) => {
+            setSession(session);
+        });
+    }, []);
+
+    console.log(session, showAuth);
+
+    // Render different views based on session state
+    if (session && !showAuth) {
+        return (
+            <>
+                <Navbar />
+                <HomePage />
+            </>
+        );
+    }
 
     return (
-        <>
-            {/* Render Navbar if there is a session */}
-            {session && <Navbar />}
-
-            {/* Home page, rendered only if there is a session */}
-            {session && <HomePage />}
-
-            {/* Login page, rendered only if there is no session and showAuth is true */}
-            {!session && showAuth && <LoginPage />}
-
-            {/* Initial landing page when not logged in */}
-            {!session && !showAuth && (
-                 <div className="wrapper">
-                <div className="initial-container">
-                    <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
-                    <h3 className="initial-slogan">Less Searching, More Creating</h3>
-                    <button className="initial-button" onClick={logIn}>
-                        start building
-                    </button>
-                    <LocomotiveScrollBar />
-                    <h3 className="initial-feedback">
-                        Got ideas or feedback?{" "}
-                        <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
-                            Contact us!
-                        </Link>
-                    </h3>
-                </div>
+        <div className="landing-page-wrapper">
+            {showAuth ? (
+                <LoginPage />
+            ) : (
+                <div className="wrapper">
+                    <div className="initial-container">
+                        <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
+                        <h3 className="initial-slogan">Less Searching, More Creating</h3>
+                            <button className="initial-button" onClick={handleShowLogin}>
+                            start building
+                        </button>
+                        <LocomotiveScrollBar />
+                        <h3 className="initial-feedback">
+                            Got ideas or feedback?{" "}
+                            <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
+                                Contact us!
+                            </Link>
+                        </h3>
+                    </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };

@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-import { useUser } from "../../../context";
-import { User } from "../../../types/user";
 import { SearchBar } from "../SearchBar";
+import { fetchUserById } from "../../../store/slices/userSlice";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { User } from "../../../common/types";
 
 export const ProfileSearch: React.FC = () => {
-    const { users, retrieveUser } = useUser();
+    const dispatch = useAppDispatch();
 
-    const [userResults, setUserResults] = useState<User[] | User>(users as User[]);
+    const [userResults, setUserResults] = useState<User[] | User>([]);
     const [searchQuery, setSearchQuery] = useState<string>();
-
-    // console.log(users);
-    // console.log(userResults);
 
     // Handle search when button is clicked
     const handleSearch = async (id: string) => {
-        const user = await retrieveUser(id);
-        setUserResults(user as User);
-        console.log(userResults);
+        dispatch(fetchUserById(id))
+            .unwrap()
+            .then((user) => {
+                setUserResults(user);
+                console.log(userResults);
+            })
+            .catch((error) => {
+                console.error("Error fetching user by ID:", error);
+            });
     };
 
     // Handle search when Enter key is pressed
@@ -31,12 +35,16 @@ export const ProfileSearch: React.FC = () => {
         setSearchQuery(e.target.value);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
     return (
         <SearchBar
             searchQuery={searchQuery as string}
             handleEnter={handleEnter}
             handleKeyPress={handleKeyPress}
-            handleSearch={handleSearch}
+            handleInputChange={handleInputChange}
         />
     );
 };

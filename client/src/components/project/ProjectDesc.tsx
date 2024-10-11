@@ -1,9 +1,9 @@
 import React from "react";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
-import { ProjectInfo } from "../../types/project";
+import { Project } from "../../common/types";
 
-const TechStack: React.FC<ProjectInfo> = (project) => {
+const TechStack: React.FC<Project> = (project) => {
     return (
         <div>
             <div className="details-heading">

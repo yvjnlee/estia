@@ -1,0 +1,85 @@
+import L from '../../common/logger';
+import { Comment } from '../../../common/types';
+import { supabase } from '../../../common/clients';
+
+export class CommentsService {
+  async create(comment: Comment): Promise<Comment | null> {
+    L.info(`Creating new comment for post: ${comment.commentId}`);
+    const { data, error } = await supabase
+      .from('comments')
+      .insert(comment)
+      .single();
+    if (error) {
+      L.error(`Error creating comment: ${error.message}`);
+      return null;
+    }
+    return data;
+  }
+
+  async getAll(): Promise<Comment[] | null> {
+    L.info('Fetching all comments');
+    const { data, error } = await supabase.from('comments').select('*');
+    if (error) {
+      L.error(`Error fetching all comments: ${error.message}`);
+      return null;
+    }
+    return data;
+  }
+
+  async getByCommentId(id: string): Promise<Comment | null> {
+    L.info(`Fetching comment with id: ${id}`);
+    const { data, error } = await supabase
+      .from('comments')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) {
+      L.error(`Error fetching comment by id: ${error.message}`);
+      return null;
+    }
+    return data;
+  }
+
+  async getByProjectId(postId: string): Promise<Comment[] | null> {
+    L.info(`Fetching comments for post: ${postId}`);
+    const { data, error } = await supabase
+      .from('comments')
+      .select('*')
+      .eq('post_id', postId);
+    if (error) {
+      L.error(`Error fetching comments by post id: ${error.message}`);
+      return null;
+    }
+    return data;
+  }
+
+  async update(
+    id: string,
+    commentData: Partial<Comment>
+  ): Promise<Comment | null> {
+    L.info(`Updating comment with id: ${id}`);
+    const { data, error } = await supabase
+      .from('comments')
+      .update(commentData)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) {
+      L.error(`Error updating comment: ${error.message}`);
+      return null;
+    }
+    return data;
+  }
+
+  async delete(id: string): Promise<boolean> {
+    L.info(`Deleting comment with id: ${id}`);
+    const { error } = await supabase.from('comments').delete().eq('id', id);
+    if (error) {
+      L.error(`Error deleting comment: ${error.message}`);
+      return false;
+    }
+    return true;
+  }
+}
+
+export default new CommentsService();

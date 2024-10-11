@@ -1,87 +1,48 @@
-import supabase from "../../SupabaseClient";
-import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import React, { useEffect } from "react";
+import { useState } from "react";
+
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
-import { User } from "../../types/user";
-import { ProjectInfo } from "../../types/project";
-import { CommentInfo, CommentDB } from "../../types/comment";
-import { useUser } from "../../context/UserContext"
+import { Comment, User } from "../../common/types";
+import { getSession } from "../../api/authAPI";
+import { getUserById } from "../../api/userAPI";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-
-const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }> = ({ project, comments }) => {
-    const { retrieveUser } = useUser();
-    const { user } = useAuth();
-
-    const [currUser, setCurrUser] = useState<User | null>(null);
-    const [newComment, setNewComment] = useState('');
-    const [existingComments, setExistingComments] = useState<CommentInfo[]>(comments);
+const DiscussionBoard: React.FC<{comments: Comment[] }> = ({ comments }) => {
+    const dispatch = useAppDispatch();
+    
+    const [user, setUser] = useState<User | null>(null);
+    const [newComment, setNewComment] = useState("");
+    const [existingComments, setExistingComments] = useState<Comment[]>(comments);
 
     useEffect(() => {
-        // fetch user and set it
-        const fetchUser = async () => {
-            const userId = user?.id; // Safely get user.id
+        getSession().then((session) => {
+            const userId = session?.user.id;
 
             if (userId) {
-                const userData = await retrieveUser(userId); // Await the promise
-                setCurrUser(userData); // Set the user data in state
+                getUserById(dispatch, userId).then((user) => {
+                    setUser(user);
+                });
             }
-        };
+        });
+    }, []);
 
-        fetchUser(); // Call the async function
-    }, [retrieveUser]);
 
-    const changeVote = ( commentId : number, votes: number) => {
+    const changeVote = ( commentId : string, votes: number) => {
         setExistingComments(existingComments =>
             existingComments.map(comment =>
               comment.commentId === commentId ? { ...comment, votes: comment.likes + votes } : comment
             ));
     }
 
-    
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
         setNewComment(event.target.value);
-    }
+    };
 
-    // output temporary comment but it'll be in the database at the next reload
-    const postComment = async () => {
-        if (currUser) {
-            const { data, error } = await supabase
-            .from('comments')
-            .insert({
-                    project_id: project.projectId,
-                    user_id: currUser.id,
-                    content: newComment,
-                    likes: 0,
-                    username: currUser.username
-                })
-            .select() // data holds the column object that was just added
+    const postComment = () => {
 
-            if (error) {
-                console.log(error);
-                console.log("Could not add comment!")
-            }
-
-            if (data) {
-                const mappedData : CommentInfo = {
-                    commentId: data[0].comment_id,
-                    projectId: data[0].project_id,
-                    userId: data[0].user_id,
-                    content: data[0].content,
-                    likes: data[0].likes,
-                    username: data[0].username
-                };
-                comments.push(mappedData);
-            }
-            
-            console.log(comments);
-            setExistingComments(comments);
-            setNewComment('');
-        } else {
-            console.log("You can't comment!")
-        }
-    }
+    };
 
     return (
         <div className="comment-container">
@@ -95,9 +56,9 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
             {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
-                        <button onClick={() => changeVote(comment.likes, 1)}><img src={UpChevron} /></button>
+                        <button onClick={() => changeVote(comment.commentId, 1)}><img src={UpChevron} /></button>
                         <span>{comment.likes}</span>
-                        <button onClick={() => changeVote(comment.likes, -1)}><img src={DownChevron} /></button>
+                        <button onClick={() => changeVote(comment.commentId, -1)}><img src={DownChevron} /></button>
                     </div>
                     <div className="comment">
                         <h3 className = "existing-comment-header">{comment.username}</h3> 

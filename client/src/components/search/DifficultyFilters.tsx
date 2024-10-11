@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useProject } from "../../context/ProjectContext";
+import React, { useState } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { setDifficultyFilter } from "../../store/slices/projectSlice";
+import { filterProjects } from "../../api/projectAPI";
 
 export const DifficultyFilter: React.FC = () => {
-    const difficultyOptions = ["Beginner", "Intermediate", "Advanced"];
-    
-    const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
-    
-    const { handleSearch, searchProjects } = useProject();
+    const dispatch = useAppDispatch();
 
-    // Handle change for difficulty selection
+    const difficultyOptions = ["Beginner", "Intermediate", "Advanced"];
+    const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
+
     const handleDifficultyChange = (difficulty: string) => {
         setSelectedDifficulty(difficulty);
-        // Trigger project search whenever difficulty is updated
-        handleSearch([], "", difficulty);
+        dispatch(setDifficultyFilter(difficulty));
+        console.log(selectedDifficulty);
     };
-
-    useEffect(() => {
-        searchProjects();
-    }, [selectedDifficulty, searchProjects]);
 
     return (
         <div className="difficulty-filter">

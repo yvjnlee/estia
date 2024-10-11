@@ -6,9 +6,6 @@ install:
 lint:
 	npx eslint . --fix
 
-format:
-	npx prettier --write .
-
 start:
 	npm start
 
