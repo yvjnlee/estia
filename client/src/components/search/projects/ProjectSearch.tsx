@@ -1,15 +1,38 @@
-import React, { useState } from "react";
-import { useProject } from "../../../context";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "../SearchBar";
 import { Filters } from "../Filters";
 
 import GreyFilter from "../../../img/Grey_Filters.svg";
 import WhiteFilter from "../../../img/White_Filters.svg";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { setSearchFilter } from "../../../store/slices/projectSlice";
+import { filterProjects } from "../../../api/projectAPI";
 
 export const ProjectSearch: React.FC = () => {
-    const { searchQuery, handleEnter, handleKeyPress, handleSearch } = useProject();
-
+    const dispatch = useAppDispatch();
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    const handleEnter = () => {
+        dispatch(setSearchFilter(searchQuery));
+        handleSearch(searchQuery);
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleSearch(searchQuery);
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+        dispatch(setSearchFilter(e.target.value));
+    };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        dispatch(setSearchFilter(query));
+    };
 
     const handleToggleFilters = () => {
         setShowFilters(!showFilters);
@@ -19,7 +42,7 @@ export const ProjectSearch: React.FC = () => {
         <div className="heading-container">
             <div className="heading-content">
                 <h2 className="main-h2" data-scroll-section>
-                Welcome to the world's largest collective of coding projects.
+                    Welcome to the world&apos;s largest collective of coding projects.
                 </h2>
 
                 <div className="search-bar-and-filters">
@@ -27,7 +50,7 @@ export const ProjectSearch: React.FC = () => {
                         searchQuery={searchQuery}
                         handleEnter={handleEnter}
                         handleKeyPress={handleKeyPress}
-                        handleSearch={handleSearch}
+                        handleInputChange={handleInputChange}
                     />
 
                     <button

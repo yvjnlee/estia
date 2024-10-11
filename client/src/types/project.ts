@@ -42,3 +42,10 @@ export interface ProjectInfo {
     theme?: string;
     difficulty?: string;
 }
+
+export interface FilterCriteria {
+  search: string;
+  techStack: string[];
+  theme: string[];
+  difficulty: string;
+}

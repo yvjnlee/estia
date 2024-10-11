@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context";
+import { Session } from "@supabase/supabase-js";
+import { getSession } from "../../api/authAPI";
+import { getUserById } from "../../api/userAPI";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export const ProfileButton = () => {
-    const { session } = useAuth();
-    // const { retrieveUser } = useUser();
+    const dispatch = useAppDispatch();
 
-    const [username, setUsername] = useState<string | null>();
-    const [loading, setLoading] = useState<boolean>(true);
-
-    const fetchUser = async () => {
-        try {
-            if (session?.user?.id) {
-                // const user = await retrieveUser(session.user.id);
-                // console.log(user);
-                setUsername(session.user.email); // Assuming the user object has a username property
-            }
-        } catch (error) {
-            console.error("Error fetching user:", error);
-        }
-    };
+    const [session, setSession] = useState<Session | null>(null);
+    const [sessionLoading, setSessionLoading] = useState(true);
+    const [username, setUsername] = useState<string | null>(null);
+    const [userLoading, setUserLoading] = useState(true);
 
     useEffect(() => {
-        fetchUser();
-        setLoading(false);
+        getSession().then((session) => {
+            setSession(session);
+            setSessionLoading(false);
+        });
     }, []);
+
+    useEffect(() => {
+        if (session) {
+            getUserById(dispatch, session.user.id).then((user) => {
+                setUsername(user.username as string);
+                setUserLoading(false);
+            });
+        }
+    }, [session, dispatch]);
+
+    console.log(username, session);
 
     return (
         <>
-            {loading && <>Loading</>}
+            {sessionLoading && userLoading && <>Loading</>}
 
-            {!loading && (
+            {!sessionLoading && !userLoading && (
                 <Link to={`/profile/${username}`} className="create-project-button">
                     Profile
                 </Link>

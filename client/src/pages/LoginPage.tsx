@@ -1,10 +1,13 @@
 /* eslint-disable camelcase */
 import React from "react";
 import { Auth } from "@supabase/auth-ui-react";
-import { useAuth } from "../context";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { supabase } from "../common/clients";
 
 export const LoginPage: React.FC = () => {
-    const { supabase, logOut } = useAuth();
+    const logOut = () => {
+        supabase?.auth.signOut();
+    };
 
     return (
         <div className="login-container">
@@ -17,7 +20,7 @@ export const LoginPage: React.FC = () => {
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
                 <h2 className="login-title">Let's get started</h2>
                 <Auth
-                    supabaseClient={supabase}
+                    supabaseClient={supabase as SupabaseClient}
                     appearance={{
                         extend: false,
                         className: {

@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfileProps } from "../../types/user";
+import { ProfileProps } from "../../types";
 
 export const VisitProfile: React.FC<ProfileProps> = ({ profile }) => {
     return (

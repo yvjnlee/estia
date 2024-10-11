@@ -1,54 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { ProjectInfo, ProjectsDB } from "../../types/project";
-import { useAuth } from "../../context";
-import { useNavigate } from "react-router-dom";
+import { supabase } from "../../common/clients";
 
 import ProjectCard from "../project/ProjectCard";
+import { User } from "../../common/types";
+import { getSession } from "../../api/authAPI";
+import { getUserProjects } from "../../api/projectAPI";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export const UserCreated: React.FC = () => {
-    const { supabase, user } = useAuth();
+    const dispatch = useAppDispatch();
     const [userProjects, setUserProjects] = useState<ProjectInfo[]>([]);
-
-    const navigate = useNavigate()
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const fetchUserProjects = async () => {
-            try {
-                if (user) {
-                    const { data, error } = await supabase
-                        .from("estia_projects")
-                        .select("*")
-                        .eq("created_by", user.id);
+        getSession().then((session) => {    
+            setUser(session?.user || null);
+        });
+    }, []);
 
-                    if (error) {
-                        console.log("Error fetching projects:", error);
-                        return;
-                    }
+    // const navigate = useNavigate();
 
-                    if (data) {
-                        const mappedData: ProjectInfo[] = data.map((row: ProjectsDB) => ({
-                            projectId: row.project_id,
-                            projectName: row.project_name,
-                            createdAt: row.created_at,
-                            tech1: row.tech1,
-                            tech2: row.tech2,
-                            colour: row.colour,
-                            description: row.description,
-                            videoId: row.video_Id,
-                            repoPath: row.repo_Path,
-                            difficulty: row.difficulty,
-                        }));
-
-                        setUserProjects(mappedData);
-                    }
-                }
-            } catch (err) {
-                console.error("Error:", err);
+    useEffect(() => {
+        try {
+            if (user) {
+                getUserProjects(dispatch, user.id).then((projects) => {
+                    setUserProjects(projects);
+                });
             }
-        };
-
-        fetchUserProjects();
-    }, [supabase, user]);
+        } catch (err) {
+            console.error("Error:", err);
+        }
+    }, [user]);
 
     return (
         <>

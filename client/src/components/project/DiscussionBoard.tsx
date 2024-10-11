@@ -1,5 +1,5 @@
 import supabase from "../../SupabaseClient";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
@@ -7,8 +7,6 @@ import { User } from "../../types/user";
 import { ProjectInfo } from "../../types/project";
 import { CommentInfo, CommentDB } from "../../types/comment";
 import { useUser } from "../../context/UserContext"
-import { isEmptyObj } from "groq-sdk/core";
-import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
 
 
 const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }> = ({ project, comments }) => {
@@ -17,97 +15,30 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
 
     const [currUser, setCurrUser] = useState<User | null>(null);
     const [newComment, setNewComment] = useState('');
-    // const commentsRef = useRef<CommentInfo[]>(comments);
+    const [existingComments, setExistingComments] = useState<CommentInfo[]>(comments);
 
     useEffect(() => {
         // fetch user and set it
         const fetchUser = async () => {
-            const userId = user?.id; 
+            const userId = user?.id; // Safely get user.id
 
             if (userId) {
-                const userData = await retrieveUser(userId); 
-                setCurrUser(userData);
+                const userData = await retrieveUser(userId); // Await the promise
+                setCurrUser(userData); // Set the user data in state
             }
-        };
+        });
+    }, []);
 
-        fetchUser(); 
-
+        fetchUser(); // Call the async function
     }, [retrieveUser]);
 
-    useEffect(() => {
-
-    })
-    const changeVote = async ( comment : CommentInfo, interaction: boolean) => {
-        let likes = 1;
-
-        if (interaction === false) {
-            likes = -1;
-        }
-        
-        // query to check if user has voted before
-        // if query isnt null then we render that out using a bool or smth 
-        // if query is null then wtv the user clicks on will work and update the comments
-        // add patch request
-        const { data, error } = await supabase 
-            .from('comment_interactions')
-            .select('interaction')
-            .eq("comment_id", comment.commentId)
-            .eq("user_id", user?.id)
-
-        if (error) {
-                console.log(error);
-                console.log("Cannot upvote this comment")
-        }
-
-        if (data) {
-            if (isEmptyObj(data)) {
-                console.log("posting")
-                const { error } = await supabase 
-                    .from('comment_interactions')
-                    .insert( {
-                        comment_id: comment.commentId,
-                        user_id: user?.id,
-                        interaction: interaction
-                    })
-                
-                if ( error ){
-                    console.log(error);
-                }
-
-                // update the likes, should add an error object later
-                await supabase 
-                    .from('comments')
-                    .update({likes: comment.likes + likes})
-                    .eq('comment_id', comment.commentId)
-                
-                // comments = comments.map(comment =>
-                //   comment.commentId === comment.commentId ? { ...comment, likes: comment.likes + likes } : comment);
-                // console.log(comments);
-
-            } else if (data[0].interaction !== interaction) {
-                // patch request to update the vote in comment table and comment_interactions table
-                console.log(data[0].interaction);
-                console.log("patching")
-                await supabase 
-                    .from('comments')
-                    .update({likes: comment.likes + 2 * likes})
-                    .eq('comment_id', comment.commentId)
-                
-                await supabase
-                    .from('comment_interactions')
-                    .update({interaction: interaction})
-                    .eq('comment_id', comment.commentId)
-                    .eq('user_id', user?.id)
-                
-                // comments = comments.map(comment =>
-                //     comment.commentId === comment.commentId ? { ...comment, likes: comment.likes + 2 * likes } : comment);
-                // // setExistingComments(comments);
-                // console.log(comments);
-            } 
-        }
+    const changeVote = ( commentId : number, votes: number) => {
+        setExistingComments(existingComments =>
+            existingComments.map(comment =>
+              comment.commentId === commentId ? { ...comment, votes: comment.likes + votes } : comment
+            ));
     }
 
-    
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
         setNewComment(event.target.value);
@@ -145,7 +76,7 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
             }
             
             console.log(comments);
-            // setExistingComments(comments);
+            setExistingComments(comments);
             setNewComment('');
         } else {
             console.log("You can't comment!")
@@ -164,9 +95,9 @@ const DiscussionBoard: React.FC<{project: ProjectInfo, comments: CommentInfo[] }
             {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
-                        <button onClick={() => changeVote(comment, true)}><img src={UpChevron} /></button>
+                        <button onClick={() => changeVote(comment.likes, 1)}><img src={UpChevron} /></button>
                         <span>{comment.likes}</span>
-                        <button onClick={() => changeVote(comment, false)}><img src={DownChevron} /></button>
+                        <button onClick={() => changeVote(comment.likes, -1)}><img src={DownChevron} /></button>
                     </div>
                     <div className="comment">
                         <h3 className = "existing-comment-header">{comment.username}</h3> 

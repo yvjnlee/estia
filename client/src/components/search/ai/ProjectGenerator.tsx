@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-undef */
-import React, { useState } from "react";
-import { useProject } from "../../../context/ProjectContext";
-import Groq from "groq-sdk"; // Import Groq SDK
+import React, { useEffect, useState } from "react";
 import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
+import { Project } from "../../../common/types";
+import { groq } from "../../../common/clients";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { getProjects } from "../../../api/projectAPI";
 
 const ProjectGenerator: React.FC = () => {
     const containerStyle: React.CSSProperties = {
@@ -23,12 +24,20 @@ const ProjectGenerator: React.FC = () => {
         // border: "2px solid grey",
     };
 
-    const { projects } = useProject(); // Access project data from context
     const [input, setInput] = useState("");
     const [output, setOutput] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const [projects, setProjects] = useState<Project[]>([]);
+    
+    useEffect(() => {
+        getProjects(dispatch).then((projects) => {
+            setProjects(projects);
+        });
+    }, []);
 
     // Helper function to format and parse JSON output
     const formatOutput = (jsonString: string) => {
@@ -82,13 +91,6 @@ const ProjectGenerator: React.FC = () => {
 
         // Get project titles from the context
         const projectTitles = projects?.map((project) => project.projectName).join(", ") || "";
-
-        const apiKey = process.env.REACT_APP_GROQ_API_KEY;
-        // console.log("API Key:", apiKey);
-        const groq = new Groq({
-            apiKey,
-            dangerouslyAllowBrowser: true,
-        });
 
         try {
             const response = await groq.chat.completions.create({

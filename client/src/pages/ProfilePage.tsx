@@ -1,37 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth, useUser } from "../context";
-import { User } from "../types/user";
 import { Navbar } from "../components/navbar/Navbar";
-
 import { VisitProfile } from "../components/profile/VisitProfile";
-import { UserCreated } from "../components/profile/UserCreated";
+import { User } from "../common/types";
+import { Session } from "@supabase/supabase-js";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { getUserByUsername } from "../api/userAPI";
+import { getSession } from "../api/authAPI";
 import { UserSaved } from "../components/profile/UserSaved";
+import { UserCreated } from "../components/profile/UserCreated";
 
 export const ProfilePage: React.FC = () => {
     const { username } = useParams();
-    const { searchUser } = useUser();
-    const { session } = useAuth();
+    const dispatch = useAppDispatch();
 
-    const [loading, setLoading] = useState<boolean>(true);
     const [profile, setProfile] = useState<User | null>(null);
-
-    const fetchUser = async () => {
-        try {
-            const userData = await searchUser(username as string);
-            setProfile(userData as User);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching user:", error);
-        }
-    };
+    const [profileLoading, setProfileLoading] = useState<boolean>(true);
+    const [session, setSession] = useState<Session | null>(null);
+    const [sessionLoading, setSessionLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        fetchUser();
-        console.log("profile: ", username)
-    }, [username]);
+        getSession()
+            .then((session) => {
+                setSession(session);
+                setSessionLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching session:", error);
+                setSessionLoading(false);
+            });
+    }, []);
 
-    if (loading) {
+    useEffect(() => {
+        if (username && !sessionLoading) {
+            setProfileLoading(true);
+            getUserByUsername(dispatch, username)
+                .then((user) => {
+                    setProfile(user);
+                })
+                .catch((error) => {
+                    console.error("Error fetching user:", error);
+                    setProfile(null);
+                })
+                .finally(() => {
+                    setProfileLoading(false);
+                });
+        }
+    }, [username, sessionLoading, dispatch]);
+
+    if (profileLoading) {
         return <div>loading...</div>;
     }
 

@@ -1,33 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useProject } from "../../context/ProjectContext";
+import React, { useState } from "react";
+import { setThemeFilter } from "../../store/slices/projectSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { filterProjects } from "../../api/projectAPI";
 
 export const ThemeFilters: React.FC = () => {
     const themeOptions = [
-        "Game Development", "Full Stack", "Portfolio", "Clone App (Full Stack)",
-        "Clone App (Frontend)", "Frontend", "Backend", "Machine Learning", "Simple", "Web Development",
+        "Game Development",
+        "Full Stack",
+        "Portfolio",
+        "Clone App (Full Stack)",
+        "Clone App (Frontend)",
+        "Frontend",
+        "Backend",
+        "Machine Learning",
+        "Simple",
+        "Web Development",
     ];
 
+    const dispatch = useAppDispatch();
     const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
-    const [showMore, setShowMore] = useState(false); // To toggle visibility
+    const [showMore, setShowMore] = useState(false);
 
-    const { handleSearch, searchProjects } = useProject();
-
-    const handleFilter = (theme: string) => {
+    const handleFilter = (tech: string) => {
         setSelectedThemes((prevSelected) => {
-            const isChecked = prevSelected.includes(theme);
+            const isChecked = prevSelected.includes(tech);
             const newSelected = isChecked
-                ? prevSelected.filter((item) => item !== theme)
-                : [...prevSelected, theme];
-            
-            // Trigger project search whenever filter is updated
-            handleSearch([], newSelected.length ? newSelected[0] : "", "");
+                ? prevSelected.filter((item) => item !== tech)
+                : [...prevSelected, tech];
+
+            dispatch(setThemeFilter(newSelected));
+            console.log(newSelected);
+
             return newSelected;
         });
     };
-
-    useEffect(() => {
-        searchProjects();
-    }, [selectedThemes, searchProjects]);
 
     return (
         <div className="filters" data-scroll-section>

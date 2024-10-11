@@ -1,34 +1,38 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-undef */
-import React, { useState } from "react";
-import { useProject } from "../../../context/ProjectContext";
+import React, { useEffect, useState } from "react";
 import Groq from "groq-sdk"; // Import Groq SDK
 import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { Project } from "../../../common/types";
+import { fetchProjects } from "../../../store/slices/projectSlice";
 
 const GiveProjectPage: React.FC = () => {
-    const containerStyle: React.CSSProperties = {
-        //backgroundColor: colour,
-        backgroundColor: "",
-        cursor: "pointer",
-        border: "1px solid #383838",
-        height: "5rem",
-        width: "32rem",
-        borderRadius: "4px",
-        padding: "24px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        transition: "transform 0.3s ease, filter 0.3s ease",
-        // border: "2px solid grey",
-    };
-
-    const { projects } = useProject(); // Access project data from context
     const [input, setInput] = useState("");
     const [output, setOutput] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const fetchAllProjects = async () => {
+            try {
+                dispatch(fetchProjects())
+                    .unwrap()
+                    .then((projects) => {
+                        setProjects(projects);
+                    });
+            } catch (error) {
+                console.error("Error fetching projects:", error);
+            }
+        };
+
+        fetchAllProjects();
+    }, []);
 
     // Helper function to format and parse JSON output
     const formatOutput = (jsonString: string) => {
@@ -39,14 +43,22 @@ const GiveProjectPage: React.FC = () => {
             if (Array.isArray(parsedOutput["Recommended Projects"])) {
                 return parsedOutput["Recommended Projects"].map(
                     (project: string, index: number) => (
-                            <h2 className="project-title"
-                                onClick={() =>
-                                    navigate(`/project/${encodeURIComponent(project)}`)
-                                } // Navigate to project details page
-                                style={{ cursor: "pointer" }}
-                            >
-                                {project}
-                            </h2>
+                        <div className="project-theme-section" key={index}>
+                            <div className="projects-section">
+                                <div className="projects-div">
+                                    {/* Make the project title clickable */}
+                                    <h5
+                                        className="projects-heading"
+                                        onClick={() =>
+                                            navigate(`/project/${encodeURIComponent(project)}`)
+                                        } // Navigate to project details page
+                                        style={{ cursor: "pointer" }} // Add pointer for clickable effect
+                                    >
+                                        {project}
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
                     )
                 );
             }
@@ -55,14 +67,22 @@ const GiveProjectPage: React.FC = () => {
             if (parsedOutput["Recommended Project"]) {
                 const project = parsedOutput["Recommended Project"];
                 return (
-                    <h2 className="project-title"
-                        onClick={() =>
-                            navigate(`/project/${encodeURIComponent(project)}`)
-                        } // Navigate to project details page
-                        style={{ cursor: "pointer", textDecoration: "underline" }}
-                    >
-                        {project}
-                    </h2>
+                    <div className="project-theme-section">
+                        <div className="projects-section">
+                            <div className="projects-div">
+                                {/* Make the project title clickable */}
+                                <h5
+                                    className="projects-heading"
+                                    onClick={() =>
+                                        navigate(`/project/${encodeURIComponent(project)}`)
+                                    } // Navigate to project details page
+                                    style={{ cursor: "pointer", textDecoration: "underline" }} // Add pointer and underline for clickable effect
+                                >
+                                    {project}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
                 );
             }
 
@@ -84,6 +104,7 @@ const GiveProjectPage: React.FC = () => {
         // Get project titles from the context
         const projectTitles = projects?.map((project) => project.projectName).join(", ") || "";
 
+        // eslint-disable-next-line no-undef
         const apiKey = process.env.REACT_APP_GROQ_API_KEY;
         // console.log("API Key:", apiKey);
         const groq = new Groq({
@@ -178,10 +199,8 @@ const GiveProjectPage: React.FC = () => {
                 </form>
                 {output && (
                     <div>
-                        <h3 className="related-results">Related results:</h3>
-                        <div className="project-container" style={containerStyle}>        
-                            {formatOutput(output)}
-                        </div>
+                        <h3>Here are some related results:</h3>
+                        <div className="outer-theme-section-div">{formatOutput(output)}</div>
                     </div>
                 )}
             </div>

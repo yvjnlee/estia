@@ -26,7 +26,6 @@ export default [
         plugins: {
             "@typescript-eslint": tsPlugin,
             react: reactPlugin,
-            prettier: prettierPlugin,
         },
         rules: {
             quotes: ["error", "double"],
@@ -37,7 +36,6 @@ export default [
             "no-unused-vars": "error",
             ...tsPlugin.configs.recommended.rules,
             ...reactPlugin.configs.recommended.rules,
-            ...prettierPlugin.configs.recommended.rules,
         },
     },
     js.configs.recommended,

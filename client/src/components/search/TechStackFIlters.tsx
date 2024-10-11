@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useProject } from "../../context/ProjectContext";
+import React, { useState } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { setTechStackFilter } from "../../store/slices/projectSlice";
+import { filterProjects } from "../../api/projectAPI";
 
 export const TechStackFilters: React.FC = () => {
     const techStackOptions = [
-        "React", "TypeScript", "Python", "Tensorflow", "TailwindCSS",
-        "Next.js", "GraphQL", "Angular", "HTML/CSS", "C++",
+        "React",
+        "TypeScript",
+        "Python",
+        "Tensorflow",
+        "TailwindCSS",
+        "Next.js",
+        "GraphQL",
+        "Angular",
+        "HTML/CSS",
+        "C++",
     ];
 
+    const dispatch = useAppDispatch();
     const [selectedTechStack, setSelectedTechStack] = useState<string[]>([]);
-    const [showMore, setShowMore] = useState(false); // To toggle visibility
-
-    const { searchProjects, handleSearch } = useProject();
+    const [showMore, setShowMore] = useState(false);
 
     const handleFilter = (tech: string) => {
         setSelectedTechStack((prevSelected) => {
@@ -18,9 +27,10 @@ export const TechStackFilters: React.FC = () => {
             const newSelected = isChecked
                 ? prevSelected.filter((item) => item !== tech)
                 : [...prevSelected, tech];
-            
-            // Trigger project search whenever filter is updated
-            handleSearch(newSelected, "", "");
+
+            dispatch(setTechStackFilter(selectedTechStack));
+            console.log(selectedTechStack);
+
             return newSelected;
         });
     };

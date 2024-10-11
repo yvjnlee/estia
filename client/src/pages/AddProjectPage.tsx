@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProject } from "../context/ProjectContext";
 import { Navbar } from "../components/navbar/Navbar";
-import DifficultyLevel from "../components/project/DifficultyLevel";
+import { supabase } from "../common/clients/supabaseClient";
 
 // Expanded dictionary of languages and frameworks
 const techStackOptions = [
@@ -81,7 +80,6 @@ const difficultyOptions = [
 ]
 
 const AddProject: React.FC = () => {
-    const { supabase } = useProject();
     const navigate = useNavigate();
 
     const [projectName, setProjectName] = useState("");

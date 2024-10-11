@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
-import { useProject } from "../../context/ProjectContext";
-import { useAuth } from "../../context"; // Ensure you're using useAuth for user context
-import { CommentInfo, CommentDB } from "../../types/comment";
-import supabase from "../../SupabaseClient";
+
+// Import the new projects data
 
 // Imported icons
 import LikeImage from "../../img/ThumbsUp.svg";
@@ -19,164 +17,90 @@ import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { getProjectByName, getUserLikedProjects, getUserSavedProjects, toggleLikeProject, toggleSaveProject } from "../../api/projectAPI";
+import { Project, User, Comment } from "../../common/types";
+import { getSession } from "../../api/authAPI";
+import { getComments } from "../../api/commentAPI";
 
 const ProjectDetails: React.FC = () => {
-  const { projects } = useProject();
-  const navigate = useNavigate(); // Hook for navigation
-  const { supabase, user } = useAuth(); // Ensure you're getting the user properly
+    const navigate = useNavigate(); // Hook for navigation
+    const dispatch = useAppDispatch();
 
-  const [isLiked, setIsLiked] = useState(false); // Manage liked state
-  const [isSaved, setIsSaved] = useState(false); // Manage saved state
-  const [comments, setComments] = useState<CommentInfo[]>([]);
+    const [project, setProject] = useState<Project | null>(null);
+    const [projectLoading, setProjectLoading] = useState<boolean>(true);
+    const [user, setUser] = useState<User | null>(null);
+    const [isLiked, setIsLiked] = useState(false); // Manage liked state
+    const [isSaved, setIsSaved] = useState(false); // Manage saved state
+    const [comments, setComments] = useState<Comment[]>([]);
+    // Get the current URL and extract the project title
+    const url = window.location.href;
+    const urlParts = url.split("/");
+    const rawTitle = urlParts[urlParts.length - 1];
 
-  // Get the current URL and extract the project title
-  const url = window.location.href;
-  const urlParts = url.split("/");
-  const rawTitle = urlParts[urlParts.length - 1];
+    // Decode the project name from URL
+  
+  // Decode the project name from URL
   const decodedTitle = decodeURIComponent(rawTitle);
 
-  // Get the project details based on the decoded title parameter
-  const project = projects.find((project) => project.projectName === decodedTitle);
-
-  if (!project) {
-    throw new Error("This project doesn't exist");
-  }
-
-  // Function to check if the project is already saved
-  const checkIfSaved = async () => {
-    if (user) {
-      const { data: savedProjects, error } = await supabase
-        .from("saved_projects")
-        .select("project_id")
-        .eq("profile_id", user.id)
-        .eq("project_id", project.projectId); // Check if this project is saved
-
-      if (savedProjects && savedProjects.length > 0) {
-        setIsSaved(true); // Project is already saved
-      } else {
-        setIsSaved(false); // Project is not saved
-      }
-    }
-  };
-
-
-  // Function to check if the project is already saved
-  const checkIfLiked = async () => {
-    if (user) {
-      const { data: likedProjects, error } = await supabase
-        .from("liked_projects")
-        .select("project_id")
-        .eq("profile_id", user.id)
-        .eq("project_id", project.projectId); // Check if this project is liked
-
-      if (likedProjects && likedProjects.length > 0) {
-        setIsLiked(true); // Project is already liked
-      } else {
-        setIsLiked(false); // Project is not liked
-      }
-    }
-  };
-
-  // Run checkIfSaved when component mounts
-  useEffect(() => {
-    checkIfSaved();
-    checkIfLiked();
-  }, [user, project]);
-
-  // Function to save or unsave the project
-  const toggleSaveProject = async () => {
-    if (user) {
-      if (isSaved) {
-        // Unsave project
-        const { error } = await supabase
-          .from("saved_projects")
-          .delete()
-          .eq("profile_id", user.id)
-          .eq("project_id", project.projectId);
-
-        if (!error) {
-          setIsSaved(false); // Update state to "not saved"
+    // Get the project details based on the decoded title parameter
+    useEffect(() => {
+        if (decodedTitle) {
+            getProjectByName(dispatch, decodedTitle).then((project) => {
+                setProject(project);
+                setProjectLoading(false);
+            });
         }
-      } else {
-        // Save project
-        const { error } = await supabase
-          .from("saved_projects")
-          .insert([{ profile_id: user.id, project_id: project.projectId }]);
+    }, [dispatch, decodedTitle]);
 
-        if (!error) {
-          setIsSaved(true); // Update state to "saved"
+    useEffect(() => {
+        getSession().then((session) => {
+            if (session?.user) {
+                setUser(session.user);
+            }
+        });
+    }, []);
+
+    const checkIfSaved = async () => {
+        if (user) {
+            const savedProjects = await getUserSavedProjects(dispatch, user.id);
+            return savedProjects.includes(project?.projectName);
         }
-      }
-    } else {
-      console.error("User is not logged in");
+        return false;
     }
-  };
 
-
-  // Function to save or unsave the project
-  const toggleLikeProject = async () => {
-    if (user) {
-      if (isLiked) {
-        // Unlike project
-        const { error } = await supabase
-          .from("liked_projects")
-          .delete()
-          .eq("profile_id", user.id)
-          .eq("project_id", project.projectId);
-
-        if (!error) {
-          setIsLiked(false); // Update state to "not liked"
+    const checkIfLiked = async () => {
+        if (user) {
+            const likedProjects = await getUserLikedProjects(dispatch, user.id);
+            return likedProjects.includes(project?.projectName);
         }
-      } else {
-        // Like project
-        const { error } = await supabase
-          .from("liked_projects")
-          .insert([{ profile_id: user.id, project_id: project.projectId }]);
-
-        if (!error) {
-          setIsLiked(true); // Update state to "liked"
-        }
-      }
-    } else {
-      console.error("User is not logged in");
+        return false;
     }
-  };
 
+    useEffect(() => {
+        checkIfSaved();
+        checkIfLiked();
+    }, [project, user]);
 
+    const handleSave = () => {
+        toggleSaveProject(dispatch, project?.projectId as string, user?.id as string);
+    }
 
-  // fetching the comments
-  useEffect(() => {
-    const fetchComments = async () => {
-      const { data, error } = await supabase
-        .from("comments")
-        .select("*")
-        .eq("project_id", project.projectId);
+    const handleLike = () => {
+        toggleLikeProject(dispatch, project?.projectId as string, user?.id as string);
+    }
 
-      if (error) {
-        console.log(error);
-      }
+    useEffect(() => {
+        getComments(dispatch).then((comments) => {
+            setComments(comments);
+        });
+    }, [dispatch]);
 
-      if (data) {
-        const mappedData: CommentInfo[] = data.map((row: CommentDB) => ({
-          commentId: row.comment_id,
-          projectId: row.project_id,
-          userId: row.user_id,
-          content: row.content,
-          likes: row.likes,
-          username: row.username,
-        }));
-        setComments(mappedData);
-      }
-    };
-    fetchComments();
-  }, [project]);
+    const saveButtonClass = isSaved ? "saved" : "save"; // classname for save button
+    const likeButtonClass = isLiked ? "saved" : "save"; // using same class name as it is same aesthetics
 
-  const saveButtonClass = isSaved ? "saved" : "save"; // classname for save button
-  const likeButtonClass = isLiked ? "saved" : "save"; // using same class name as it is same aesthetics
-
-
-  return (
-    <>
+    return (
+        <>
       <Navbar />
       <div className="details-main-container">
         {/* Left side of page */}
@@ -188,7 +112,7 @@ const ProjectDetails: React.FC = () => {
             <div className="details-container">
               <div className="title-and-difficulty-container">
                 <h1 className="details-title">{project?.projectName}</h1>
-                <DifficultyLevel difficulty={project.difficulty as string} />
+                <DifficultyLevel difficulty={project?.difficulty as string} />
               </div>
               <div className="embed-container">
                 <div className="description-container">
@@ -200,20 +124,20 @@ const ProjectDetails: React.FC = () => {
             <div className="button-container">
               <button
                 className={`save-and-like-button ${saveButtonClass}`}
-                onClick={toggleSaveProject}
+                onClick={handleSave}
               >
                 <img className="like-fav-icon" src={isSaved ? SavedImage : FavImage} alt="Save" />
                 <p className="project-details-button-text">{isSaved ? "Saved" : "Save"}</p>
               </button>
 
               <button className={`save-and-like-button ${likeButtonClass}`}
-                onClick={toggleLikeProject}>
+                onClick={handleLike}>
                 <img className="like-fav-icon" src={isLiked ? LikedImage : LikeImage} alt="Like" />
                 <p className="project-details-button-text">{isLiked ? "Unlike" : "Like"}</p>
               </button>
             </div>
             <div className="">
-              <DiscussionBoard project={project} comments={comments} />
+              <DiscussionBoard comments={comments} />
             </div>
           </div>
 
@@ -228,7 +152,7 @@ const ProjectDetails: React.FC = () => {
         </div>
       </div>
     </>
-  );
+    );
 };
 
 export default ProjectDetails;
