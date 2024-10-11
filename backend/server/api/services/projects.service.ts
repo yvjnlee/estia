@@ -26,7 +26,7 @@ export class ProjectsService {
   }
 
   // Read
-  async all(): Promise<Project[] | null> {
+  async getAll(): Promise<Project[] | null> {
     L.info('Fetching all projects');
 
     try {
@@ -44,7 +44,7 @@ export class ProjectsService {
     }
   }
 
-  async byId(projectId: string): Promise<Project | null> {
+  async getByProjectId(projectId: string): Promise<Project | null> {
     L.info(`Fetching project with id: ${projectId}`);
 
     try {
@@ -66,7 +66,7 @@ export class ProjectsService {
     }
   }
 
-  async byName(projectName: string): Promise<Project | null> {
+  async getByProjectName(projectName: string): Promise<Project | null> {
     L.info(`Fetching projects with name: ${projectName}`);
 
     try {
@@ -137,7 +137,7 @@ export class ProjectsService {
   }
 
   // Search projects by user ID
-  async byUserId(userId: string): Promise<Project[] | null> {
+  async getByUserId(userId: string): Promise<Project[] | null> {
     L.info(`Fetching projects for user with id: ${userId}`);
 
     try {
@@ -155,6 +155,174 @@ export class ProjectsService {
     } catch (err) {
       L.error(`Unexpected error: ${err}`);
       return null;
+    }
+  }
+
+  async getBySavedUserId(userId: string): Promise<Project[] | null> {
+    L.info(`Fetching projects saved by user with id: ${userId}`);
+
+    try {
+      const { data, error } = await supabase
+        .from('saved_projects')
+        .select('*')
+        .eq('profile_id', userId);
+
+      if (error) {
+        L.error(`Error fetching projects saved by user: ${error.message}`);
+        return null;
+      }
+
+      if (data) {
+        const projectIds = data.map((project) => project.project_id);
+        const { data: projectsData, error: projectsError } = await supabase
+          .from('estia_projects')
+          .select('*')
+          .in('project_id', projectIds);
+
+        if (projectsError) {
+          L.error(`Error fetching project details: ${projectsError.message}`);
+          return null;
+        }
+
+        return projectsData || null;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      L.error(`Unexpected error: ${err}`);
+      return null;
+    }
+  }
+
+  async getByLikedUserId(userId: string): Promise<Project[] | null> {
+    L.info(`Fetching projects liked by user with id: ${userId}`);
+
+    try {
+      const { data, error } = await supabase
+        .from('liked_projects')
+        .select('*')
+        .eq('profile_id', userId);
+
+      if (error) {
+        L.error(`Error fetching projects saved by user: ${error.message}`);
+        return null;
+      }
+
+      if (data) {
+        const projectIds = data.map((project) => project.project_id);
+        const { data: projectsData, error: projectsError } = await supabase
+          .from('estia_projects')
+          .select('*')
+          .in('project_id', projectIds);
+
+        if (projectsError) {
+          L.error(`Error fetching project details: ${projectsError.message}`);
+          return null;
+        }
+
+        return projectsData || null;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      L.error(`Unexpected error: ${err}`);
+      return null;
+    }
+  }
+
+  async saveProject(projectId: string, userId: string): Promise<boolean> {
+    L.info(`Toggling save status for project ${projectId} by user ${userId}`);
+
+    try {
+      // Check if the project is already saved
+      const { data: existingSave, error: checkError } = await supabase
+        .from('saved_projects')
+        .select()
+        .eq('profile_id', userId)
+        .eq('project_id', projectId)
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        L.error(`Error checking saved status: ${checkError.message}`);
+        return false;
+      }
+
+      if (existingSave) {
+        // Unsave project
+        const { error: deleteError } = await supabase
+          .from('saved_projects')
+          .delete()
+          .eq('profile_id', userId)
+          .eq('project_id', projectId);
+
+        if (deleteError) {
+          L.error(`Error unsaving project: ${deleteError.message}`);
+          return false;
+        }
+      } else {
+        // Save project
+        const { error: insertError } = await supabase
+          .from('saved_projects')
+          .insert([{ profile_id: userId, project_id: projectId }]);
+
+        if (insertError) {
+          L.error(`Error saving project: ${insertError.message}`);
+          return false;
+        }
+      }
+
+      return true;
+    } catch (err) {
+      L.error(`Unexpected error in saveProject: ${err}`);
+      return false;
+    }
+  }
+
+  async likeProject(projectId: string, userId: string): Promise<boolean> {
+    L.info(`Toggling like status for project ${projectId} by user ${userId}`);
+
+    try {
+      // Check if the project is already liked
+      const { data: existingLike, error: checkError } = await supabase
+        .from('liked_projects')
+        .select()
+        .eq('profile_id', userId)
+        .eq('project_id', projectId)
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        L.error(`Error checking liked status: ${checkError.message}`);
+        return false;
+      }
+
+      if (existingLike) {
+        // Unlike project
+        const { error: deleteError } = await supabase
+          .from('liked_projects')
+          .delete()
+          .eq('profile_id', userId)
+          .eq('project_id', projectId);
+
+        if (deleteError) {
+          L.error(`Error unliking project: ${deleteError.message}`);
+          return false;
+        }
+      } else {
+        // Like project
+        const { error: insertError } = await supabase
+          .from('liked_projects')
+          .insert([{ profile_id: userId, project_id: projectId }]);
+
+        if (insertError) {
+          L.error(`Error liking project: ${insertError.message}`);
+          return false;
+        }
+      }
+
+      return true;
+    } catch (err) {
+      L.error(`Unexpected error in likeProject: ${err}`);
+      return false;
     }
   }
 }

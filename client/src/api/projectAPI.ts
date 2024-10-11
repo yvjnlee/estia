@@ -3,7 +3,11 @@ import {
     fetchProjectById,
     fetchProjectByName,
     fetchProjects,
+    fetchUserLikedProjects,
     fetchUserProjects,
+    fetchUserSavedProjects,
+    saveProject,
+    likeProject,
 } from "../store/slices/projectSlice";
 import { AppDispatch } from "../store/store";
 
@@ -45,6 +49,18 @@ export const getUserProjects = async (dispatch: AppDispatch, userId: string) => 
     return mappedProjects;
 };
 
+export const getUserSavedProjects = async (dispatch: AppDispatch, userId: string) => {
+    const projects = await dispatch(fetchUserSavedProjects(userId)).unwrap();
+    const mappedProjects = projects.map((project: ProjectDB) => mapProjectData(project));
+    return mappedProjects;
+};
+
+export const getUserLikedProjects = async (dispatch: AppDispatch, userId: string) => {
+    const projects = await dispatch(fetchUserLikedProjects(userId)).unwrap();
+    const mappedProjects = projects.map((project: ProjectDB) => mapProjectData(project));
+    return mappedProjects;
+};
+
 export const filterProjects = async (projects: Project[], searchFilter?: string, techStackFilter?: string[], themeFilter?: string[], difficultyFilter?: string) => {
     if (!searchFilter && !techStackFilter && !themeFilter && !difficultyFilter) return projects;
 
@@ -67,4 +83,14 @@ export const filterProjects = async (projects: Project[], searchFilter?: string,
     })
 
     return filteredProjects;
+};
+
+export const toggleSaveProject = async (dispatch: AppDispatch, projectId: string, userId: string) => {
+    const project = await dispatch(saveProject({ projectId, userId })).unwrap();
+    return mapProjectData(project);
+};
+
+export const toggleLikeProject = async (dispatch: AppDispatch, projectId: string, userId: string) => {
+    const project = await dispatch(likeProject({ projectId, userId })).unwrap();
+    return mapProjectData(project);
 };

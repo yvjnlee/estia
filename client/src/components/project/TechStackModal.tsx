@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useEffect } from "react";
 import { groq } from "../../common/clients";
 
@@ -8,7 +7,6 @@ interface TechStackModalProps {
 }
 
 const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
-    // what type is data?
     const [data, setData] = React.useState<any>(null);
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
@@ -17,7 +15,7 @@ const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
     const [showWhatIs, setShowWhatIs] = React.useState(false);
     const [showCommonUses, setShowCommonUses] = React.useState(false);
     const [showAdvantages, setShowAdvantages] = React.useState(false);
-    // const [showDisadvantages, setShowDisadvantages] = React.useState(false);
+    const [showDisadvantages, setShowDisadvantages] = React.useState(false);
     const [showResources, setShowResources] = React.useState(false);
     const [showNextSteps, setShowNextSteps] = React.useState(false);
 
@@ -124,6 +122,7 @@ Here is the input
                 setTimeout(() => setShowAdvantages(true), 600);
                 setTimeout(() => setShowResources(true), 800);
                 setTimeout(() => setShowNextSteps(true), 1000);
+
             } catch (error) {
                 console.error("Error fetching tech data:", error);
                 setError("Error fetching tech data.");
@@ -141,9 +140,7 @@ Here is the input
     return (
         <div className="modal-overlay">
             <div className="modal-content growing-modal">
-                <button className="close-button" onClick={onClose}>
-                    X
-                </button>
+                <button className="close-button" onClick={onClose}>X</button>
 
                 {data && (
                     <div>
@@ -161,36 +158,29 @@ Here is the input
                                 <h3>Common Uses</h3>
                                 <ul className="common-use-ul">
                                     {data.common_uses.map((cu: string, index: number) => (
-                                        <li className="common-use-li" key={index}>
-                                            {cu}
-                                        </li>
+                                        <li className="common-use-li" key={index}>{cu}</li>
                                     ))}
                                 </ul>
                             </>
                         )}
                         <div className="advantage-disadvantage-container">
+
                             {showAdvantages && (
                                 <>
                                     <div className="advantage-container">
                                         <h3>Advantages</h3>
                                         <ul className="av-dv-ul">
                                             {data.advantages.map((adv: string, index: number) => (
-                                                <li className="common-use-li" key={index}>
-                                                    {adv}
-                                                </li>
+                                                <li className="common-use-li" key={index}>{adv}</li>
                                             ))}
                                         </ul>
-                                    </div>
+                                    </div>            
                                     <div className="disadvantage-container">
                                         <h3>Disadvantages</h3>
                                         <ul className="av-dv-ul">
-                                            {data.disadvantages.map(
-                                                (dis: string, index: number) => (
-                                                    <li className="common-use-li" key={index}>
-                                                        {dis}
-                                                    </li>
-                                                )
-                                            )}
+                                            {data.disadvantages.map((dis: string, index: number) => (
+                                                <li className="common-use-li" key={index}>{dis}</li>
+                                            ))}
                                         </ul>
                                     </div>
                                 </>
@@ -201,19 +191,13 @@ Here is the input
                             <>
                                 <h3>Resources</h3>
                                 <ul className="resources-ul">
-                                    {data.resources.map(
-                                        (res: { title: string; link: string }, index: number) => (
-                                            <li key={index}>
-                                                <a
-                                                    href={res.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    {res.title}
-                                                </a>
-                                            </li>
-                                        )
-                                    )}
+                                    {data.resources.map((res: { title: string; link: string }, index: number) => (
+                                        <li key={index}>
+                                            <a href={res.link} target="_blank" rel="noopener noreferrer">
+                                                {res.title}
+                                            </a>
+                                        </li>
+                                    ))}
                                 </ul>
                             </>
                         )}

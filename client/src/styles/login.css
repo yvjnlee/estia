@@ -96,6 +96,14 @@
     font-size: 1.5rem;
 }
 
+
+.custom-input::placeholder {
+
+    color: var(--placeholder-text-color);
+    font-size: 1.5rem;
+}
+
+
 .custom-anchor {
     color: var(--anchor-color);
     text-decoration: none;

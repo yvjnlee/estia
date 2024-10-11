@@ -47,7 +47,6 @@
     "mocha": "^9.2.2",
     "nodemon": "^2.0.15",
     "pino-pretty": "^7.5.3",
-    "prettier": "^2.5.1",
     "shelljs": "^0.8.5",
     "supertest": "^6.1.6",
     "swagger-autogen": "^2.23.7",

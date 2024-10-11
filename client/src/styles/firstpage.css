@@ -6,6 +6,7 @@
     align-items: center;
     margin-top: 10%;
     display: flex;
+    height: 134vh;
     flex-direction: column;
     position: relative; /* Establishes positioning context */
 }
@@ -41,7 +42,7 @@
     margin-bottom: 32px;
 }
 
-.inital-feedback {
+.initial-feedback {
     position: fixed;
     bottom: 0;
     width: 100%;

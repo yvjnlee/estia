@@ -82,6 +82,37 @@ export const fetchUserProjects = createAsyncThunk(
     }
 );
 
+export const fetchUserSavedProjects = createAsyncThunk(
+    "projects/fetchUserSavedProjects",
+    async (userId: string) => {
+        return await fetchAPI(
+            `${process.env.REACT_APP_API_BASE_URL}/projects/saved/${userId}`,
+            "GET"
+        );
+    }
+);
+
+export const fetchUserLikedProjects = createAsyncThunk(
+    "projects/fetchUserLikedProjects",
+    async (userId: string) => {
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects/liked/${userId}`, "GET");
+    }
+);
+
+export const saveProject = createAsyncThunk(
+    "projects/saveProject",
+    async ({ projectId, userId }: { projectId: string; userId: string }) => {
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects/save/${projectId}/${userId}`, "POST");
+    }
+);
+
+export const likeProject = createAsyncThunk(
+    "projects/likeProject",
+    async ({ projectId, userId }: { projectId: string; userId: string }) => {
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/projects/like/${projectId}/${userId}`, "POST");
+    }
+);
+
 const projectSlice = createSlice({
     name: "projects",
     initialState,

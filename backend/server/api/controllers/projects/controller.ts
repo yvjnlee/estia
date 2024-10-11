@@ -22,7 +22,7 @@ export class Controller {
   all(_: Request, res: Response): void {
     // #swagger.tags = ['Projects']
     try {
-      ProjectsService.all().then((r) => {
+      ProjectsService.getAll().then((r) => {
         res.json(r);
       });
     } catch (error) {
@@ -35,7 +35,7 @@ export class Controller {
     const id = req.params.id;
 
     try {
-      ProjectsService.byId(id).then((r) => {
+      ProjectsService.getByProjectId(id).then((r) => {
         if (r) res.json(r);
         else res.status(404).json({ message: 'Project not found' });
       });
@@ -49,7 +49,7 @@ export class Controller {
     const name = req.params.name;
 
     try {
-      ProjectsService.byName(name).then((r) => {
+      ProjectsService.getByProjectName(name).then((r) => {
         if (r) res.json(r);
         else res.status(404).json({ message: 'Project not found' });
       });
@@ -97,7 +97,7 @@ export class Controller {
     const userId = req.params.userId;
 
     try {
-      ProjectsService.byUserId(userId).then((r) => {
+      ProjectsService.getByUserId(userId).then((r) => {
         if (r && r.length > 0) {
           res.json(r);
         } else {
@@ -108,6 +108,68 @@ export class Controller {
       res
         .status(500)
         .json({ message: 'Error fetching projects by user ID', error });
+    }
+  }
+
+  bySavedUserId(req: Request<RequestParams>, res: Response): void {
+    // #swagger.tags = ['Projects']
+    const userId = req.params.userId;
+
+    try {
+      ProjectsService.getBySavedUserId(userId).then((r) => {
+        if (r) res.json(r);
+        else
+          res.status(404).json({ message: 'No projects found for this user' });
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: 'Error fetching projects saved by user ID', error });
+    }
+  }
+
+  byLikedUserId(req: Request<RequestParams>, res: Response): void {
+    // #swagger.tags = ['Projects']
+    const userId = req.params.userId;
+
+    try {
+      ProjectsService.getByLikedUserId(userId).then((r) => {
+        if (r) res.json(r);
+        else
+          res.status(404).json({ message: 'No projects found for this user' });
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: 'Error fetching projects liked by user ID', error });
+    }
+  }
+
+  saveProject(req: Request<RequestParams>, res: Response): void {
+    // #swagger.tags = ['Projects']
+    const projectId = req.params.projectId;
+    const userId = req.params.userId;
+
+    try {
+      ProjectsService.saveProject(projectId, userId).then((r) => {
+        res.json(r);
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Error saving project', error });
+    }
+  }
+
+  likeProject(req: Request<RequestParams>, res: Response): void {
+    // #swagger.tags = ['Projects']
+    const projectId = req.params.projectId;
+    const userId = req.params.userId;
+
+    try {
+      ProjectsService.likeProject(projectId, userId).then((r) => {
+        res.json(r);
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Error liking project', error });
     }
   }
 }

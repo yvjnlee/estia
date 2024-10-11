@@ -1,5 +1,5 @@
 export interface CommentDB {
-    comment_id: number;
+    comment_id: string;
     project_id: string;
     user_id: string;
     content: string;
@@ -8,7 +8,7 @@ export interface CommentDB {
 }
 
 export interface Comment {
-    commentId: number;
+    commentId: string;
     projectId: string;
     userId: string;
     content: string;

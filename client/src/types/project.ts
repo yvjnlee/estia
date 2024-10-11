@@ -12,7 +12,7 @@ export interface ProjectsDB {
   video_Id?: string;
   repo_Path?: string;
   theme?: string;
-  Likes?: number;
+  likes?: number;
   comment_thread_id?: number;
   project_id: string;
   difficulty?: string;

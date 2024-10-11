@@ -156,34 +156,40 @@ const GiveProjectPage: React.FC = () => {
         <>
             <Navbar />
             <div className="preference-page">
+            <h2 className="page-heading">Hey Estia, find me...</h2>
                 <div className="navigation-links">
-                    <NavLink
+                <NavLink
                         to="/preference"
                         className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
                         end
                     >
-                        AI Learning Tool
+                        Programming languages/frameworks to learn
                     </NavLink>
                     <NavLink
                         to="/preference/give-project"
                         className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
                     >
-                        AI Project Finder
+                        A project within your collection
+                    </NavLink>
+                    <NavLink
+                        to="/preference/project-idea"
+                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
+                    >
+                        A fresh new project idea
                     </NavLink>
                 </div>
+                <div className="fade-in-div">
                 <div className="page-heading-container">
-                    <h2 className="page-heading">Tailored Projects for Your Learning Goals</h2>
                     <p className="preference-description">
-                        Unleash your potential by finding projects that align with your learning
-                        goals. We find projects on estia and connect you with the right hands-on
-                        experiences!
+                        Let us know what you are interested in making. We find projects on Estia based on your input and 
+                        connect you with the right hands-on experiences.
                     </p>
                 </div>
                 <form className="input-form" onSubmit={handleSubmit}>
                     <textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        rows={5}
+                        rows={3}
                         placeholder="Describe what you're interested in building..."
                         className="input-field"
                     />
@@ -197,6 +203,7 @@ const GiveProjectPage: React.FC = () => {
                         <div className="outer-theme-section-div">{formatOutput(output)}</div>
                     </div>
                 )}
+            </div>
             </div>
         </>
     );

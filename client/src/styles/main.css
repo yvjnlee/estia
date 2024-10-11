@@ -163,3 +163,27 @@
         margin-top: 8px; /* Adds space above the button */
     }
 }
+
+
+.wrapper {
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-attachment: fixed;
+    display: flex;
+    height: max-content;
+    justify-content: center;
+    align-items: center;
+    background-color:#221d25;
+    background-image:
+    radial-gradient(at 30% 89%, rgb(45, 21, 45) 0px, transparent 50%),
+    radial-gradient(at 35% 0%, rgb(39, 2, 47) 0px, transparent 50%),
+    radial-gradient(at 93% 46%, rgb(71, 27, 42) 0px, transparent 50%),
+    radial-gradient(at 23% 49%, rgb(24, 17, 36) 0px, transparent 50%),
+    radial-gradient(at 17% 27%, rgb(63, 28, 44) 0px, transparent 50%),
+    radial-gradient(at 79% 30%, rgb(17, 24, 20) 0px, transparent 50%),
+    radial-gradient(at 26% 40%, rgb(28, 22, 12) 0px, transparent 50%);
+  }
+  

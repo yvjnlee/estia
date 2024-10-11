@@ -3,13 +3,19 @@
     margin-left: 5rem;
     margin-top: 3rem;
     padding: 2rem;
-    animation: fadeIn 1s forwards;
 
+}
+
+.fade-in-div {
+    animation: fadeIn 0.5s forwards;
 }
 
 .navigation-links {
     display: flex;
     gap: 10px;
+    margin-left: -1rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
 }
 
 .nav-link {
@@ -42,7 +48,7 @@
 .page-heading {
     font-size: var(--font-size-xxl);
     font-weight: 700;
-    margin-bottom: -1rem;
+    margin-bottom: 2rem;
     text-align: left;
 }
 
@@ -232,5 +238,49 @@
 }
 
 .page-heading-container {
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
+}
+
+
+.project-idea-title {
+    font-size: var(--font-size-lg); /* Large font size for title */
+    margin-bottom: 10px; /* Space below the title */
+}
+
+.project-idea-description {
+    font-size: var(--font-size-md); /* Medium font size for description */
+    margin-bottom: 20px; /* Space below description */
+}
+
+.project-idea-tech-stack, .estimated-time {
+    font-size: var(--font-size-sm); /* Smaller font size for additional details */
+    margin-bottom: 15px; /* Space below each item */
+}
+
+h4 {
+    font-size: var(--font-size-md); /* Medium font size for subheadings */
+    margin-top: 20px; /* Space above headings */
+    margin-bottom: 10px; /* Space below headings */
+}
+
+.checklist, .project-idea-potential-names {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.checklist li, .project-idea-potential-names li {
+    position: relative; /* Create a positioning context for pseudo-elements */
+    font-size: var(--font-size-sm); /* Font size for list items */
+    margin-bottom: 8px; /* Space between list items */
+}
+
+.checklist li::before, .project-idea-potential-names li::before {
+    content: ''; /* No text content */
+    position: absolute; /* Position relative to the list item */
+    left: -20px; /* Adjust left positioning */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center align */
+    width: 10px; /* Width of the dot */
+    height: 10px; /* Height of the dot */
+    border-radius: 50%; /* Make it a circle */
 }
