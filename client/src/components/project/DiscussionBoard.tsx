@@ -25,6 +25,7 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                     setUser(user);
                 });
             }
+        })
     }, []);
 
     const changeVote = async ( comment : Comment, interaction: boolean) => {

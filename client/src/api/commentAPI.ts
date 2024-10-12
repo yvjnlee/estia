@@ -45,7 +45,7 @@ export const filterComments = async (comments: Comment[], searchFilter?: string,
     if (!comments) return [];
 
     const filteredComments = comments.filter((comment: Comment) => {
-        const matchesSearch = comment.content?.toLowerCase().includes(searchFilter?.toLowerCase() || "");
+        const matchesSearch = comment.content.toLowerCase().includes(searchFilter?.toLowerCase() || "");
         const matchesAuthor = !authorFilter || comment.userId === authorFilter;
 
         return matchesSearch && matchesAuthor;
