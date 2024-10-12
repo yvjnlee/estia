@@ -1,18 +1,29 @@
 import L from '../../common/logger';
-import { Comment } from '../../../common/types';
+import { Comment, CommentInteraction } from '../../../common/types';
 import { supabase } from '../../../common/clients';
-
-export class CommentsService {
-  async create(comment: Comment): Promise<Comment | null> {
-    L.info(`Creating new comment for post: ${comment.projectId}`);
+import { CommentsService } from './comments.service';
+// creating a comment interaction, this will result in an update in comment table as well
+export class CommentInteractionsService {
+  async create(commentInteraction: CommentInteraction, comment: Comment): Promise<CommentInteraction | null> {
+    L.info(`Creating new comment interaction for comment: ${commentInteraction.commentId}`);
     const { data, error } = await supabase
-      .from('comments')
-      .insert(comment)
+      .from('comment_iteractions')
+      .insert(commentInteraction)
       .single();
+
     if (error) {
       L.error(`Error creating comment: ${error.message}`);
       return null;
     }
+    let likes = 1;
+    if (commentInteraction.interaction === false) {
+        likes = -1;
+    }
+
+    CommentsService.update(commentInteraction.commentId, {
+        interactions: comment.likes + likes; 
+    })
+
     return data;
   }
 
@@ -26,7 +37,7 @@ export class CommentsService {
     return data;
   }
 
-  async getByCommentId(id: string): Promise<Comment | null> {
+  async getByCommentId(id: string): Promise<CommentInteraction | null> {
     L.info(`Fetching comment with id: ${id}`);
     const { data, error } = await supabase
       .from('comments')
@@ -40,7 +51,6 @@ export class CommentsService {
     return data;
   }
 
-  // returns an array of all comments
   async getByProjectId(postId: string): Promise<Comment[] | null> {
     L.info(`Fetching comments for post: ${postId}`);
     const { data, error } = await supabase
@@ -72,9 +82,14 @@ export class CommentsService {
     return data;
   }
 
-  async delete(id: string): Promise<boolean> {
-    L.info(`Deleting comment with id: ${id}`);
-    const { error } = await supabase.from('comments').delete().eq('id', id);
+// deleting a comment by selecting commentid and userid
+  async delete(commentId: string, userId: string): Promise<boolean> {
+    L.info(`Deleting comment with comment id: ${commentId} and user id: ${userId}`);
+    const { error } = await supabase
+        .from('comment_interactions')
+        .delete()
+        .eq('comment_id', commentId)
+        .eq('user_id', userId);
     if (error) {
       L.error(`Error deleting comment: ${error.message}`);
       return false;
@@ -83,4 +98,4 @@ export class CommentsService {
   }
 }
 
-export default new CommentsService();
+export default new CommentInteractionsService();
