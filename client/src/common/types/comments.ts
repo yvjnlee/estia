@@ -7,7 +7,7 @@ export interface CommentDB {
     username: string;
 }
 
-export interface Comment {
+export interface CommentInteraction {
     commentId: string;
     projectId: string;
     userId: string;

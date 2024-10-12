@@ -137,7 +137,7 @@ const ProjectDetails: React.FC = () => {
               </button>
             </div>
             <div className="">
-              <DiscussionBoard comments={comments} />
+              <DiscussionBoard comments={comments} project = {project} />
             </div>
           </div>
 

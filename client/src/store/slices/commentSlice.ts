@@ -17,7 +17,7 @@ const initialState: CommentState = {
 // Thunks
 export const createComment = createAsyncThunk(
     "comments/createComment",
-    async (newComment: Comment) => {
+    async (newComment: Omit<Comment, 'commentId'>) => {
         return await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/comments/`,
             "POST",

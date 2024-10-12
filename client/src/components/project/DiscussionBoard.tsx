@@ -3,12 +3,13 @@ import { useState } from "react";
 
 import UpChevron from "../../img/UpChevron.svg";
 import DownChevron from "../../img/DownChevron.svg";
-import { Comment, User } from "../../common/types";
+import { Comment, User, Project } from "../../common/types";
 import { getSession } from "../../api/authAPI";
 import { getUserById } from "../../api/userAPI";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { addComment } from "../../api/commentAPI";
 
-const DiscussionBoard: React.FC<{comments: Comment[] }> = ({ comments }) => {
+const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }> = ({ comments, project }) => {
     const dispatch = useAppDispatch();
     
     const [user, setUser] = useState<User | null>(null);
@@ -27,21 +28,76 @@ const DiscussionBoard: React.FC<{comments: Comment[] }> = ({ comments }) => {
         });
     }, []);
 
+    const changeVote = async ( comment : Comment, interaction: boolean) => {
+        let likes = 1;
+        if (interaction === false) {
+            likes = -1;
+        }
 
-    const changeVote = ( commentId : string, votes: number) => {
-        setExistingComments(existingComments =>
-            existingComments.map(comment =>
-              comment.commentId === commentId ? { ...comment, votes: comment.likes + votes } : comment
-            ));
+        // change below
+        const { data, error } = await supabase 
+            .from('comment_interactions')
+            .select('interaction')
+            .eq("comment_id", comment.commentId)
+            .eq("user_id", user?.id)
+  
+        if (data) {
+            if (isEmptyObj(data)) {
+                console.log("posting")
+                const { error } = await supabase 
+                    .from('comment_interactions')
+                    .insert( {
+                        comment_id: comment.commentId,
+                        user_id: user?.id,
+                        interaction: interaction
+                    })
+                
+                if ( error ){
+                    console.log(error);
+                }
+                // update the likes, should add an error object later
+                await supabase 
+                    .from('comments')
+                    .update({likes: comment.likes + likes})
+                    .eq('comment_id', comment.commentId)
+                
+                // comments = comments.map(comment =>
+                //   comment.commentId === comment.commentId ? { ...comment, likes: comment.likes + likes } : comment);
+                // console.log(comments);
+            } else if (data[0].interaction !== interaction) {
+                // patch request to update the vote in comment table and comment_interactions table
+                console.log(data[0].interaction);
+                console.log("patching")
+                await supabase 
+                    .from('comments')
+                    .update({likes: comment.likes + 2 * likes})
+                    .eq('comment_id', comment.commentId)
+                
+                await supabase
+                    .from('comment_interactions')
+                    .update({interaction: interaction})
+                    .eq('comment_id', comment.commentId)
+                    .eq('user_id', user?.id)
+            } 
+            // change above
+        }
+
     }
-
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
         setNewComment(event.target.value);
     };
 
     const postComment = () => {
-
+        if (user && project) { // change this later
+            addComment(dispatch, {
+                projectId: project?.projectId ? project?.projectId : " empty",
+                userId: user.id,
+                content: newComment,
+                likes: 0,
+                username: user.username ? user.username : 'empty',
+            });
+        }
     };
 
     return (
@@ -56,9 +112,9 @@ const DiscussionBoard: React.FC<{comments: Comment[] }> = ({ comments }) => {
             {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
-                        <button onClick={() => changeVote(comment.commentId, 1)}><img src={UpChevron} /></button>
+                        <button onClick={() => changeVote(comment.commentId, true)}><img src={UpChevron} /></button>
                         <span>{comment.likes}</span>
-                        <button onClick={() => changeVote(comment.commentId, -1)}><img src={DownChevron} /></button>
+                        <button onClick={() => changeVote(comment.commentId, false)}><img src={DownChevron} /></button>
                     </div>
                     <div className="comment">
                         <h3 className = "existing-comment-header">{comment.username}</h3> 

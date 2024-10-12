@@ -25,7 +25,7 @@ export const getComments = async (dispatch: AppDispatch) => {
     return mappedComments;
 };
 
-export const addComment = async (dispatch: AppDispatch, commentData: Omit<Comment, 'id' | 'createdAt' | 'updatedAt'>) => {
+export const addComment = async (dispatch: AppDispatch, commentData: Omit<Comment, 'commentId'>) => {
     const comment = await dispatch(createComment(commentData)).unwrap();
     return mapCommentData(comment);
 };
