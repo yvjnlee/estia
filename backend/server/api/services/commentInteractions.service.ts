@@ -1,18 +1,18 @@
 import L from '../../common/logger';
 import { Comment, CommentInteraction } from '../../../common/types';
 import { supabase } from '../../../common/clients';
-import { CommentsService } from './comments.service';
+
 // creating a comment interaction, this will result in an update in comment table as well
 export class CommentInteractionsService {
   async create(commentInteraction: CommentInteraction, comment: Comment): Promise<CommentInteraction | null> {
     L.info(`Creating new comment interaction for comment: ${commentInteraction.commentId}`);
-    const { data, error } = await supabase
+    const { data: commentInteractionData, error: commentInteractionError } = await supabase
       .from('comment_iteractions')
       .insert(commentInteraction)
       .single();
 
-    if (error) {
-      L.error(`Error creating comment: ${error.message}`);
+    if ( commentInteractionError ) {
+      L.error(`Error creating comment: ${commentInteractionError.message}`);
       return null;
     }
     let likes = 1;
@@ -20,16 +20,20 @@ export class CommentInteractionsService {
         likes = -1;
     }
 
-    CommentsService.update(commentInteraction.commentId, {
-        interactions: comment.likes + likes; 
-    })
+    const { data: updatedCommentData, error: updateError } = await supabase
+      .from('comments')
+      .update({ likes: comment.likes + likes})
 
-    return data;
+    if (updateError) {
+      L.error(`Error when updating number of interactions with a comment: ${updateError}`)
+    }
+
+    return commentInteractionData;
   }
 
-  async getAll(): Promise<Comment[] | null> {
-    L.info('Fetching all comments');
-    const { data, error } = await supabase.from('comments').select('*');
+  async getAll(): Promise<CommentInteraction[] | null> {
+    L.info('Fetching all comments interactions');
+    const { data, error } = await supabase.from('comment_interactions').select('*');
     if (error) {
       L.error(`Error fetching all comments: ${error.message}`);
       return null;
@@ -37,28 +41,16 @@ export class CommentInteractionsService {
     return data;
   }
 
-  async getByCommentId(id: string): Promise<CommentInteraction | null> {
-    L.info(`Fetching comment with id: ${id}`);
+  async getInteraction(commentId: string, userId: string): Promise<CommentInteraction | null> {
+    L.info(`Fetching comment with id: ${commentId}, ${userId}`);
     const { data, error } = await supabase
-      .from('comments')
+      .from('comment_interactions')
       .select('*')
-      .eq('id', id)
+      .eq('comment_id', commentId)
+      .eq('user_id', userId)
       .single();
     if (error) {
       L.error(`Error fetching comment by id: ${error.message}`);
-      return null;
-    }
-    return data;
-  }
-
-  async getByProjectId(postId: string): Promise<Comment[] | null> {
-    L.info(`Fetching comments for post: ${postId}`);
-    const { data, error } = await supabase
-      .from('comments')
-      .select('*')
-      .eq('post_id', postId);
-    if (error) {
-      L.error(`Error fetching comments by post id: ${error.message}`);
       return null;
     }
     return data;

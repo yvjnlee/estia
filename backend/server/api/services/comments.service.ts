@@ -41,12 +41,12 @@ export class CommentsService {
   }
 
   // returns an array of all comments
-  async getByProjectId(postId: string): Promise<Comment[] | null> {
-    L.info(`Fetching comments for post: ${postId}`);
+  async getByProjectId(projectId: string): Promise<Comment[] | null> {
+    L.info(`Fetching comments for post: ${projectId}`);
     const { data, error } = await supabase
       .from('comments')
       .select('*')
-      .eq('post_id', postId);
+      .eq('post_id', projectId);
     if (error) {
       L.error(`Error fetching comments by post id: ${error.message}`);
       return null;
