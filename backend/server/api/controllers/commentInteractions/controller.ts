@@ -8,11 +8,12 @@ export class Controller {
   create(req: Request<RequestParams, unknown, CommentInteraction>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
     const commentId = req.params.commentId;
+    const userId = req.params.userId;
     const commentInteraction = req.body;
 
     try {
       CommentInteractionsService.create(commentInteraction, commentId).then((r) => {
-        res.status(201).location(`/api/v1/commentInteractions/${r?.commentId}`).json(r);
+        res.status(201).location(`/api/v1/commentInteractions/${r?.commentId}/${r?.userId}`).json(r);
       });
     } catch (error) {
       res.status(500).json({ message: 'Error creating comment', error });
@@ -55,7 +56,7 @@ export class Controller {
     const commentId = req.params.commentId;
     const userId = req.params.userId;
     const commentInteraction = req.body;
-    
+
     try {
       CommentInteractionsService.update(commentId, userId, commentInteraction).then((r) => {
         if (r) res.json(r);
