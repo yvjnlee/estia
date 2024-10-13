@@ -4,7 +4,7 @@ import { RequestParams } from './types';
 import { User } from '../../../../common/types';
 export class Controller {
   // Create
-  create(req: Request<unknown, User>, res: Response): void {
+  create(req: Request<unknown, unknown, User>, res: Response): void {
     // #swagger.tags = ['Users']
     const user: User = req.body;
 
@@ -60,10 +60,10 @@ export class Controller {
   }
 
   // Update
-  update(req: Request<RequestParams, User>, res: Response): void {
+  update(req: Request<RequestParams, unknown, Partial<User>>, res: Response): void {
     // #swagger.tags = ['Users']
     const id = req.params.id;
-    const user: User = req.body; // Assuming you send the full User object
+    const user = req.body; // Assuming you send the full User object
 
     try {
       UsersService.update(id, user).then((r) => {

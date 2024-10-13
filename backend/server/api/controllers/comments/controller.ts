@@ -5,7 +5,7 @@ import { Comment } from '../../../../common/types';
 
 export class Controller {
   // Create
-  create(req: Request<unknown, Comment>, res: Response): void {
+  create(req: Request<unknown, unknown, Comment>, res: Response): void {
     // #swagger.tags = ['Comments']
     const comment: Comment = req.body;
 
@@ -67,10 +67,10 @@ export class Controller {
   }
 
   // Update
-  update(req: Request<RequestParams, Comment>, res: Response): void {
+  update(req: Request<RequestParams, unknown, Partial<Comment>>, res: Response): void {
     // #swagger.tags = ['Comments']
     const id = req.params.id;
-    const comment: Comment = req.body;
+    const comment = req.body;
 
     try {
       CommentsService.update(id, comment).then((r) => {

@@ -1,17 +1,18 @@
-import CommentsService from '../../services/comments.service';
+import CommentInteractionsService from '../../services/commentInteractions.service';
 import { Request, Response } from 'express';
 import { RequestParams } from './types';
-import { Comment } from '../../../../common/types';
+import { CommentInteraction } from '../../../../common/types';
 
 export class Controller {
   // Create
-  create(req: Request<unknown, Comment>, res: Response): void {
-    // #swagger.tags = ['Comments']
-    const comment: Comment = req.body;
+  create(req: Request<RequestParams, unknown, CommentInteraction>, res: Response): void {
+    // #swagger.tags = ['CommentInteractions']
+    const commentId = req.params.commentId;
+    const commentInteraction = req.body;
 
     try {
-      CommentsService.create(comment).then((r) => {
-        res.status(201).location(`/api/v1/comments/${r?.commentId}`).json(r);
+      CommentInteractionsService.create(commentInteraction, commentId).then((r) => {
+        res.status(201).location(`/api/v1/commentInteractions/${r?.commentId}`).json(r);
       });
     } catch (error) {
       res.status(500).json({ message: 'Error creating comment', error });
@@ -19,10 +20,12 @@ export class Controller {
   }
 
   // Read
-  all(_: Request, res: Response): void {
-    // #swagger.tags = ['Comments']
+  all(req: Request, res: Response): void {
+    // #swagger.tags = ['CommentInteractions']
+    const commentId = req.params.commentId;
+
     try {
-      CommentsService.getAll().then((r) => {
+      CommentInteractionsService.getAll(commentId).then((r) => {
         res.json(r);
       });
     } catch (error) {
@@ -30,34 +33,14 @@ export class Controller {
     }
   }
 
-  // Fetch comments by project ID
-  byProjectId(req: Request<RequestParams>, res: Response): void {
-    // #swagger.tags = ['Comments']
-    const projectId = req.params.projectId;
+
+  get(req: Request<RequestParams>, res: Response): void {
+    // #swagger.tags = ['CommentInteractions']
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
 
     try {
-      CommentsService.getByProjectId(projectId).then((r) => {
-        if (r && r.length > 0) {
-          res.json(r);
-        } else {
-          res
-            .status(404)
-            .json({ message: 'No comments found for this project' });
-        }
-      });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Error fetching comments by project ID', error });
-    }
-  }
-
-  byCommentId(req: Request<RequestParams>, res: Response): void {
-    // #swagger.tags = ['Comments']
-    const id = req.params.id;
-
-    try {
-      CommentsService.getByCommentId(id).then((r) => {
+      CommentInteractionsService.getInteraction(commentId, userId).then((r) => {
         if (r) res.json(r);
         else res.status(404).json({ message: 'Comment not found' });
       });
@@ -67,13 +50,14 @@ export class Controller {
   }
 
   // Update
-  update(req: Request<RequestParams, Comment>, res: Response): void {
-    // #swagger.tags = ['Comments']
-    const id = req.params.id;
-    const comment: Comment = req.body;
-
+  update(req: Request<RequestParams, unknown, Partial<CommentInteraction>>, res: Response): void {
+    // #swagger.tags = ['CommentInteractions']
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
+    const commentInteraction = req.body;
+    
     try {
-      CommentsService.update(id, comment).then((r) => {
+      CommentInteractionsService.update(commentId, userId, commentInteraction).then((r) => {
         if (r) res.json(r);
         else res.status(404).json({ message: 'Comment not found' });
       });
@@ -84,11 +68,12 @@ export class Controller {
 
   // Delete
   delete(req: Request<RequestParams>, res: Response): void {
-    // #swagger.tags = ['Comments']
-    const id = req.params.id;
+    // #swagger.tags = ['CommentInteractions']
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
 
     try {
-      CommentsService.delete(id).then((r) => {
+      CommentInteractionsService.delete(commentId, userId).then((r) => {
         if (r) res.status(204).end();
         else res.status(404).json({ message: 'Comment not found' });
       });

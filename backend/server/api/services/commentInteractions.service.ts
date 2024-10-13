@@ -23,6 +23,7 @@ export class CommentInteractionsService {
     const { data: updatedCommentData, error: updateError } = await supabase
       .from('comments')
       .update({ likes: comment.likes + likes})
+      .eq('comment_id', comment.commentId)
 
     if (updateError) {
       L.error(`Error when updating number of interactions with a comment: ${updateError}`)
@@ -31,9 +32,11 @@ export class CommentInteractionsService {
     return commentInteractionData;
   }
 
-  async getAll(): Promise<CommentInteraction[] | null> {
-    L.info('Fetching all comments interactions');
-    const { data, error } = await supabase.from('comment_interactions').select('*');
+  async getAll(commentId: string): Promise<CommentInteraction[] | null> {
+    L.info('Fetching all comment interactions');
+    const { data, error } = await supabase.from('comment_interactions')
+      .eq('comment_id', commentId)
+      .select('*');
     if (error) {
       L.error(`Error fetching all comments: ${error.message}`);
       return null;
@@ -45,7 +48,6 @@ export class CommentInteractionsService {
     L.info(`Fetching comment with id: ${commentId}, ${userId}`);
     const { data, error } = await supabase
       .from('comment_interactions')
-      .select('*')
       .eq('comment_id', commentId)
       .eq('user_id', userId)
       .single();
@@ -57,14 +59,16 @@ export class CommentInteractionsService {
   }
 
   async update(
-    id: string,
+    commentId: string,
+    userId: string,
     commentData: Partial<Comment>
   ): Promise<Comment | null> {
-    L.info(`Updating comment with id: ${id}`);
+    L.info(`Updating comment with id: ${commentId}, ${userId}`);
     const { data, error } = await supabase
       .from('comments')
       .update(commentData)
-      .eq('id', id)
+      .eq('comment_id', commentId)
+      .eq('user_id', userId)
       .select()
       .single();
     if (error) {
@@ -79,9 +83,10 @@ export class CommentInteractionsService {
     L.info(`Deleting comment with comment id: ${commentId} and user id: ${userId}`);
     const { error } = await supabase
         .from('comment_interactions')
-        .delete()
         .eq('comment_id', commentId)
-        .eq('user_id', userId);
+        .eq('user_id', userId)
+        .delete()
+        
     if (error) {
       L.error(`Error deleting comment: ${error.message}`);
       return false;
