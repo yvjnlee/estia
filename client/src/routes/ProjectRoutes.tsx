@@ -22,7 +22,7 @@ const ProjectsRoutes = () => {
 
     // Add check for projects before trying to map over them
     if (!projects || !Array.isArray(projects) || projectsLoading) {
-        return <div>Loading projects...</div>;
+        return <div><h1>Loading projects...</h1></div>;
     }
 
     return (

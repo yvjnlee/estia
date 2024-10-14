@@ -49,3 +49,11 @@ export interface FilterCriteria {
   theme: string[];
   difficulty: string;
 }
+
+export interface SavedProject {
+  projectName: string;
+}
+
+export interface LikedProject {
+  projectName: string;
+}
