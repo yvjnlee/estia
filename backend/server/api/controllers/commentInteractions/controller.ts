@@ -7,12 +7,13 @@ export class Controller {
   // Create
   create(req: Request<RequestParams, unknown, CommentInteraction>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
+    const projectId = req.params.projectId;
     const commentId = req.params.commentId;
     const userId = req.params.userId;
     const commentInteraction = req.body;
 
     try {
-      CommentInteractionsService.create(commentInteraction, commentId).then((r) => {
+      CommentInteractionsService.create(commentInteraction, projectId, commentId, userId).then((r) => {
         res.status(201).location(`/api/v1/commentInteractions/${r?.commentId}/${r?.userId}`).json(r);
       });
     } catch (error) {
@@ -53,12 +54,13 @@ export class Controller {
   // Update
   update(req: Request<RequestParams, unknown, Partial<CommentInteraction>>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
+    const projectId = req.params.projectId;
     const commentId = req.params.commentId;
     const userId = req.params.userId;
     const commentInteraction = req.body;
 
     try {
-      CommentInteractionsService.update(commentId, userId, commentInteraction).then((r) => {
+      CommentInteractionsService.update(commentInteraction, projectId, commentId, userId).then((r) => {
         if (r) res.json(r);
         else res.status(404).json({ message: 'Comment not found' });
       });
@@ -70,11 +72,12 @@ export class Controller {
   // Delete
   delete(req: Request<RequestParams>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
+    const projectId = req.params.projectId;
     const commentId = req.params.commentId;
     const userId = req.params.userId;
 
     try {
-      CommentInteractionsService.delete(commentId, userId).then((r) => {
+      CommentInteractionsService.delete(projectId, commentId, userId).then((r) => {
         if (r) res.status(204).end();
         else res.status(404).json({ message: 'Comment not found' });
       });
