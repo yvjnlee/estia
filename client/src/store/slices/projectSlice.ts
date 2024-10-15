@@ -135,7 +135,6 @@ const projectSlice = createSlice({
         builder
             .addCase(fetchProjects.pending, (state) => {
                 state.projectsLoading = true;
-                state.projectsError = null;
             })
             .addCase(fetchProjects.fulfilled, (state, action) => {
                 state.projectsLoading = false;
@@ -145,9 +144,19 @@ const projectSlice = createSlice({
                 state.projectsLoading = false;
                 state.projectsError = action.error.message || "An error occurred while fetching projects";
             })
+            .addCase(createProject.pending, (state) => {
+                state.projectsLoading = true;
+            })
             .addCase(createProject.fulfilled, (state, action) => {
                 state.projectsLoading = false;
                 state.projects = state.projects ? [...state.projects, action.payload] : [action.payload];
+            })
+            .addCase(createProject.rejected, (state, action) => {
+                state.projectsLoading = false;
+                state.projectsError = action.error.message || "An error occurred while creating projects";
+            })
+            .addCase(updateProject.pending, (state) => {
+                state.projectsLoading = true;
             })
             .addCase(updateProject.fulfilled, (state, action) => {
                 state.projectsLoading = false;
@@ -158,11 +167,23 @@ const projectSlice = createSlice({
                     }
                 }
             })
+            .addCase(updateProject.rejected, (state, action) => {
+                state.projectsLoading = false;
+                state.projectsError = action.error.message || "An error occurred while updating projects";
+                
+            })
+            .addCase(deleteProject.pending, (state) => {
+                state.projectsLoading = true;
+            })
             .addCase(deleteProject.fulfilled, (state, action) => {
                 state.projectsLoading = false;
                 if (state.projects) {
                     state.projects = state.projects.filter(p => p.project_id !== action.payload);
                 }
+            })
+            .addCase(deleteProject.rejected, (state, action) => {
+                state.projectsLoading = false;
+                state.projectsError = action.error.message || "An error occurred while deleting projects";
             });
     },
 });

@@ -17,9 +17,9 @@ const initialState: CommentInteractionState = {
 // Thunks
 export const createCommentInteraction = createAsyncThunk(
     "commentInteraction/createCommentInteraction",
-    async (newCommentInteraction: CommentInteraction, commentId: string, userId: string) => {
+    async ({ newCommentInteraction, projectId, commentId, userId }: { newCommentInteraction: CommentInteraction; projectId: string; commentId: string; userId: string }) => {
         return await fetchAPI(
-            `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}/${userId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`,
             "POST",
             newCommentInteraction
         );
@@ -27,7 +27,7 @@ export const createCommentInteraction = createAsyncThunk(
 );
 
 
-export const fetchAllCommentInteraction = createAsyncThunk("commentInteraction/fetchAllCommentInteractions", 
+export const fetchAllCommentInteractions = createAsyncThunk("commentInteraction/fetchAllCommentInteractions", 
     async (commentId: string) => {
         return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}`, "GET");
     }
@@ -35,16 +35,16 @@ export const fetchAllCommentInteraction = createAsyncThunk("commentInteraction/f
 
 export const fetchCommentInteraction = createAsyncThunk(
     "comments/fetchCommentInteraction",
-    async (commentId: string, userId: string) => {
+    async ({ commentId, userId }: { commentId: string, userId: string }) => {
         return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}`, "GET");
     }
 );
 
 export const updateCommentInteraction = createAsyncThunk(
     "comments/updateCommentInteraction",
-    async ({ commentId, updates }: { commentId: string; updates: Partial<CommentInteraction> }) => {
+    async ({ projectId, commentId, userId, updates }: { projectId: string, commentId: string, userId: string, updates: Partial<CommentInteraction> }) => {
         return await fetchAPI(
-            `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}/${userId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`,
             "PATCH",
             updates
         );
@@ -52,8 +52,8 @@ export const updateCommentInteraction = createAsyncThunk(
 );
 
 export const deleteCommentInteraction = createAsyncThunk("commentInteraction/deleteCommentInteraction", 
-    async (commentId: string, userId: string) => {
-        await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}/${userId}`, "DELETE");
+    async ({ projectId, commentId, userId}: { projectId: string, commentId: string, userId: string }) => {
+        await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`, "DELETE");
         return commentId; // y do we return this?
 });
 
@@ -63,41 +63,72 @@ const commentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCommentInteractions.pending, (state) => {
-                state.commentsLoading = true;
-                state.commentsError = null;
+            .addCase(fetchCommentInteraction.pending, (state) => {
+                state.commentInteractionLoading = true;
+                state.commentInteractionError = null;
             })
-            .addCase(fetchCommentInteractions.fulfilled, (state, action) => {
-                state.commentsLoading = false;
-                state.comments = action.payload;
+            .addCase(fetchCommentInteraction.fulfilled, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteraction = action.payload;
             })
-            .addCase(fetchCommentInteractions.rejected, (state, action) => {
-                state.commentsLoading = false;
-                state.commentsError = action.error.message || "An error occurred while fetching comments";
+            .addCase(fetchCommentInteraction.rejected, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteractionError = action.error.message || "An error occurred while fetching comment interaction";
+            })
+            .addCase(createCommentInteraction.pending, (state) => {
+                state.commentInteractionLoading = true;
+                state.commentInteraction = null;
             })
             .addCase(createCommentInteraction.fulfilled, (state, action) => {
-                state.commentsLoading = false;
-                state.comments = state.comments ? [...state.comments, action.payload] : [action.payload];
+                state.commentInteractionLoading = false;
+                state.commentInteraction = state.commentInteraction ? [...state.commentInteraction, action.payload] : [action.payload];
+            })
+            .addCase(createCommentInteraction.rejected, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteractionError = action.error.message || "An error occurred while creating comment interaction";
+            })
+            .addCase(fetchAllCommentInteractions.pending, (state) => {
+                state.commentInteractionLoading = true;
+                state.commentInteraction = null;
+            })
+            .addCase(fetchAllCommentInteractions.fulfilled, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteraction = action.payload;
+            })
+            .addCase(fetchAllCommentInteractions.rejected, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteractionError = action.error.message || "An error occurred while fetching all comment interactions";
+            })
+            .addCase(updateCommentInteraction.pending, (state) => {
+                state.commentInteractionLoading = true;
             })
             .addCase(updateCommentInteraction.fulfilled, (state, action) => {
-                state.commentsLoading = false;
-                if (state.comments) {
-                    const index = state.comments.findIndex(c => c.comment_id === action.payload.comment_id);
+                state.commentInteractionLoading = false;
+                if (state.commentInteraction) {
+                    const index = state.commentInteraction.findIndex(c => c.comment_id === action.payload.comment_id && c.user_id === action.payload.user_id);
                     if (index !== -1) {
-                        state.comments[index] = action.payload;
+                        state.commentInteraction[index] = action.payload;
                     }
                 }
             })
+            .addCase(updateCommentInteraction.rejected, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteractionError = action.error.message || "An error occurred while updating comment interaction";
+            })
+            .addCase(deleteCommentInteraction.pending, (state) => {
+                state.commentInteractionLoading = true;
+            })
             .addCase(deleteCommentInteraction.fulfilled, (state, action) => {
-                state.commentsLoading = false;
-                if (state.comments) {
-                    state.comments = state.comments.filter(c => c.comment_id !== action.payload);
+                state.commentInteractionLoading = false;
+                if (state.commentInteraction) {
+                    state.commentInteraction = state.commentInteraction.filter(c => c.comment_id !== action.payload);
                 }
             })
-            .addCase(fetchCommentInteraction.fulfilled, (state, action) => {
-                state.commentsLoading = false;
-                state.comments = action.payload;
+            .addCase(deleteCommentInteraction.rejected, (state, action) => {
+                state.commentInteractionLoading = false;
+                state.commentInteractionError = action.error.message || "An error occurred while deleting comment interaction";
             });
+            
     },
 });
 

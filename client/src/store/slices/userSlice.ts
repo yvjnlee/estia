@@ -61,9 +61,19 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(fetchUsers.pending, (state) => {
+                state.usersLoading = true;
+            })
             .addCase(fetchUsers.fulfilled, (state, action) => {
                 state.users = action.payload;
                 state.usersLoading = false;
+            })
+            .addCase(fetchUsers.rejected, (state, action) => {
+                state.usersLoading = false;
+                state.usersError = action.error.message || "An error occurred while fetching users";
+            })
+            .addCase(fetchUserById.pending, (state) => {
+                state.usersLoading = true;
             })
             .addCase(fetchUserById.fulfilled, (state, action) => {
                 if (state.users) {
@@ -75,8 +85,22 @@ const userSlice = createSlice({
                 }
                 state.usersLoading = false;
             })
+            .addCase(fetchUserById.rejected, (state, action) => {
+                state.usersLoading = false;
+                state.usersError = action.error.message || "An error occurred while fetching user";
+            })
+            .addCase(createUser.pending, (state) => {
+                state.usersLoading = true;
+            })
             .addCase(createUser.fulfilled, (state, action) => {
+                state.usersLoading = false;
                 state.users = state.users ? [...state.users, action.payload] : [action.payload];
+            })
+            .addCase(createUser.rejected, (state, action) => {
+                state.usersLoading = false;
+                state.usersError = action.error.message || "An error occurred while creating user";
+            })
+            .addCase(updateUser.pending, (state) => {
                 state.usersLoading = false;
             })
             .addCase(updateUser.fulfilled, (state, action) => {
@@ -87,11 +111,25 @@ const userSlice = createSlice({
                 }
                 state.usersLoading = false;
             })
+            .addCase(updateUser.rejected, (state, action) => {
+                state.usersLoading = false;
+                state.usersError = action.error.message || "An error occurred while updating user";
+            })
+            .addCase(deleteUser.pending, (state) => {
+                state.usersLoading = true;
+            })
             .addCase(deleteUser.fulfilled, (state, action) => {
                 if (state.users) {
                     state.users = state.users.filter((user) => user.id !== action.payload);
                 }
                 state.usersLoading = false;
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+                state.usersLoading = false;
+                state.usersError = action.error.message || "An error occurred while deleting user";
+            })
+            .addCase(fetchUserByUsername.pending, (state) => {
+                state.usersLoading = true;
             })
             .addCase(fetchUserByUsername.fulfilled, (state, action) => {
                 if (state.users) {
@@ -102,6 +140,10 @@ const userSlice = createSlice({
                     state.users = [action.payload];
                 }
                 state.usersLoading = false;
+            })
+            .addCase(fetchUserByUsername.rejected, (state, action) => {
+                state.usersLoading = false;
+                state.usersError = action.error.message || "An error occurred while fetching user";
             })
             .addMatcher(
                 (action) => action.type.endsWith("/pending"),
