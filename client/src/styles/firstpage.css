@@ -6,7 +6,7 @@
     align-items: center;
     margin-top: 10%;
     display: flex;
-    height: 134vh;
+    height: 400vh;
     flex-direction: column;
     position: relative; /* Establishes positioning context */
 }
@@ -33,13 +33,39 @@
 
 .initial-slogan {
     color: white !important;
-    display: flex;
-    margin-top: 0px;
-    font-size: var(--font-size-md);
-    font-weight: 100;
+    font-size: var(--font-size-xxxl);
+    font-weight: 600; /* Heavier font weight */
+
+    max-width: 70%;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 32px;
+    margin-top: 10rem;
+    text-align: center; /* Ensures text is centered */
+    margin-bottom: 0;
+    width: 100%; /* Centers horizontally */
+}
+
+.initial-secondary-slogan {
+       max-width: 70%;
+    max-width: 44%;
+    text-align: center;
+    font-weight: 300; /* Heavier font weight */
+    margin-bottom: 4rem;
+
+}
+
+.initial-heading-container {
+    height: 90vh; /* Full height of the viewport */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    margin-bottom: 10rem; /* Optional, adjust as needed */
+}
+
+.highlight {
+    color: #AF0880;
+    display: inline; /* Ensure it behaves like inline text */
+
 }
 
 .initial-feedback {

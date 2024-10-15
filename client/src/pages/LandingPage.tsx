@@ -7,10 +7,13 @@ import { Navbar } from "../components/navbar/Navbar";
 import HomePage from "./HomePage";
 import { LoginPage } from "./LoginPage";
 
-import MainEstiaLogo from "../img/MainAppLogo.svg"
 import { Session } from "@supabase/supabase-js";
 import { getSession } from "../api/authAPI";
 import { Link } from "react-router-dom";
+
+import { InitialNavbar } from "../components/navbar/InitialNavbar";
+
+import PrototypeImage from "../img/prototype.svg";
 
 export const LandingPage: React.FC = () => {
     const [session, setSession] = useState<Session | null>(null);
@@ -43,20 +46,29 @@ export const LandingPage: React.FC = () => {
             {showAuth ? (
                 <LoginPage />
             ) : (
-                <div className="wrapper">
-                    <div className="initial-container">
-                        <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
-                        <h3 className="initial-slogan">Less Searching, More Creating</h3>
+                <div>
+                    <InitialNavbar />
+                    <div className="wrapper">
+                        <div className="initial-container">
+                            <div className="initial-heading-container">
+                            <h3 className="initial-slogan">
+                                The world's largest
+                                <span className="highlight"> collection </span>
+                                of coding projects.
+                            </h3>
+                            <h2 className="initial-secondary-slogan"> 
+                                Whether you're a seasoned coder or just starting out, 
+                                our knowledge bank is here to transform your coding journey.
+                                </h2>
                             <button className="initial-button" onClick={handleShowLogin}>
-                            start building
-                        </button>
-                        <LocomotiveScrollBar />
-                        <h3 className="initial-feedback">
-                            Got ideas or feedback?{" "}
-                            <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
-                                Contact us!
-                            </Link>
-                        </h3>
+                                start building
+                            </button>
+                            </div>
+                            <img src={PrototypeImage}/>
+
+                            <LocomotiveScrollBar />
+                            
+                        </div>
                     </div>
                 </div>
             )}

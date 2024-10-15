@@ -22,7 +22,34 @@ const ProjectsRoutes = () => {
 
     // Add check for projects before trying to map over them
     if (!projects || !Array.isArray(projects) || projectsLoading) {
-        return <div><h1>Loading projects...</h1></div>;
+        return <div className="loading">
+        <div className="loading-animation">
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>;
     }
 
     return (

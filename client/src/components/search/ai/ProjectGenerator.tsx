@@ -6,6 +6,7 @@ import { Project } from "../../../common/types";
 import { groq } from "../../../common/clients";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { getProjects } from "../../../api/projectAPI";
+import { PreferenceLinks } from "../../navbar/PreferenceLinks";
 
 const ProjectGenerator: React.FC = () => {
     const containerStyle: React.CSSProperties = {
@@ -163,28 +164,8 @@ User Input: "${input}"`, // Change the response format to an array of projects
         <>
             <Navbar />
             <div className="preference-page">
-            <h2 className="page-heading">Hey Estia, find me...</h2>
-                <div className="navigation-links">
-                <NavLink
-                        to="/preference"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                        end
-                    >
-                        Programming languages/frameworks to learn
-                    </NavLink>
-                    <NavLink
-                        to="/preference/give-project"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A project within your collection
-                    </NavLink>
-                    <NavLink
-                        to="/preference/project-idea"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A fresh new project idea
-                    </NavLink>
-                </div>
+            <h2 className="page-heading">Hey Estia, find me...</h2>  
+               <PreferenceLinks/>
                 <div className="fade-in-div">
                 <div className="page-heading-container">
                     <p className="preference-description">

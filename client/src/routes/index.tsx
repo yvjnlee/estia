@@ -13,6 +13,8 @@ import PreferencePage from "../pages/PreferencePage";
 import GiveProject from "../components/search/ai/GiveProjectPage";
 import ProjectGenerator from "../components/search/ai/ProjectGenerator"
 
+import { LoginPage } from "../pages/LoginPage";
+
 const AppRoutes = () => {
     return (
         <>
@@ -20,6 +22,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/add-project/*" element={<AddProjectPage />} />
+                <Route path="/login" element={<LoginPage />} />
                 
                 <Route path="/preference/" element={<PreferencePage />} />
                 <Route path="/preference/give-project" element={<GiveProject />} />

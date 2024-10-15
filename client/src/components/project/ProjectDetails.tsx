@@ -117,7 +117,34 @@ const ProjectDetails: React.FC = () => {
 
     // Render loading indicator if still loading
     if (loading) {
-        return <p><h1>Loading project...</h1></p>;
+        return <div className="loading">
+        <div className="loading-animation">
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>;
     }
 
     // Render the component once all data is fetched

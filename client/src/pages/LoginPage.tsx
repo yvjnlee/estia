@@ -18,7 +18,7 @@ export const LoginPage: React.FC = () => {
             </div>
             <div className="registration-container">
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
-                <h2 className="login-title">Let's get started</h2>
+                <h2 className="login-title">Get Started</h2>
                 <Auth
                     supabaseClient={supabase as SupabaseClient}
                     appearance={{

@@ -29,7 +29,35 @@ export const UserProjects: React.FC<ProfileProps> = ({ profile }) => {
         }
     }, [dispatch, userId]);
 
-    if (projectsLoading) return <div>Loading projects...</div>;
+    if (projectsLoading) return <div className="loading">
+
+    <div className="loading-animation">
+        <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div className="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>;
     if (projects.length === 0) return <div>No projects found.</div>;
 
     return (
