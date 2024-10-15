@@ -42,9 +42,12 @@ const ProjectDetails: React.FC = () => {
     const urlParts = url.split("/");
     const rawTitle = urlParts[urlParts.length - 1];
     const decodedTitle = decodeURIComponent(rawTitle);
+    console.log("Decoded Title:", decodedTitle); // Check the value here
+
 
     // Fetch all necessary data
     useEffect(() => {
+        // Inside the fetchData function
         const fetchData = async () => {
             try {
                 // Fetch project details and session data concurrently
@@ -52,6 +55,10 @@ const ProjectDetails: React.FC = () => {
                     getProjectByName(dispatch, decodedTitle),
                     getSession(),
                 ]);
+
+                // Log the project object
+                console.log("Fetched Project Object:", project);
+                console.log("Hello")
                 setProject(project);
                 setUser(session?.user || null);
 
@@ -78,7 +85,7 @@ const ProjectDetails: React.FC = () => {
                     );
                     setIsLiked(isProjectLiked);
                 }
-                
+
                 // Set loading to false after all data is fetched
                 setLoading(false);
             } catch (error) {
@@ -118,33 +125,33 @@ const ProjectDetails: React.FC = () => {
     // Render loading indicator if still loading
     if (loading) {
         return <div className="loading">
-        <div className="loading-animation">
-            <div className="box">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div className="loading-animation">
+                <div className="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div className="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div className="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div className="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
-            <div className="box">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div className="box">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div className="box">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-    </div>;
+        </div>;
     }
 
     // Render the component once all data is fetched

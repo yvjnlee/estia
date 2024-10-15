@@ -175,7 +175,7 @@ const GiveProjectPage: React.FC = () => {
         <>
             <Navbar />
             <div className="preference-page">
-                <h2 className="page-heading">Hey Estia, find me...</h2>
+                <h2 className="page-heading">Alright Estia, find me...</h2>
                     <PreferenceLinks />
                 <div className="fade-in-div">
                     <div className="page-heading-container">

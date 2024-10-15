@@ -12,8 +12,10 @@ import { getSession } from "../api/authAPI";
 import { Link } from "react-router-dom";
 
 import { InitialNavbar } from "../components/navbar/InitialNavbar";
+import { FeatureList } from "../components/landingpage/FeatureList";
 
 import PrototypeImage from "../img/prototype.svg";
+import { FadeInSection } from "../components/FadeInSection";
 
 export const LandingPage: React.FC = () => {
     const [session, setSession] = useState<Session | null>(null);
@@ -64,10 +66,14 @@ export const LandingPage: React.FC = () => {
                                 start building
                             </button>
                             </div>
-                            <img src={PrototypeImage}/>
-
+                            <img className="starting-image" src={PrototypeImage}/>
+                            <FadeInSection>
+                            <h2 className="landing-subheading">Any Skill You Can Imagine</h2>
                             <LocomotiveScrollBar />
-                            
+                            </FadeInSection>
+                            <FadeInSection>
+                                <FeatureList/>
+                            </FadeInSection>
                         </div>
                     </div>
                 </div>

@@ -39,6 +39,7 @@ import react from "../../img/frameworkslogos/react.svg";
 import reactnative from "../../img/frameworkslogos/reactnative.svg";
 import redux from "../../img/frameworkslogos/redux.svg";
 import spring from "../../img/frameworkslogos/spring.svg";
+import scss from "../../img/frameworkslogos/scss.png"
 import tailwindcss from "../../img/frameworkslogos/tailwindcss.svg";
 import tensorflow from "../../img/frameworkslogos/tensorflow.svg";
 
@@ -91,6 +92,7 @@ const techImages: { [key: string]: string } = {
     react,
     reactnative,
     redux,
+    scss,
     spring,
     tailwindcss,
     tensorflow,

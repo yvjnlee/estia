@@ -63,8 +63,8 @@ export const LocomotiveScrollBar: React.FC = () => {
                 <li>Angular</li>
                 <li>TypeScript</li>
                 <li>Databases</li>
-                <li>Integration Testing</li>
-                <li>Animation</li>
+                <li>Game Development</li>
+                <li>Hosting</li>
                 <li>Blockchain</li>
                 <li>UI/UX</li>
             </ul>

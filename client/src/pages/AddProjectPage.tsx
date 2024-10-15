@@ -23,6 +23,7 @@ const techStackOptions = [
     "Ember.js",
     "Express",
     "Flask",
+    "Framer Motion",
     "Gatsby",
     "Go",
     "GraphQL",
@@ -38,7 +39,7 @@ const techStackOptions = [
     "MongoDB",
     "MySQL",
     "NestJS",
-    "Next.js",
+    "NextJS",
     "Node.js",
     "Oracle",
     "Pandas",
@@ -51,7 +52,9 @@ const techStackOptions = [
     "Redis",
     "Redux",
     "Ruby",
+    "Ruby on Rails",
     "Rust",
+    "SCSS",
     "Spring",
     "Svelte",
     "TailwindCSS",
@@ -61,16 +64,18 @@ const techStackOptions = [
 ];
 
 const themeOptions = [
+    "Blockchain",
     "Game Development",
     "Full Stack",
     "Portfolio",
-    "Clone App (Full Stack)",
-    "Clone App (Frontend)",
+    "Full Stack Clone App",
+    "Frontend Clone App",
     "Frontend",
     "Backend",
     "Machine Learning",
     "Simple",
     "Web Development",
+    "Webscraping",
 ]
 
 const difficultyOptions = [
@@ -91,35 +96,55 @@ const AddProject: React.FC = () => {
     const [color, setColor] = useState("#6E00FF");
     const [theme, setTheme] = useState("");
     const [difficulty, setDifficulty] = useState("");
-
-
+    const [error, setError] = useState(""); // Added state for error handling
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // Validate project name
+        if (!isValidProjectName(projectName)) {
+            setError("Project name cannot contain slashes (/) or backslashes (\\) and must be less than 26 characters.");
+            return;
+        }
+    
+        // Validate required fields
+        if (!projectName || !tech1 || !description || !theme || !difficulty) {
+            setError("Please fill out all fields except for the background color.");
+            return;
+        }
+    
+        setError(""); // Reset error message if valid
+    
         try {
             const { data, error } = await supabase.from("estia_projects").insert([
                 {
                     project_name: projectName,
-                    tech1: tech1,
-                    tech2: tech2,
-                    description: description,
+                    tech1,
+                    tech2,
+                    description,
                     video_Id: videoId,
                     repo_Path: repoPath,
-                    colour: color,
-                    theme: theme,
-                    difficulty: difficulty,
+                    colour: color, // Optional, so it can be any value (even the default)
+                    theme,
+                    difficulty,
                 },
             ]);
-
             if (error) {
-                console.error("Error inserting data:", error);
-            } else {
-                console.log("Project added:", data);
-                navigate("/");
+                console.error("Error adding project:", error);
+                return;
             }
-        } catch (err) {
-            console.error(err);
+            navigate(`/project/${encodeURIComponent(projectName)}`);
+        } catch (error) {
+            console.error("Error during submission:", error);
         }
+    };
+    
+    
+    const isValidProjectName = (name: string) => {
+        // Check for slashes and length
+        const hasInvalidChars = /[\/\\]/.test(name);
+        const isTooLong = name.length >= 26;
+        return !hasInvalidChars && !isTooLong;
     };
 
     const colors = [
@@ -280,6 +305,7 @@ const AddProject: React.FC = () => {
                     <button type="submit" className="submit-button">
                         Add Project
                     </button>
+                    {error && <p style={{ color: 'red', fontSize: '2rem' }}>{error}</p>} {/* Display error message */}
                 </form>
             </div>
         </>
