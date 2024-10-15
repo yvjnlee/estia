@@ -14,22 +14,24 @@ export class CommentInteractionsService {
     if (updateError) {
       L.error(`Error when updating number of interactions with a comment: ${updateError}`)
     }
+    return updatedCommentData;
   }
 
   async getComment(projectId: string, commentId: string, userId: string) {
     const {data, error} = await supabase
       .from('comments')
+      .select()
       .eq('project_id', projectId)
       .eq('comment_id', commentId)
       .eq('user_id', userId)
-      .select()
+      
       .single()
     
       if (error) {
         L.error(`Error getting comment: ${error}`);
-        return null
+        return null // if no rows are found or if other errors occur
       }
-      return data
+      return data;
   }
   
   async create(commentInteraction: CommentInteraction, projectId: string, commentId: string, userId: string): Promise<CommentInteraction | null> {
@@ -43,6 +45,7 @@ export class CommentInteractionsService {
       L.error(`Error creating comment: ${commentInteractionError.message}`);
       return null;
     }
+
     let likes = 1;
     if (commentInteraction.interaction === false) {
         likes = -1;
@@ -56,8 +59,9 @@ export class CommentInteractionsService {
   async getAll(commentId: string): Promise<CommentInteraction[] | null> {
     L.info('Fetching all comment interactions');
     const { data, error } = await supabase.from('comment_interactions')
+      .select('*')
       .eq('comment_id', commentId)
-      .select('*');
+  
     if (error) {
       L.error(`Error fetching all comments: ${error.message}`);
       return null;
@@ -69,6 +73,7 @@ export class CommentInteractionsService {
     L.info(`Fetching comment with id: ${commentId}, ${userId}`);
     const { data, error } = await supabase
       .from('comment_interactions')
+      .select()
       .eq('comment_id', commentId)
       .eq('user_id', userId)
       .single();
@@ -122,16 +127,21 @@ export class CommentInteractionsService {
       L.error(`Error deleting comment: ${error.message}`);
       return false;
     }
+    if (data) {
+      const interactionData = data as CommentInteraction[];
 
-    let likes = -1
-    if (data[0].interaction === false) {
-      likes = 1
+      let likes = -1
+      if (interactionData[0].interaction === false) {
+        likes = 1
+      }
+      
+      const comment = await this.getComment(projectId, commentId, userId);
+      this.updateLikes(comment, likes);
+
+      return true;
     }
     
-    const comment = await this.getComment(projectId, commentId, userId);
-    this.updateLikes(comment, likes);
-
-    return true;
+    return false;
   }
 }
 

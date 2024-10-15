@@ -20,7 +20,7 @@ const mapCommentData = (comment: CommentDB) => {
 };
 
 export const getComments = async (dispatch: AppDispatch) => {
-    const comments = await dispatch(fetchComments()).unwrap();
+    const comments = await dispatch(fetchAllComments()).unwrap();
     const mappedComments = comments.map((comment: CommentDB) => mapCommentData(comment));
     return mappedComments;
 };

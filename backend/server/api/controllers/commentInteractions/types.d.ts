@@ -1,5 +1,6 @@
 export interface RequestParams {
-    commentId: string;
-    userId: string;
-    interaction: boolean;
+    projectId: string,
+    commentId: string,
+    userId: string,
+    interaction: boolean
 }

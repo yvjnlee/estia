@@ -8,6 +8,8 @@ import { getSession } from "../../api/authAPI";
 import { getUserById } from "../../api/userAPI";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addComment } from "../../api/commentAPI";
+import { getCommentInteraction, addCommentInteraction, editCommentInteraction, removeCommentInteraction} from "../../api/commentInteractionAPI";
+import { createCommentInteraction } from "../../store/slices/commentInteractionSlice";
 
 const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }> = ({ comments, project }) => {
     const dispatch = useAppDispatch();
@@ -28,61 +30,96 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
         })
     }, []);
 
-    const changeVote = async ( comment : Comment, interaction: boolean) => {
-        let likes = 1;
-        if (interaction === false) {
-            likes = -1;
-        }
+    // const changeVote = async ( comment : Comment, interaction: boolean) => {
+    //     let likes = 1;
+    //     if (interaction === false) {
+    //         likes = -1;
+    //     }
 
-        // change below
-        const { data, error } = await supabase 
-            .from('comment_interactions')
-            .select('interaction')
-            .eq("comment_id", comment.commentId)
-            .eq("user_id", user?.id)
+    //     // change below
+    //     const { data, error } = await supabase 
+    //         .from('comment_interactions')
+    //         .select('interaction')
+    //         .eq("comment_id", comment.commentId)
+    //         .eq("user_id", user?.id)
   
-        if (data) {
-            if (isEmptyObj(data)) {
-                console.log("posting")
-                const { error } = await supabase 
-                    .from('comment_interactions')
-                    .insert( {
-                        comment_id: comment.commentId,
-                        user_id: user?.id,
-                        interaction: interaction
-                    })
+    //     if (data) {
+    //         if (isEmptyObj(data)) {
+    //             console.log("posting")
+    //             const { error } = await supabase 
+    //                 .from('comment_interactions')
+    //                 .insert( {
+    //                     comment_id: comment.commentId,
+    //                     user_id: user?.id,
+    //                     interaction: interaction
+    //                 })
                 
-                if ( error ){
-                    console.log(error);
-                }
-                // update the likes, should add an error object later
-                await supabase 
-                    .from('comments')
-                    .update({likes: comment.likes + likes})
-                    .eq('comment_id', comment.commentId)
+    //             if ( error ){
+    //                 console.log(error);
+    //             }
+    //             // update the likes, should add an error object later
+    //             await supabase 
+    //                 .from('comments')
+    //                 .update({likes: comment.likes + likes})
+    //                 .eq('comment_id', comment.commentId)
                 
-                // comments = comments.map(comment =>
-                //   comment.commentId === comment.commentId ? { ...comment, likes: comment.likes + likes } : comment);
-                // console.log(comments);
-            } else if (data[0].interaction !== interaction) {
-                // patch request to update the vote in comment table and comment_interactions table
-                console.log(data[0].interaction);
-                console.log("patching")
-                await supabase 
-                    .from('comments')
-                    .update({likes: comment.likes + 2 * likes})
-                    .eq('comment_id', comment.commentId)
+    //             // comments = comments.map(comment =>
+    //             //   comment.commentId === comment.commentId ? { ...comment, likes: comment.likes + likes } : comment);
+    //             // console.log(comments);
+    //         } else if (data[0].interaction !== interaction) {
+    //             // patch request to update the vote in comment table and comment_interactions table
+    //             console.log(data[0].interaction);
+    //             console.log("patching")
+    //             await supabase 
+    //                 .from('comments')
+    //                 .update({likes: comment.likes + 2 * likes})
+    //                 .eq('comment_id', comment.commentId)
                 
-                await supabase
-                    .from('comment_interactions')
-                    .update({interaction: interaction})
-                    .eq('comment_id', comment.commentId)
-                    .eq('user_id', user?.id)
-            } 
-            // change above
-        }
+    //             await supabase
+    //                 .from('comment_interactions')
+    //                 .update({interaction: interaction})
+    //                 .eq('comment_id', comment.commentId)
+    //                 .eq('user_id', user?.id)
+    //         } 
+    //         // change above
+    //     }
 
+    // }
+
+    const changeVote = async ( comment : Comment, interaction: boolean ) => {
+        // check if comment interaction exists
+        // if data: use edit interaction
+        // if not data: use create interaction
+        if (user && project) {
+            const commentInteraction = await getCommentInteraction(dispatch, comment.commentId, user.id)
+            if (commentInteraction) {
+                await editCommentInteraction(
+                    dispatch,
+                    project?.projectId ? project?.projectId : 'null',
+                    comment.commentId,
+                    user.id,
+                    { interaction: interaction },
+                )
+            } else {
+                await addCommentInteraction(
+                    dispatch,
+                    {
+                        commentId:comment.commentId,
+                        userId: user.id,
+                        interaction: interaction
+                    },
+                    project?.projectId ? project?.projectId : 'null',
+                    comment.commentId,
+                    user.id,
+                )
+            }
+        }
     }
+
+    // const removeVote() {
+
+    // }
+
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
         setNewComment(event.target.value);
@@ -91,7 +128,7 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
     const postComment = () => {
         if (user && project) { // change this later
             addComment(dispatch, {
-                projectId: project?.projectId ? project?.projectId : " empty",
+                projectId: project?.projectId ? project?.projectId : 'empty',
                 userId: user.id,
                 content: newComment,
                 likes: 0,
@@ -112,9 +149,9 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
             {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
-                        <button onClick={() => changeVote(comment.commentId, true)}><img src={UpChevron} /></button>
+                        <button onClick={() => changeVote(comment, true)}><img src={UpChevron} /></button>
                         <span>{comment.likes}</span>
-                        <button onClick={() => changeVote(comment.commentId, false)}><img src={DownChevron} /></button>
+                        <button onClick={() => changeVote(comment, false)}><img src={DownChevron} /></button>
                     </div>
                     <div className="comment">
                         <h3 className = "existing-comment-header">{comment.username}</h3> 

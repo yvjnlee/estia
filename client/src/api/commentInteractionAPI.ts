@@ -18,6 +18,9 @@ const mapCommentInteractionData = (commentInteraction: CommentInteractionDB) => 
 
 export const getCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string) => {
     const comments = await dispatch(fetchCommentInteraction({ commentId, userId })).unwrap();
+    if (!comments) {
+        return null;
+    }
     const mappedComments = comments.map((commentInteraction: CommentInteractionDB) => mapCommentInteractionData(commentInteraction));
     return mappedComments;
 };
@@ -35,18 +38,3 @@ export const editCommentInteraction = async (dispatch: AppDispatch, projectId: s
 export const removeCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string) => {
     await dispatch(deleteCommentInteraction({projectId, commentId, userId})).unwrap();
 };
-
-// export const filterCommentInteraction = async (commentInteractions: CommentInteraction[], searchFilter?: string, authorFilter?: string) => {
-//     if (!searchFilter && !authorFilter) return commentInteractions;
-
-//     if (!commentInteractions) return [];
-
-//     const filteredComments = commentInteractions.filter((commentInteraction: CommentInteraction) => {
-//         const matchesSearch = commentInteraction.content.toLowerCase().includes(searchFilter?.toLowerCase() || "");
-//         const matchesAuthor = !authorFilter || commentInteraction.userId === authorFilter;
-
-//         return matchesSearch && matchesAuthor;
-//     });
-
-//     return filteredComments;
-// };
