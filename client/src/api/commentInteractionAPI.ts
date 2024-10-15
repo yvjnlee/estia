@@ -1,11 +1,11 @@
 import { CommentInteraction, CommentInteractionDB } from "../common/types";
 import {
-    fetchCommentById,
-    fetchComments,
-    createComment,
-    updateComment,
-    deleteComment,
-} from "../store/slices/commentSlice";
+    fetchCommentInteraction,
+    fetchAllCommentInteractions,
+    createCommentInteraction,
+    updateCommentInteraction,
+    deleteCommentInteraction,
+} from "../store/slices/commentInteractionSlice";
 import { AppDispatch } from "../store/store";
 
 const mapCommentInteractionData = (commentInteraction: CommentInteractionDB) => {
@@ -15,3 +15,38 @@ const mapCommentInteractionData = (commentInteraction: CommentInteractionDB) => 
         interaction: commentInteraction.interaction
     };
 };
+
+export const getCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string) => {
+    const comments = await dispatch(fetchCommentInteraction({ commentId, userId })).unwrap();
+    const mappedComments = comments.map((commentInteraction: CommentInteractionDB) => mapCommentInteractionData(commentInteraction));
+    return mappedComments;
+};
+
+export const addCommentInteraction = async (dispatch: AppDispatch, newCommentInteraction: CommentInteraction, projectId: string, commentId: string, userId: string) => {
+    const commentInteraction = await dispatch(createCommentInteraction({ newCommentInteraction, projectId, commentId, userId })).unwrap();
+    return mapCommentInteractionData(commentInteraction);
+};
+
+export const editCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string, updates: Partial<CommentInteraction> ) => {
+    const commentInteraction = await dispatch(updateCommentInteraction({projectId, commentId, userId, updates})).unwrap();
+    return mapCommentInteractionData(commentInteraction);
+};
+
+export const removeCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string) => {
+    await dispatch(deleteCommentInteraction({projectId, commentId, userId})).unwrap();
+};
+
+// export const filterCommentInteraction = async (commentInteractions: CommentInteraction[], searchFilter?: string, authorFilter?: string) => {
+//     if (!searchFilter && !authorFilter) return commentInteractions;
+
+//     if (!commentInteractions) return [];
+
+//     const filteredComments = commentInteractions.filter((commentInteraction: CommentInteraction) => {
+//         const matchesSearch = commentInteraction.content.toLowerCase().includes(searchFilter?.toLowerCase() || "");
+//         const matchesAuthor = !authorFilter || commentInteraction.userId === authorFilter;
+
+//         return matchesSearch && matchesAuthor;
+//     });
+
+//     return filteredComments;
+// };

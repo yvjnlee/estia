@@ -1,7 +1,7 @@
 import { Comment, CommentDB } from "../common/types";
 import {
     fetchCommentById,
-    fetchComments,
+    fetchAllComments,
     createComment,
     updateComment,
     deleteComment,
