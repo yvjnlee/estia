@@ -8,7 +8,8 @@
     display: flex;
     height: 900vh;
     flex-direction: column;
-    position: relative; /* Establishes positioning context */
+    position: relative;
+    /* Establishes positioning context */
 }
 
 .initial-title {
@@ -34,37 +35,48 @@
 .initial-slogan {
     color: white !important;
     font-size: var(--font-size-xxxl);
-    font-weight: 600; /* Heavier font weight */
+    font-weight: 600;
+    /* Heavier font weight */
 
     max-width: 70%;
     justify-content: center;
     margin-top: 10rem;
-    text-align: center; /* Ensures text is centered */
+    text-align: center;
+    /* Ensures text is centered */
     margin-bottom: 0;
-    width: 100%; /* Centers horizontally */
+    width: 100%;
+    /* Centers horizontally */
 }
 
 .initial-secondary-slogan {
-       max-width: 70%;
+    max-width: 70%;
     max-width: 44%;
     text-align: center;
-    font-weight: 300; /* Heavier font weight */
+    font-weight: 300;
+    /* Heavier font weight */
     margin-bottom: 4rem;
 
 }
 
 .initial-heading-container {
-    height: 90vh; /* Full height of the viewport */
-    display: flex; /* Use flexbox */
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    margin-bottom: 10rem; /* Optional, adjust as needed */
+    height: 90vh;
+    /* Full height of the viewport */
+    display: flex;
+    /* Use flexbox */
+    flex-direction: column;
+    /* Stack elements vertically */
+    align-items: center;
+    /* Center horizontally */
+    justify-content: center;
+    /* Center vertically */
+    margin-bottom: 10rem;
+    /* Optional, adjust as needed */
 }
 
 .highlight {
     color: #AF0880;
-    display: inline; /* Ensure it behaves like inline text */
+    display: inline;
+    /* Ensure it behaves like inline text */
 
 }
 
@@ -78,17 +90,18 @@
 
 .initial-button {
     padding: 25px 40px;
-    border-radius: var(--border-radius);
+    border-radius: 42px;
     cursor: pointer;
-    border: 0.5px solid var(--button-text-color);
-    width: 300px;
-    height: 36px;
+    border: none;
+    width: 340px;
+    height: 70px;
     margin-bottom: 10px;
     background-color: white;
     color: #2d2d2d !important;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 700;
     font-size: var(--font-size-md);
     text-align: center;
 }
@@ -98,8 +111,9 @@
     z-index: 1;
 }
 
-.starting-image{
-margin-bottom: 5rem;
+.starting-image {
+    margin-bottom: 5rem;
+    width: 95%;
 }
 
 .landing-subheading {
@@ -107,18 +121,22 @@ margin-bottom: 5rem;
     margin-bottom: 0;
     margin-top: 10rem;
     display: flex;
-    justify-content: center; /* Horizontally center the content */
-    align-items: center; /* Vertically center the content */
-    text-align: center; /* Center the text within the element */
-    width: 100%; /* Ensure it takes up the full width of the container */
+    justify-content: center;
+    /* Horizontally center the content */
+    align-items: center;
+    /* Vertically center the content */
+    text-align: center;
+    /* Center the text within the element */
+    width: 100%;
+    /* Ensure it takes up the full width of the container */
 }
 
 
 .fade-in {
     opacity: 0;
-    transform: translateY(14rem); 
-    transition: opacity 5s cubic-bezier(0.25, 1, 0.5, 1), 
-                transform 5s cubic-bezier(0.25, 1, 0.5, 1); 
+    transform: translateY(14rem);
+    transition: opacity 5s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* When the section is visible, apply the active styles */
@@ -133,19 +151,24 @@ margin-bottom: 5rem;
 /* Horizontal Scroller */
 
 .scroller {
-    max-width: 1300px; /* Increased width */
-    margin-top: 2rem; /* Increased margin */
+    max-width: 1300px;
+    /* Increased width */
+    margin-top: 2rem;
+    /* Increased margin */
 }
 
 .scroller__inner {
-    padding-block: 2.5rem; /* Increased padding */
+    padding-block: 2.5rem;
+    /* Increased padding */
     display: flex;
     flex-wrap: wrap;
-    gap: 2.5rem; /* Increased gap */
+    gap: 2.5rem;
+    /* Increased gap */
 }
 
 .scroller__inner li {
-    font-size: calc(var(--font-size-lg)); /* Slightly increased font size */
+    font-size: calc(var(--font-size-lg));
+    /* Slightly increased font size */
 }
 
 .scroller[data-animated="true"] {
@@ -157,8 +180,7 @@ margin-bottom: 5rem;
 .scroller[data-animated="true"] .scroller__inner {
     width: max-content;
     flex-wrap: nowrap;
-    animation: scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear
-        infinite;
+    animation: scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear infinite;
 }
 
 .scroller[data-direction="right"] {
@@ -179,8 +201,21 @@ margin-bottom: 5rem;
 
 @keyframes scroll {
     to {
-        transform: translate(calc(-50% - 1.25rem)); /* Adjusted translation */
+        transform: translate(calc(-50% - 1.25rem));
+        /* Adjusted translation */
     }
+}
+
+/* Media query for scaling down at 793px */
+@media (max-width: 793px) {
+    .scroller-div {
+        display: none;
+    }
+
+    /* If you want to adjust animation speed on smaller screens, uncomment below */
+    /* .scroller[data-animated="true"] .scroller__inner {
+        animation: scroll var(--_animation-duration, 30s) var(--_animation-direction, forwards) linear infinite; /* Slower scroll */
+    /*}*/
 }
 
 /* general styles */
@@ -204,11 +239,14 @@ html {
 }
 
 .tag-list li {
-    padding: 1.8rem; /* Increased padding */
+    padding: 1.8rem;
+    /* Increased padding */
     background: var(--clr-primary-900);
     border: 0.5px solid #AF0880;
-    border-radius: 1.2rem; /* Increased border-radius */
-    box-shadow: 0 1.2rem 2.4rem -0.5rem var(--clr-primary-900); /* Adjusted shadow */
+    border-radius: 1.2rem;
+    /* Increased border-radius */
+    box-shadow: 0 1.2rem 2.4rem -0.5rem var(--clr-primary-900);
+    /* Adjusted shadow */
 }
 
 /* for testing purposes to ensure the animation lined up correctly */

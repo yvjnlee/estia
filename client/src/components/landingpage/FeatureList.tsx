@@ -22,7 +22,7 @@ export const FeatureList: React.FC = () => {
         },
         {
             svg: Technology,
-            feature: "Technology Knowledge",
+            feature: "Tech Stack Knowledge",
             description: "Explore detailed descriptions of hundreds of tech stacks to expand your knowledge.",
         },
         {

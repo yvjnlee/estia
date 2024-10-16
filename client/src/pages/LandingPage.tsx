@@ -63,7 +63,7 @@ export const LandingPage: React.FC = () => {
                                 our knowledge bank is here to transform your coding journey.
                                 </h2>
                             <button className="initial-button" onClick={handleShowLogin}>
-                                start building
+                                Start Building
                             </button>
                             </div>
                             <img className="starting-image" src={PrototypeImage}/>

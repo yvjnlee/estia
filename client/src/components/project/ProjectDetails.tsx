@@ -161,9 +161,6 @@ const ProjectDetails: React.FC = () => {
             <div className="details-main-container">
                 <div className="grid-container">
                     <div>
-                        <button onClick={() => navigate(-1)} className="back-button">
-                            Back
-                        </button>
                         <div className="details-container">
                             <div className="title-and-difficulty-container">
                                 <h1 className="details-title">{project?.projectName}</h1>
@@ -210,9 +207,6 @@ const ProjectDetails: React.FC = () => {
                     <div className="additional-information-container">
                         <GitHubRepo repoPath={project?.repoPath as string} />
                         <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
-                        <div className="sidebar-container">
-                            <h1>Similar Projects</h1>
-                        </div>
                     </div>
                 </div>
             </div>

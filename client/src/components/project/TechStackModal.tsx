@@ -148,14 +148,14 @@ Here is the input
 
                         {showWhatIs && (
                             <>
-                                <h3>What is it?</h3>
+                                <h2>What is it?</h2>
                                 <p className="what-is-it-content">{data.what_is}</p>
                             </>
                         )}
 
                         {showCommonUses && (
                             <>
-                                <h3>Common Uses</h3>
+                                <h2>Common Uses</h2>
                                 <ul className="common-use-ul">
                                     {data.common_uses.map((cu: string, index: number) => (
                                         <li className="common-use-li" key={index}>{cu}</li>
@@ -168,7 +168,7 @@ Here is the input
                             {showAdvantages && (
                                 <>
                                     <div className="advantage-container">
-                                        <h3>Advantages</h3>
+                                        <h2>Advantages</h2>
                                         <ul className="av-dv-ul">
                                             {data.advantages.map((adv: string, index: number) => (
                                                 <li className="common-use-li" key={index}>{adv}</li>
@@ -176,7 +176,7 @@ Here is the input
                                         </ul>
                                     </div>            
                                     <div className="disadvantage-container">
-                                        <h3>Disadvantages</h3>
+                                        <h2>Disadvantages</h2>
                                         <ul className="av-dv-ul">
                                             {data.disadvantages.map((dis: string, index: number) => (
                                                 <li className="common-use-li" key={index}>{dis}</li>
@@ -189,7 +189,7 @@ Here is the input
 
                         {showResources && (
                             <>
-                                <h3>Resources</h3>
+                                <h2>Resources</h2>
                                 <ul className="resources-ul">
                                     {data.resources.map((res: { title: string; link: string }, index: number) => (
                                         <li key={index}>
@@ -204,7 +204,7 @@ Here is the input
 
                         {showNextSteps && (
                             <>
-                                <h3>Next Steps</h3>
+                                <h2>Next Steps</h2>
                                 <ul className="next-steps-ul">
                                     {data.next_steps.map((ns: string, index: number) => (
                                         <li key={index}>{ns}</li>

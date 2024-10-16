@@ -285,6 +285,10 @@
     font-size: var(--font-size-xs);
 }
 
+.additional-information-container {
+    margin-top: 2rem;
+}
+
 .github-additional-information {
     display: flex;
     justify-content: space-between;
@@ -478,6 +482,22 @@ body.modal-open {
 .res-link {
     color: white;
     font-weight: 500;
+}
+
+.resources-ul li {
+    font-size: 18px; /* Adjust the size as needed */
+    margin-bottom: 10px; /* Add some spacing between list items */
+}
+
+.resources-ul li a {
+    text-decoration: none; /* Remove underline */
+    color: #0073e6; /* Set a better color for the link */
+    font-weight: bold; /* Make the link text stand out */
+    transition: color 0.3s; /* Add a smooth transition effect */
+}
+
+.resources-ul li a:hover {
+    color: #005bb5; /* Change color on hover */
 }
 
 .growing-modal {

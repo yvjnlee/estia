@@ -118,6 +118,7 @@ const ProjectGenerator: React.FC = () => {
                         as clear as possible outlining potential features and uses.
                         Also, suggest potential project names and provide a 
                         full description of the project’s features and functionality. 
+                        Give something unique, creative, and really interesting unless otherwise specified.
                         Make sure to tailor the recommendation 
                         based on the input provided. Format your response in the following JSON structure:
 
@@ -153,7 +154,7 @@ User Input: "${input}"`, // Change the response format to an array of projects
                     },
                 ],
                 model: "llama3-8b-8192", // Ensure this is the correct model for your use case
-                temperature: 0.5,
+                temperature: 1,
                 max_tokens: 1024,
                 top_p: 1,
                 stream: false,
