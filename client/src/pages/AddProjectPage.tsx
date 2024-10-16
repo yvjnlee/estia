@@ -103,7 +103,7 @@ const AddProject: React.FC = () => {
         
         // Validate project name
         if (!isValidProjectName(projectName)) {
-            setError("Project name cannot contain slashes (/) or backslashes (\\) and must be less than 26 characters.");
+            setError("Project name cannot contain slashes (/) or backslashes (\\) and must be less than 32 characters.");
             return;
         }
     
@@ -138,22 +138,36 @@ const AddProject: React.FC = () => {
             console.error("Error during submission:", error);
         }
     };
-    
-    
+
     const isValidProjectName = (name: string) => {
         // Check for slashes and length
         const hasInvalidChars = /[\/\\]/.test(name);
-        const isTooLong = name.length >= 26;
+        const isTooLong = name.length >= 32;
         return !hasInvalidChars && !isTooLong;
     };
 
-    const colors = [
-        { hex: "#8A0303", label: "Red" },
-        { hex: "#000B6F", label: "Blue" },
-        { hex: "#007562", label: "Teal" },
-        { hex: "#6F0050", label: "Pink" },
-        { hex: "#45006F", label: "Purple" },
-    ];
+    const extractVideoId = (input: string) => {
+        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = input.match(regex);
+        return match ? match[1] : input; // Return video ID or input if no match
+    };
+
+    const handleVideoIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value;
+        setVideoId(extractVideoId(input)); // Extract and set video ID
+    };
+
+    const extractRepoPath = (input: string) => {
+        // Regex to match the GitHub URL pattern and extract the username/repo part
+        const regex = /https:\/\/github\.com\/([^\/]+\/[^\/]+)/;
+        const match = input.match(regex);
+        return match ? match[1] : input; // Return the extracted path or the original input if no match is found
+    };
+
+    const handleRepoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value;
+        setRepoPath(extractRepoPath(input)); // Extract and set video ID
+    };
 
     return (
         <>
@@ -260,52 +274,30 @@ const AddProject: React.FC = () => {
                             required
                         />
                     </div>
-                    <div className="colours-container">
-                        <label>Choose a background color:</label>
-                        <div className="colour-picker">
-                            {colors.map((col) => (
-                                <button
-                                    key={col.hex}
-                                    type="button"
-                                    className={`colour-button ${color === col.hex ? "active" : ""}`}
-                                    style={{ backgroundColor: col.hex }}
-                                    onClick={() => setColor(col.hex)}
-                                ></button>
-                            ))}
-                        </div>
+                    <div>
+                        <label>Link to GitHub Repository:</label>
+                        <input
+                            placeholder="Paste entire link it will grab the repo path..."
+                            className="link-input"
+                            type="text"
+                            value={repoPath}
+                            onChange={handleRepoChange}
+                        />
                     </div>
                     <div>
-                        <label>Link to Youtube</label>
-                        <div className="link-split-container">
-                            <label className="link-split-font">
-                                https://www.youtube.com/watch?v=
-                            </label>
-                            <input
-                                placeholder="video id"
-                                className="link-split-input"
-                                type="text"
-                                value={videoId}
-                                onChange={(e) => setVideoId(e.target.value)}
-                            />
-                        </div>
+                        <label>YouTube Video URL:</label>
+                        <input
+                            placeholder="Paste entire link it will grab the video id..."
+                            className="link-input"
+                            type="text"
+                            value={videoId}
+                            onChange={handleVideoIdChange} 
+                        />
                     </div>
-                    <div>
-                        <label>Link to Github</label>
-                        <div className="link-split-container">
-                            <label className="link-split-font">https://github.com/</label>
-                            <input
-                                placeholder="username/repo"
-                                className="link-split-input"
-                                type="text"
-                                value={repoPath}
-                                onChange={(e) => setRepoPath(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <button type="submit" className="submit-button">
+                    {error && <p className="error-message">{error}</p>}
+                    <button className="submit-button" type="submit">
                         Add Project
                     </button>
-                    {error && <p style={{ color: 'red', fontSize: '2rem' }}>{error}</p>} {/* Display error message */}
                 </form>
             </div>
         </>

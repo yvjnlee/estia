@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EstiaLogo from "../../img/AppLogo.png";
 
 import { LogInButton } from "../buttons/LoginButton";
@@ -9,10 +9,24 @@ import { GithubButton } from "../buttons/GithubButton";
 
 export const InitialNavbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement | null>(null); // Reference for the mobile menu
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setIsMenuOpen(false); // Close the menu if clicked outside
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <nav className="nav-bar" data-scroll-section>
@@ -35,7 +49,7 @@ export const InitialNavbar: React.FC = () => {
             </div>
 
             {/* Mobile Menu */}
-            <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
+            <div ref={menuRef} className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
                 <FeedbackButton />
                 <GithubButton />
                 <LogInButton />

@@ -135,19 +135,28 @@ const GiveProjectPage: React.FC = () => {
                 messages: [
                     {
                         role: "user",
-                        content: `Given the following submission, recommend the most relevant project titles from the database
-                        based on what my input is. I am looking for a project that is similar semantically to what I typed
-                        out. You can only give one if you think only one fits the description. Remember to only give the ones that
-                        are the most relevant. Anyways, the database project titles are: [${projectTitles}]. 
-                        Here is the user's submission: "${input}". Format your response as JSON, 
-                        and provide the result in the format:
+                        content: `Given the user's submission, identify and recommend the most relevant project titles from the database that align semantically with the provided input. Focus on projects that best match the themes and concepts expressed in the user's description.
+
+                        Please consider the following project titles from the database: [${projectTitles}]. 
+
+                        User's submission: "${input}"
+
+                        Your response should be formatted as JSON, following this structure:
+
                         {
-                          "Recommended Projects": ["project name 1", "project name 2", ...]
-                        }.`, // Change the response format to an array of projects
+                          "Recommended Projects": [
+                               "project name 1",
+                                  "project name 2",
+                                      ...
+                               ]
+                            }
+
+If you believe that only one project title fits well, provide just that single recommendation. Try to give an average of at least two projects. Ensure the recommendations are the most relevant based on the user's input.
+`, // Change the response format to an array of projects
                     },
                 ],
                 model: "llama3-8b-8192", // Ensure this is the correct model for your use case
-                temperature: 0.5,
+                temperature: 0.3,
                 max_tokens: 1024,
                 top_p: 1,
                 stream: false,
