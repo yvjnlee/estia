@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
 
@@ -17,10 +17,12 @@ import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { getProjectByName, getUserLikedProjects, getUserSavedProjects, toggleLikeProject, toggleSaveProject } from "../../api/projectAPI";
+import { getProjectById, getUserLikedProjects, getUserSavedProjects, toggleLikeProject, toggleSaveProject } from "../../api/projectAPI";
 import { Project, User, Comment } from "../../common/types";
 import { getSession } from "../../api/authAPI";
-import { getComments } from "../../api/commentAPI";
+import { getCommentsByProjectId } from "../../api/commentAPI";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const ProjectDetails: React.FC = () => {
     const navigate = useNavigate(); // Hook for navigation
@@ -32,25 +34,28 @@ const ProjectDetails: React.FC = () => {
     const [isLiked, setIsLiked] = useState(false); // Manage liked state
     const [isSaved, setIsSaved] = useState(false); // Manage saved state
     const [comments, setComments] = useState<Comment[]>([]);
+
+    const { creatingComment } = useSelector((state: RootState) => state.comments);
+    
     // Get the current URL and extract the project title
     const url = window.location.href;
     const urlParts = url.split("/");
     const rawTitle = urlParts[urlParts.length - 1];
-
-    // Decode the project name from URL
   
-  // Decode the project name from URL
-  const decodedTitle = decodeURIComponent(rawTitle);
+    // Decode the project id from URL
+    const projectId = decodeURIComponent(rawTitle);
 
     // Get the project details based on the decoded title parameter
     useEffect(() => {
-        if (decodedTitle) {
-            getProjectByName(dispatch, decodedTitle).then((project) => {
+        if (projectId) {
+            getProjectById(dispatch, projectId).then((project) => {
+              if (project) {
                 setProject(project);
                 setProjectLoading(false);
+              }
             });
         }
-    }, [dispatch, decodedTitle]);
+    }, [dispatch, projectId]);
 
     useEffect(() => {
         getSession().then((session) => {
@@ -77,8 +82,10 @@ const ProjectDetails: React.FC = () => {
     }
 
     useEffect(() => {
-        checkIfSaved();
-        checkIfLiked();
+        if (project) {
+            checkIfSaved();
+            checkIfLiked();
+        }
     }, [project, user]);
 
     const handleSave = () => {
@@ -90,13 +97,19 @@ const ProjectDetails: React.FC = () => {
     }
 
     useEffect(() => {
-        getComments(dispatch).then((comments) => {
-            setComments(comments);
+        getCommentsByProjectId(dispatch, projectId).then((comments) => {
+            if (comments) {
+                setComments(comments);
+            }
         });
-    }, [dispatch]);
+    }, [creatingComment]);
 
     const saveButtonClass = isSaved ? "saved" : "save"; // classname for save button
     const likeButtonClass = isLiked ? "saved" : "save"; // using same class name as it is same aesthetics
+
+    if (projectLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
@@ -135,7 +148,7 @@ const ProjectDetails: React.FC = () => {
               </button>
             </div>
             <div className="">
-              <DiscussionBoard comments={comments} />
+              <DiscussionBoard comments={comments} project = {project} />
             </div>
           </div>
 

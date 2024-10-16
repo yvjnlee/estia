@@ -6,7 +6,6 @@ import GreyFilter from "../../../img/Grey_Filters.svg";
 import WhiteFilter from "../../../img/White_Filters.svg";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { setSearchFilter } from "../../../store/slices/projectSlice";
-import { filterProjects } from "../../../api/projectAPI";
 
 export const ProjectSearch: React.FC = () => {
     const dispatch = useAppDispatch();

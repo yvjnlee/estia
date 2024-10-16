@@ -32,9 +32,11 @@ const ProjectsRoutes = () => {
 
             {/* <Route path=":projectId" element={<ProjectDetails />} /> */}
 
-            {projects.map((project, index) => (
-                <Route key={index} path={`/${project.projectName}`} element={<ProjectDetails />} />
-            ))}
+            {projects.map((project, index) => {
+                return (
+                    <Route key={index} path={`/${project.projectId}`} element={<ProjectDetails />} />
+                );
+            })}
         </Routes>
     );
 };

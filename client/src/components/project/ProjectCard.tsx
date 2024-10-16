@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ProjectInfo } from "../../types/project";
+import { Project } from "../../common/types/";
 
-const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, difficulty, }) => {
+const ProjectCard: React.FC<Project> = ({ projectId, projectName, tech1, tech2, difficulty, }) => {
     const containerStyle: React.CSSProperties = {
         //backgroundColor: colour,
         backgroundColor: "",
@@ -20,7 +20,7 @@ const ProjectCard: React.FC<ProjectInfo> = ({ projectName, tech1, tech2, difficu
     };
 
     return (
-        <Link to={`/project/${projectName}`} style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to={`/project/${projectId}`} style={{ textDecoration: "none", color: "inherit" }}>
             <div className="project-container" style={containerStyle}>
                 <h2 className={`project-difficulty ${difficulty?.toLowerCase() || "beginner"}`}>
                     {difficulty || "Beginner"}

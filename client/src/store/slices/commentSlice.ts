@@ -6,18 +6,20 @@ interface CommentState {
     comments: CommentDB[] | null;
     commentsLoading: boolean;
     commentsError: string | null;
+    creatingComment: boolean;
 }
 
 const initialState: CommentState = {
     comments: null,
     commentsLoading: false,
     commentsError: null,
+    creatingComment: false,
 };
 
 // Thunks
 export const createComment = createAsyncThunk(
     "comments/createComment",
-    async (newComment: Comment) => {
+    async (newComment: Partial<Comment>) => {
         return await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/comments/`,
             "POST",
@@ -26,7 +28,7 @@ export const createComment = createAsyncThunk(
     }
 );
 
-export const fetchComments = createAsyncThunk("comments/fetchComments", async () => {
+export const fetchAllComments = createAsyncThunk("comments/fetchComments", async () => {
     return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/comments/`, "GET");
 });
 
@@ -34,6 +36,13 @@ export const fetchCommentById = createAsyncThunk(
     "comments/fetchCommentById",
     async (id: string) => {
         return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/comments/${id}`, "GET");
+    }
+);
+
+export const fetchCommentsByProjectId = createAsyncThunk(
+    "comments/fetchCommentsByProjectId",
+    async (projectId: string) => {
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/comments/project/${projectId}`, "GET");
     }
 );
 
@@ -69,21 +78,35 @@ const commentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchComments.pending, (state) => {
+            .addCase(fetchAllComments.pending, (state) => {
                 state.commentsLoading = true;
-                state.commentsError = null;
             })
-            .addCase(fetchComments.fulfilled, (state, action) => {
+            .addCase(fetchAllComments.fulfilled, (state, action) => {
                 state.commentsLoading = false;
                 state.comments = action.payload;
             })
-            .addCase(fetchComments.rejected, (state, action) => {
+            .addCase(fetchAllComments.rejected, (state, action) => {
                 state.commentsLoading = false;
                 state.commentsError = action.error.message || "An error occurred while fetching comments";
+            })
+
+            .addCase(createComment.pending, (state) => {
+                state.commentsLoading = true;
+                state.creatingComment = true;
             })
             .addCase(createComment.fulfilled, (state, action) => {
                 state.commentsLoading = false;
                 state.comments = state.comments ? [...state.comments, action.payload] : [action.payload];
+                state.creatingComment = false;
+            })
+            .addCase(createComment.rejected, (state, action) => {
+                state.commentsLoading = false;
+                state.commentsError = action.error.message || "An error occurred while creating comments";
+                state.creatingComment = false;
+            })
+
+            .addCase(updateComment.pending, (state) => {
+                state.commentsLoading = true;
             })
             .addCase(updateComment.fulfilled, (state, action) => {
                 state.commentsLoading = false;
@@ -94,16 +117,36 @@ const commentSlice = createSlice({
                     }
                 }
             })
+            .addCase(updateComment.rejected, (state, action) => {
+                state.commentsLoading = false;
+                state.commentsError = action.error.message || "An error occurred while updating comments";
+            })
+
+            .addCase(deleteComment.pending, (state) => {
+                state.commentsLoading = true;
+            })
             .addCase(deleteComment.fulfilled, (state, action) => {
                 state.commentsLoading = false;
                 if (state.comments) {
                     state.comments = state.comments.filter(c => c.comment_id !== action.payload);
                 }
             })
+            .addCase(deleteComment.rejected, (state, action) => {
+                state.commentsLoading = false;
+                state.commentsError = action.error.message || "An error occurred while deleting comments";
+            })
+
+            .addCase(fetchCommentsByProject.pending, (state) => {
+                state.commentsLoading = true;
+            })
             .addCase(fetchCommentsByProject.fulfilled, (state, action) => {
                 state.commentsLoading = false;
                 state.comments = action.payload;
-            });
+            })
+            .addCase(fetchCommentsByProject.rejected, (state, action) => {
+                state.commentsLoading = false;
+                state.commentsError = action.error.message || "An error occurred while fetching comment";
+            })
     },
 });
 

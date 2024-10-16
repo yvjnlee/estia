@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { setTechStackFilter } from "../../store/slices/projectSlice";
-import { filterProjects } from "../../api/projectAPI";
 
 export const TechStackFilters: React.FC = () => {
     const techStackOptions = [
@@ -28,8 +27,8 @@ export const TechStackFilters: React.FC = () => {
                 ? prevSelected.filter((item) => item !== tech)
                 : [...prevSelected, tech];
 
-            dispatch(setTechStackFilter(selectedTechStack));
-            console.log(selectedTechStack);
+            dispatch(setTechStackFilter(newSelected));
+            console.log(newSelected);
 
             return newSelected;
         });

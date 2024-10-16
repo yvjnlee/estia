@@ -42,6 +42,7 @@ export const ProjectFeed: React.FC = () => {
                     projects.map((project, index) => (
                         <div className="project-row" key={index} data-scroll-section>
                             <ProjectCard
+                                projectId={project.projectId}
                                 projectName={project.projectName}
                                 createdAt={project.createdAt}
                                 tech1={project.tech1}

@@ -7,7 +7,8 @@ export const fetchAPI = async (url: string, method: string, body?: unknown) => {
         body: body ? JSON.stringify(body) : undefined,
     });
     if (!response.ok) {
-        throw new Error(`Failed to ${method} ${url}`);
+        // throw new Error(`Failed to ${method} ${url}`);
+        console.log(`Failed to ${method} ${url}`);
     }
     return response.json();
 };

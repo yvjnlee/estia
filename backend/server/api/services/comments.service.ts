@@ -3,8 +3,12 @@ import { Comment } from '../../../common/types';
 import { supabase } from '../../../common/clients';
 
 export class CommentsService {
-  async create(comment: Comment): Promise<Comment | null> {
-    L.info(`Creating new comment for post: ${comment.commentId}`);
+  async create(comment: Partial<Comment>): Promise<Comment | null> {
+    L.info(`Creating new comment for post: ${comment.projectId}`);
+
+    console.log("IN SERVICE");
+    console.log(comment);
+
     const { data, error } = await supabase
       .from('comments')
       .insert(comment)
@@ -31,7 +35,7 @@ export class CommentsService {
     const { data, error } = await supabase
       .from('comments')
       .select('*')
-      .eq('id', id)
+      .eq('comment_id', id)
       .single();
     if (error) {
       L.error(`Error fetching comment by id: ${error.message}`);
@@ -40,12 +44,13 @@ export class CommentsService {
     return data;
   }
 
-  async getByProjectId(postId: string): Promise<Comment[] | null> {
-    L.info(`Fetching comments for post: ${postId}`);
+  // returns an array of all comments
+  async getByProjectId(projectId: string): Promise<Comment[] | null> {
+    L.info(`Fetching comments for post: ${projectId}`);
     const { data, error } = await supabase
       .from('comments')
       .select('*')
-      .eq('post_id', postId);
+      .eq('project_id', projectId);
     if (error) {
       L.error(`Error fetching comments by post id: ${error.message}`);
       return null;
@@ -61,7 +66,7 @@ export class CommentsService {
     const { data, error } = await supabase
       .from('comments')
       .update(commentData)
-      .eq('id', id)
+      .eq('comment_id', id)
       .select()
       .single();
     if (error) {
@@ -73,7 +78,7 @@ export class CommentsService {
 
   async delete(id: string): Promise<boolean> {
     L.info(`Deleting comment with id: ${id}`);
-    const { error } = await supabase.from('comments').delete().eq('id', id);
+    const { error } = await supabase.from('comments').delete().eq('comment_id', id);
     if (error) {
       L.error(`Error deleting comment: ${error.message}`);
       return false;
