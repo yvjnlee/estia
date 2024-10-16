@@ -13,7 +13,6 @@ import FavImage from "../../img/Star.svg";
 import SavedImage from "../../img/Starred.svg"
 
 // Import components
-import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
@@ -101,7 +100,6 @@ const ProjectDetails: React.FC = () => {
 
     return (
         <>
-      <Navbar />
       <div className="details-main-container">
         {/* Left side of page */}
         <div className="grid-container">

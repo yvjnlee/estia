@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Navbar } from "../components/navbar/Navbar";
 import { VisitProfile } from "../components/profile/VisitProfile";
 import { User } from "../common/types";
 import { Session } from "@supabase/supabase-js";
@@ -62,7 +61,6 @@ export const ProfilePage: React.FC = () => {
 
     return (
         <>
-            <Navbar />
             {session?.user.id === profile?.id && (
                 <>
                     <div className="profile-page">

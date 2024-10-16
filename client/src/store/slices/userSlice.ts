@@ -61,6 +61,10 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(fetchUsers.pending, (state) => {
+                state.usersLoading = true;
+                state.usersError = null;
+            })
             .addCase(fetchUsers.fulfilled, (state, action) => {
                 state.users = action.payload;
                 state.usersLoading = false;
@@ -103,20 +107,6 @@ const userSlice = createSlice({
                 }
                 state.usersLoading = false;
             })
-            .addMatcher(
-                (action) => action.type.endsWith("/pending"),
-                (state) => {
-                    state.usersLoading = true;
-                    state.usersError = null;
-                }
-            )
-            .addMatcher(
-                (action) => action.type.endsWith("/rejected"),
-                (state, action: PayloadAction<unknown, string, never, SerializedError>) => {
-                    state.usersLoading = false;
-                    state.usersError = action.error.message || null;
-                }
-            );
     },
 });
 

@@ -34,7 +34,7 @@ export const ProjectFeed: React.FC = () => {
 
     return (
         <>
-            {projectsLoading && <div>Loading...</div>}
+            {projectsLoading && <div className="loading-overlay"><div className="loading-spinner"></div></div>}
 
             {projects && projects.length > 0 && (
                 <div className="projects-container">

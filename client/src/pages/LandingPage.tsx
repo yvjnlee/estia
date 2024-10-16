@@ -3,9 +3,7 @@ import { LocomotiveScrollBar } from "../components/LocomotiveScrollBar";
 
 import "../index.css";
 
-import { Navbar } from "../components/navbar/Navbar";
 import HomePage from "./HomePage";
-import { LoginPage } from "./LoginPage";
 
 import MainEstiaLogo from "../img/MainAppLogo.svg"
 import { Session } from "@supabase/supabase-js";
@@ -14,25 +12,22 @@ import { Link } from "react-router-dom";
 
 export const LandingPage: React.FC = () => {
     const [session, setSession] = useState<Session | null>(null);
-    const [showAuth, setShowAuth] = useState<boolean>(false);
-
-    const handleShowLogin = () => {
-        setShowAuth(true);
-    };
+    const [sessionLoading, setSessionLoading] = useState(true);
 
     useEffect(() => {
         getSession().then((session) => {
             setSession(session);
+            setSessionLoading(false);
         });
     }, []);
 
-    console.log(session, showAuth);
+    if (sessionLoading) {
+        return <div className="loading-overlay"><div className="loading-spinner"></div></div>;
+    }
 
-    // Render different views based on session state
-    if (session && !showAuth) {
+    if (session && !sessionLoading) {
         return (
             <>
-                <Navbar />
                 <HomePage />
             </>
         );
@@ -40,26 +35,22 @@ export const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page-wrapper">
-            {showAuth ? (
-                <LoginPage />
-            ) : (
-                <div className="wrapper">
-                    <div className="initial-container">
-                        <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
-                        <h3 className="initial-slogan">Less Searching, More Creating</h3>
-                            <button className="initial-button" onClick={handleShowLogin}>
-                            start building
-                        </button>
-                        <LocomotiveScrollBar />
-                        <h3 className="initial-feedback">
-                            Got ideas or feedback?{" "}
-                            <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
-                                Contact us!
-                            </Link>
-                        </h3>
-                    </div>
+            <div className="wrapper">
+                <div className="initial-container">
+                    <img className="initial-logo" src={MainEstiaLogo} alt="Estia Logo" />
+                    <h3 className="initial-slogan">Less Searching, More Creating</h3>
+                    <Link to="/login" className="initial-button">
+                        start building
+                    </Link>
+                    <LocomotiveScrollBar />
+                    <h3 className="initial-feedback">
+                        Got ideas or feedback?{" "}
+                        <Link target="_blank" to="https://forms.gle/RCfJKZtoGXo1Dq9DA">
+                            Contact us!
+                        </Link>
+                    </h3>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

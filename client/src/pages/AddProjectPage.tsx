@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../components/navbar/Navbar";
 import { supabase } from "../common/clients/supabaseClient";
 
 // Expanded dictionary of languages and frameworks
@@ -132,7 +131,6 @@ const AddProject: React.FC = () => {
 
     return (
         <>
-            <Navbar />
             <div className="add-project-form">
                 <h2>Add New Project</h2>
                 <p className="subtitle">

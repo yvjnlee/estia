@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAPI } from "../../utils/fetchAPI";
 import { Project, ProjectDB } from "../../common/types";
-import { RootState } from "../store";
 
 interface ProjectState {
     projects: ProjectDB[] | null;

@@ -98,9 +98,8 @@ export class Controller {
 
     try {
       ProjectsService.getByUserId(userId).then((r) => {
-        if (r && r.length > 0) {
-          res.json(r);
-        } else {
+        if (r) res.json(r);
+        else {
           res.status(404).json({ message: 'No projects found for this user' });
         }
       });

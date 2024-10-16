@@ -20,10 +20,16 @@ lint:
 format:
 	npx prettier --write .
 
+# Clean up node_modules and generated files
+clean:
+	rm -rf node_modules
+	rm -rf dist
+	rm -rf coverage
+
 # Run in development mode
 dev:
 	$(NPM) run $(GENERATE-SWAGGER)
-	$(NPM) run $(DEV_MODE)
+	npx nodemon server/index.ts | npx pino-pretty
 
 # Generates Swagger
 swagger:
@@ -55,6 +61,7 @@ help:
 	@echo ""
 	@echo "Usage:"
 	@echo "  make install         # Install dependencies"
+	@echo "  make clean           # Remove node_modules and generated files"
 	@echo "  make dev             # Run in development mode"
 	@echo "  make prod            # Run in production mode"
 	@echo "  make test            # Run tests"
@@ -63,4 +70,4 @@ help:
 	@echo "  make try             # Invoke the /examples endpoint"
 	@echo "  make help            # Show this help message"
 
-.PHONY: install dev prod test test-debug debug try help
+.PHONY: install clean dev prod test test-debug debug try help

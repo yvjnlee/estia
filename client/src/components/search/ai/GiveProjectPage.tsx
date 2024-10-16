@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
 import Groq from "groq-sdk"; // Import Groq SDK
-import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { Project } from "../../../common/types";
@@ -154,7 +153,6 @@ const GiveProjectPage: React.FC = () => {
 
     return (
         <>
-            <Navbar />
             <div className="preference-page">
             <h2 className="page-heading">Hey Estia, find me...</h2>
                 <div className="navigation-links">

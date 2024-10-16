@@ -19,17 +19,11 @@ export const UserCreated: React.FC = () => {
         });
     }, []);
 
-    // const navigate = useNavigate();
-
     useEffect(() => {
-        try {
-            if (user) {
-                getUserProjects(dispatch, user.id).then((projects) => {
-                    setUserProjects(projects);
-                });
-            }
-        } catch (err) {
-            console.error("Error:", err);
+        if (user) {
+            getUserProjects(dispatch, user.id).then((projects) => {
+                setUserProjects(projects);
+            });
         }
     }, [user]);
 
@@ -38,8 +32,8 @@ export const UserCreated: React.FC = () => {
             <h2 className="saved-heading">Your Created Projects</h2>
             <div className="outer-saved-section-div">
                 <div className="project-theme-section">
-                    {userProjects.length > 0 ? (
-                        userProjects.map((project: ProjectInfo, index: number) => (
+                    {userProjects?.length > 0 ? (
+                        userProjects?.map((project: ProjectInfo, index: number) => (
                             <ProjectCard
                                 key={index}
                                 projectName={project.projectName}
