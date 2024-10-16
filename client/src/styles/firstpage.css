@@ -6,7 +6,7 @@
     align-items: center;
     margin-top: 10%;
     display: flex;
-    height: 600vh;
+    height: 800vh;
     flex-direction: column;
     position: relative;
     /* Establishes positioning context */
@@ -49,7 +49,6 @@
 }
 
 .initial-secondary-slogan {
-    max-width: 70%;
     max-width: 44%;
     text-align: center;
     font-weight: 300;
@@ -101,9 +100,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 500;
     font-size: var(--font-size-md);
     text-align: center;
+}
+
+
+.star-button {
+    padding: 25px 40px;
+    border-radius: 42px;
+    cursor: pointer;
+    border: none;
+    width: 450px;
+    height: 90px;
+    margin-bottom: 10px;
+    background-color: #AF0880;
+    color: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: var(--font-size-md);
+    text-align: center;
+}
+
+.star-button:hover {
+    background-color: #de3cb0 !important;
+    z-index: 1;
 }
 
 .initial-button:hover {
@@ -122,13 +145,9 @@
     margin-top: 10rem;
     display: flex;
     justify-content: center;
-    /* Horizontally center the content */
     align-items: center;
-    /* Vertically center the content */
     text-align: center;
-    /* Center the text within the element */
     width: 100%;
-    /* Ensure it takes up the full width of the container */
 }
 
 
@@ -145,6 +164,32 @@
     transform: translateY(0);
 }
 
+.contribution-container {
+    margin-top: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.contribution-header {
+    max-width: 65%;
+    font-weight: 400;
+    margin-bottom: 4rem;
+    font-size: var(--font-size-md);
+    line-height: 1.5; 
+}
+
+.contact-tag {
+    color: #D46AA3;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-tag:hover {
+    color: #e3a2c4;
+}
 
 
 

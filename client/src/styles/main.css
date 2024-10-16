@@ -308,11 +308,6 @@
         align-items: center;
         /* Center cards in the column */
     }
-
-    .starting-image {
-        margin-bottom: 5rem;
-        width: 75%;
-    }
 }
 
 /* Styles for smaller screens */

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import EstiaLogo from "../../img/AppLogo.png";
+import EstiaLogo from "../../img/AppLogo.svg";
 
 import { LogOutButton } from "../buttons/LogOutButton";
 import { Link } from "react-router-dom";

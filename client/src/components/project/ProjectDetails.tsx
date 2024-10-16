@@ -204,6 +204,7 @@ const ProjectDetails: React.FC = () => {
                         </div>
                         <DiscussionBoard comments={comments} />
                     </div>
+                    
                     <div className="additional-information-container">
                         <GitHubRepo repoPath={project?.repoPath as string} />
                         <TechStack tech1={project?.tech1 || ""} tech2={project?.tech2 || ""} />
