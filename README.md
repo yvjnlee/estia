@@ -33,5 +33,6 @@
 - Abeer - [@linkedin/abeerdas](https://www.linkedin.com/in/abeerdas/)
 - Eugene - [@linkedin/eugenelee]()
 - Anne - [@linkedin/annesun](https://www.linkedin.com/in/sunanne/)
+- Michael - [@linkedin/michaelzhou](https://www.linkedin.com/in/michael-zhou-6a70b1282/)
 - [Main Linkedin Page](https://www.linkedin.com/company/estia-2024/about/)
 - Email - officialestia@gmail.com
