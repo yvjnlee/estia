@@ -34,7 +34,7 @@ export const ProjectFeed: React.FC = () => {
 
     return (
         <>
-            {projectsLoading && <div>Loading...</div>}
+            {projectsLoading && <div className="loading-overlay"><div className="loading-spinner"></div></div>}
 
             {projects && projects.length > 0 && (
                 <div className="projects-container">
@@ -42,6 +42,7 @@ export const ProjectFeed: React.FC = () => {
                     projects.map((project, index) => (
                         <div className="project-row" key={index} data-scroll-section>
                             <ProjectCard
+                                projectId={project.projectId}
                                 projectName={project.projectName}
                                 createdAt={project.createdAt}
                                 tech1={project.tech1}

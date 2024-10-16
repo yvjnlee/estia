@@ -66,15 +66,14 @@ export class ProjectsService {
     }
   }
 
-  async getByProjectName(projectName: string): Promise<Project | null> {
+  async getByProjectName(projectName: string): Promise<Project[] | null> {
     L.info(`Fetching projects with name: ${projectName}`);
 
     try {
       const { data, error } = await supabase
         .from('estia_projects')
         .select('*')
-        .eq('project_name', projectName)
-        .single();
+        .eq('project_name', projectName);
 
       if (error) {
         L.error(`Error fetching project: ${error.message}`);

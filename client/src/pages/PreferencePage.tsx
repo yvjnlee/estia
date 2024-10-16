@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
 import Groq from "groq-sdk"; // Import the Groq SDK
-import { Navbar } from "../components/navbar/Navbar";
 
 const PreferencePage: React.FC = () => {
     const [input, setInput] = useState("");
@@ -187,7 +186,6 @@ say you are giving a json formatted response just give the json file. Do not rep
 
     return (
         <>
-            <Navbar />
             <div className="preference-page">
             <h2 className="page-heading">Hey Estia, find me...</h2>
                 <div className="navigation-links">

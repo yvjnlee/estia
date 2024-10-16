@@ -6,18 +6,20 @@ interface CommentState {
     comments: CommentDB[] | null;
     commentsLoading: boolean;
     commentsError: string | null;
+    creatingComment: boolean;
 }
 
 const initialState: CommentState = {
     comments: null,
     commentsLoading: false,
     commentsError: null,
+    creatingComment: false,
 };
 
 // Thunks
 export const createComment = createAsyncThunk(
     "comments/createComment",
-    async (newComment: Omit<Comment, 'commentId'>) => {
+    async (newComment: Partial<Comment>) => {
         return await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/comments/`,
             "POST",
@@ -34,6 +36,13 @@ export const fetchCommentById = createAsyncThunk(
     "comments/fetchCommentById",
     async (id: string) => {
         return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/comments/${id}`, "GET");
+    }
+);
+
+export const fetchCommentsByProjectId = createAsyncThunk(
+    "comments/fetchCommentsByProjectId",
+    async (projectId: string) => {
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/comments/project/${projectId}`, "GET");
     }
 );
 
@@ -83,14 +92,17 @@ const commentSlice = createSlice({
 
             .addCase(createComment.pending, (state) => {
                 state.commentsLoading = true;
+                state.creatingComment = true;
             })
             .addCase(createComment.fulfilled, (state, action) => {
                 state.commentsLoading = false;
                 state.comments = state.comments ? [...state.comments, action.payload] : [action.payload];
+                state.creatingComment = false;
             })
             .addCase(createComment.rejected, (state, action) => {
                 state.commentsLoading = false;
                 state.commentsError = action.error.message || "An error occurred while creating comments";
+                state.creatingComment = false;
             })
 
             .addCase(updateComment.pending, (state) => {

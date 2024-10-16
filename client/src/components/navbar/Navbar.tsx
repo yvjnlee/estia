@@ -8,8 +8,6 @@ import { CreateProjectButton } from "../buttons/CreateProjectButton";
 import { LearnPreferencesButton } from "../buttons/LearnPreferencesButton";
 import { ProfileButton } from "../buttons/ProfileButton";
 
-
-
 export const Navbar: React.FC = () => {
     return (
         <nav className="nav-bar" data-scroll-section>

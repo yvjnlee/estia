@@ -418,9 +418,45 @@
           "Comments"
         ],
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": ""
+                },
+                "user_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "project_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 0
+                },
+                "username": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },

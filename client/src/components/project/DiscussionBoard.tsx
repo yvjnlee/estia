@@ -16,7 +16,6 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
     
     const [user, setUser] = useState<User | null>(null);
     const [newComment, setNewComment] = useState("");
-    const [existingComments, setExistingComments] = useState<Comment[]>(comments);
 
     useEffect(() => {
         getSession().then((session) => {
@@ -29,62 +28,6 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
             }
         })
     }, []);
-
-    // const changeVote = async ( comment : Comment, interaction: boolean) => {
-    //     let likes = 1;
-    //     if (interaction === false) {
-    //         likes = -1;
-    //     }
-
-    //     // change below
-    //     const { data, error } = await supabase 
-    //         .from('comment_interactions')
-    //         .select('interaction')
-    //         .eq("comment_id", comment.commentId)
-    //         .eq("user_id", user?.id)
-  
-    //     if (data) {
-    //         if (isEmptyObj(data)) {
-    //             console.log("posting")
-    //             const { error } = await supabase 
-    //                 .from('comment_interactions')
-    //                 .insert( {
-    //                     comment_id: comment.commentId,
-    //                     user_id: user?.id,
-    //                     interaction: interaction
-    //                 })
-                
-    //             if ( error ){
-    //                 console.log(error);
-    //             }
-    //             // update the likes, should add an error object later
-    //             await supabase 
-    //                 .from('comments')
-    //                 .update({likes: comment.likes + likes})
-    //                 .eq('comment_id', comment.commentId)
-                
-    //             // comments = comments.map(comment =>
-    //             //   comment.commentId === comment.commentId ? { ...comment, likes: comment.likes + likes } : comment);
-    //             // console.log(comments);
-    //         } else if (data[0].interaction !== interaction) {
-    //             // patch request to update the vote in comment table and comment_interactions table
-    //             console.log(data[0].interaction);
-    //             console.log("patching")
-    //             await supabase 
-    //                 .from('comments')
-    //                 .update({likes: comment.likes + 2 * likes})
-    //                 .eq('comment_id', comment.commentId)
-                
-    //             await supabase
-    //                 .from('comment_interactions')
-    //                 .update({interaction: interaction})
-    //                 .eq('comment_id', comment.commentId)
-    //                 .eq('user_id', user?.id)
-    //         } 
-    //         // change above
-    //     }
-
-    // }
 
     const changeVote = async ( comment : Comment, interaction: boolean ) => {
         // check if comment interaction exists
@@ -135,18 +78,20 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                 username: user.username ? user.username : 'empty',
             });
         }
+
+        setNewComment("");
     };
 
     return (
         <div className="comment-container">
-            <h1> Discussion (20)</h1>
+            <h1> Discussion ({comments?.length})</h1>
             <div className="discussion-input">
                 <input type="text" value={newComment} onChange={updateComment} required></input>
                 <label className="placeholders">Add a comment...</label>
                 <button onClick={postComment}>Post</button>
             </div>
             <ul className="comments">
-            {comments.map((comment) => (
+            {comments?.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
                         <button onClick={() => changeVote(comment, true)}><img src={UpChevron} /></button>

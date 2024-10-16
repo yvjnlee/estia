@@ -5,9 +5,24 @@ import { Comment } from '../../../../common/types';
 
 export class Controller {
   // Create
-  create(req: Request<unknown, unknown, Comment>, res: Response): void {
+  create(req: Request<unknown, Partial<Comment>>, res: Response): void {
     // #swagger.tags = ['Comments']
-    const comment: Comment = req.body;
+    /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Comment data.',
+        required: true,
+        schema: {
+            content: "",
+            user_id: "",
+            project_id: "",
+            likes: 0,
+            username: ""
+        }
+    } */
+    const comment: Partial<Comment> = req.body;
+
+    console.log("IN CONTROLLER");
+    console.log(comment);
 
     try {
       CommentsService.create(comment).then((r) => {

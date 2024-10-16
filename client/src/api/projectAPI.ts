@@ -33,7 +33,7 @@ export const getProjects = async (dispatch: AppDispatch) => {
     return mappedProjects;
 };
 
-export const getProject = async (dispatch: AppDispatch, projectId: string) => {
+export const getProjectById = async (dispatch: AppDispatch, projectId: string) => {
     const project = await dispatch(fetchProjectById(projectId)).unwrap();
     return mapProjectData(project);
 };
