@@ -17,14 +17,11 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.projectId;
-    const commentId = req.params.commentId;
-    const userId = req.params.userId;
     const commentInteraction = req.body;
     console.log(req.params)
     try {
-      CommentInteractionsService.create(commentInteraction, projectId, commentId, userId).then((r) => {
-        res.status(201).location(`/api/v1/commentInteractions/${r?.commentId}/${r?.userId}`).json(r);
+      CommentInteractionsService.create(commentInteraction, commentInteraction.comment_id).then((r) => {
+        res.status(201).location(`/api/v1/commentInteractions/`).json(r);
       });
     } catch (error) {
       res.status(500).json({ message: 'Error creating comment', error });
@@ -72,13 +69,12 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.projectId;
     const commentId = req.params.commentId;
     const userId = req.params.userId;
     const commentInteraction = req.body;
 
     try {
-      CommentInteractionsService.update(commentInteraction, projectId, commentId, userId).then((r) => {
+      CommentInteractionsService.update(commentInteraction, commentId, userId).then((r) => {
         if (r) res.json(r);
         else res.status(404).json({ message: 'Comment not found' });
       });
@@ -100,12 +96,11 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.projectId;
     const commentId = req.params.commentId;
     const userId = req.params.userId;
 
     try {
-      CommentInteractionsService.delete(projectId, commentId, userId).then((r) => {
+      CommentInteractionsService.delete(commentId, userId).then((r) => {
         if (r) res.status(204).end();
         else res.status(404).json({ message: 'Comment not found' });
       });

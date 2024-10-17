@@ -26,17 +26,17 @@ export const getCommentInteraction = async (dispatch: AppDispatch, commentId: st
     return mappedComment;
 };
 
-export const addCommentInteraction = async (dispatch: AppDispatch, newCommentInteraction: CommentInteractionDB, projectId: string, commentId: string, userId: string) => {
-    const commentInteraction = await dispatch(createCommentInteraction({ newCommentInteraction, projectId, commentId, userId })).unwrap();
+export const addCommentInteraction = async (dispatch: AppDispatch, newCommentInteraction: CommentInteractionDB) => {
+    const commentInteraction = await dispatch(createCommentInteraction({ newCommentInteraction })).unwrap();
     console.log(commentInteraction)
     return mapCommentInteractionData(commentInteraction);
 };
 
-export const editCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string, updates: Partial<CommentInteractionDB> ) => {
-    const commentInteraction = await dispatch(updateCommentInteraction({projectId, commentId, userId, updates})).unwrap();
+export const editCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string, updates: Partial<CommentInteractionDB> ) => {
+    const commentInteraction = await dispatch(updateCommentInteraction({ commentId, userId, updates})).unwrap();
     return mapCommentInteractionData(commentInteraction);
 };
 
-export const removeCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string) => {
-    await dispatch(deleteCommentInteraction({projectId, commentId, userId})).unwrap();
+export const removeCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string) => {
+    await dispatch(deleteCommentInteraction({ commentId, userId})).unwrap();
 };

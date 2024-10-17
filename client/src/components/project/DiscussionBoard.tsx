@@ -39,7 +39,6 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                 console.log("hihihihihihihihi")
                 await editCommentInteraction(
                     dispatch,
-                    project?.projectId ? project?.projectId : 'null',
                     comment.commentId,
                     user.id,
                     { interaction: interaction },
@@ -51,10 +50,7 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                         comment_id: comment.commentId,
                         user_id: user.id,
                         interaction: interaction
-                    },
-                    project?.projectId ? project?.projectId : 'null',
-                    comment.commentId,
-                    user.id,
+                    }
                 )
             }
         }

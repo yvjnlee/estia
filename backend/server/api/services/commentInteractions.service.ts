@@ -21,16 +21,11 @@ export class CommentInteractionsService {
     return updatedCommentData;
   }
 
-  async getComment(projectId: string, commentId: string, userId: string) {
-    console.log(projectId)
-    console.log(commentId)
-    console.log(userId)
+  async getComment(commentId: string) {
     const {data, error} = await supabase
       .from('comments')
       .select()
-      .eq('project_id', projectId)
       .eq('comment_id', commentId)
-      .eq('user_id', userId)
       .single()
     
       if (error) {
@@ -41,7 +36,7 @@ export class CommentInteractionsService {
       return data;
   }
   
-  async create(commentInteraction: CommentInteractionDB, projectId: string, commentId: string, userId: string): Promise<CommentInteraction | null> {
+  async create(commentInteraction: CommentInteractionDB, commentId: string): Promise<CommentInteraction | null> {
     L.info(`Creating new comment interaction for comment: ${commentInteraction.comment_id}`);
     const { data: commentInteractionData, error: commentInteractionError } = await supabase
       .from('comment_interactions')
@@ -58,10 +53,7 @@ export class CommentInteractionsService {
     if (commentInteraction.interaction === false) {
         likes = -1;
     }
-    console.log(projectId)
-    console.log(commentId)
-    console.log(userId)
-    const comment = await this.getComment(projectId, commentId, userId);
+    const comment = await this.getComment(commentId);
     
     await this.updateLikes(comment, likes);
     
@@ -99,7 +91,6 @@ export class CommentInteractionsService {
 
   async update(
     commentInteractionData: Partial<CommentInteractionDB>,
-    projectId: string,
     commentId: string,
     userId: string
   ): Promise<Comment | null> {
@@ -120,14 +111,14 @@ export class CommentInteractionsService {
         likes = -2;
     }
 
-    const comment = await this.getComment(projectId, commentId, userId)
+    const comment = await this.getComment(commentId)
     await this.updateLikes(comment, likes);
   
     return data;
   }
 
 // deleting a comment by selecting commentid and userid
-  async delete(projectId: string, commentId: string, userId: string): Promise<boolean> {
+  async delete(commentId: string, userId: string): Promise<boolean> {
     
     L.info(`Deleting comment with comment id: ${commentId} and user id: ${userId}`);
     const { data, error } = await supabase
@@ -149,7 +140,7 @@ export class CommentInteractionsService {
         likes = 1
       }
       
-      const comment = await this.getComment(projectId, commentId, userId);
+      const comment = await this.getComment(commentId);
       await this.updateLikes(comment, likes);
 
       return true;

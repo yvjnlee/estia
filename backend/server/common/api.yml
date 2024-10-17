@@ -573,31 +573,13 @@
         }
       }
     },
-    "/api/v1/commentInteractions/{commentId}/{userId}/{projectId}": {
+    "/api/v1/commentInteractions/": {
       "post": {
         "tags": [
           "CommentInteractions"
         ],
         "description": "",
         "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
@@ -627,8 +609,34 @@
             "description": ""
           }
         }
-      },
-      "patch": {
+      }
+    },
+    "/api/v1/commentInteractions/comment/{commentId}": {
+      "get": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/commentInteractions/comment/{commentId}/user/{userId}": {
+      "get": {
         "tags": [
           "CommentInteractions"
         ],
@@ -645,9 +653,34 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           },
           {
-            "name": "projectId",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -693,12 +726,6 @@
             "type": "string"
           },
           {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "body",
             "in": "body",
             "description": "Comment Interaction data.",
@@ -725,63 +752,6 @@
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/commentInteractions/{commentId}": {
-      "get": {
-        "tags": [
-          "CommentInteractions"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/commentInteractions/{commentId}/{userId}": {
-      "get": {
-        "tags": [
-          "CommentInteractions"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
           "404": {
             "description": "Not Found"

@@ -3,10 +3,10 @@ import controller from './controller';
 
 const router = express.Router();
 
-router.post('/:commentId/:userId/:projectId', controller.create);
-router.get('/:commentId', controller.all);
-router.get('/:commentId/:userId', controller.get);
-router.patch('/:commentId/:userId/:projectId', controller.update);
-router.delete('/:commentId/:userId/:projectId', controller.delete);
+router.post('/', controller.create);
+router.get('/comment/:commentId', controller.all);
+router.get('/comment/:commentId/user/:userId', controller.get);
+router.patch('/comment/:commentId/user/:userId', controller.update);
+router.delete('/comment/:commentId/user/:userId', controller.delete);
 
 export default router;
