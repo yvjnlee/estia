@@ -45,11 +45,13 @@ export const fetchCommentInteraction = createAsyncThunk(
 export const updateCommentInteraction = createAsyncThunk(
     "comments/updateCommentInteraction",
     async ({ projectId, commentId, userId, updates }: { projectId: string, commentId: string, userId: string, updates: Partial<CommentInteractionDB> }) => {
-        return await fetchAPI(
+        const res= await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}/${projectId}`,
             "PATCH",
             updates
-        );
+        )
+
+        return res;
     }
 );
 

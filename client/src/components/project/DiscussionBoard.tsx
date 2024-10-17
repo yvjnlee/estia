@@ -36,7 +36,7 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
         if (user && project) {
             const commentInteraction = await getCommentInteraction(dispatch, comment.commentId, user.id)
             if (commentInteraction) {
-                console.log(commentInteraction)
+                console.log("hihihihihihihihi")
                 await editCommentInteraction(
                     dispatch,
                     project?.projectId ? project?.projectId : 'null',

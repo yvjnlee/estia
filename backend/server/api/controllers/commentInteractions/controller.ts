@@ -17,9 +17,9 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.projectId;
-    const commentId = req.params.commentId;
-    const userId = req.params.userId;
+    const projectId = req.params.project_id;
+    const commentId = req.params.comment_id;
+    const userId = req.params.user_id;
     const commentInteraction = req.body;
 
     try {
@@ -48,8 +48,8 @@ export class Controller {
 
   get(req: Request<RequestParams>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
-    const commentId = req.params.commentId;
-    const userId = req.params.userId;
+    const commentId = req.params.comment_id;
+    const userId = req.params.user_id;
 
     try {
       CommentInteractionsService.getInteraction(commentId, userId).then((r) => {
@@ -64,9 +64,17 @@ export class Controller {
   // Update
   update(req: Request<RequestParams, unknown, Partial<CommentInteractionDB>>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
-    const projectId = req.params.projectId;
-    const commentId = req.params.commentId;
-    const userId = req.params.userId;
+    /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Comment Interaction data.',
+        required: true,
+        schema: {
+            interaction: true
+        }
+    } */
+    const projectId = req.params.project_id;
+    const commentId = req.params.comment_id;
+    const userId = req.params.user_id;
     const commentInteraction = req.body;
 
     try {
@@ -82,9 +90,19 @@ export class Controller {
   // Delete
   delete(req: Request<RequestParams>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
-    const projectId = req.params.projectId;
-    const commentId = req.params.commentId;
-    const userId = req.params.userId;
+    /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Comment Interaction data.',
+        required: true,
+        schema: {
+            comment_id: "",
+            user_id: "",
+            interaction: true
+        }
+    } */
+    const projectId = req.params.project_id;
+    const commentId = req.params.comment_id;
+    const userId = req.params.user_id;
 
     try {
       CommentInteractionsService.delete(projectId, commentId, userId).then((r) => {
