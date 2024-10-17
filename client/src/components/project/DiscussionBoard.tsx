@@ -9,7 +9,7 @@ import { getUserById } from "../../api/userAPI";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addComment } from "../../api/commentAPI";
 import { getCommentInteraction, addCommentInteraction, editCommentInteraction, removeCommentInteraction} from "../../api/commentInteractionAPI";
-import { createCommentInteraction } from "../../store/slices/commentInteractionSlice";
+import { setInteractingComment } from "../../store/slices/commentSlice";
 
 const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }> = ({ comments, project }) => {
     const dispatch = useAppDispatch();
@@ -30,13 +30,11 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
     }, []);
 
     const changeVote = async ( comment : Comment, interaction: boolean ) => {
-        // check if comment interaction exists
-        // if data: use edit interaction
-        // if not data: use create interaction
+        dispatch(setInteractingComment(true));
+
         if (user && project) {
             const commentInteraction = await getCommentInteraction(dispatch, comment.commentId, user.id)
             if (commentInteraction) {
-                console.log("hihihihihihihihi")
                 await editCommentInteraction(
                     dispatch,
                     comment.commentId,
@@ -54,11 +52,9 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                 )
             }
         }
+
+        dispatch(setInteractingComment(false));
     }
-
-    // const removeVote() {
-
-    // }
 
     const updateComment = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);

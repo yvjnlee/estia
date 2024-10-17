@@ -34,6 +34,7 @@ export const ProjectDetails: React.FC = () => {
     const [comments, setComments] = useState<Comment[]>([]);
 
     const { creatingComment } = useSelector((state: RootState) => state.comments);
+    const { interactingComment } = useSelector((state: RootState) => state.comments);
     
     // Get the current URL and extract the project title
     const url = window.location.href;
@@ -120,7 +121,7 @@ export const ProjectDetails: React.FC = () => {
                 setComments(comments);
             }
         });
-    }, [creatingComment]);
+    }, [creatingComment, interactingComment]);
 
     const saveButtonClass = isSaved ? "saved" : "save";
     const likeButtonClass = isLiked ? "liked" : "like";

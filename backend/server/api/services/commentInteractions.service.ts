@@ -95,6 +95,18 @@ export class CommentInteractionsService {
     userId: string
   ): Promise<Comment | null> {
     L.info(`Updating comment with id: ${commentId}, ${userId}`);
+    const commentInteraction = await this.getInteraction(commentId, userId);
+
+    if (commentInteraction?.interaction != commentInteractionData.interaction) {
+      let likes = 1;
+      if (commentInteractionData.interaction === false) {
+          likes = -1;
+      }
+
+      const comment = await this.getComment(commentId)
+      await this.updateLikes(comment, likes);
+    }
+
     const { data, error } = await supabase
       .from('comment_interactions')
       .update(commentInteractionData)
@@ -106,13 +118,6 @@ export class CommentInteractionsService {
       L.error(`Error updating comment: ${error.message}`);
       return null;
     }
-    let likes = 2;
-    if (commentInteractionData.interaction === false) {
-        likes = -2;
-    }
-
-    const comment = await this.getComment(commentId)
-    await this.updateLikes(comment, likes);
   
     return data;
   }

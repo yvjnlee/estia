@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAPI } from "../../utils/fetchAPI";
 import { Comment, CommentDB } from "../../common/types";
 
@@ -7,6 +7,7 @@ interface CommentState {
     commentsLoading: boolean;
     commentsError: string | null;
     creatingComment: boolean;
+    interactingComment: boolean;
 }
 
 const initialState: CommentState = {
@@ -14,6 +15,7 @@ const initialState: CommentState = {
     commentsLoading: false,
     commentsError: null,
     creatingComment: false,
+    interactingComment: false,
 };
 
 // Thunks
@@ -75,7 +77,11 @@ export const fetchCommentsByProject = createAsyncThunk(
 const commentSlice = createSlice({
     name: "comments",
     initialState,
-    reducers: {},
+    reducers: {
+        setInteractingComment: (state, action: PayloadAction<boolean>) => {
+            state.interactingComment = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAllComments.pending, (state) => {
@@ -149,5 +155,7 @@ const commentSlice = createSlice({
             })
     },
 });
+
+export const { setInteractingComment } = commentSlice.actions;
 
 export default commentSlice.reducer;
