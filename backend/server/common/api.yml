@@ -573,8 +573,70 @@
         }
       }
     },
-    "/api/v1/commentInteractions/{commentId}/{userId}/{projectId}": {
+    "/api/v1/commentInteractions/": {
       "post": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment Interaction data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "user_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "interaction": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/commentInteractions/comment/{commentId}": {
+      "get": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/commentInteractions/comment/{commentId}/user/{userId}": {
+      "get": {
         "tags": [
           "CommentInteractions"
         ],
@@ -591,17 +653,17 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -624,10 +686,19 @@
             "type": "string"
           },
           {
-            "name": "projectId",
-            "in": "path",
+            "name": "body",
+            "in": "body",
+            "description": "Comment Interaction data.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "interaction": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -655,72 +726,32 @@
             "type": "string"
           },
           {
-            "name": "projectId",
-            "in": "path",
+            "name": "body",
+            "in": "body",
+            "description": "Comment Interaction data.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "user_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "interaction": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
           }
         ],
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/commentInteractions/{commentId}": {
-      "get": {
-        "tags": [
-          "CommentInteractions"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/commentInteractions/{commentId}/{userId}": {
-      "get": {
-        "tags": [
-          "CommentInteractions"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
           "404": {
             "description": "Not Found"

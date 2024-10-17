@@ -17,24 +17,26 @@ const mapCommentInteractionData = (commentInteraction: CommentInteractionDB) => 
 };
 
 export const getCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string) => {
-    const comments = await dispatch(fetchCommentInteraction({ commentId, userId })).unwrap();
-    if (!comments) {
+    const commentInteraction = await dispatch(fetchCommentInteraction({ commentId, userId })).unwrap();
+    if (!commentInteraction) {
         return null;
     }
-    const mappedComments = comments.map((commentInteraction: CommentInteractionDB) => mapCommentInteractionData(commentInteraction));
-    return mappedComments;
+    console.log(commentInteraction)
+    const mappedComment = mapCommentInteractionData(commentInteraction);
+    return mappedComment;
 };
 
-export const addCommentInteraction = async (dispatch: AppDispatch, newCommentInteraction: CommentInteraction, projectId: string, commentId: string, userId: string) => {
-    const commentInteraction = await dispatch(createCommentInteraction({ newCommentInteraction, projectId, commentId, userId })).unwrap();
+export const addCommentInteraction = async (dispatch: AppDispatch, newCommentInteraction: CommentInteractionDB) => {
+    const commentInteraction = await dispatch(createCommentInteraction({ newCommentInteraction })).unwrap();
+    console.log(commentInteraction)
     return mapCommentInteractionData(commentInteraction);
 };
 
-export const editCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string, updates: Partial<CommentInteraction> ) => {
-    const commentInteraction = await dispatch(updateCommentInteraction({projectId, commentId, userId, updates})).unwrap();
+export const editCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string, updates: Partial<CommentInteractionDB> ) => {
+    const commentInteraction = await dispatch(updateCommentInteraction({ commentId, userId, updates})).unwrap();
     return mapCommentInteractionData(commentInteraction);
 };
 
-export const removeCommentInteraction = async (dispatch: AppDispatch, projectId: string, commentId: string, userId: string) => {
-    await dispatch(deleteCommentInteraction({projectId, commentId, userId})).unwrap();
+export const removeCommentInteraction = async (dispatch: AppDispatch, commentId: string, userId: string) => {
+    await dispatch(deleteCommentInteraction({ commentId, userId})).unwrap();
 };
