@@ -62,7 +62,7 @@ export class Controller {
   }
 
   // Update
-  update(req: Request<RequestParams, unknown, Partial<CommentInteraction>>, res: Response): void {
+  update(req: Request<RequestParams, unknown, Partial<CommentInteractionDB>>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
     const projectId = req.params.projectId;
     const commentId = req.params.commentId;

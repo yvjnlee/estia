@@ -22,8 +22,8 @@ export const getCommentInteraction = async (dispatch: AppDispatch, commentId: st
         return null;
     }
     console.log(commentInteraction)
-    const mappedComments = commentInteraction.map((commentInteraction: CommentInteractionDB) => mapCommentInteractionData(commentInteraction));
-    return mappedComments;
+    const mappedComment = mapCommentInteractionData(commentInteraction);
+    return mappedComment;
 };
 
 export const addCommentInteraction = async (dispatch: AppDispatch, newCommentInteraction: CommentInteractionDB, projectId: string, commentId: string, userId: string) => {

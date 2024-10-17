@@ -90,11 +90,12 @@ export class CommentInteractionsService {
       L.error(`Error fetching comment by id: ${error.message}`);
       return null;
     }
+    console.log(data)
     return data;
   }
 
   async update(
-    commentInteractionData: Partial<CommentInteraction>,
+    commentInteractionData: Partial<CommentInteractionDB>,
     projectId: string,
     commentId: string,
     userId: string
