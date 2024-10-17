@@ -18,25 +18,27 @@ const initialState: CommentInteractionState = {
 export const createCommentInteraction = createAsyncThunk(
     "commentInteraction/createCommentInteraction",
     async ({ newCommentInteraction, projectId, commentId, userId }: { newCommentInteraction: CommentInteractionDB, projectId: string; commentId: string; userId: string }) => {
-        return await fetchAPI(
-            `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`,
+        const res = await fetchAPI(
+            `${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}/${projectId}`,
             "POST",
             newCommentInteraction
-        );
+        )
+        console.log(res)
+        return res;
     }
 );
 
 
 export const fetchAllCommentInteractions = createAsyncThunk("commentInteraction/fetchAllCommentInteractions", 
     async (commentId: string) => {
-        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}`, "GET");
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}`, "GET");
     }
 );
 
 export const fetchCommentInteraction = createAsyncThunk(
     "comments/fetchCommentInteraction",
     async ({ commentId, userId }: { commentId: string, userId: string }) => {
-        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}/${userId}`, "GET");
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}`, "GET");
     }
 );
 
@@ -44,7 +46,7 @@ export const updateCommentInteraction = createAsyncThunk(
     "comments/updateCommentInteraction",
     async ({ projectId, commentId, userId, updates }: { projectId: string, commentId: string, userId: string, updates: Partial<CommentInteractionDB> }) => {
         return await fetchAPI(
-            `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}/${projectId}`,
             "PATCH",
             updates
         );
@@ -53,7 +55,7 @@ export const updateCommentInteraction = createAsyncThunk(
 
 export const deleteCommentInteraction = createAsyncThunk("commentInteraction/deleteCommentInteraction", 
     async ({ projectId, commentId, userId}: { projectId: string, commentId: string, userId: string }) => {
-        await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`, "DELETE");
+        await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}/${projectId}`, "DELETE");
         return commentId; // y do we return this?
 });
 

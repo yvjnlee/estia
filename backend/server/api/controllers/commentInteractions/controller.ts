@@ -1,11 +1,11 @@
 import CommentInteractionsService from '../../services/commentInteractions.service';
 import { Request, Response } from 'express';
 import { RequestParams } from './types';
-import { CommentInteraction } from '../../../../common/types';
+import { CommentInteraction, CommentInteractionDB } from '../../../../common/types';
 
 export class Controller {
   // Create
-  create(req: Request<RequestParams, unknown, CommentInteraction>, res: Response): void {
+  create(req: Request<RequestParams, unknown, CommentInteractionDB>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
     /* #swagger.parameters['body'] = {
         in: 'body',
@@ -54,7 +54,7 @@ export class Controller {
     try {
       CommentInteractionsService.getInteraction(commentId, userId).then((r) => {
         if (r) res.json(r);
-        else res.status(404).json({ message: 'Comment not found' });
+        else res.status(404).json(null);
       });
     } catch (error) {
       res.status(500).json({ message: 'Error fetching comment', error });

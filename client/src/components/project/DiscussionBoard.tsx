@@ -35,6 +35,9 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
         // if not data: use create interaction
         if (user && project) {
             const commentInteraction = await getCommentInteraction(dispatch, comment.commentId, user.id)
+            // get isnt returning null
+            console.log("hi")
+            console.log(commentInteraction)
             if (commentInteraction) {
                 await editCommentInteraction(
                     dispatch,
@@ -47,7 +50,7 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                 await addCommentInteraction(
                     dispatch,
                     {
-                        comment_id:comment.commentId,
+                        comment_id: comment.commentId,
                         user_id: user.id,
                         interaction: interaction
                     },
