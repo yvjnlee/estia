@@ -3,8 +3,13 @@ import React, { useEffect, useState } from "react";
 import Groq from "groq-sdk"; // Import Groq SDK
 import { useNavigate, NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { Project } from "../../../common/types";
+import { Project, ProjectDB } from "../../../common/types";
 import { fetchProjects } from "../../../store/slices/projectSlice";
+
+import { Session } from "@supabase/supabase-js";
+import { getSession } from "../../../api/authAPI";
+
+import { PreferenceLinks } from "../../navbar/PreferenceLinks";
 
 const GiveProjectPage: React.FC = () => {
     const [input, setInput] = useState("");
@@ -15,7 +20,17 @@ const GiveProjectPage: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const [projects, setProjects] = useState<Project[]>([]);
+    const [projects, setProjects] = useState<ProjectDB[]>([]);
+    const [session, setSession] = useState<Session | null>(null);
+    const [showAuth, setShowAuth] = useState<boolean>(false);
+
+
+
+    useEffect(() => {
+        getSession().then((session) => {
+            setSession(session);
+        });
+    }, []);
 
     useEffect(() => {
         const fetchAllProjects = async () => {
@@ -23,6 +38,7 @@ const GiveProjectPage: React.FC = () => {
                 dispatch(fetchProjects())
                     .unwrap()
                     .then((projects) => {
+                        console.log("Fetched projects:", projects); // Add this line
                         setProjects(projects);
                     });
             } catch (error) {
@@ -100,8 +116,10 @@ const GiveProjectPage: React.FC = () => {
         setLoading(true);
         setOutput(null);
 
+        console.log("Current projects state:", projects); // Add this line
         // Get project titles from the context
-        const projectTitles = projects?.map((project) => project.projectName).join(", ") || "";
+        const projectTitles = projects?.map((project) => project.project_name).join(", ") || "";
+        console.log("Project titles:", projectTitles); // Add this line
 
         // eslint-disable-next-line no-undef
         const apiKey = process.env.REACT_APP_GROQ_API_KEY;
@@ -116,18 +134,28 @@ const GiveProjectPage: React.FC = () => {
                 messages: [
                     {
                         role: "user",
-                        content: `Given the following submission, recommend the most relevant project titles from the database. 
-                        Please provide the project names that are most relevant to the input. You can
-                        give one if you think only one fits the description. The database project titles are: [${projectTitles}]. 
-                        Here is the user's submission: "${input}". Format your response as JSON, 
-                        and provide the result in the format:
+                        content: `Given the user's submission, identify and recommend the most relevant project titles from the database that align semantically with the provided input. Focus on projects that best match the themes and concepts expressed in the user's description.
+
+                        Please consider the following project titles from the database: [${projectTitles}]. 
+
+                        User's submission: "${input}"
+
+                        Your response should be formatted as JSON, following this structure:
+
                         {
-                          "Recommended Projects": ["project name 1", "project name 2", ...]
-                        }.`, // Change the response format to an array of projects
+                          "Recommended Projects": [
+                               "project name 1",
+                                  "project name 2",
+                                      ...
+                               ]
+                            }
+
+If you believe that only one project title fits well, provide just that single recommendation. Try to give an average of at least two projects. Ensure the recommendations are the most relevant based on the user's input.
+`, // Change the response format to an array of projects
                     },
                 ],
                 model: "llama3-8b-8192", // Ensure this is the correct model for your use case
-                temperature: 0.5,
+                temperature: 0.3,
                 max_tokens: 1024,
                 top_p: 1,
                 stream: false,
@@ -154,54 +182,34 @@ const GiveProjectPage: React.FC = () => {
     return (
         <>
             <div className="preference-page">
-            <h2 className="page-heading">Hey Estia, find me...</h2>
-                <div className="navigation-links">
-                <NavLink
-                        to="/preference"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                        end
-                    >
-                        Programming languages/frameworks to learn
-                    </NavLink>
-                    <NavLink
-                        to="/preference/give-project"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A project within your collection
-                    </NavLink>
-                    <NavLink
-                        to="/preference/project-idea"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A fresh new project idea
-                    </NavLink>
-                </div>
+                <h2 className="page-heading">Alright Estia, find me...</h2>
+                    <PreferenceLinks />
                 <div className="fade-in-div">
-                <div className="page-heading-container">
-                    <p className="preference-description">
-                        Let us know what you are interested in making. We find projects on Estia based on your input and 
-                        connect you with the right hands-on experiences.
-                    </p>
-                </div>
-                <form className="input-form" onSubmit={handleSubmit}>
-                    <textarea
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        rows={3}
-                        placeholder="Describe what you're interested in building..."
-                        className="input-field"
-                    />
-                    <button type="submit" className="submit-button" disabled={loading}>
-                        {loading ? "Processing..." : "Submit"}
-                    </button>
-                </form>
-                {output && (
-                    <div>
-                        <h3>Here are some related results:</h3>
-                        <div className="outer-theme-section-div">{formatOutput(output)}</div>
+                    <div className="page-heading-container">
+                        <p className="preference-description">
+                            Let us know what you are interested in making. We find projects on Estia based on your input and
+                            connect you with the right hands-on experiences.
+                        </p>
                     </div>
-                )}
-            </div>
+                    <form className="input-form" onSubmit={handleSubmit}>
+                        <textarea
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            rows={3}
+                            placeholder="Describe what you're interested in building..."
+                            className="input-field"
+                        />
+                        <button type="submit" className="submit-button" disabled={loading}>
+                            {loading ? "Processing..." : "Submit"}
+                        </button>
+                    </form>
+                    {output && (
+                        <div>
+                            <h3>Here are some related results:</h3>
+                            <div className="outer-theme-section-div">{formatOutput(output)}</div>
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

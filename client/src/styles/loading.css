@@ -1,0 +1,139 @@
+/* Loading screen styling */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 140vh; /* Full screen height */
+    position: relative;
+    overflow: hidden;
+    font-family: Roboto, Arial;
+}
+
+/* Loading header styling */
+.loading-header {
+    position: absolute;
+    top: 20px;
+    font-size: 1.5rem;
+    color: #AF0880;
+    z-index: 10;
+}
+
+/* Animation container styling */
+.loading-animation {
+    height: 32px;
+    width: 32px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+    margin-top: 32px;
+    transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
+}
+
+/* Individual box styling */
+.loading-animation .box {
+    width: 32px;
+    height: 32px;
+    top: 0px;
+    left: 0;
+    position: absolute;
+    transform-style: preserve-3d;
+}
+
+/* Box animations */
+.loading-animation .box:nth-child(1) {
+    transform: translate(100%, 0);
+    animation: box1 1s linear infinite;
+}
+.loading-animation .box:nth-child(2) {
+    transform: translate(0, 100%);
+    animation: box2 1s linear infinite;
+}
+.loading-animation .box:nth-child(3) {
+    transform: translate(100%, 100%);
+    animation: box3 1s linear infinite;
+}
+.loading-animation .box:nth-child(4) {
+    transform: translate(200%, 0);
+    animation: box4 1s linear infinite;
+}
+
+/* Inner box faces */
+.loading-animation .box > div {
+    background: #AF0880;
+    --translateZ: 15.5px;
+    --rotateY: 0deg;
+    --rotateX: 0deg;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
+}
+
+/* Box face colors */
+.loading-animation .box > div:nth-child(1) {
+    top: 0;
+    left: 0;
+    background: #b35a9a;
+}
+.loading-animation .box > div:nth-child(2) {
+    background: #AF0880;
+    right: 0;
+    --rotateY: 90deg;
+}
+.loading-animation .box > div:nth-child(3) {
+    background: #ab2986;
+    --rotateX: -90deg;
+}
+.loading-animation .box > div:nth-child(4) {
+    background: #87898e;
+    top: 0;
+    left: 0;
+    --translateZ: -90px;
+}
+
+/* Keyframe animations */
+@keyframes box1 {
+    0%, 50% {
+        transform: translate(100%, 0);
+    }
+    100% {
+        transform: translate(200%, 0);
+    }
+}
+
+@keyframes box2 {
+    0% {
+        transform: translate(0, 100%);
+    }
+    50% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(100%, 0);
+    }
+}
+
+@keyframes box3 {
+    0%, 50% {
+        transform: translate(100%, 100%);
+    }
+    100% {
+        transform: translate(0, 100%);
+    }
+}
+
+@keyframes box4 {
+    0% {
+        transform: translate(200%, 0);
+    }
+    50% {
+        transform: translate(200%, 100%);
+    }
+    100% {
+        transform: translate(100%, 100%);
+    }
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
-import ProjectDetails from "../components/project/ProjectDetails";
+import { ProjectDetails } from "../components/project/ProjectDetails";
 import { useDispatch } from "react-redux";
 import { getProjects } from "../api/projectAPI";
 import { Project } from "../common/types";
@@ -22,7 +22,34 @@ const ProjectsRoutes = () => {
 
     // Add check for projects before trying to map over them
     if (!projects || !Array.isArray(projects) || projectsLoading) {
-        return <div>Loading projects...</div>;
+        return <div className="loading">
+        <div className="loading-animation">
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>;
     }
 
     return (

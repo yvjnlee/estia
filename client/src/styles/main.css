@@ -35,7 +35,7 @@
     height: 100%;
     background-color: #000000 !important;
     z-index: 0;
-    /* Keep the background below everything */ 
+    /* Keep the background below everything */
 }
 
 .heading-content {
@@ -53,7 +53,8 @@
     font-weight: 600;
     font-size: var(--font-size-xxxl);
     letter-spacing: 2px;
-    max-width: 1450px;
+    max-width: 1550px;
+    width: 95%;
     align-items: center;
     text-align: center;
     color: rgb(255, 255, 255);
@@ -72,12 +73,121 @@
     z-index: 8;
     border: 2px solid rgb(56, 56, 56);
     justify-content: space-between;
-    align-items: center; /* Aligns items vertically in the center */
+    align-items: center;
     background-color: var(--background-color);
 }
 
+
+.nav-buttons-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+
+.nav-buttons {
+    margin-left: auto;
+}
+
+.nav-close-button {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    right: 1rem;
+    top: 1rem;
+}
+
+.back-icon {
+    width: 32px; 
+    height: 32px; 
+}
+
+.nav-link-buttons {
+    display: flex;
+    gap: 1rem;
+    /* Add space between buttons */
+    justify-content: center;
+    /* Center the buttons horizontally */
+    flex-grow: 1;
+    /* Allow it to take up available space */
+    margin-right: 2rem;
+}
+
+/* Hamburger Menu Button */
+.hamburger {
+    display: none;
+    /* Hide by default */
+    flex-direction: column;
+    cursor: pointer;
+    margin-left: auto;
+    padding-right: 1rem;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    /* Hide by default */
+    position: fixed;
+    right: 0;
+    top: 1.8rem;
+    height: 500vh;
+    width: 250px;
+    background-color: #121212;
+    flex-direction: column;
+    align-items: start;
+    padding: 2rem;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    /* Hide off-screen */
+    z-index: 9;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+    /* Show on-screen */
+}
+
+.mobile-menu a,
+.mobile-menu button {
+    margin: 1rem 0;
+    width: 100%;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 710px) {
+    .nav-bar {
+        flex-wrap: wrap;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .nav-buttons-container {
+        display: none;
+        /* Hide normal navigation */
+    }
+
+    .hamburger {
+        display: flex;
+        /* Show hamburger */
+    }
+
+    .mobile-menu {
+        display: flex;
+        /* Display the mobile menu */
+    }
+}
+
+
 .logo {
-    width: 150px;
+    width: 180px;
     margin-left: 1.5rem;
 }
 
@@ -101,21 +211,11 @@
     margin-right: 1rem;
 }
 
-.nav-buttons-container {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-
 .log-out-button:hover {
     /* filter: brightness(0.8);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); */
     background-color: #151b23;
     color: #fff;
-}
-
-.nav-buttons {
-    margin-left: auto;
 }
 
 .create-project-button {
@@ -135,11 +235,12 @@
 }
 
 .create-project-button:hover {
-    filter: brightness(1.2); /* Slightly brighten the text */
+    filter: brightness(1.2);
+    /* Slightly brighten the text */
     background-color: #151b23;
 }
 
-.ai-div{
+.ai-div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,30 +261,92 @@
 @media (max-width: 480px) {
     .more-btn {
         display: block;
-        margin-top: 8px; /* Adds space above the button */
+        margin-top: 8px;
+        /* Adds space above the button */
     }
 }
 
 
 .wrapper {
     position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-attachment: fixed;
     display: flex;
     height: max-content;
     justify-content: center;
     align-items: center;
-    background-color:#221d25;
+    background-color: #221d25;
     background-image:
-    radial-gradient(at 30% 89%, rgb(45, 21, 45) 0px, transparent 50%),
-    radial-gradient(at 35% 0%, rgb(39, 2, 47) 0px, transparent 50%),
-    radial-gradient(at 93% 46%, rgb(71, 27, 42) 0px, transparent 50%),
-    radial-gradient(at 23% 49%, rgb(24, 17, 36) 0px, transparent 50%),
-    radial-gradient(at 17% 27%, rgb(63, 28, 44) 0px, transparent 50%),
-    radial-gradient(at 79% 30%, rgb(17, 24, 20) 0px, transparent 50%),
-    radial-gradient(at 26% 40%, rgb(28, 22, 12) 0px, transparent 50%);
-  }
-  
+        radial-gradient(at 30% 89%, rgb(45, 21, 45) 0px, transparent 50%),
+        radial-gradient(at 35% 0%, rgb(39, 2, 47) 0px, transparent 50%),
+        radial-gradient(at 93% 46%, rgb(39, 19, 25) 0px, transparent 50%),
+        radial-gradient(at 23% 49%, rgb(24, 17, 36) 0px, transparent 50%),
+        radial-gradient(at 17% 27%, rgb(63, 28, 44) 0px, transparent 50%),
+        radial-gradient(at 79% 30%, rgb(17, 24, 20) 0px, transparent 50%),
+        radial-gradient(at 26% 40%, rgb(28, 22, 12) 0px, transparent 50%);
+}
+
+.feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow cards to wrap to the next line */
+    width: 96%;
+    margin-top: 12rem;
+    justify-content: space-between;
+}
+
+/* Styles for smaller screens */
+@media (max-width: 1162px) {
+
+    /* Adjust the max-width as needed */
+    .feature-list {
+        flex-direction: column;
+        /* Stack cards vertically */
+        align-items: center;
+        /* Center cards in the column */
+    }
+}
+
+/* Styles for smaller screens */
+@media (max-width: 1162px) {
+
+    /* Adjust the max-width as needed */
+    .starting-image {
+        margin-bottom: 5rem;
+        width: 65%;
+    }
+}
+
+.feature-container {
+    background-color: none;
+    border: 1px solid #383838;
+    border-radius: 4px;
+    padding: 10rem;
+    flex: 1 1 calc(100%);
+    /* Allow cards to take 50% width minus gap */
+    max-width: 50rem;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /* Center items horizontally */
+}
+
+.svg-container {
+    margin-bottom: 1rem;
+}
+
+.feature-text {
+    text-align: center;
+    font-size: var(--font-size-md);
+}
+
+.feature-description {
+    font-size: var(--font-size-sm);
+    text-align: center;
+    width: 80%;
+}

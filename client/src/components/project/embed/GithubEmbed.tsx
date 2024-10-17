@@ -20,19 +20,23 @@ const GitHubRepo: React.FC<GitHubRepoProps> = ({ repoPath }) => {
     useEffect(() => {
         const fetchRepoData = async () => {
             try {
+                console.log(`Fetching data for: ${repoPath}`);
                 const response = await fetch(`https://api.github.com/repos/${repoPath}`);
                 if (!response.ok) {
                     throw new Error(`Error: ${response.statusText}`);
                 }
                 const data: RepoData = await response.json();
+                console.log('Fetched data:', data);
                 setRepoData(data);
             } catch (err) {
+                console.error('Fetch error:', err);
                 setError((err as Error).message);
             }
         };
-
+    
         fetchRepoData();
     }, [repoPath]);
+    
 
     if (error) {
         return <p>{error}</p>;

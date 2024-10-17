@@ -25,7 +25,7 @@ const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ videoId }) => {
                         className="lock-unlock-icon"
                     />
                     <span className="overlay-text">
-                        {isHovered ? "Click to see the video" : "Try the idea yourself before seeing the video"}
+                        {isHovered ? "Try the idea yourself before seeing the video" : "Click to see the video"}
                     </span>
                 </div>
             )}

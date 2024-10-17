@@ -7,12 +7,14 @@ interface userState {
     users: User[] | null;
     usersLoading: boolean;
     usersError: string | null;
+    isUserLoaded: boolean;
 }
 
 const initialState: userState = {
     users: null,
     usersLoading: false,
     usersError: null,
+    isUserLoaded: false,
 };
 
 // Thunks
@@ -58,7 +60,11 @@ export const fetchUserByUsername = createAsyncThunk(
 const userSlice = createSlice({
     name: "users",
     initialState,
-    reducers: {},
+    reducers: {
+        setUserLoaded: (state, action: PayloadAction<boolean>) => {
+            state.isUserLoaded = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUsers.pending, (state) => {
@@ -162,4 +168,5 @@ const userSlice = createSlice({
     },
 });
 
+export const { setUserLoaded } = userSlice.actions;
 export default userSlice.reducer;

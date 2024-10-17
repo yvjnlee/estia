@@ -5,6 +5,7 @@ import { Project } from "../../../common/types";
 import { groq } from "../../../common/clients";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { getProjects } from "../../../api/projectAPI";
+import { PreferenceLinks } from "../../navbar/PreferenceLinks";
 
 const ProjectGenerator: React.FC = () => {
     const containerStyle: React.CSSProperties = {
@@ -31,7 +32,7 @@ const ProjectGenerator: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const [projects, setProjects] = useState<Project[]>([]);
-    
+
     useEffect(() => {
         getProjects(dispatch).then((projects) => {
             setProjects(projects);
@@ -42,7 +43,7 @@ const ProjectGenerator: React.FC = () => {
     const formatOutput = (jsonString: string) => {
         try {
             const parsedOutput = JSON.parse(jsonString); // Parse the JSON string
-    
+
             // Destructure necessary fields from the parsed output
             const {
                 "Project Idea": projectIdea,
@@ -52,25 +53,39 @@ const ProjectGenerator: React.FC = () => {
                 "Potential Project Names": potentialNames,
                 "Project Description": projectDescription
             } = parsedOutput;
-    
+
             return (
                 <div className="project-details">
-                    <h2 className="project-idea-title">{projectIdea}</h2>
-                    <p className="project-idea-description">{projectDescription}</p>
-                    <h3 className="project-idea-tech-stack">Tech Stack: {techStack.join(', ')}</h3>
-                    <p className="estimated-time">Estimated Time Commitment: {timeCommitment}</p>
-                    <h4>Time Breakdown/Checklist:</h4>
-                    <ul className="checklist">
-                        {Object.entries(checklist).map(([week, task]) => (
-                            <li key={week}>{`${week}: ${task}`}</li>
-                        ))}
-                    </ul>
-                    <h4>Potential Project Names:</h4>
-                    <ul className="project-idea-potential-names">
-                        {potentialNames.map((name: string, index: number) => (
-                            <li key={index}>{name}</li>
-                        ))}
-                    </ul>
+                    <div className="first-generator-div">
+                        <h2 className="project-idea-title">{projectIdea}</h2>
+                        <p className="project-idea-description">{projectDescription}</p>
+                    </div>
+                    <div className="second-generator-div">
+                        <div className="generator-tech">
+                            <h3 className="tech-stack-header">Tech Stack</h3>
+                            <p className="project-idea-description">{techStack.join(', ')}</p>
+                        </div>
+                        <div className="generator-time">
+                            <h3 className="estimated-time-header">Estimated Time Commitment</h3>
+                            <p className="project-idea-description">{timeCommitment}</p>
+                        </div>
+                    </div>
+                    <div className="first-generator-div">
+                        <h4>Time Breakdown</h4>
+                        <ul className="checklist">
+                            {Object.entries(checklist).map(([week, task]) => (
+                                <li key={week}>{`${week}: ${task}`}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="second-generator-div">
+                        <h4>Potential Names</h4>
+                        <ul className="generator-potential-names-list">
+                            {potentialNames.map((name: string, index: number) => (
+                                <li className="generator-name-list-items" key={index}>{name}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             );
         } catch (error) {
@@ -98,8 +113,12 @@ const ProjectGenerator: React.FC = () => {
                         role: "user",
                         content: `Given the user's input, recommend a personalized project idea, 
                         tech stack, estimated time commitment, and a weekly breakdown/checklist for completing the project. 
-                        If the user inputs "Any," provide a random project idea. Also, suggest potential project names and provide a 
-                        full description of the project’s features and functionality. Make sure to tailor the recommendation 
+                        If the user inputs "Any," provide a random project idea. Make the breif summary of project 
+                        as clear as possible outlining potential features and uses.
+                        Also, suggest potential project names and provide a 
+                        full description of the project’s features and functionality. 
+                        Give something unique, creative, and really interesting unless otherwise specified.
+                        Make sure to tailor the recommendation 
                         based on the input provided. Format your response in the following JSON structure:
 
 {
@@ -134,7 +153,7 @@ User Input: "${input}"`, // Change the response format to an array of projects
                     },
                 ],
                 model: "llama3-8b-8192", // Ensure this is the correct model for your use case
-                temperature: 0.5,
+                temperature: 1,
                 max_tokens: 1024,
                 top_p: 1,
                 stream: false,
@@ -161,55 +180,36 @@ User Input: "${input}"`, // Change the response format to an array of projects
     return (
         <>
             <div className="preference-page">
-            <h2 className="page-heading">Hey Estia, find me...</h2>
-                <div className="navigation-links">
-                <NavLink
-                        to="/preference"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                        end
-                    >
-                        Programming languages/frameworks to learn
-                    </NavLink>
-                    <NavLink
-                        to="/preference/give-project"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A project within your collection
-                    </NavLink>
-                    <NavLink
-                        to="/preference/project-idea"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A fresh new project idea
-                    </NavLink>
-                </div>
+                <h2 className="page-heading">Alright Estia, find me...</h2>
+                <PreferenceLinks />
                 <div className="fade-in-div">
-                <div className="page-heading-container">
-                    <p className="preference-description">
-                    Provide us with a theme or concept, and we'll expand it into a comprehensive project idea, 
-                    complete with recommended technologies and a checklist of tasks to accomplish.
-                    </p>
-                </div>
-                <form className="input-form" onSubmit={handleSubmit}>
-                    <textarea
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        rows={3}
-                        placeholder="Describe what you're interested in building..."
-                        className="input-field"
-                    />
-                    <button type="submit" className="submit-button" disabled={loading}>
-                        {loading ? "Processing..." : "Submit"}
-                    </button>
-                </form>
-                {output && (
-                    <div>
-                        <h3 className="related-results">Related results:</h3>
-                        <div className="project-idea-container">
-                            {formatOutput(output)}
-                        </div>
+                    <div className="page-heading-container">
+                        <p className="preference-description">
+                            Provide us with a theme or concept, and we'll expand it into a comprehensive project idea,
+                            complete with recommended technologies and a checklist of tasks to accomplish.
+                            Type "Any" for something random.
+                        </p>
                     </div>
-                )}
+                    <form className="input-form" onSubmit={handleSubmit}>
+                        <textarea
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            rows={3}
+                            placeholder="Describe what you're interested in building..."
+                            className="input-field"
+                        />
+                        <button type="submit" className="submit-button" disabled={loading}>
+                            {loading ? "Processing..." : "Submit"}
+                        </button>
+                    </form>
+                    {output && (
+                        <div>
+                            <h3 className="related-results">Try this:</h3>
+                            <div className="project-idea-container">
+                                {formatOutput(output)}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

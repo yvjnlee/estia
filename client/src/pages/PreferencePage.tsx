@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
 import Groq from "groq-sdk"; // Import the Groq SDK
+import { Navbar } from "../components/navbar/Navbar";
+import { PreferenceLinks } from "../components/navbar/PreferenceLinks";
 
 const PreferencePage: React.FC = () => {
     const [input, setInput] = useState("");
@@ -187,28 +189,8 @@ say you are giving a json formatted response just give the json file. Do not rep
     return (
         <>
             <div className="preference-page">
-            <h2 className="page-heading">Hey Estia, find me...</h2>
-                <div className="navigation-links">
-                    <NavLink
-                        to="/preference"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                        end
-                    >
-                        Programming languages/frameworks to learn
-                    </NavLink>
-                    <NavLink
-                        to="/preference/give-project"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A project within your collection
-                    </NavLink>
-                    <NavLink
-                        to="/preference/project-idea"
-                        className={({ isActive }) => (isActive ? "active-nav-link" : "nav-link")}
-                    >
-                        A fresh new project idea
-                    </NavLink>
-                </div>
+            <h2 className="page-heading">Alright Estia, find me...</h2>
+                <PreferenceLinks/>
                 <div className="fade-in-div">
                 <div className="page-heading-container">
                     <p className="preference-description">

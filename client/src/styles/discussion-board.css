@@ -13,7 +13,8 @@ body {
     flex-direction: column;
     position: relative;
     margin: 20px 0;
-    background-color: #151b23;
+    background-color: #0E1011;
+    border: 1px solid #383838;
     border-radius: 10px;
     padding: 5rem;
     padding-top: 5rem !important;
@@ -93,14 +94,19 @@ body {
     flex-direction: row;
     align-items: center;
     position: relative;
-    background-color: #151b23;
+    background-color: #0E1011;
     border-radius: 10px;
     padding: 2rem;
 }
 .comment-form {
-    background-color: #151b23;
+    background-color: #0E1011;
     font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Roboto", "Oxygen", "Ubuntu",
         "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.comments {
+    border: 1px solid #383838;
+    margin-left: 0rem;
 }
 
 .comment-container {

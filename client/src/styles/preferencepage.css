@@ -234,33 +234,78 @@
 
 .preference-description {
     font-size: var(--font-size-sm);
-    max-width: 1000px;
+    max-width: 1400px;
 }
 
 .page-heading-container {
     margin-bottom: 1rem;
 }
 
+.project-details {
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: calc(0.8s * var(--animation-order));
+}
+
+.first-generator-div {
+    padding: 2rem 2rem;
+    border: 1px solid #383838;
+}
+
+.second-generator-div {
+    padding: 2rem;
+    border: 1px solid #383838;
+    display: flex;
+    justify-content: space-between; /* Space out the two blocks */
+    align-items: flex-start; /* Align the blocks to the top */
+}
+
+.generator-tech,
+.generator-time {
+    display: flex;
+    flex-direction: column; /* Make content stack vertically */
+    align-items: center; /* Center align content within each block */
+    text-align: center; /* Center align text inside */
+    flex: 1; /* Make each block take equal space */
+}
 
 .project-idea-title {
-    font-size: var(--font-size-lg); /* Large font size for title */
-    margin-bottom: 10px; /* Space below the title */
+    font-size: var(--font-size-md);
+    margin-bottom: 10px;
 }
 
 .project-idea-description {
-    font-size: var(--font-size-md); /* Medium font size for description */
-    margin-bottom: 20px; /* Space below description */
+    font-size: var(--font-size-sm);
+    margin-bottom: 20px;
 }
 
-.project-idea-tech-stack, .estimated-time {
-    font-size: var(--font-size-sm); /* Smaller font size for additional details */
-    margin-bottom: 15px; /* Space below each item */
+.tech-stack-header,
+.estimated-time-header {
+    font-size: var(--font-size-sm);
+    margin-bottom: 15px;
 }
+
 
 h4 {
     font-size: var(--font-size-md); /* Medium font size for subheadings */
     margin-top: 20px; /* Space above headings */
     margin-bottom: 10px; /* Space below headings */
+}
+
+.generator-potential-names-list {
+    display: flex; /* Display list items in a row */
+    justify-content: space-between; /* Space items evenly */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    list-style: none; /* Remove bullet points */
+    width: 100%; /* Make the list take full width */
+}
+
+.generator-name-list-items {
+    font-size: var(--font-size-sm);
+    margin: 0 1rem; /* Add horizontal spacing between items */
+    justify-content: center;
+    margin-top: 2.25rem;
+    align-items: center;
 }
 
 .checklist, .project-idea-potential-names {

@@ -36,6 +36,7 @@ export const UserCreated: React.FC = () => {
                         userProjects?.map((project: ProjectInfo, index: number) => (
                             <ProjectCard
                                 key={index}
+                                projectId={project.projectId}
                                 projectName={project.projectName}
                                 tech1={project.tech1}
                                 tech2={project.tech2}
