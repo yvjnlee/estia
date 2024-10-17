@@ -13,8 +13,8 @@
 .loading-header {
     position: absolute;
     top: 20px;
-    font-size: 1.5rem;
-    color: #AF0880;
+    font-size: var(--font-size-sm);
+    color: var(--accent-colour);
     z-index: 10;
 }
 
@@ -59,7 +59,7 @@
 
 /* Inner box faces */
 .loading-animation .box > div {
-    background: #AF0880;
+    background: var(--accent-colour);
     --translateZ: 15.5px;
     --rotateY: 0deg;
     --rotateX: 0deg;
@@ -80,7 +80,7 @@
     background: #b35a9a;
 }
 .loading-animation .box > div:nth-child(2) {
-    background: #AF0880;
+    background: var(--accent-colour);
     right: 0;
     --rotateY: 90deg;
 }

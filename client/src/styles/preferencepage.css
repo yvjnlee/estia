@@ -72,10 +72,10 @@
 
 .submit-button {
     padding: 0.75rem 1.5rem;
-    font-size: 1.1rem;
+    font-size: var(--font-size-xs);
     border: none;
     border-radius: 8px;
-    background-color: #AF0880;
+    background-color: var(--accent-colour);
     color: white;
     cursor: pointer;
     width: 15rem;
@@ -98,7 +98,7 @@
 }
 
 .output-heading {
-    font-size: 1.75rem;
+    font-size: var(--font-size-md);
     margin-bottom: 1rem;
 }
 
@@ -140,7 +140,7 @@
 }
 
 .theme-heading {
-    font-size: 1.5rem;
+    font-size: var(--font-size-sm);
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
@@ -178,7 +178,7 @@
 }
 
 .category-heading {
-    font-size: 1.2rem;
+    font-size: var(--font-size-xs);
     margin-bottom: 0.3rem;
     font-weight: bold;
 }
@@ -188,7 +188,7 @@
 }
 
 .projects-heading {
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
     align-items: center;
     padding: 1rem;
     justify-content: center;
@@ -210,7 +210,7 @@
 }
 
 .category-item {
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
     margin-bottom: 1rem;
     background-color: inherit;
 }
@@ -248,24 +248,30 @@
 
 .first-generator-div {
     padding: 2rem 2rem;
-    border: 1px solid #383838;
+    border: 1px solid var(--border-color);
 }
 
 .second-generator-div {
     padding: 2rem;
-    border: 1px solid #383838;
+    border: 1px solid var(--border-color);
     display: flex;
-    justify-content: space-between; /* Space out the two blocks */
-    align-items: flex-start; /* Align the blocks to the top */
+    justify-content: space-between;
+    /* Space out the two blocks */
+    align-items: flex-start;
+    /* Align the blocks to the top */
 }
 
 .generator-tech,
 .generator-time {
     display: flex;
-    flex-direction: column; /* Make content stack vertically */
-    align-items: center; /* Center align content within each block */
-    text-align: center; /* Center align text inside */
-    flex: 1; /* Make each block take equal space */
+    flex-direction: column;
+    /* Make content stack vertically */
+    align-items: center;
+    /* Center align content within each block */
+    text-align: center;
+    /* Center align text inside */
+    flex: 1;
+    /* Make each block take equal space */
 }
 
 .project-idea-title {
@@ -286,46 +292,63 @@
 
 
 h4 {
-    font-size: var(--font-size-md); /* Medium font size for subheadings */
-    margin-top: 20px; /* Space above headings */
-    margin-bottom: 10px; /* Space below headings */
+    font-size: var(--font-size-md);
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .generator-potential-names-list {
-    display: flex; /* Display list items in a row */
-    justify-content: space-between; /* Space items evenly */
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
-    list-style: none; /* Remove bullet points */
-    width: 100%; /* Make the list take full width */
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    width: 100%;
 }
 
 .generator-name-list-items {
     font-size: var(--font-size-sm);
-    margin: 0 1rem; /* Add horizontal spacing between items */
+    margin: 0 1rem;
+    /* Add horizontal spacing between items */
     justify-content: center;
     margin-top: 2.25rem;
     align-items: center;
 }
 
-.checklist, .project-idea-potential-names {
-    list-style-type: none; /* Remove default bullet points */
-    padding: 0; /* Remove padding */
+.checklist,
+.project-idea-potential-names {
+    list-style-type: none;
+    /* Remove default bullet points */
+    padding: 0;
+    /* Remove padding */
 }
 
-.checklist li, .project-idea-potential-names li {
-    position: relative; /* Create a positioning context for pseudo-elements */
-    font-size: var(--font-size-sm); /* Font size for list items */
-    margin-bottom: 8px; /* Space between list items */
+.checklist li,
+.project-idea-potential-names li {
+    position: relative;
+    /* Create a positioning context for pseudo-elements */
+    font-size: var(--font-size-sm);
+    /* Font size for list items */
+    margin-bottom: 8px;
+    /* Space between list items */
 }
 
-.checklist li::before, .project-idea-potential-names li::before {
-    content: ''; /* No text content */
-    position: absolute; /* Position relative to the list item */
-    left: -20px; /* Adjust left positioning */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Center align */
-    width: 10px; /* Width of the dot */
-    height: 10px; /* Height of the dot */
-    border-radius: 50%; /* Make it a circle */
+.checklist li::before,
+.project-idea-potential-names li::before {
+    content: '';
+    /* No text content */
+    position: absolute;
+    /* Position relative to the list item */
+    left: -20px;
+    /* Adjust left positioning */
+    top: 50%;
+    /* Center vertically */
+    transform: translateY(-50%);
+    /* Center align */
+    width: 10px;
+    /* Width of the dot */
+    height: 10px;
+    /* Height of the dot */
+    border-radius: 50%;
+    /* Make it a circle */
 }

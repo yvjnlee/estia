@@ -9,7 +9,7 @@
 }
 
 .profile-title {
-    font-size: 3rem;
+    font-size: var(--font-size-xl);
     font-weight: 700;
     margin-bottom: 1.5rem;
 }
@@ -17,13 +17,13 @@
 
 
 .profile-heading{
-    font-size: 3rem;
+    font-size: var(--font-size-xl);
 }
 
 
 .saved-heading {
     display: block;
-    font-size: 2rem;
+    font-size: var(--font-size-md);
 }
 
 .outer-saved-section-div {

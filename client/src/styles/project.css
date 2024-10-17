@@ -80,7 +80,7 @@
 }
 
 .project-difficulty {
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
     margin-bottom: 0;
     padding-left: 12px;
     padding-top: 4px;
@@ -133,7 +133,7 @@
 }
 
 .tech-item {
-    font-size: 18px;
+    font-size: var(--font-size-xs);
     color: #ffffff;
     border-radius: 4px;
 }
@@ -251,7 +251,7 @@
     margin-top: 1rem;
     margin-left: 4rem;
     cursor: pointer;
-    font-size: 24px;
+    font-size: var(--font-size-sm);
 }
 
 .search-button:hover {
@@ -267,7 +267,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    font-size: 20px;
+    font-size: var(--font-size-xs);
     margin-left: 1rem;
 }
 
@@ -295,7 +295,7 @@
     margin-top: 1rem;
     margin-left: 1rem;
     cursor: pointer;
-    font-size: 24px;
+    font-size: var(--font-size-sm);
 }
 
 .white-filter {

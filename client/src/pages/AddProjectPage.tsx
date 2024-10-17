@@ -3,86 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/navbar/Navbar";
 import { supabase } from "../common/clients/supabaseClient";
+import Groq from "groq-sdk"; // Import the Groq SDK
 
-// Expanded dictionary of languages and frameworks
-const techStackOptions = [
-    "Android",
-    "Angular",
-    "ASP.NET",
-    "BackboneJS",
-    "Bootstrap",
-    "C",
-    "C++",
-    "C#",
-    "Cassandra",
-    "CodeIgniter",
-    "CSS",
-    "Dart",
-    "Deno",
-    "Django",
-    "Ember.js",
-    "Express",
-    "Flask",
-    "Framer Motion",
-    "Gatsby",
-    "Go",
-    "GraphQL",
-    "Haskell",
-    "HTML",
-    "Java",
-    "JavaScript",
-    "jQuery",
-    "Kotlin",
-    "Laravel",
-    "Materialize",
-    "MERN",
-    "MongoDB",
-    "MySQL",
-    "NestJS",
-    "NextJS",
-    "Node.js",
-    "Oracle",
-    "Pandas",
-    "PHP",
-    "PostgreSQL",
-    "Python",
-    "Rails",
-    "React",
-    "React Native",
-    "Redis",
-    "Redux",
-    "Ruby",
-    "Ruby on Rails",
-    "Rust",
-    "SCSS",
-    "Spring",
-    "Svelte",
-    "TailwindCSS",
-    "TensorFlow",
-    "TypeScript",
-    "VueJS",
-];
+import { FaInfoCircle } from 'react-icons/fa'; // Import an info icon
 
-const themeOptions = [
-    "Blockchain",
-    "Game Development",
-    "Full Stack",
-    "Portfolio",
-    "Full Stack Clone App",
-    "Frontend Clone App",
-    "Frontend",
-    "Backend",
-    "Machine Learning",
-    "Simple",
-    "Web Development",
-    "Webscraping",
-]
-
-const difficultyOptions = [
-    "Beginner",
-    "Intermediate",
-    "Advanced",
-]
+import { techStackOptions, themeOptions, difficultyOptions } from "../storage/option";
 
 const AddProject: React.FC = () => {
     const navigate = useNavigate();
@@ -97,24 +22,29 @@ const AddProject: React.FC = () => {
     const [theme, setTheme] = useState("");
     const [difficulty, setDifficulty] = useState("");
     const [error, setError] = useState(""); // Added state for error handling
+    const [loading, setLoading] = useState(false); // Loading state for AI summary
+    const [summarizedDescription, setSummarizedDescription] = useState(""); // State for summarized description
+    const [showText, setShowText] = useState(false);
+
+    const toggleText = () => setShowText(!showText);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         // Validate project name
         if (!isValidProjectName(projectName)) {
             setError("Project name cannot contain slashes (/) or backslashes (\\) and must be less than 32 characters.");
             return;
         }
-    
+
         // Validate required fields
         if (!projectName || !tech1 || !description || !theme || !difficulty) {
             setError("Please fill out all fields except for the background color.");
             return;
         }
-    
+
         setError(""); // Reset error message if valid
-    
+
         try {
             const { data, error } = await supabase.from("estia_projects").insert([
                 {
@@ -169,6 +99,64 @@ const AddProject: React.FC = () => {
         setRepoPath(extractRepoPath(input)); // Extract and set video ID
     };
 
+
+    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setDescription(e.target.value);
+    };
+    const summarizeDescription = async () => {
+        if (loading) return;
+
+        setLoading(true);
+        setSummarizedDescription(""); // Reset summarized description
+
+        const apiKey = process.env.REACT_APP_GROQ_API_KEY;
+        const groq = new Groq({
+            apiKey,
+            dangerouslyAllowBrowser: true,
+        });
+
+        try {
+            const response = await groq.chat.completions.create({
+                messages: [
+                    {
+                        role: "user",
+                        content: `I am creating project descriptions intended as introductory overviews for individuals eager to start coding projects. Your task is to carefully analyze the provided information and generate a concise paragraph summarizing the key concepts and skills the project will teach. Make it a brief one short paragraph of highlights. Please focus on the following guidelines:
+                        Relevance: Highlight only the essential knowledge and skills relevant to the learner. Consider different learning styles and backgrounds, ensuring that the description is accessible to beginners.
+                        Clarity: Use clear and straightforward language. Avoid jargon or complex terminology that might confuse novice learners. If technical terms are necessary, provide a brief explanation.
+                        Omissions: Exclude any promotional content, subscription requests, links, or unrelated information. The focus should solely be on the educational value of the project.
+                        Give it in a JSON format. I want it to be under a key called "description" and then a one paragraph description.
+                        Here is the submission: "${description}".`,
+                    },
+                ],
+                model: "llama3-8b-8192",
+                temperature: 0.2,
+                max_tokens: 150,
+                top_p: 1,
+                stream: false,
+                response_format: {
+                    type: "json_object",
+                },
+            });
+
+            if (response.choices[0].message.content) {
+                const jsonResponse = JSON.parse(response.choices[0].message.content);
+                const descriptionText = extractDescription(jsonResponse);
+                setSummarizedDescription(descriptionText);
+                setDescription(descriptionText); // Automatically set the summarized description as the new input
+            }
+        } catch (error) {
+            console.error("Error fetching data from Groq:", error);
+            setSummarizedDescription("Error summarizing description. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Helper function to extract the description from the JSON response
+    const extractDescription = (jsonResponse: { description?: string }): string => {
+        return jsonResponse.description || "Description not available.";
+    };
+
     return (
         <>
             <Navbar />
@@ -180,7 +168,7 @@ const AddProject: React.FC = () => {
                 </p>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Project Name:</label>
+                        <label className="heading-label">Project Name</label>
                         <input
                             placeholder="Give it a short name..."
                             className="name-input"
@@ -191,7 +179,7 @@ const AddProject: React.FC = () => {
                         />
                     </div>
                     <div className="tech-stack">
-                        <label>Tech Stacks:</label>
+                        <label className="heading-label">Tech Stacks</label>
                         <div className="tech-inputs-container">
                             <select
                                 className="tech-select"
@@ -225,7 +213,7 @@ const AddProject: React.FC = () => {
                         </div>
                     </div>
                     <div className="tech-stack">
-                        <label>Main Area of Focus:</label>
+                        <label className="heading-label">Main Area of Focus</label>
                         <div className="tech-inputs-container">
                             <select
                                 className="tech-select"
@@ -245,7 +233,7 @@ const AddProject: React.FC = () => {
                         </div>
                     </div>
                     <div className="tech-stack">
-                        <label>Difficulty Level</label>
+                        <label className="heading-label">Difficulty Level</label>
                         <div className="tech-inputs-container">
                             <select
                                 className="tech-select"
@@ -265,17 +253,31 @@ const AddProject: React.FC = () => {
                         </div>
                     </div>
                     <div>
-                        <label>Description:</label>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <label className="heading-label">Description</label>
+                            <button type="button" onClick={toggleText} className="info-icon">
+                                <FaInfoCircle style={{ fontSize: '24px' }} />
+                            </button>
+                            {showText && <span className="info-icon-info">"AI summarize" automatically rewords Youtube descriptions</span>}
+                        </div>
                         <textarea
-                            placeholder="Small blurb describing key concepts..."
-                            className="description-input"
                             value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={handleDescriptionChange}
+                            rows={3}
+                            placeholder="Enter project description..."
                             required
+                            className="add-project-input-field"
                         />
+                        <button
+                            type="button"
+                            onClick={summarizeDescription}
+                            disabled={loading}
+                            className="ai-button">
+                            {loading ? "Summarizing..." : "AI Summarize"}
+                        </button>
                     </div>
                     <div>
-                        <label>Link to GitHub Repository:</label>
+                        <label className="heading-label">GitHub Repo URL</label>
                         <input
                             placeholder="Paste entire link it will grab the repo path..."
                             className="link-input"
@@ -285,13 +287,13 @@ const AddProject: React.FC = () => {
                         />
                     </div>
                     <div>
-                        <label>YouTube Video URL:</label>
+                        <label className="heading-label">YouTube Video URL</label>
                         <input
                             placeholder="Paste entire link it will grab the video id..."
                             className="link-input"
                             type="text"
                             value={videoId}
-                            onChange={handleVideoIdChange} 
+                            onChange={handleVideoIdChange}
                         />
                     </div>
                     {error && <p className="error-message">{error}</p>}
