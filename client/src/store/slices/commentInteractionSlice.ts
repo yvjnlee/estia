@@ -18,13 +18,11 @@ const initialState: CommentInteractionState = {
 export const createCommentInteraction = createAsyncThunk(
     "commentInteraction/createCommentInteraction",
     async ({ newCommentInteraction, projectId, commentId, userId }: { newCommentInteraction: CommentInteractionDB, projectId: string; commentId: string; userId: string }) => {
-        const res = await fetchAPI(
+        return await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}/${projectId}`,
             "POST",
             newCommentInteraction
         )
-        console.log(res)
-        return res;
     }
 );
 

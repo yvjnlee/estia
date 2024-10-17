@@ -17,11 +17,11 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.project_id;
-    const commentId = req.params.comment_id;
-    const userId = req.params.user_id;
+    const projectId = req.params.projectId;
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
     const commentInteraction = req.body;
-
+    console.log(req.params)
     try {
       CommentInteractionsService.create(commentInteraction, projectId, commentId, userId).then((r) => {
         res.status(201).location(`/api/v1/commentInteractions/${r?.commentId}/${r?.userId}`).json(r);
@@ -48,8 +48,8 @@ export class Controller {
 
   get(req: Request<RequestParams>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
-    const commentId = req.params.comment_id;
-    const userId = req.params.user_id;
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
 
     try {
       CommentInteractionsService.getInteraction(commentId, userId).then((r) => {
@@ -72,9 +72,9 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.project_id;
-    const commentId = req.params.comment_id;
-    const userId = req.params.user_id;
+    const projectId = req.params.projectId;
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
     const commentInteraction = req.body;
 
     try {
@@ -100,9 +100,9 @@ export class Controller {
             interaction: true
         }
     } */
-    const projectId = req.params.project_id;
-    const commentId = req.params.comment_id;
-    const userId = req.params.user_id;
+    const projectId = req.params.projectId;
+    const commentId = req.params.commentId;
+    const userId = req.params.userId;
 
     try {
       CommentInteractionsService.delete(projectId, commentId, userId).then((r) => {

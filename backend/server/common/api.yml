@@ -660,14 +660,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "comment_id": {
-                  "type": "string",
-                  "example": ""
-                },
-                "user_id": {
-                  "type": "string",
-                  "example": ""
-                },
                 "interaction": {
                   "type": "boolean",
                   "example": true

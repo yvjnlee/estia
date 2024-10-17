@@ -58,10 +58,13 @@ export class CommentInteractionsService {
     if (commentInteraction.interaction === false) {
         likes = -1;
     }
+    console.log(projectId)
+    console.log(commentId)
+    console.log(userId)
     const comment = await this.getComment(projectId, commentId, userId);
     
     await this.updateLikes(comment, likes);
-    console.log(commentInteractionData)
+    
     return commentInteractionData;
   }
 
@@ -79,7 +82,7 @@ export class CommentInteractionsService {
   }
 
   async getInteraction(commentId: string, userId: string): Promise<CommentInteraction | null> {
-    L.info(`Fetching comment with id: ${commentId}, ${userId}`);
+    L.info(`Fetching comment interaction with id: ${commentId}, ${userId}`);
     const { data, error } = await supabase
       .from('comment_interactions')
       .select()
@@ -87,7 +90,7 @@ export class CommentInteractionsService {
       .eq('user_id', userId)
       .single();
     if (error) {
-      L.error(`Error fetching comment by id: ${error.message}`);
+      L.error(`Error fetching comment interaction by id: ${error.message}`);
       return null;
     }
     console.log(data)
