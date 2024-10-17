@@ -52,6 +52,8 @@
     --intermediate-colour: #5d5d25;
     --advanced-colour: #582727;
 
+    --white-in-dark-theme: #fff;
+
 }
 
 body {
@@ -69,12 +71,12 @@ code {
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 50px white inset; /* Change the color to your own background color */
+    -webkit-box-shadow: 0 0 0 50px var(--white-in-dark-theme) inset; /* Change the color to your own background color */
     -webkit-text-fill-color: #333;
 }
 
 input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 50px white inset; /*your box-shadow*/
+    -webkit-box-shadow: 0 0 0 50px var(--white-in-dark-theme) inset; /*your box-shadow*/
     -webkit-text-fill-color: #333;
 }
 

@@ -51,6 +51,7 @@ export const techStackOptions = [
     "SCSS",
     "Spring",
     "Svelte",
+    "Swift",
     "TailwindCSS",
     "TensorFlow",
     "TypeScript",
@@ -58,16 +59,17 @@ export const techStackOptions = [
 ];
 
 export const themeOptions = [
-    "Blockchain",
-    "Game Development",
-    "Full Stack",
-    "Portfolio",
-    "Full Stack Clone App",
-    "Frontend Clone App",
-    "Frontend",
     "Backend",
+    "Blockchain",
+    "Core Utility",
+    "Frontend",
+    "Frontend Clone App",
+    "Full Stack",
+    "Full Stack Clone App",
+    "Game Development",
     "Machine Learning",
     "Simple",
+    "Portfolio",
     "Web Development",
     "Webscraping",
 ];

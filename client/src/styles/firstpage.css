@@ -12,7 +12,7 @@
 }
 
 .initial-title {
-    color: white !important;
+    color: var(--white-in-dark-theme) !important;
     font-size: var(--font-size-largest);
     font-weight: 100;
     display: flex;
@@ -32,7 +32,7 @@
 }
 
 .initial-slogan {
-    color: white !important;
+    color: var(--white-in-dark-theme) !important;
     font-size: var(--font-size-xxxl);
     font-weight: 600;
     /* Heavier font weight */
@@ -95,7 +95,7 @@
     width: 340px;
     height: 70px;
     margin-bottom: 10px;
-    background-color: white;
+    background-color: var(--white-in-dark-theme);
     color: #2d2d2d !important;
     display: flex;
     align-items: center;
@@ -115,7 +115,7 @@
     height: 90px;
     margin-bottom: 10px;
     background-color: var(--accent-colour);
-    color: #fff !important;
+    color: var(--white-in-dark-theme) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -195,7 +195,7 @@
 
 .footer {
     background-color: none;
-    color: #ffffff;
+    color: var(--white-in-dark-theme);
     text-align: center;
     padding: 2rem 0;
     margin-top: 4rem;
@@ -204,7 +204,7 @@
 }
 
 .footer a {
-    color: #ffffff;
+    color: var(--white-in-dark-theme);
     text-decoration: none;
     display: block;
     margin: 0 0.5rem;

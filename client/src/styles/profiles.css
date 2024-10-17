@@ -1,5 +1,5 @@
 .profile-page{
-        color: #fff;
+        color: var(--white-in-dark-theme);
         padding: 20px;
         border-radius: 10px;
         width: 100%;

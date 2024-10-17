@@ -1,5 +1,5 @@
 .add-project-form {
-    color: #fff;
+    color: var(--white-in-dark-theme);
     padding: 20px;
     border-radius: 10px;
     width: 100%;
@@ -37,7 +37,7 @@
     border: none;
     padding: 1rem;
     background-color: #151b23;
-    color: #fff;
+    color: --white-in-dark-theme;
 }
 
 .name-input {
@@ -101,7 +101,7 @@
 }
 
 .colour-button.active {
-    border: 2px solid #fff;
+    border: 2px solid var(--white-in-dark-theme);
 }
 
 .link-split-container {
@@ -121,7 +121,7 @@
 }
 
 .back-button {
-    background-color: #fff;
+    background-color: var(--white-in-dark-theme);
     color: #000000;
     border: none;
     font-size: var(--font-size-xs);
@@ -134,14 +134,14 @@
 }
 
 .back-button:hover {
-    color: #fff;
+    color: var(--white-in-dark-theme);
     background-color: #151b23;
 }
 
 .info-icon {
     margin-top: 1rem;
     margin-left: 1rem;
-    color: #ffffff; /* Change this color as needed */
+    color: var(--white-in-dark-theme); /* Change this color as needed */
     cursor: pointer;
     align-items: center;
     width: 40px;
@@ -171,7 +171,7 @@
     border: none;
     padding: 1rem;
     background-color: #151b23;
-    color: #fff;
+    color: var(--white-in-dark-theme);
     resize: none;
 }
 

@@ -94,7 +94,7 @@
   .project-difficulty.beginner {
     width: 85px;
     background-color: var(--beginner-colour);
-    color: #fff;  
+    color: var(--white-in-dark-theme);  
     font-weight: 400;
     font-size: var(--font-size-xs);
 }
@@ -102,7 +102,7 @@
   .project-difficulty.intermediate {
     width: 115px;
     background-color: var(--intermediate-colour);
-    color: #fff;
+    color: var(--white-in-dark-theme);
     font-weight: 400;
     font-size: var(--font-size-xs);
   }
@@ -110,7 +110,7 @@
   .project-difficulty.advanced {
     width: 95px;
     background-color: var(--advanced-colour);
-    color: #fff;
+    color: var(--white-in-dark-theme);
     font-weight: 400;
     font-size: var(--font-size-xs);
   }
@@ -134,7 +134,7 @@
 
 .tech-item {
     font-size: var(--font-size-xs);
-    color: #ffffff;
+    color: var(--white-in-dark-theme);
     border-radius: 4px;
 }
 
@@ -181,7 +181,7 @@
     top: 10px;
     right: 10px;
     background-color: red;
-    color: white;
+    color: var(--white-in-dark-theme);
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
@@ -208,7 +208,7 @@
     border: none;
     margin-top: 1rem;
     font-size: var(--font-size-sm);
-    color: white;
+    color: var(--white-in-dark-theme);
 }
 
 
@@ -239,7 +239,7 @@
 }
 
 .search-bar[type="text"] {
-    color: white;
+    color: var(--white-in-dark-theme);
 }
 
 .search-button {

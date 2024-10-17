@@ -19,7 +19,7 @@
 .login-title {
     display: flex;
     align-items: center;
-    color: white !important;
+    color: var(--white-in-dark-theme) !important;
     font-size: var(--font-size-xxxl);
     padding: 0px;
     margin-top: 32px;

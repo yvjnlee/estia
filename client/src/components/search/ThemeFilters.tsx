@@ -3,19 +3,9 @@ import { setThemeFilter } from "../../store/slices/projectSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { filterProjects } from "../../api/projectAPI";
 
+import { themeOptions } from "../../storage/option";
+
 export const ThemeFilters: React.FC = () => {
-    const themeOptions = [
-        "Game Development",
-        "Full Stack",
-        "Portfolio",
-        "Full Stack Clone App",
-        "Frontend Clone App",
-        "Frontend",
-        "Backend",
-        "Machine Learning",
-        "Simple",
-        "Web Development",
-    ];
 
     const dispatch = useAppDispatch();
     const [selectedThemes, setSelectedThemes] = useState<string[]>([]);

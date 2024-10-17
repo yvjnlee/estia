@@ -114,11 +114,12 @@ const ProjectGenerator: React.FC = () => {
                         role: "user",
                         content: `Given the user's input, recommend a personalized project idea, 
                         tech stack, estimated time commitment, and a weekly breakdown/checklist for completing the project. 
-                        If the user inputs "Any," provide a random project idea. Make the breif summary of project 
+                        If the user inputs "Any," provide a random project idea and try to not make it AI related. Make the breif summary of project 
                         as clear as possible outlining potential features and uses.
                         Also, suggest potential project names and provide a 
                         full description of the project’s features and functionality. 
                         Give something unique, creative, and really interesting unless otherwise specified.
+                        
                         Make sure to tailor the recommendation 
                         based on the input provided. Format your response in the following JSON structure:
 
@@ -189,7 +190,7 @@ User Input: "${input}"`, // Change the response format to an array of projects
                         <p className="preference-description">
                             Provide us with a theme or concept, and we'll expand it into a comprehensive project idea,
                             complete with recommended technologies and a checklist of tasks to accomplish.
-                            Type "Any" for something random.
+                            Type <span style={{fontWeight: "700"}} className="highlight">Any</span> for something random.
                         </p>
                     </div>
                     <form className="input-form" onSubmit={handleSubmit}>

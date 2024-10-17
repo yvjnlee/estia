@@ -150,7 +150,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.76);
-    color: white;
+    color: var(--white-in-dark-theme);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -263,7 +263,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
-    color: #fff;
+    color: var(--white-in-dark-theme);
     padding: 0.5rem;
     border-radius: 5px;
     white-space: nowrap;
@@ -388,7 +388,7 @@ body.modal-open {
     right: 0;
     width: 100%;
     height: 100%;
-    background: white;
+    background: var(--white-in-dark-theme);
     padding: 20px;
     z-index: 1001;
     transform: translateX(100%); /* Start off-screen */
@@ -454,7 +454,7 @@ body.modal-open {
 
 .common-use-li {
     background-color: none;
-    color: white;
+    color: var(--white-in-dark-theme);
     font-size: var(--font-size-sm);
     width: 100%;
     padding: 20px 22px;
@@ -497,7 +497,7 @@ body.modal-open {
 }
 
 .res-link {
-    color: white;
+    color: var(--white-in-dark-theme);
     font-weight: 500;
 }
 
