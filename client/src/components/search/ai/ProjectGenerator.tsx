@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
-import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Project } from "../../../common/types";
 import { groq } from "../../../common/clients";
@@ -181,7 +180,6 @@ User Input: "${input}"`, // Change the response format to an array of projects
 
     return (
         <>
-            <Navbar />
             <div className="preference-page">
                 <h2 className="page-heading">Alright Estia, find me...</h2>
                 <PreferenceLinks />

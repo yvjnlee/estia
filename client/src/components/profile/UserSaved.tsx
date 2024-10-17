@@ -7,6 +7,7 @@ import { User } from "../../common/types";
 import { getSession } from "../../api/authAPI";
 import { getUserSavedProjects } from "../../api/projectAPI";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import ProjectCard from "../project/ProjectCard";
 
 export const UserSaved: React.FC = () => {
     const [savedProjects, setSavedProjects] = useState<ProjectInfo[]>([]);
@@ -49,26 +50,16 @@ export const UserSaved: React.FC = () => {
                 {savedProjects.length > 0 ? (
                     <div className="project-theme-section">
                         {savedProjects.map((project: ProjectInfo, index: number) => (
-                            <Link
-                                to={`/project/${project.projectName}`}
-                                style={{ textDecoration: "none", color: "inherit" }}
-                                key={index}
-                            >
-                                <div className="project-container" style={containerStyle}>
-                                    <h2
-                                        className={`project-difficulty ${project.difficulty?.toLowerCase() || "beginner"}`}
-                                    >
-                                        {project.difficulty || "Beginner"}
-                                    </h2>
-                                    <h2 className="project-title">{project.projectName}</h2>
-                                    <div className="project-tech">
-                                        <span className="tech-item">
-                                            {project.tech1}
-                                            {project.tech2 ? `, ${project.tech2}` : ""}
-                                        </span>
-                                    </div>
-                                </div>
-                            </Link>
+                            <ProjectCard
+                            key={index}
+                            projectId={project.projectId}
+                            projectName={project.projectName}
+                            tech1={project.tech1}
+                            tech2={project.tech2}
+                            difficulty={project.difficulty || "Beginner"} // Default difficulty if null
+                            createdAt={project.createdAt} // Pass createdAt
+                            colour={project.colour} // Pass colour
+                        />
                         ))}
                     </div>
                 ) : (

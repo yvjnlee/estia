@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import YouTubeEmbed from "./embed/YoutubeEmbed";
 import GitHubRepo from "./embed/GithubEmbed";
 
@@ -10,92 +10,88 @@ import FavImage from "../../img/Star.svg";
 import SavedImage from "../../img/Starred.svg";
 
 // Import components
-import { Navbar } from "../navbar/Navbar";
 import TechStack from "./TechStack";
 import DifficultyLevel from "./DifficultyLevel";
 import DiscussionBoard from "./DiscussionBoard";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import {
-    getProjectByName,
-    getUserLikedProjects,
-    getUserSavedProjects,
-    toggleLikeProject,
-    toggleSaveProject,
-} from "../../api/projectAPI";
+import { getProjectById, getUserLikedProjects, getUserSavedProjects, toggleLikeProject, toggleSaveProject } from "../../api/projectAPI";
 import { Project, User, Comment } from "../../common/types";
 import { SavedProject, LikedProject } from "../../types/project";
 import { getSession } from "../../api/authAPI";
-import { getComments } from "../../api/commentAPI";
+import { getCommentsByProjectId } from "../../api/commentAPI";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
-const ProjectDetails: React.FC = () => {
-    const navigate = useNavigate();
+export const ProjectDetails: React.FC = () => {
+    const navigate = useNavigate(); // Hook for navigation
     const dispatch = useAppDispatch();
 
     const [project, setProject] = useState<Project | null>(null);
+    const [projectLoading, setProjectLoading] = useState<boolean>(true);
     const [user, setUser] = useState<User | null>(null);
-    const [isLiked, setIsLiked] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
+    const [isLiked, setIsLiked] = useState(false); // Manage liked state
+    const [isSaved, setIsSaved] = useState(false); // Manage saved state
     const [comments, setComments] = useState<Comment[]>([]);
-    const [loading, setLoading] = useState(true);
 
+    const { creatingComment } = useSelector((state: RootState) => state.comments);
+    const { interactingComment } = useSelector((state: RootState) => state.comments);
+    
+    // Get the current URL and extract the project title
     const url = window.location.href;
     const urlParts = url.split("/");
     const rawTitle = urlParts[urlParts.length - 1];
-    const decodedTitle = decodeURIComponent(rawTitle);
-    console.log("Decoded Title:", decodedTitle); // Check the value here
+  
+    // Decode the project id from URL
+    const projectId = decodeURIComponent(rawTitle);
 
-
-    // Fetch all necessary data
+    // Get the project details based on the decoded title parameter
     useEffect(() => {
-        // Inside the fetchData function
-        const fetchData = async () => {
-            try {
-                // Fetch project details and session data concurrently
-                const [project, session] = await Promise.all([
-                    getProjectByName(dispatch, decodedTitle),
-                    getSession(),
-                ]);
-
-                // Log the project object
-                console.log("Fetched Project Object:", project);
-                console.log("Hello")
+        if (projectId) {
+            getProjectById(dispatch, projectId).then((project) => {
+              if (project) {
                 setProject(project);
-                setUser(session?.user || null);
+                setProjectLoading(false);
+              }
+            });
+        }
+    }, [dispatch, projectId]);
 
-                // Fetch comments
-                const commentsData = await getComments(dispatch);
-                setComments(commentsData);
-
-                // If user is logged in, check if the project is liked or saved
-                if (session?.user) {
-                    const [savedProjects, likedProjects] = await Promise.all([
-                        getUserSavedProjects(dispatch, session.user.id),
-                        getUserLikedProjects(dispatch, session.user.id),
-                    ]);
-
-                    // Check if the project is saved
-                    const isProjectSaved = savedProjects.some(
-                        (savedProject: SavedProject) => savedProject.projectName === project?.projectName
-                    );
-                    setIsSaved(isProjectSaved);
-
-                    // Check if the project is liked
-                    const isProjectLiked = likedProjects.some(
-                        (likedProject: LikedProject) => likedProject.projectName === project?.projectName
-                    );
-                    setIsLiked(isProjectLiked);
-                }
-
-                // Set loading to false after all data is fetched
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                setLoading(false); // Ensure loading is set to false even if there's an error
+    useEffect(() => {
+        getSession().then((session) => {
+            if (session?.user) {
+                setUser(session.user);
             }
-        };
+        });
+    }, []);
 
-        fetchData();
-    }, [dispatch, decodedTitle]);
+    const checkIfSaved = async () => {
+        if (user) {
+            const savedProjects = await getUserSavedProjects(dispatch, user.id);
+            const isProjectSaved = savedProjects.some(
+                (savedProject: SavedProject) => savedProject.projectName === project?.projectName
+            );
+            setIsSaved(isProjectSaved);
+        }
+        return false;
+    }
+
+    const checkIfLiked = async () => {
+        if (user) {
+            const likedProjects = await getUserLikedProjects(dispatch, user.id);
+            const isProjectLiked = likedProjects.some(
+                (likedProject: LikedProject) => likedProject.projectName === project?.projectName
+            );
+            setIsLiked(isProjectLiked);
+        }
+        return false;
+    }
+
+    useEffect(() => {
+        if (project) {
+            checkIfSaved();
+            checkIfLiked();
+        }
+    }, [project, user]);
 
     const handleSave = async () => {
         if (project && user) {
@@ -119,11 +115,19 @@ const ProjectDetails: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        getCommentsByProjectId(dispatch, projectId).then((comments) => {
+            if (comments) {
+                setComments(comments);
+            }
+        });
+    }, [creatingComment, interactingComment]);
+
     const saveButtonClass = isSaved ? "saved" : "save";
     const likeButtonClass = isLiked ? "liked" : "like";
 
     // Render loading indicator if still loading
-    if (loading) {
+    if (projectLoading) {
         return <div className="loading">
             <div className="loading-animation">
                 <div className="box">
@@ -157,8 +161,7 @@ const ProjectDetails: React.FC = () => {
     // Render the component once all data is fetched
     return (
         <>
-            <Navbar />
-            <div className="details-main-container">
+                  <div className="details-main-container">
                 <div className="grid-container">
                     <div>
                         <div className="details-container">
@@ -202,7 +205,7 @@ const ProjectDetails: React.FC = () => {
                                 </p>
                             </button>
                         </div>
-                        <DiscussionBoard comments={comments} />
+                        <DiscussionBoard comments={comments} project={project} />
                     </div>
                     
                     <div className="additional-information-container">
@@ -214,5 +217,3 @@ const ProjectDetails: React.FC = () => {
         </>
     );
 };
-
-export default ProjectDetails;

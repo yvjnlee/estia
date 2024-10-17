@@ -5,7 +5,7 @@ import { Project } from '../../../../common/types';
 
 export class Controller {
   // Create
-  create(req: Request<unknown, Project>, res: Response): void {
+  create(req: Request<unknown, unknown, Project>, res: Response): void {
     // #swagger.tags = ['Projects']
     const project: Project = req.body;
 
@@ -61,10 +61,10 @@ export class Controller {
   }
 
   // Update
-  update(req: Request<RequestParams, Project>, res: Response): void {
+  update(req: Request<RequestParams, unknown, Partial<Project>>, res: Response): void {
     // #swagger.tags = ['Projects']
     const id = req.params.id;
-    const project: Project = req.body; // Assuming you send the full Project object
+    const project = req.body; // Assuming you send the full Project object
 
     try {
       ProjectsService.update(id, project).then((r) => {
@@ -98,9 +98,8 @@ export class Controller {
 
     try {
       ProjectsService.getByUserId(userId).then((r) => {
-        if (r && r.length > 0) {
-          res.json(r);
-        } else {
+        if (r) res.json(r);
+        else {
           res.status(404).json({ message: 'No projects found for this user' });
         }
       });

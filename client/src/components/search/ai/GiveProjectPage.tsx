@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
 import Groq from "groq-sdk"; // Import Groq SDK
-import { Navbar } from "../../navbar/Navbar";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { Project, ProjectDB } from "../../../common/types";
@@ -182,7 +181,6 @@ If you believe that only one project title fits well, provide just that single r
 
     return (
         <>
-            <Navbar />
             <div className="preference-page">
                 <h2 className="page-heading">Alright Estia, find me...</h2>
                     <PreferenceLinks />

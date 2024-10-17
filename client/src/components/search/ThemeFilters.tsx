@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { setThemeFilter } from "../../store/slices/projectSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { filterProjects } from "../../api/projectAPI";
 
 import { themeOptions } from "../../storage/option";
 
@@ -11,12 +10,12 @@ export const ThemeFilters: React.FC = () => {
     const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
     const [showMore, setShowMore] = useState(false);
 
-    const handleFilter = (tech: string) => {
+    const handleFilter = (theme: string) => {
         setSelectedThemes((prevSelected) => {
-            const isChecked = prevSelected.includes(tech);
+            const isChecked = prevSelected.includes(theme);
             const newSelected = isChecked
-                ? prevSelected.filter((item) => item !== tech)
-                : [...prevSelected, tech];
+                ? prevSelected.filter((item) => item !== theme)
+                : [...prevSelected, theme];
 
             dispatch(setThemeFilter(newSelected));
             console.log(newSelected);

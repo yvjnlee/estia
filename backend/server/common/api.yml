@@ -24,11 +24,8 @@
         ],
         "description": "",
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -116,14 +113,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -301,11 +292,8 @@
         ],
         "description": "",
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -393,14 +381,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -436,6 +418,39 @@
           "Comments"
         ],
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": ""
+                },
+                "user_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "project_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "likes": {
+                  "type": "number",
+                  "example": 0
+                },
+                "username": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -527,14 +542,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -549,6 +558,195 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/commentInteractions/": {
+      "post": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment Interaction data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "user_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "interaction": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/commentInteractions/comment/{commentId}": {
+      "get": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/commentInteractions/comment/{commentId}/user/{userId}": {
+      "get": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment Interaction data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "interaction": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CommentInteractions"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Comment Interaction data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "user_id": {
+                  "type": "string",
+                  "example": ""
+                },
+                "interaction": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
           }
         ],
         "responses": {

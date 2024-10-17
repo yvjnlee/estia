@@ -29,8 +29,6 @@ export const ProfileButton = () => {
         }
     }, [session, dispatch]);
 
-    console.log(username, session);
-
     return (
         <>
             {sessionLoading && userLoading && <>Loading</>}

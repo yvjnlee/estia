@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../components/navbar/Navbar";
 import { supabase } from "../common/clients/supabaseClient";
 import Groq from "groq-sdk"; // Import the Groq SDK
 
@@ -46,24 +45,29 @@ const AddProject: React.FC = () => {
         setError(""); // Reset error message if valid
 
         try {
-            const { data, error } = await supabase.from("estia_projects").insert([
-                {
-                    project_name: projectName,
-                    tech1,
-                    tech2,
-                    description,
-                    video_Id: videoId,
-                    repo_Path: repoPath,
-                    colour: color, // Optional, so it can be any value (even the default)
-                    theme,
-                    difficulty,
-                },
-            ]);
+            const { data, error } = await supabase
+                .from("estia_projects")
+                .insert([
+                    {
+                        project_name: projectName,
+                        tech1,
+                        tech2,
+                        description,
+                        video_Id: videoId,
+                        repo_Path: repoPath,
+                        colour: color, // Optional, so it can be any value (even the default)
+                        theme,
+                        difficulty,
+                    },
+                ])
+                .select()
+                .single();
             if (error) {
                 console.error("Error adding project:", error);
                 return;
             }
-            navigate(`/project/${encodeURIComponent(projectName)}`);
+
+            navigate(`/project/${encodeURIComponent(data.project_id)}`);
         } catch (error) {
             console.error("Error during submission:", error);
         }
@@ -103,6 +107,7 @@ const AddProject: React.FC = () => {
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value);
     };
+
     const summarizeDescription = async () => {
         if (loading) return;
 
@@ -159,7 +164,6 @@ const AddProject: React.FC = () => {
 
     return (
         <>
-            <Navbar />
             <div className="add-project-form">
                 <h2>Add New Project</h2>
                 <p className="subtitle">

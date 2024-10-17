@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
-import ProjectDetails from "../components/project/ProjectDetails";
+import { ProjectDetails } from "../components/project/ProjectDetails";
 import { useDispatch } from "react-redux";
 import { getProjects } from "../api/projectAPI";
 import { Project } from "../common/types";
@@ -59,9 +59,11 @@ const ProjectsRoutes = () => {
 
             {/* <Route path=":projectId" element={<ProjectDetails />} /> */}
 
-            {projects.map((project, index) => (
-                <Route key={index} path={`/${project.projectName}`} element={<ProjectDetails />} />
-            ))}
+            {projects.map((project, index) => {
+                return (
+                    <Route key={index} path={`/${project.projectId}`} element={<ProjectDetails />} />
+                );
+            })}
         </Routes>
     );
 };
