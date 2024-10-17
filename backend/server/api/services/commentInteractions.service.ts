@@ -98,9 +98,9 @@ export class CommentInteractionsService {
     const commentInteraction = await this.getInteraction(commentId, userId);
 
     if (commentInteraction?.interaction != commentInteractionData.interaction) {
-      let likes = 1;
+      let likes = 2;
       if (commentInteractionData.interaction === false) {
-          likes = -1;
+          likes = -2;
       }
 
       const comment = await this.getComment(commentId)

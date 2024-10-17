@@ -23,7 +23,7 @@
 /* Used for tech stack, difficulty level, and similar project blocks */
 .sidebar-container {
     background-color: none;
-    border: 1px solid #383838;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     width: 26rem;
     padding: 2rem;
@@ -128,7 +128,7 @@
 }
 
 
-.difficulty-pill.intermediate{
+.difficulty-pill.intermediate {
     background-color: var(--intermediate-colour);
 }
 
@@ -136,11 +136,13 @@
 .difficulty-pill.advanced {
     background-color: var(--advanced-colour);
 }
+
 /* Container for the video and overlay */
 .youtube-container {
     position: relative;
     display: inline-block;
 }
+
 .youtube-overlay {
     position: absolute;
     top: 0;
@@ -166,18 +168,18 @@
 }
 
 .overlay-text {
-    font-size: 1.2rem;
+    font-size: var(--font-size-xs);
     margin-top: 0.5rem;
     transition: all 0.3s ease;
 }
 
 
 .youtube-overlay:hover .overlay-click-text {
-    opacity: 1; 
+    opacity: 1;
 }
 
 .youtube-overlay:hover .lock-icon {
-    display: none; 
+    display: none;
 }
 
 .youtube-overlay:hover .unlock-icon {
@@ -186,24 +188,26 @@
 
 
 
-.overlay-text, .overlay-click-text {
-    font-size: 1.2rem;
+.overlay-text,
+.overlay-click-text {
+    font-size: var(--font-size-xs);
     margin-top: 0.5rem;
     transition: opacity 0.3s ease;
 }
 
 .overlay-click-text {
-    opacity: 0; 
+    opacity: 0;
 }
 
-.lock-icon, .unlock-icon {
+.lock-icon,
+.unlock-icon {
     width: 50px;
     height: 50px;
     margin-bottom: 1rem;
 }
 
 .unlock-icon {
-    display: none; 
+    display: none;
 }
 
 .youtube-embed-iframe {
@@ -264,7 +268,7 @@
     border-radius: 5px;
     white-space: nowrap;
     /* Prevent text wrapping */
-    font-size: 0.875rem;
+    font-size: var(--font-size-xs);
     z-index: 10;
 }
 
@@ -278,7 +282,7 @@
 }
 
 .github-name {
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
 }
 
 .github-description {
@@ -319,13 +323,13 @@
     display: flex;
     flex-direction: row;
     font-size: var(--font-size-sm);
-    background-color: #0E1011;
+    background-color: var(--background-color);
     align-items: center;
     margin-right: 2rem;
     padding-left: 2rem;
     padding-right: 2rem;
     border-radius: 10px;
-    border: 1px solid #383838;
+    border: 1px solid var(--border-color);
     transition: transform 10s ease;
     transition: background-color 0.3s ease;
 }
@@ -337,7 +341,7 @@
 }
 
 .saved {
-    background-color: #AF0880;
+    background-color: var(--accent-colour);
 }
 
 .like-fav-icon {
@@ -351,109 +355,122 @@
     margin-left: -2.6rem;
 }
 
-.project-details-button-text{
+.project-details-button-text {
     margin: 1rem;
 }
 
 .existing-comment-header {
-    font-size: 1.5rem;
+    font-size: var(--font-size-sm);
 }
 
 .existing-comment-body {
-    font-size: 1.5rem;
+    font-size: var(--font-size-sm);
 }
 
 body.modal-open {
     overflow: hidden;
 }
-
+/* Modal overlay */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    overflow-y: auto;
-
-    overflow: hidden;
-
+    background: rgba(0, 0, 0, 0.5); /* Dimmed background */
+    z-index: 1000;
 }
 
+/* Drawer-style modal content */
 .modal-content {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
     background: white;
     padding: 20px;
-    border-radius: 5px;
-    width: 82%;
-    max-height: 150vh;
-    /* Ensure modal stays within viewport and can scroll */
-    align-items: center;
-    max-width: 2500px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    z-index: 1001;
+    transform: translateX(100%); /* Start off-screen */
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto; /* Add this line */
+
 }
 
+/* Show the modal by sliding in */
+.modal-open .modal-content {
+    transform: translateX(0); /* Slide in */
+}
+
+.growing-modal {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    max-height: 0;
+    opacity: 0;
+}
+
+.modal-open .growing-modal {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+/* Close button styling */
 .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     background: none;
     border: none;
-    font-size: 20px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    font-size: 24px;
     cursor: pointer;
 }
 
-
 .what-is-it-content {
     width: 95%;
-    font-size: 1.25rem;
+    font-size: var(--font-size-sm);
+    text-align: left;
 }
 
 .common-use-ul {
     list-style-type: none;
-    /* Remove bullets */
     padding: 0;
-    /* Remove default padding */
     display: flex;
-    /* Enable flexbox */
     flex-wrap: wrap;
-    /* Allow items to wrap to the next line */
     gap: 10px;
-    /* Space between items */
 }
+
+.modal-header {
+    text-align: left;
+    margin-bottom: 0;
+    font-size: var(--font-size-md);
+
+}
+
+.modal-main-header {
+    text-align: left;
+    margin-bottom: 0;
+    font-size: var(--font-size-xxl);
+}
+
 
 .common-use-li {
-    background-color: #151b23;
-    /* Dark blue background */
+    background-color: none;
     color: white;
-    /* White text color */
-    width: 200px;
-    padding: 21px 22px;
-    /* Add padding inside the box */
+    font-size: var(--font-size-sm);
+    width: 100%;
+    padding: 20px 22px;
     border-radius: 5px;
-    /* Optional: rounded corners */
-    margin: 5px 0;
-    /* Space between items vertically */
+    margin: 0;
     display: flex;
-    /* Keep the list items flex for alignment */
-    justify-content: center;
-    /* Center the text horizontally */
-    text-align: center;
+    border: 1px solid var(--border-color);
+    text-align: left !important;
     align-items: center;
-    /* Center the text vertically */
 }
 
-.advantage-disadvantage-container {
-    display: flex;
-}
 
 .av-dv-ul {
     list-style-type: none;
     /* Remove bullets */
     padding: 0;
-    /* Remove default padding */
     display: flex;
     /* Enable flexbox */
     flex-wrap: wrap;
@@ -473,7 +490,7 @@ body.modal-open {
 }
 
 .tech-title {
-    font-size: 2.5rem;
+    font-size: var(--font-size-lg);
     align-items: center;
     justify-content: center;
     text-align: center !important;
@@ -484,20 +501,29 @@ body.modal-open {
     font-weight: 500;
 }
 
+.resources-ul {
+    margin-bottom: 6rem;
+    list-style-type: none;
+}
+
 .resources-ul li {
-    font-size: 18px; /* Adjust the size as needed */
-    margin-bottom: 10px; /* Add some spacing between list items */
+    font-size: var(--font-size-sm);
+    margin-bottom: 10px;
+    text-align: left;
+    margin-left: -1rem;
 }
 
 .resources-ul li a {
-    text-decoration: none; /* Remove underline */
-    color: #0073e6; /* Set a better color for the link */
-    font-weight: bold; /* Make the link text stand out */
-    transition: color 0.3s; /* Add a smooth transition effect */
+    text-decoration: none;
+    color: var(--accent-colour);
+    font-weight: bold;
+    transition: color 0.3s;
+    /* Add a smooth transition effect */
 }
 
 .resources-ul li a:hover {
-    color: #005bb5; /* Change color on hover */
+    color: #005bb5;
+    /* Change color on hover */
 }
 
 .growing-modal {
@@ -508,6 +534,6 @@ body.modal-open {
 }
 
 .modal-overlay .growing-modal {
-    max-height: 1000px;
+    max-height: 2000px;
     /* or some upper limit */
 }

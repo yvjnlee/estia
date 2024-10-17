@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { groq } from "../../common/clients";
 
 interface TechStackModalProps {
@@ -7,17 +7,25 @@ interface TechStackModalProps {
 }
 
 const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
-    const [data, setData] = React.useState<any>(null);
-    const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState<string | null>(null);
+    const [data, setData] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     // States to control the gradual reveal of each section
-    const [showWhatIs, setShowWhatIs] = React.useState(false);
-    const [showCommonUses, setShowCommonUses] = React.useState(false);
-    const [showAdvantages, setShowAdvantages] = React.useState(false);
-    const [showDisadvantages, setShowDisadvantages] = React.useState(false);
-    const [showResources, setShowResources] = React.useState(false);
-    const [showNextSteps, setShowNextSteps] = React.useState(false);
+    const [showWhatIs, setShowWhatIs] = useState(false);
+    const [showCommonUses, setShowCommonUses] = useState(false);
+    const [showAdvantages, setShowAdvantages] = useState(false);
+    const [showDisadvantages, setShowDisadvantages] = useState(false);
+    const [showResources, setShowResources] = useState(false);
+    const [showNextSteps, setShowNextSteps] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        // Check if the click is on the overlay (not the content)
+        if ((event.target as Element).classList.contains('modal-overlay')) {
+            onClose();
+        }
+    };
 
     // Add or remove the 'modal-open' class on the body element
     useEffect(() => {
@@ -48,9 +56,7 @@ const TechStackModal: React.FC<TechStackModalProps> = ({ tech, onClose }) => {
 "common_uses": List 5 specific real-world applications and industries where this technology is commonly used. Include both modern and traditional use cases.
 "advantages": Provide 3 practical advantages that make it useful in certain scenarios. Focus on performance, scalability, or ecosystem benefits.
 "disadvantages": Provide 3 notable disadvantages, with a focus on potential limitations or situations where it may not be suitable.
-"resources": Include three links to articles, tutorials, or documentation for deeper learning.
-"next_steps": Suggest 2 important actionable steps for a beginner or intermediate user to explore within the language/framework/library.
-
+"resources": Include three links official documentation links for more learning. Make sure they are active links. Do not be 404 dead links they should be real. 
 
 here is an example:
 {
@@ -88,14 +94,6 @@ here is an example:
       "title": "something else",
       "link": "https://sample text"
     }
-  ],
-  
-  "next_steps": [
-    "sample text",
-    "sample text",
-    "sample text",
-    "sample text",
-    "sample text"
   ]
 }
 
@@ -137,46 +135,53 @@ Here is the input
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
+
     return (
-        <div className="modal-overlay">
-            <div className="modal-content growing-modal">
-                <button className="close-button" onClick={onClose}>X</button>
+        <div className={`modal-overlay 
+        ${loading ? "" : "modal-open"}`}
+            onClick={handleOverlayClick}>
+                
+            <div className="modal-content">
+                <button className="close-button" onClick={onClose}>
+                    &times;
+                </button>
 
-                {data && (
-                    <div>
-                        <h2 className="tech-title">{tech}</h2>
+                {loading && <p>Loading...</p>}
+                {error && <p>{error}</p>}
 
+                {!loading && data && (
+                    <>
                         {showWhatIs && (
-                            <>
-                                <h2>What is it?</h2>
+                            <div className="growing-modal">
+                                <h2 className="modal-main-header">What is {tech}?</h2>
                                 <p className="what-is-it-content">{data.what_is}</p>
-                            </>
+                            </div>
                         )}
 
                         {showCommonUses && (
-                            <>
-                                <h2>Common Uses</h2>
+                            <div className="growing-modal">
+                                <h2 className="modal-header">Common Uses</h2>
                                 <ul className="common-use-ul">
-                                    {data.common_uses.map((cu: string, index: number) => (
-                                        <li className="common-use-li" key={index}>{cu}</li>
+                                    {data.common_uses.map((use: string, index: number) => (
+                                        <li key={index} className="common-use-li">{use}</li>
                                     ))}
                                 </ul>
-                            </>
+                            </div>
                         )}
-                        <div className="advantage-disadvantage-container">
 
+                        <div className="advantage-disadvantage-container">
                             {showAdvantages && (
                                 <>
                                     <div className="advantage-container">
-                                        <h2>Advantages</h2>
+                                        <h2 className="modal-header">Advantages</h2>
                                         <ul className="av-dv-ul">
                                             {data.advantages.map((adv: string, index: number) => (
                                                 <li className="common-use-li" key={index}>{adv}</li>
                                             ))}
                                         </ul>
-                                    </div>            
+                                    </div>
                                     <div className="disadvantage-container">
-                                        <h2>Disadvantages</h2>
+                                        <h2 className="modal-header">Disadvantages</h2>
                                         <ul className="av-dv-ul">
                                             {data.disadvantages.map((dis: string, index: number) => (
                                                 <li className="common-use-li" key={index}>{dis}</li>
@@ -189,30 +194,21 @@ Here is the input
 
                         {showResources && (
                             <>
-                                <h2>Resources</h2>
-                                <ul className="resources-ul">
-                                    {data.resources.map((res: { title: string; link: string }, index: number) => (
-                                        <li key={index}>
-                                            <a href={res.link} target="_blank" rel="noopener noreferrer">
-                                                {res.title}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="growing-modal">
+                                    <h2 className="modal-header">Resources</h2>
+                                    <ul className="resources-ul">
+                                        {data.resources.map((res: { title: string; link: string }, index: number) => (
+                                            <li key={index}>
+                                                <a href={res.link} target="_blank" rel="noopener noreferrer">
+                                                    {res.title}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </>
                         )}
-
-                        {showNextSteps && (
-                            <>
-                                <h2>Next Steps</h2>
-                                <ul className="next-steps-ul">
-                                    {data.next_steps.map((ns: string, index: number) => (
-                                        <li key={index}>{ns}</li>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
-                    </div>
+                    </>
                 )}
             </div>
         </div>

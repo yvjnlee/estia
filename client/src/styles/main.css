@@ -92,7 +92,7 @@
 .nav-close-button {
     background: transparent;
     border: none;
-    font-size: 1.5rem;
+    font-size: var(--font-size-sm);
     cursor: pointer;
     right: 1rem;
     top: 1rem;
@@ -274,7 +274,6 @@
     right: 0;
     bottom: 0;
     background-attachment: fixed;
-    display: flex;
     height: max-content;
     justify-content: center;
     align-items: center;
@@ -322,7 +321,7 @@
 
 .feature-container {
     background-color: none;
-    border: 1px solid #383838;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 10rem;
     flex: 1 1 calc(100%);

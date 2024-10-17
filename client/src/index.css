@@ -25,9 +25,7 @@
     --placeholder-text-color: #a4a4a4;
     --input-background: #282828;
     --input-border: #626262;
-    --border-radius: 8px;
     --anchor-color: #ffffff; /* Purple color, replace with desired color */
-    --button-background2: #000000;
     --element-height: clamp(
         200px,
         44vw,
@@ -43,9 +41,17 @@
     --font-size-xxl: 3.5rem;   /* Extra extra large */
     --font-size-xxxl: 4rem;    /* Extra extra extra large */
 
+    --font-size-largest: 4.5rem;
+
+    --border-color: #383838;
+    --border-radius-std: 10px; /* Standard */
+
+    --accent-colour: #AF0880;
+
     --beginner-colour: #214b2f;
     --intermediate-colour: #5d5d25;
     --advanced-colour: #582727;
+
 }
 
 body {
@@ -74,5 +80,5 @@ input:-webkit-autofill:focus {
 
 ::selection {
     background-color: #b32f92; /* Change the highlight color */
-    color: #fff; /* Change the text color inside the selection */
+    color: #f9cfee; /* Change the text color inside the selection */
 }

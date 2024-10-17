@@ -47,19 +47,47 @@ const AppRoutes = () => {
         dispatch(setUserLoaded(false));
 
         if (session) {
-            const { data, error } = await supabase.auth.getUser();
-            const user = data.user;
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+            const user = userData.user;
 
-            if (error) {
-                console.error(error);
-            } else {
-                if (user) {
-                    console.log("Account sync triggered");
-                    await supabase.from('profiles')
-                        .update({ email: user.email, username: user.email })
-                        .eq('id', user.id);
-                    console.log("Account sync completed");
+            if (userError) {
+                console.error(userError);
+            } else if (user) {
+                console.log("Account sync triggered");
+
+                // Check if the user exists in the profiles table
+                const { data: profileData, error: profileError } = await supabase
+                    .from('profiles')
+                    .select()
+                    .eq('id', user.id)
+                    .single();
+
+                if (profileError && profileError.code !== 'PGRST116') {
+                    console.error("Error checking profile:", profileError);
+                } else {
+                    if (profileData) {
+                        // User exists, update the profile
+                        const { error: updateError } = await supabase
+                            .from('profiles')
+                            .update({ email: user.email, username: user.email })
+                            .eq('id', user.id);
+
+                        if (updateError) {
+                            console.error("Error updating profile:", updateError);
+                        }
+                    } else {
+                        // User doesn't exist, create a new profile
+                        const { error: insertError } = await supabase
+                            .from('profiles')
+                            .insert({ id: user.id, email: user.email, username: user.email });
+
+                        if (insertError) {
+                            console.error("Error creating profile:", insertError);
+                        }
+                    }
                 }
+
+                console.log("Account sync completed");
             }
         }
 

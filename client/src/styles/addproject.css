@@ -124,7 +124,7 @@
     background-color: #fff;
     color: #000000;
     border: none;
-    font-size: 15px;
+    font-size: var(--font-size-xs);
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
@@ -132,9 +132,47 @@
     transition: background-color 0.75s ease;
     transition: color 0.75s ease;
 }
+
 .back-button:hover {
     color: #fff;
     background-color: #151b23;
+}
+
+.info-icon {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    color: #ffffff; /* Change this color as needed */
+    cursor: pointer;
+    align-items: center;
+    width: 40px;
+    height: auto;
+    background: none;
+    border: none;
+    justify-content: center;
+}
+
+.info-icon-info {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    font-size: var(--font-size-sm);
+}
+
+.heading-label {
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+}
+
+.add-project-input-field {
+    width: 80%;
+    font-size: var(--font-size-md);
+    margin-bottom: 15px;
+    border-radius: 6px;
+    height: 18rem;
+    border: none;
+    padding: 1rem;
+    background-color: #151b23;
+    color: #fff;
+    resize: none;
 }
 
 .submit-button {
@@ -151,6 +189,23 @@
 
 .submit-button:hover {
     background-color: #9b51e0;
+}
+
+
+.ai-button {
+    margin-top: 2rem;
+    background-color: hsl(0, 0%, 100%);
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size-sm) !important;
+    transition: background-color 0.3s ease;
+}
+
+.ai-button:hover {
+    background-color: #dfb0d1;
 }
 
 @media (max-width: 768px) {

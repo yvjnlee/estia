@@ -91,6 +91,12 @@ export const LandingPage: React.FC = () => {
                             </div>
                         </FadeInSection>
                     </div>
+                        <footer className="footer">
+                        <p>&copy; 2024 Estia. All rights reserved.</p>
+                        <p>
+                            Follow us on <a href="https://github.com/yvjnlee/estia" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </p>
+                    </footer>
                 </div>
             </div>
         </div>
