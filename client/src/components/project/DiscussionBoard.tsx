@@ -47,8 +47,8 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                 await addCommentInteraction(
                     dispatch,
                     {
-                        commentId:comment.commentId,
-                        userId: user.id,
+                        comment_id:comment.commentId,
+                        user_id: user.id,
                         interaction: interaction
                     },
                     project?.projectId ? project?.projectId : 'null',
@@ -91,7 +91,7 @@ const DiscussionBoard: React.FC<{comments: Comment[], project: Project | null }>
                 <button onClick={postComment}>Post</button>
             </div>
             <ul className="comments">
-            {comments?.map((comment) => (
+            {comments.map((comment) => (
                 <li className="comment-section" key={comment.commentId}>
                     <div className="vote">
                         <button onClick={() => changeVote(comment, true)}><img src={UpChevron} /></button>

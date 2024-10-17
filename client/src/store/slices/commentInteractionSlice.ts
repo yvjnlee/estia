@@ -17,7 +17,7 @@ const initialState: CommentInteractionState = {
 // Thunks
 export const createCommentInteraction = createAsyncThunk(
     "commentInteraction/createCommentInteraction",
-    async ({ newCommentInteraction, projectId, commentId, userId }: { newCommentInteraction: CommentInteraction; projectId: string; commentId: string; userId: string }) => {
+    async ({ newCommentInteraction, projectId, commentId, userId }: { newCommentInteraction: CommentInteractionDB, projectId: string; commentId: string; userId: string }) => {
         return await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`,
             "POST",
@@ -36,13 +36,13 @@ export const fetchAllCommentInteractions = createAsyncThunk("commentInteraction/
 export const fetchCommentInteraction = createAsyncThunk(
     "comments/fetchCommentInteraction",
     async ({ commentId, userId }: { commentId: string, userId: string }) => {
-        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteractions/${commentId}/${userId}`, "GET");
+        return await fetchAPI(`${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${commentId}/${userId}`, "GET");
     }
 );
 
 export const updateCommentInteraction = createAsyncThunk(
     "comments/updateCommentInteraction",
-    async ({ projectId, commentId, userId, updates }: { projectId: string, commentId: string, userId: string, updates: Partial<CommentInteraction> }) => {
+    async ({ projectId, commentId, userId, updates }: { projectId: string, commentId: string, userId: string, updates: Partial<CommentInteractionDB> }) => {
         return await fetchAPI(
             `${process.env.REACT_APP_API_BASE_URL}/commentInteraction/${projectId}/${commentId}/${userId}`,
             "PATCH",

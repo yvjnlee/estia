@@ -7,6 +7,16 @@ export class Controller {
   // Create
   create(req: Request<RequestParams, unknown, CommentInteraction>, res: Response): void {
     // #swagger.tags = ['CommentInteractions']
+    /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Comment Interaction data.',
+        required: true,
+        schema: {
+            comment_id: "",
+            user_id: "",
+            interaction: true
+        }
+    } */
     const projectId = req.params.projectId;
     const commentId = req.params.commentId;
     const userId = req.params.userId;
