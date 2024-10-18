@@ -54,7 +54,7 @@ export const LandingPage: React.FC = () => {
                                 Whether you're a seasoned coder or just starting out,
                                 our knowledge bank is here to transform your coding journey.
                             </h2>
-                            <Link to="/login">
+                            <Link to="/login" style={{ textDecoration: "none" }}>
                                 <button className="initial-button">
                                     Start Building
                                 </button>

@@ -42,18 +42,19 @@
         /* 1 column */
     }
 }
-
 .project-container {
+    cursor: pointer;
+    border: 1px solid #383838;
+    height: 15rem;
+    width: 27rem;
     border-radius: 4px;
     padding: 24px;
     display: flex;
     flex-direction: column;
-    transition:
-        transform 0.3s ease,
-        filter 0.3s ease;
+    justify-content: flex-start;
+    transition: transform 0.3s ease, filter 0.3s ease;
     margin-bottom: 0px;
 }
-
 .projects-container .project-row:nth-child(2n) {
     margin-top: 5rem;
     margin-bottom: -5rem;
@@ -94,7 +95,7 @@
   .project-difficulty.beginner {
     width: 85px;
     background-color: var(--beginner-colour);
-    color: var(--white-in-dark-theme);  
+    color: white;  
     font-weight: 400;
     font-size: var(--font-size-xs);
 }
@@ -102,7 +103,7 @@
   .project-difficulty.intermediate {
     width: 115px;
     background-color: var(--intermediate-colour);
-    color: var(--white-in-dark-theme);
+    color: white;
     font-weight: 400;
     font-size: var(--font-size-xs);
   }
@@ -110,15 +111,15 @@
   .project-difficulty.advanced {
     width: 95px;
     background-color: var(--advanced-colour);
-    color: var(--white-in-dark-theme);
+    color: white;
     font-weight: 400;
     font-size: var(--font-size-xs);
   }
 
 .project-title {
     font-size: var(--font-size-md);
-    font-weight: 300;
-    color: #d5d5d5;
+    font-weight: var(--less-at-dark);
+    color: var(--project-card-title);
     max-width: 90%;
     margin-top: 20px;
     /* Adjust as needed to fit within container */
@@ -204,7 +205,7 @@
     border-radius: 12px;
     justify-content: center;
     align-items: center;
-    background-color: #202020 !important;
+    background-color: var(--search-bar) !important;
     border: none;
     margin-top: 1rem;
     font-size: var(--font-size-sm);
@@ -264,10 +265,11 @@
 }
 
 .dropdown {
+    color: var(--white-in-dark-theme);
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     margin-left: 1rem;
 }
 
@@ -277,7 +279,37 @@
     gap: 5px;
 }
 
+.filters input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    background-color: #f0f0f0; /* Default background color */
+}
+
+.filters input[type="checkbox"]:checked {
+    background-color: var(--accent-colour); /* Background color when checked */
+    border: none;
+}
+
+/* Optional: Add a checkmark icon when checked */
+.filters input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-colour);
+    border-radius: 2px;
+}
+
 .filter-label {
+    color: var(--white-in-dark-theme);
     font-size: var(--font-size-sm);
 }
 
@@ -288,10 +320,10 @@
 
 .filters-button {
     padding: 1rem;
-    background-color: #202020 !important;
-    border: 2px solid #202020 !important;
+    background-color: var(--search-bar) !important;
+    border: 2px solid var(--search-bar) !important;
     border-radius: 12px 12px 12px 12px;
-    color: rgb(125, 125, 125);
+    color: var(--white-in-dark-theme);
     margin-top: 1rem;
     margin-left: 1rem;
     cursor: pointer;
@@ -299,7 +331,7 @@
 }
 
 .white-filter {
-    color: rgb(234, 234, 234);
+    color: var(--white-in-dark-theme);
 }
 
 .grey-filter {
@@ -307,7 +339,7 @@
 }
 
 .filters-button:hover {
-    background-color: rgb(38, 38, 38) !important;
+    background-color: var(--blue-grey) !important;
 }
 
 /* Make sure the filters container is hidden by default */
@@ -369,23 +401,26 @@
 
 /* When the filters are shown */
 .filters-container.show {
-    height: 300px;
+    height: 390px;
 }
 
 
 .difficulty-filter {
+    align-items: center;
     margin-top: 2.5rem;
 }
 
 .difficulty-filter-label {
     margin-right: 5rem;
+    color: var(--white-in-dark-theme);
     font-size: var(--font-size-sm);
 }
 
 .difficulty-select {
     padding: 0.5rem;
     font-size: var(--font-size-sm);
-    background-color: #151b23;
+    background-color: var(--blue-grey);
     border: none;
+    color: var(--white-in-dark-theme);
     border-radius: 4px;
 }

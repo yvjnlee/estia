@@ -31,18 +31,18 @@
 }
 
 .nav-link:hover {
-    background-color: #151b23;
+    background-color: var(--blue-grey);
     color: var(--white-in-dark-theme);
 }
 
 .active-nav-link {
     padding: 16px 17px;
-    background-color: #3f4c5b;
+    background-color: var(--blue-grey-hover);
     color: var(--white-in-dark-theme);
     border-radius: 6px;
     font-size: var(--font-size-sm);
     text-decoration: none;
-    border-color: #151c24;
+    border-color: var(--blue-grey);
 }
 
 .page-heading {
@@ -65,7 +65,7 @@
     border-radius: 6px;
     border: none;
     padding: 1rem;
-    background-color: #151b23;
+    background-color: var(--blue-grey);
     color: var(--white-in-dark-theme);
     resize: none;
 }
@@ -163,7 +163,7 @@
     border-radius: 8px;
     flex-direction: column;
     display: flex;
-    background-color: #151c24;
+    background-color: var(--blue-grey);
     transition:
         transform 0.3s ease,
         background-color 0.3s ease;
@@ -256,22 +256,16 @@
     border: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
-    /* Space out the two blocks */
     align-items: flex-start;
-    /* Align the blocks to the top */
 }
 
 .generator-tech,
 .generator-time {
     display: flex;
     flex-direction: column;
-    /* Make content stack vertically */
     align-items: center;
-    /* Center align content within each block */
     text-align: center;
-    /* Center align text inside */
     flex: 1;
-    /* Make each block take equal space */
 }
 
 .project-idea-title {
@@ -309,7 +303,6 @@ h4 {
 .generator-name-list-items {
     font-size: var(--font-size-sm);
     margin: 0 1rem;
-    /* Add horizontal spacing between items */
     justify-content: center;
     margin-top: 2.25rem;
     align-items: center;
@@ -318,9 +311,7 @@ h4 {
 .checklist,
 .project-idea-potential-names {
     list-style-type: none;
-    /* Remove default bullet points */
     padding: 0;
-    /* Remove padding */
 }
 
 .checklist li,
@@ -342,7 +333,6 @@ h4 {
     left: -20px;
     /* Adjust left positioning */
     top: 50%;
-    /* Center vertically */
     transform: translateY(-50%);
     /* Center align */
     width: 10px;

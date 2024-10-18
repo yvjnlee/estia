@@ -200,7 +200,7 @@ If you believe that only one project title fits well, provide just that single r
                             className="input-field"
                         />
                         <button type="submit" className="submit-button" disabled={loading}>
-                            {loading ? "Processing..." : "Submit"}
+                        <span className="submit-button-text">{loading ? "Processing..." : "Submit"}</span>
                         </button>
                     </form>
                     {output && (

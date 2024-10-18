@@ -3,6 +3,7 @@ import { SearchBar } from "../SearchBar";
 import { Filters } from "../Filters";
 
 import GreyFilter from "../../../img/Grey_Filters.svg";
+import GreyFilterLight from "../../../img/Grey_Filters_Light.svg";
 import WhiteFilter from "../../../img/White_Filters.svg";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { setSearchFilter } from "../../../store/slices/projectSlice";
@@ -11,6 +12,21 @@ export const ProjectSearch: React.FC = () => {
     const dispatch = useAppDispatch();
     const [showFilters, setShowFilters] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [theme, setTheme] = useState("default");
+
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme") || "default";
+        setTheme(savedTheme);
+        document.documentElement.setAttribute("data-theme", savedTheme);
+    }, []);
+
+    const toggleTheme = () => {
+        const newTheme = theme === "default" ? "inverted" : "default";
+        setTheme(newTheme);
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+    };
 
     const handleEnter = () => {
         dispatch(setSearchFilter(searchQuery));
@@ -59,9 +75,15 @@ export const ProjectSearch: React.FC = () => {
                         }
                         onClick={handleToggleFilters}
                     >
-                        <img
+                         <img
                             className="filters-logo"
-                            src={showFilters ? GreyFilter : WhiteFilter}
+                            src={
+                                showFilters
+                                    ? theme === "default"
+                                        ? GreyFilter
+                                        : GreyFilterLight
+                                    : WhiteFilter
+                            }
                             alt="Filter Icon"
                         />
                         Filters

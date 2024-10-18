@@ -6,13 +6,18 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    
+}
+
+.login-page {
+    position: relative;
+    z-index: 1;
 }
 
 .registration-container {
     align-items: center;
     justify-content: center;
     margin-top: 14rem;
+    max-width: 50rem;
     height: 100%; /* Ensure it fills the parent container */
 }
 
@@ -20,7 +25,7 @@
     display: flex;
     align-items: center;
     color: var(--white-in-dark-theme) !important;
-    font-size: var(--font-size-xxxl);
+    font-size: var(--font-size-xxl);
     padding: 0px;
     margin-top: 32px;
     margin-bottom: 2rem;
@@ -29,6 +34,7 @@
 
 .custom-container {
     display: flex;
+    border-style: none !important;
     font-family: "Montserrat";
     flex-direction: column;
     align-items: center;
@@ -36,6 +42,32 @@
     background-color: var(--background-color);
     padding: 20px;
     margin-bottom: 2rem !important;
+}
+
+/* My name is Abeer and I dislike supabase CSS a lot*/
+
+/* Controls CSS borders  */
+.c-bOcPnF {
+    border-style: none !important;
+    background-color: var(--accent-colour) !important;
+}
+
+/*Container for length of providers and submit button */
+.c-jTXIoq {
+    width: 600px;
+    align-items: center;
+}
+
+/* Controls width of the two input fields of form */
+.c-dEnagJ {
+    width: 600px !important;
+    align-items: center;
+}
+
+
+/* Controls font size of the Sign In/Up button */
+.c-bOcPnF {
+font-size: var(--font-size-sm) !important;
 }
 
 .custom-button {
@@ -61,6 +93,30 @@
     width: 36px !important;
     height: 36px !important;
     margin-right: 1rem !important;
+}
+
+/* Background shape for the top right */
+.top-right-shape {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    max-width: 600px;
+    height: auto;
+    opacity: 0.7;
+    z-index: -9999999; /* Behind other content */
+}
+
+/* Background shape for the bottom left */
+.bottom-left-shape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    max-width: 900px;
+    height: auto;
+    opacity: 0.7;
+    z-index: -9999999; /* Behind other content */
 }
 
 .custom-button:hover::before {
@@ -105,20 +161,21 @@
 
 
 .custom-anchor {
-    color: var(--anchor-color);
-    text-decoration: none;
-    margin-top: 1rem;
-    font-size: var(--font-size-sm);
-    margin-bottom: -1rem;
+    color: var(--anchor-color) !important;
+    text-decoration: none !important;
+    margin-top: 1rem !important;
+    font-size: var(--font-size-sm) !important;
+    margin-bottom: -1rem !important; 
 }
 
 .custom-anchor:hover {
-    text-decoration: underline;
+    text-decoration: underline !important;
+    color: var(--accent-colour) !important;
 }
 
 .custom-label {
-    font-weight: bold;
-    font-size: 0;
+    font-weight: 600 !important;
+    font-size: var(--font-size-sm) !important;
     margin-bottom: 5px;
 }
 

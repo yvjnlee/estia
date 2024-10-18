@@ -124,7 +124,7 @@ export const ProjectDetails: React.FC = () => {
     }, [creatingComment, interactingComment]);
 
     const saveButtonClass = isSaved ? "saved" : "save";
-    const likeButtonClass = isLiked ? "liked" : "like";
+    const likeButtonClass = isLiked ? "saved" : "save";
 
     // Render loading indicator if still loading
     if (projectLoading) {

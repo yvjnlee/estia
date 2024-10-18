@@ -17,7 +17,6 @@ export const DifficultyFilter: React.FC = () => {
 
     return (
         <div className="difficulty-filter">
-            <label className="difficulty-filter-label">Select Difficulty:</label>
             <select
                 value={selectedDifficulty}
                 className="difficulty-select"

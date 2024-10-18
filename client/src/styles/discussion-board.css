@@ -3,7 +3,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Roboto", "Oxygen", "Ubuntu",
         "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    background-color: #f9f9f9;
+    background-color: var( --off-white-in-dark);
     margin: 0;
     padding: 20px;
 }

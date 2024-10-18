@@ -302,7 +302,7 @@ const AddProject: React.FC = () => {
                     </div>
                     {error && <p className="error-message">{error}</p>}
                     <button className="submit-button" type="submit">
-                        Add Project
+                        <span className="submit-button-text">Add Project</span>
                     </button>
                 </form>
             </div>

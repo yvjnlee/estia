@@ -91,6 +91,8 @@
     padding: 25px 40px;
     border-radius: 42px;
     cursor: pointer;
+     text-decoration: none; /* Removes the underline */
+    color: inherit; /* Ensures the color stays the same */
     border: none;
     width: 340px;
     height: 70px;

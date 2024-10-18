@@ -28,21 +28,6 @@ export const UserSaved: React.FC = () => {
         }   
     }, [user]);
 
-    const containerStyle: React.CSSProperties = {
-        //backgroundColor: colour,
-        backgroundColor: "#151B23",
-        cursor: "pointer",
-        height: "13rem",
-        width: "18rem",
-        marginTop: "1rem",
-        borderRadius: "4px",
-        padding: "24px",
-        display: "flex",
-        justifyContent: "flex-start",
-        transition: "transform 0.3s ease, filter 0.3s ease",
-        // border: "2px solid grey",
-    };
-
     return (
         <>
             <h2 className="saved-heading">Saved Projects</h2>

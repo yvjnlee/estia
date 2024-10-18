@@ -15,7 +15,7 @@
 }
 
 .add-project-form .subtitle {
-    color: #aaa;
+    color: var(--off-white-in-dark);
     font-size: var(--font-size-sm);
     margin-bottom: 20px;
 }
@@ -36,8 +36,8 @@
     border-radius: 6px;
     border: none;
     padding: 1rem;
-    background-color: #151b23;
-    color: --white-in-dark-theme;
+    background-color: var(--blue-grey);
+    color: var(--white-in-dark-theme);
 }
 
 .name-input {
@@ -65,8 +65,9 @@
     border: none;
     padding: 1rem;
     margin-bottom: 1.25rem;
+    color: var(--white-in-dark-theme);
     width: 95%;
-    background-color: #151b23;
+    background-color: var(--blue-grey);
 }
 
 .tech-select:first-child {
@@ -135,7 +136,7 @@
 
 .back-button:hover {
     color: var(--white-in-dark-theme);
-    background-color: #151b23;
+    background-color: var(--blue-grey);
 }
 
 .info-icon {
@@ -170,15 +171,14 @@
     height: 18rem;
     border: none;
     padding: 1rem;
-    background-color: #151b23;
+    background-color: var(--blue-grey);
     color: var(--white-in-dark-theme);
     resize: none;
 }
 
 .submit-button {
     margin-top: 2rem;
-    background-color: hsl(0, 0%, 100%);
-    color: #000000;
+    background-color: var(--white-in-dark-theme);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -191,11 +191,14 @@
     background-color: #9b51e0;
 }
 
+.submit-button-text {
+    color: white !important;
+}
 
 .ai-button {
     margin-top: 2rem;
-    background-color: hsl(0, 0%, 100%);
-    color: #000000;
+    background-color: var(--white-in-dark-theme);
+    color: var(--black);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -205,7 +208,7 @@
 }
 
 .ai-button:hover {
-    background-color: #dfb0d1;
+    background-color: #8a8a8a;
 }
 
 @media (max-width: 768px) {

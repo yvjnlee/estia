@@ -19,19 +19,6 @@
 
 
 :root {
-    --background-color: #0E1011;
-    --button-background: #1C1D1E;
-    --button-text-color: #e2e2e2;
-    --placeholder-text-color: #a4a4a4;
-    --input-background: #282828;
-    --input-border: #626262;
-    --anchor-color: #ffffff; /* Purple color, replace with desired color */
-    --element-height: clamp(
-        200px,
-        44vw,
-        1440px
-    ); /* Height scales between 200px and 600px based on viewport width */
-
     --font-size-xxs: 0.5rem;   /* Extra extra small */
     --font-size-xs: 1rem;      /* Extra small */
     --font-size-sm: 1.5rem;    /* Small */
@@ -40,8 +27,23 @@
     --font-size-xl: 3rem;      /* Extra large */
     --font-size-xxl: 3.5rem;   /* Extra extra large */
     --font-size-xxxl: 4rem;    /* Extra extra extra large */
-
     --font-size-largest: 4.5rem;
+
+    --less-at-dark-weight: 300;
+
+    --element-height: clamp(
+        200px,
+        44vw,
+        1440px
+    ); /* Height scales between 200px and 600px based on viewport width */
+
+    --background-color: #0E1011;
+    --button-background: #1C1D1E;
+    --button-text-color: #e2e2e2;
+    --placeholder-text-color: #a4a4a4;
+    --input-background: #282828;
+    --input-border: #626262;
+    --anchor-color: #ffffff; /* Purple color, replace with desired color */
 
     --border-color: #383838;
     --border-radius-std: 10px; /* Standard */
@@ -52,7 +54,32 @@
     --intermediate-colour: #5d5d25;
     --advanced-colour: #582727;
 
+    --black: #000;
     --white-in-dark-theme: #fff;
+    --off-white-in-dark: #c4c4c4;
+    --blue-grey: #151b23;
+    --blue-grey-hover: #3f4c5b;
+
+    --project-card-title: #d5d5d5;
+    --search-bar: #202020;
+}
+
+[data-theme="inverted"] {
+    --background-color: #f0f0f0;
+    --button-background: #e0e0e0;
+    --button-text-color: #1e1e1e;
+    --placeholder-text-color: #5a5a5a;
+    --input-background: #d0d0d0;
+    --input-border: #9a9a9a;
+    --anchor-color: #000000;
+    --black: #fff;
+    --white-in-dark-theme: #000;
+    --off-white-in-dark: #2b2b2b;
+    --blue-grey: #ddd8d1;
+    --search-bar: #d0d0d0;
+    --project-card-title: #202020;
+    --blue-grey-hover: #bababa;
+    --less-at-dark-weight: 500;
 
 }
 
@@ -83,4 +110,20 @@ input:-webkit-autofill:focus {
 ::selection {
     background-color: #b32f92; /* Change the highlight color */
     color: #f9cfee; /* Change the text color inside the selection */
+}
+
+h1 {
+    color: var(--white-in-dark-theme);
+}
+
+h2 {
+    color: var(--white-in-dark-theme);
+}
+
+h3 {
+    color: var(--white-in-dark-theme);
+}
+
+p {
+    color: var(--white-in-dark-theme);
 }

@@ -3,6 +3,9 @@ import { supabase } from "../common/clients";
 import { Link, useNavigate } from "react-router-dom";
 import { Auth } from "@supabase/auth-ui-react";
 
+import topLeftShape from "../img/toprightshape.png";
+import bottomLeftShape from "../img/bottomleftshape.png"
+
 export const LoginPage: React.FC = () => {
     const navigate = useNavigate();
 
@@ -48,29 +51,23 @@ export const LoginPage: React.FC = () => {
     }
 
     return (
+        <>
+        <img src={topLeftShape} className="top-right-shape"/>
         <div className="login-page">
             <div className="login-container">
-                <Link to="/" className="back-link">
-                    &larr; Back to Home
-                </Link>
-                <div className="auth-container">
-                    <h1 className="login-title">Welcome Back</h1>
+                <div className="registration-container">
+                    <h1 className="login-title">Welcome to Estia</h1>
                     <Auth 
                         supabaseClient={supabase}
                         appearance={{ 
                             theme: customTheme,
-                            style: {
-                                button: { 
-                                    width: '100%', 
-                                    height: '52px',
-                                    fontSize: '16px',
-                                    borderRadius: '9999px',
-                                },
-                                input: { fontSize: '16px' },
-                                label: { fontSize: '16px' },
-                                anchor: {
-                                    color: 'hsl(153 60.0% 53.0%)',
-                                },
+                            className: {
+                                container: "custom-container",
+                                button: "custom-button",
+                                input: "custom-input",
+                                anchor: "custom-anchor",
+                                label: "custom-label",
+                                message: "custom_message",
                             },
                         }}
                         providers={["google", "github"]}
@@ -79,5 +76,7 @@ export const LoginPage: React.FC = () => {
                 </div>
             </div>
         </div>
+                 <img src={bottomLeftShape} className="bottom-left-shape"/>
+          </>
     );
 };
