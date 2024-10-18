@@ -23,7 +23,11 @@ export default class ExpressServer {
     );
     app.use(bodyParser.text({ limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(cookieParser(process.env.SESSION_SECRET));
-    app.use(express.static(`${root}/public`));
+    
+    // Only use express.static in development
+    if (process.env.NODE_ENV !== 'production') {
+      app.use(express.static(`${root}/public`));
+    }
   }
 
   router(routes: (app: Application) => void): ExpressServer {
@@ -36,12 +40,18 @@ export default class ExpressServer {
       l.info(
         `up and running in ${
           process.env.NODE_ENV || 'development'
-        } @: ${os.hostname()} on port: ${p}}`
+        } @: ${os.hostname()}${p ? ` on port: ${p}` : ''}`
       );
 
     installValidator(app, this.routes)
       .then(() => {
-        http.createServer(app).listen(port, welcome(port));
+        if (process.env.NODE_ENV === 'production') {
+          // For Vercel, we don't need to create a server or listen on a port
+          welcome(0)();
+        } else {
+          // For development, create a server and listen on the specified port
+          http.createServer(app).listen(port, welcome(port));
+        }
       })
       .catch((e) => {
         l.error(e);
@@ -51,3 +61,6 @@ export default class ExpressServer {
     return app;
   }
 }
+
+// Export the app for Vercel
+export const vercelApp = app;
