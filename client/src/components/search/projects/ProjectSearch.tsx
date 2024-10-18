@@ -57,7 +57,8 @@ export const ProjectSearch: React.FC = () => {
         <div className="heading-container">
             <div className="heading-content">
                 <h2 className="main-h2" data-scroll-section>
-                    Welcome to the world&apos;s largest collection of coding projects.
+                    Welcome to the world&apos;s 
+                    largest <span style={{color: "#AF0880"}}>collection</span> of coding projects.
                 </h2>
                 <div className="search-bar-and-filters">
                     <SearchBar

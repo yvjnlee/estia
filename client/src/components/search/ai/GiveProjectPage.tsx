@@ -10,6 +10,7 @@ import { Session } from "@supabase/supabase-js";
 import { getSession } from "../../../api/authAPI";
 
 import { PreferenceLinks } from "../../navbar/PreferenceLinks";
+import { fetchAPI } from "../../../utils/fetchAPI";
 
 const GiveProjectPage: React.FC = () => {
     const [input, setInput] = useState("");
@@ -23,8 +24,7 @@ const GiveProjectPage: React.FC = () => {
     const [projects, setProjects] = useState<ProjectDB[]>([]);
     const [session, setSession] = useState<Session | null>(null);
     const [showAuth, setShowAuth] = useState<boolean>(false);
-
-
+    const [projectsMap, setProjectsMap] = useState<Map<string, ProjectDB>>(new Map());
 
     useEffect(() => {
         getSession().then((session) => {
@@ -38,8 +38,11 @@ const GiveProjectPage: React.FC = () => {
                 dispatch(fetchProjects())
                     .unwrap()
                     .then((projects) => {
-                        console.log("Fetched projects:", projects); // Add this line
+                        console.log("Fetched projects:", projects);
                         setProjects(projects);
+                        // Create a map of project names to project objects
+                        const projectMap = new Map<string, ProjectDB>(projects.map((p: ProjectDB) => [p.project_name.toLowerCase(), p]));
+                        setProjectsMap(projectMap);
                     });
             } catch (error) {
                 console.error("Error fetching projects:", error);
@@ -47,53 +50,54 @@ const GiveProjectPage: React.FC = () => {
         };
 
         fetchAllProjects();
-    }, []);
+    }, [dispatch]);
 
     // Helper function to format and parse JSON output
     const formatOutput = (jsonString: string) => {
         try {
-            const parsedOutput = JSON.parse(jsonString); // Parse the JSON string
+            const parsedOutput = JSON.parse(jsonString);
 
-            // Check if the parsed output is an array of projects
             if (Array.isArray(parsedOutput["Recommended Projects"])) {
                 return parsedOutput["Recommended Projects"].map(
-                    (project: string, index: number) => (
-                        <div className="project-theme-section" key={index}>
-                            <div className="projects-section">
-                                <div className="projects-div">
-                                    {/* Make the project title clickable */}
-                                    <h5
-                                        className="projects-heading"
-                                        onClick={() =>
-                                            navigate(`/project/${encodeURIComponent(project)}`)
-                                        } // Navigate to project details page
-                                        style={{ cursor: "pointer" }} // Add pointer for clickable effect
-                                    >
-                                        {project}
-                                    </h5>
+                    (projectName: string, index: number) => {
+                        const project = projectsMap.get(projectName.toLowerCase());
+                        return (
+                            <div className="project-theme-section" key={index}>
+                                <div className="projects-section">
+                                    <div className="projects-div">
+                                        <h5
+                                            className="projects-heading"
+                                            onClick={() =>
+                                                navigate(`/project/${project?.project_id || encodeURIComponent(projectName)}`)
+                                            }
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                            {projectName}
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )
+                        );
+                    }
                 );
             }
 
             // Handle the case for a single project recommendation
             if (parsedOutput["Recommended Project"]) {
-                const project = parsedOutput["Recommended Project"];
+                const projectName = parsedOutput["Recommended Project"];
+                const project = projectsMap.get(projectName.toLowerCase());
                 return (
                     <div className="project-theme-section">
                         <div className="projects-section">
                             <div className="projects-div">
-                                {/* Make the project title clickable */}
                                 <h5
                                     className="projects-heading"
                                     onClick={() =>
-                                        navigate(`/project/${encodeURIComponent(project)}`)
-                                    } // Navigate to project details page
-                                    style={{ cursor: "pointer", textDecoration: "underline" }} // Add pointer and underline for clickable effect
+                                        navigate(`/project/${project?.project_id || encodeURIComponent(projectName)}`)
+                                    }
+                                    style={{ cursor: "pointer", textDecoration: "underline" }}
                                 >
-                                    {project}
+                                    {projectName}
                                 </h5>
                             </div>
                         </div>
@@ -101,7 +105,7 @@ const GiveProjectPage: React.FC = () => {
                 );
             }
 
-            return null; // Return null if no recommendations are found
+            return null;
         } catch (error) {
             console.error("Error parsing JSON output:", error);
             return <p>Error parsing the response</p>;

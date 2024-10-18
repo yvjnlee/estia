@@ -203,7 +203,7 @@ say you are giving a json formatted response just give the json file. Do not rep
                         value={input}
                         onChange={handleInputChange}
                         rows={3}
-                        placeholder="Enter a paragraph about your learning interests..."
+                        placeholder="I want to know more about backend programming..."
                         required
                         className="input-field"
                     />

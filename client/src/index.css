@@ -56,6 +56,8 @@
 
     --black: #000;
     --white-in-dark-theme: #fff;
+    --dark-in-dark-theme: #000;
+
     --off-white-in-dark: #c4c4c4;
     --blue-grey: #151b23;
     --blue-grey-hover: #3f4c5b;
@@ -74,6 +76,7 @@
     --anchor-color: #000000;
     --black: #fff;
     --white-in-dark-theme: #000;
+    --dark-in-dark-theme: #faf9f3;
     --off-white-in-dark: #2b2b2b;
     --blue-grey: #ddd8d1;
     --search-bar: #d0d0d0;

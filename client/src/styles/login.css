@@ -149,7 +149,7 @@ font-size: var(--font-size-sm) !important;
     color: var(--button-text-color);
     padding-left: 15px;
     font-weight: 500;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-sm) !important;
 }
 
 

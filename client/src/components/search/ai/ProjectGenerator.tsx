@@ -196,7 +196,7 @@ User Input: "${input}"`, // Change the response format to an array of projects
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             rows={3}
-                            placeholder="Describe what you're interested in building..."
+                            placeholder="I am interested in creating something that impacts the environment..."
                             className="input-field"
                         />
                         <button type="submit" className="submit-button" disabled={loading}>

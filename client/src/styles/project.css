@@ -69,8 +69,7 @@
 
 .project-container:hover {
     filter: brightness(1.2);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    transform: scale(1.01);
+    transform: scale(1.03);
     /* Makes the element 5% larger */
 }
 
@@ -401,7 +400,7 @@
 
 /* When the filters are shown */
 .filters-container.show {
-    height: 390px;
+    height: 500px;
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { LocomotiveScrollBar } from "../components/LocomotiveScrollBar";
 
 import "../index.css";
@@ -13,11 +13,24 @@ import { InitialNavbar } from "../components/navbar/InitialNavbar";
 import { FeatureList } from "../components/landingpage/FeatureList";
 
 import PrototypeImage from "../img/prototype.svg";
+import EstiaVideo from "../videos/EstiaDemo.mp4";
+
 import { FadeInSection } from "../components/FadeInSection";
 
 export const LandingPage: React.FC = () => {
     const [session, setSession] = useState<Session | null>(null);
     const [sessionLoading, setSessionLoading] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const handlePlay = () => {
+        setIsPlaying(true);
+        videoRef.current?.play();
+    };
+
+    const handlePause = () => {
+        setIsPlaying(false);
+    };
 
     useEffect(() => {
         getSession().then((session) => {
@@ -60,7 +73,18 @@ export const LandingPage: React.FC = () => {
                                 </button>
                             </Link>
                         </div>
-                        <img className="starting-image" src={PrototypeImage} />
+                        <div className="video-container">
+                            <video
+                                ref={videoRef}
+                                src={EstiaVideo}
+                                controls
+                                onPlay={handlePlay}
+                                onPause={handlePause}
+                            />
+                            {!isPlaying && (
+                                <div className="play-button" onClick={handlePlay}></div>
+                            )}
+                        </div>
                         <FadeInSection>
                             <h2 className="landing-subheading">
                                 Develop Any Skill You Can Imagine
@@ -72,26 +96,26 @@ export const LandingPage: React.FC = () => {
                         </FadeInSection>
                         <FadeInSection>
                             <div className="contribution-container">
-                        <h2 className="landing-subheading">
-                                Interested in Contributing?
-                            </h2>
-                            <h2 className="contribution-header">
-                            Estia was created by a group of passionate Waterloo students 
-                            who believe the best way to learn is by building something meaningful.
-                                If you're excited about 
-                                this project, <a className="contact-tag" href="https://github.com/yvjnlee/estia?tab=readme-ov-file#contact" target="_blank">contact us</a> to 
-                                get involved.
-                            </h2>
-                            <button className="star-button"     
-                            onClick={() => window.open('https://github.com/yvjnlee/estia', 
-                                '_blank')}
-                            >
-                            ⭐ Give our Repo a Star
-                            </button>
+                                <h2 className="landing-subheading">
+                                    Interested in Contributing?
+                                </h2>
+                                <h2 className="contribution-header">
+                                    Estia was created by a group of passionate Waterloo students
+                                    who believe the best way to learn is by building something meaningful.
+                                    If you're excited about
+                                    this project, <a className="contact-tag" href="https://github.com/yvjnlee/estia?tab=readme-ov-file#contact" target="_blank">contact us</a> to
+                                    get involved.
+                                </h2>
+                                <button className="star-button"
+                                    onClick={() => window.open('https://github.com/yvjnlee/estia',
+                                        '_blank')}
+                                >
+                                    ⭐ Give our Repo a Star
+                                </button>
                             </div>
                         </FadeInSection>
                     </div>
-                        <footer className="footer">
+                    <footer className="footer">
                         <p>&copy; 2024 Estia. All rights reserved.</p>
                         <p>
                             Follow us on <a href="https://github.com/yvjnlee/estia" target="_blank" rel="noopener noreferrer">GitHub</a>

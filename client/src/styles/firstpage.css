@@ -138,8 +138,61 @@
 
 .starting-image {
     margin-bottom: 5rem;
-    width: 95%;
+    width: 80%;
 }
+
+/* Style for the video container */
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 1800px; /* Set max-width as needed */
+    overflow: hidden;
+    border-radius: 15px; /* Rounded borders */
+  }
+  
+  /* Style for the video itself */
+  .video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px; /* Match the container's border-radius */
+  }
+  
+  /* Style for the play button overlay */
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .play-button:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Darken on hover */
+  }
+  
+  /* Play button icon */
+  .play-button::before {
+    content: "";
+    border-style: solid;
+    border-width: 15px 0 15px 25px;
+    border-color: transparent transparent transparent white;
+    display: inline-block;
+  }
+  
+  /* Optional cropping of the video */
+  .video-container video {
+    object-fit: cover; /* Crop the video to fill the container */
+  }
+  
 
 .landing-subheading {
     font-size: var(--font-size-xl);
